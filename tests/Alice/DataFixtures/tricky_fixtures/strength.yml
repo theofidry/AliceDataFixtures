@@ -1,0 +1,8 @@
+Hautelook\AliceBundle\Tests\SymfonyApp\TestBundle\Entity\Strength:
+    city_strength_{1..2}:
+        name: Strength <current()>
+        city: '@city_paris'
+
+    project_strength_{1..2}:
+        name: Strength Alice <current()>
+        project: '@project_alice'

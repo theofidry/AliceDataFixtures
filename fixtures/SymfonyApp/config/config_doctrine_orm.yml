@@ -1,0 +1,49 @@
+doctrine:
+    orm:
+        default_entity_manager: default
+        entity_managers:
+            default:
+                connection: default
+                mappings:
+                    TestBundle: ~
+                    TestABundle: ~
+                    TestBBundle: ~
+                    TestCBundle: ~
+                    TestDBundle: ~
+            mysql:
+                connection: mysql
+                mappings:
+                    TestBundle: ~
+                    TestABundle: ~
+                    TestBBundle: ~
+                    TestCBundle: ~
+                    TestDBundle: ~
+    dbal:
+        connections:
+            default:
+                driver: pdo_sqlite
+                path: "%kernel.cache_dir%/db.sqlite"
+                charset: UTF8
+                wrapper_class: Doctrine\DBAL\Sharding\PoolingShardConnection
+                shard_choser: Doctrine\DBAL\Sharding\ShardChoser\MultiTenantShardChoser
+                shards:
+                    - { id: 1, path: "%kernel.cache_dir%/db_shard.sqlite" }
+            mysql:
+                driver: pdo_mysql
+                host: localhost
+                port: 3306
+                dbname: "%database.name%"
+                user: "%database.user%"
+                password: "%database.password%"
+                charset: utf8
+                server_version: 5.6
+                wrapper_class: Doctrine\DBAL\Sharding\PoolingShardConnection
+                shard_choser: Doctrine\DBAL\Sharding\ShardChoser\MultiTenantShardChoser
+                shards:
+                    - id: 1
+                      host: localhost
+                      port: 3306
+                      dbname: "%database.name%_shard_1"
+                      user: "%database.user%"
+                      password: "%database.password%"
+                      charset: utf8

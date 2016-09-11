@@ -1,0 +1,14 @@
+parameters:
+    custom: 2
+
+Hautelook\AliceBundle\Tests\SymfonyApp\TestBundle\Entity\Product:
+    product{11..20}:
+        name: Product <current()>
+        price: 10.0
+        description: Awesome <identity(@self->name)>
+        brand: '@brand*'
+
+Hautelook\AliceBundle\Tests\SymfonyApp\TestBundle\Entity\Brand:
+    brand{1..10}:
+        name: Brand <{hautelook_alice.locale}> <foo(<{custom}>)> <name()> <{test_app.random}>
+

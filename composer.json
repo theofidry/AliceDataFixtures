@@ -1,0 +1,43 @@
+{
+    "name": "theofidry/alice-persistence",
+    "description": "Nelmio alice extension to persist the loaded fixtures",
+    "keywords": ["Fixture", "ORM", "Alice", "Faker", "data", "tests"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Théo FIDRY",
+            "email": "theo.fidry@gmail.com",
+            "homepage": "https://github.com/theofidry"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "nelmio/alice": "^3.0@dev"
+    },
+    "require-dev": {
+        "doctrine/data-fixtures": "To use Doctrine fixtures loader",
+        "doctrine/orm": "To use Doctrine ORM",
+        "bamarni/composer-bin-plugin": "dev-master"
+    },
+    "suggest": {
+        "doctrine/data-fixtures": "To use Doctrine fixtures loader",
+        "doctrine/orm": "To use Doctrine ORM"
+    },
+    "scripts": {
+        "post-install-cmd": ["@composer bin all install --ansi"]
+    },
+    "autoload": {
+        "psr-4": { "Fidry\\AlicePersistence\\": "src" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Fidry\\AlicePersistence\\": "tests" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        },
+        "bin-dir": "bin",
+        "sort-packages": true
+    }
+}

@@ -1,0 +1,90 @@
+language: php
+
+sudo: false
+
+php:
+  - '5.6'
+  - '7.0'
+  - nightly
+
+env:
+  global:
+    - OCULAR_BIN=$HOME/.bin/ocular.phar
+
+matrix:
+  fast_finish: true
+  include:
+    - php: '5.6'
+      env:
+        - COMPOSER_FLAGS="--prefer-lowest"
+        - COVERAGE_ENABLED="true"
+        - PHPUNIT_FLAGS="--coverage-text --coverage-clover=coverage.xml"
+        - SYMFONY_VERSION="~2.3.0"
+    - php: '5.6'
+      env: SYMFONY_VERSION="~2.7.0"
+    - php: '5.6'
+      env: SYMFONY_VERSION="~2.8.0"
+    - php: '5.6'
+      env: SYMFONY_VERSION="~3.0.0"
+    - php: '5.6'
+      env:
+        - SYMFONY_VERSION="~3.1.0"
+        - COVERAGE_ENABLED="true"
+        - PHPUNIT_FLAGS="--coverage-text --coverage-clover=coverage.xml"
+    - php: '5.6'
+      env: SYMFONY_VERSION="~3.2.0@dev"
+  allow_failures:
+    - php: '7.0'
+    - php: nightly
+    - env: SYMFONY_VERSION="~3.2.0@dev"
+
+services:
+  - mongodb
+  - mysql
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+    - $HOME/.bin/
+
+before_install:
+  # From https://github.com/travis-ci/travis-ci/issues/5780#issuecomment-196308406
+  - |
+    function composer()
+    {
+      mv /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/xdebug.ini
+      COMPOSER="$(which composer)"
+      $COMPOSER "$@"
+      STATUS=$?
+      mv ~/xdebug.ini /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
+
+      return $STATUS
+    }
+  - |
+    if [ "$SYMFONY_VERSION" != "" ]; then
+      composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update
+    fi
+  - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - |
+    if [ -z "$COVERAGE_ENABLED" ]; then
+      phpenv config-rm xdebug.ini
+    elif [ ! -e $OCULAR_BIN ]; then
+      wget https://scrutinizer-ci.com/ocular.phar -O $OCULAR_BIN
+      alias ocular="php $OCULAR_BIN"
+    fi
+
+install:
+  - composer update --prefer-dist --no-interaction $COMPOSER_FLAGS
+
+script:
+  - phpunit --stop-on-failure --verbose $PHPUNIT_FLAGS
+
+after_script:
+  - |
+    if [ -n "$COVERAGE_ENABLED" ]; then
+      ocular code-coverage:upload --format=php-clover coverage.xml
+    fi
+
+notifications:
+  email: false

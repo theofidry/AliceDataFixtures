@@ -1,0 +1,11 @@
+parameters:
+    test_app.random: 'Random parameter'
+
+services:
+    alice.processor.entity_managers:
+        class: Hautelook\AliceBundle\Tests\SymfonyApp\TestBundle\DataFixtures\Processor\BrandProcessor
+        tags: [ { name: hautelook_alice.alice.processor } ]
+
+    faker.provider.foo:
+        class: Hautelook\AliceBundle\Tests\SymfonyApp\TestBundle\DataFixtures\Faker\Provider\FooProvider
+        tags: [ { name: hautelook_alice.faker.provider } ]

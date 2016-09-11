@@ -1,0 +1,3 @@
+Hautelook\AliceBundle\Tests\SymfonyApp\TestBundle\Entity\City:
+   city_paris:
+       name: Paris

@@ -1,0 +1,4 @@
+Hautelook\AliceBundle\Tests\SymfonyApp\TestBundle\Document\Product:
+    product{1..10}:
+        name: <name()>
+        price: <randomNumber(2)>

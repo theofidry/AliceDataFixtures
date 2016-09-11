@@ -1,0 +1,2 @@
+Hautelook\AliceBundle\Tests\SymfonyApp\TestBundle\Entity\Dev:
+    dev{1..10}: {}

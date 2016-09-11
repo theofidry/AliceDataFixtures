@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/5.4/phpunit.xsd"
+         bootstrap="tests/SymfonyApp/autoload.php"
+         colors="true"
+         forceCoversAnnotation="true"
+         verbose="true">
+
+    <php>
+        <server name="KERNEL_DIR" value="tests/SymfonyApp" />
+        <server name="SYMFONY__DATABASE__NAME" value="alice"/>
+        <server name="SYMFONY__DATABASE__USER" value="root"/>
+        <server name="SYMFONY__DATABASE__PASSWORD" value=""/>
+    </php>
+
+    <testsuites>
+        <testsuite name="AliceBundle Test Suite">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>./</directory>
+            <exclude>
+                <directory>./vendor</directory>
+                <directory>./tests</directory>
+                <directory>./src/Resources</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
+</phpunit>
