@@ -1,15 +1,15 @@
 <?php
 
-namespace Fidry\AlicePersistence;
+namespace Fidry\AliceDataFixtures;
 
 interface PersisterInterface
 {
     /**
      * Persists objects into the database.
      *
-     * @param object[] $objects
+     * @param object $object
      */
-    public function persist(array $objects);
+    public function persist($object);
 
     public function flush();
 }

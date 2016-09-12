@@ -16,22 +16,27 @@
         "nelmio/alice": "^3.0@dev"
     },
     "require-dev": {
-        "doctrine/data-fixtures": "To use Doctrine fixtures loader",
-        "doctrine/orm": "To use Doctrine ORM",
-        "bamarni/composer-bin-plugin": "dev-master"
+        "doctrine/orm": "^2.2",
+        "bamarni/composer-bin-plugin": "dev-master",
+        "phpunit/phpunit": "^5.5",
+        "doctrine/data-fixtures": "^1.2"
     },
     "suggest": {
-        "doctrine/data-fixtures": "To use Doctrine fixtures loader",
         "doctrine/orm": "To use Doctrine ORM"
     },
     "scripts": {
         "post-install-cmd": ["@composer bin all install --ansi"]
     },
     "autoload": {
-        "psr-4": { "Fidry\\AlicePersistence\\": "src" }
+        "psr-4": { "Fidry\\AliceDataFixtures\\": "src" }
     },
     "autoload-dev": {
-        "psr-4": { "Fidry\\AlicePersistence\\": "tests" }
+        "psr-4": {
+            "Fidry\\AliceDataFixtures\\": [
+                "fixtures",
+                "tests"
+            ]
+        }
     },
     "extra": {
         "branch-alias": {

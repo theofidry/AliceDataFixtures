@@ -1,6 +1,6 @@
 <?php
 
-namespace Fidry\AlicePersistence;
+namespace Fidry\AliceDataFixtures;
 
 interface ProcessorInterface
 {

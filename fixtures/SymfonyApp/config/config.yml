@@ -1,10 +1,6 @@
-imports:
-    - { resource: services.yml }
-
 framework:
     secret: test
-    router:
-        resource: "%kernel.root_dir%/config/routing.yml"
+    router: ~
     form: ~
     validation:
         enabled: true
