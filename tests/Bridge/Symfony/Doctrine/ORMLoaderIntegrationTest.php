@@ -12,11 +12,10 @@
 namespace Fidry\AlicePersistence\Bridge\Symfony\Doctrine;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
+use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineOrmKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use PHPUnit\Framework\TestCase;
-use Webmozart\Assert\Assert;
 
 /**
  * @group symfony
@@ -36,9 +35,9 @@ class ORMLoaderIntegrationTest extends TestCase
         $doctrine = $kernel->getContainer()->get('doctrine');
         $result = $doctrine->getRepository(Dummy::class)->findAll();
 
-        Assert::eq(1, count($result));
+        $this->assertEquals(1, count($result));
 
-        $purger = new ORMPurger($doctrine);
+        $purger = new ORMPurger($doctrine->getManager());
         $purger->purge();
 
         $kernel->shutdown();

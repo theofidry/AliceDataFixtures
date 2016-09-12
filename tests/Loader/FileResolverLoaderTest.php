@@ -16,7 +16,6 @@ use Fidry\AliceDataFixtures\File\Resolver\DummyResolver;
 use Fidry\AliceDataFixtures\FileResolverInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Webmozart\Assert\Assert;
 
 /**
  * @covers Fidry\AliceDataFixtures\Loader\FileResolverLoader
@@ -25,7 +24,7 @@ class FileResolverLoaderTest extends TestCase
 {
     public function testIsALoader()
     {
-        Assert::implementsInterface(FileResolverLoader::class, LoaderInterface::class);
+        $this->assertTrue(is_a(FileResolverLoader::class, LoaderInterface::class, true));
     }
 
     public function testResolvesTheFilesBeforePassingThemToTheDecoratedLoader()
@@ -59,7 +58,7 @@ class FileResolverLoaderTest extends TestCase
         $loader = new FileResolverLoader($loader, $fileResolver);
         $result = $loader->load($files);
 
-        Assert::eq(
+        $this->assertEquals(
             [
                 'dummy' => new \stdClass(),
             ],
@@ -97,7 +96,7 @@ class FileResolverLoaderTest extends TestCase
         $loader = new FileResolverLoader($loader, new DummyResolver());
         $result = $loader->load($files, $parameters, $objects);
 
-        Assert::eq(
+        $this->assertEquals(
             [
                 'dummy' => new \stdClass(),
             ],

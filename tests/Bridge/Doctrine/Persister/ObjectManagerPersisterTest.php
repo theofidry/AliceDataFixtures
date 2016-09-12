@@ -12,7 +12,6 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Persistence\DummyManagerRegistry;
 use Fidry\AliceDataFixtures\PersisterInterface;
-use Webmozart\Assert\Assert;
 
 /**
  * @covers Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
@@ -50,7 +49,7 @@ class ObjectManagerPersisterTest extends \PHPUnit_Framework_TestCase
 
     public function testIsAPersister()
     {
-        Assert::implementsInterface(ObjectManagerPersister::class, PersisterInterface::class);
+        $this->assertTrue(is_a(ObjectManagerPersister::class, PersisterInterface::class, true));
     }
 
     /**
@@ -63,7 +62,7 @@ class ObjectManagerPersisterTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->entityManager->getRepository(get_class($entity))->findAll();
 
-        Assert::eq(1, count($result));
+        $this->assertEquals(1, count($result));
     }
 
     /**

@@ -1,2 +1,2 @@
-Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy:
+Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Dummy:
     dummy0: {}

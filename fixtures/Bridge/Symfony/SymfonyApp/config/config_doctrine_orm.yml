@@ -18,4 +18,4 @@ doctrine:
                 type: xml
                 dir: '%kernel.root_dir%/config/doctrine'
                 is_bundle: false
-                prefix: Fidry\AliceDataFixtures\Bridge\Doctrine\Entity
+                prefix: Fidry\AliceDataFixtures\Bridge\Symfony\Entity

@@ -18,7 +18,6 @@ use Nelmio\Alice\ObjectSet;
 use Nelmio\Alice\ParameterBag;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Webmozart\Assert\Assert;
 
 /**
  * @covers Fidry\AliceDataFixtures\Loader\SimpleFileLoader
@@ -27,7 +26,7 @@ class SimpleLoaderTest extends TestCase
 {
     public function testIsALoader()
     {
-        Assert::implementsInterface(SimpleFileLoader::class, LoaderInterface::class);
+        $this->assertTrue(is_a(SimpleFileLoader::class, LoaderInterface::class, true));
     }
 
     public function testDecoratesAliceLoaderToLoadEachFileGivenAndReturnsTheObjectsLoaded()
@@ -54,7 +53,7 @@ class SimpleLoaderTest extends TestCase
         $loader = new SimpleFileLoader($fileLoader);
         $result = $loader->load($files);
 
-        Assert::eq(
+        $this->assertEquals(
             [
                 'dummy' => new \stdClass(),
             ],
@@ -113,7 +112,7 @@ class SimpleLoaderTest extends TestCase
         $loader = new SimpleFileLoader($fileLoader);
         $result = $loader->load($files);
 
-        Assert::eq(
+        $this->assertEquals(
             [
                 'first' => new \stdClass(),
                 'second' => new \stdClass(),
@@ -185,7 +184,7 @@ class SimpleLoaderTest extends TestCase
         $loader = new SimpleFileLoader($fileLoader);
         $result = $loader->load($files, $parameters, $objects);
 
-        Assert::eq(
+        $this->assertEquals(
             [
                 'injected' => new \stdClass(),
                 'first' => new \stdClass(),

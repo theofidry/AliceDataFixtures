@@ -13,6 +13,7 @@
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 
 require_once __DIR__.'/../tests/Bridge/Doctrine/autoload.php';
+//require_once __DIR__.'/../tests/Bridge/Symfony/autoload.php';
 
 $purger = new ORMPurger($GLOBALS['entityManager']);
 $purger->purge();

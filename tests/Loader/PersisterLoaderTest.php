@@ -16,7 +16,6 @@ use Fidry\AliceDataFixtures\PersisterInterface;
 use Fidry\AliceDataFixtures\ProcessorInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Webmozart\Assert\Assert;
 
 /**
  * @covers Fidry\AliceDataFixtures\Loader\PersisterLoader
@@ -25,7 +24,7 @@ class PersisterLoaderTest extends TestCase
 {
     public function testIsALoader()
     {
-        Assert::implementsInterface(PersisterLoader::class, LoaderInterface::class);
+        $this->assertTrue(is_a(PersisterLoader::class, LoaderInterface::class, true));
     }
 
     public function testDecoratesALoaderAndProcessAndPersistEachLoadedObjectBeforeReturningThem()
@@ -67,7 +66,7 @@ class PersisterLoaderTest extends TestCase
         $loader = new PersisterLoader($loader, $persister, [$firstProcessor, $secondProcessor]);
         $result = $loader->load($files);
 
-        Assert::eq(
+        $this->assertEquals(
             [
                 'dummy' => new \stdClass(),
             ],
@@ -114,7 +113,7 @@ class PersisterLoaderTest extends TestCase
         $loader = new PersisterLoader($loader, $persister, []);
         $result = $loader->load($files, $parameters, $objects);
 
-        Assert::eq(
+        $this->assertEquals(
             [
                 'dummy' => new \stdClass(),
             ],

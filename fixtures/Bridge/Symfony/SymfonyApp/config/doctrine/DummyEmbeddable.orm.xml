@@ -3,12 +3,6 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                    https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
 
-    <mapped-superclass name="Fidry\AliceDataFixtures\Bridge\Symfony\Entity\MappedSuperclassDummy">
-        <id name="id" type="integer">
-            <generator strategy="AUTO" />
-        </id>
-
-        <field name="status" type="string" />
-    </mapped-superclass>
+    <embeddable name="Fidry\AliceDataFixtures\Bridge\Symfony\Entity\DummyEmbeddable" />
 
 </doctrine-mapping>

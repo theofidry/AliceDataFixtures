@@ -6,3 +6,4 @@ coverage.xml
 phpunit.xml
 .php_cs.cache
 .phar/
+vendor-bin/*/vendor/
