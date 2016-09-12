@@ -1,5 +1,5 @@
 {
-    "name": "theofidry/alice-persistence",
+    "name": "theofidry/alice-data-fixtures",
     "description": "Nelmio alice extension to persist the loaded fixtures",
     "keywords": ["Fixture", "ORM", "Alice", "Faker", "data", "tests"],
     "type": "library",

@@ -15,9 +15,6 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler\Register
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-/**
- * @internal
- */
 final class FidryAliceDataFixturesBundle extends Bundle
 {
     /**
