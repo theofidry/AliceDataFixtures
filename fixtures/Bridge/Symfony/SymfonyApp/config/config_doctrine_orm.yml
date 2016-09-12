@@ -1,0 +1,21 @@
+fidry_alice_data_fixtures:
+    db_drivers:
+        doctrine_orm: true
+
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver: pdo_mysql
+                dbname: fidry_alice_data_fixtures
+                user: root
+                password: ~
+    orm:
+        auto_mapping: true
+        mappings:
+            fixture_entities:
+                type: xml
+                dir: '%kernel.root_dir%/config/doctrine'
+                is_bundle: false
+                prefix: Fidry\AliceDataFixtures\Bridge\Doctrine\Entity

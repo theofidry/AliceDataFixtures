@@ -21,13 +21,13 @@ use Prophecy\Argument;
 use Webmozart\Assert\Assert;
 
 /**
- * @covers Fidry\AliceDataFixtures\Loader\SimpleLoader
+ * @covers Fidry\AliceDataFixtures\Loader\SimpleFileLoader
  */
 class SimpleLoaderTest extends TestCase
 {
     public function testIsALoader()
     {
-        Assert::implementsInterface(SimpleLoader::class, LoaderInterface::class);
+        Assert::implementsInterface(SimpleFileLoader::class, LoaderInterface::class);
     }
 
     public function testDecoratesAliceLoaderToLoadEachFileGivenAndReturnsTheObjectsLoaded()
@@ -51,7 +51,7 @@ class SimpleLoaderTest extends TestCase
         /** @var FileLoaderInterface $fileLoader */
         $fileLoader = $fileLoaderProphecy->reveal();
 
-        $loader = new SimpleLoader($fileLoader);
+        $loader = new SimpleFileLoader($fileLoader);
         $result = $loader->load($files);
 
         Assert::eq(
@@ -110,7 +110,7 @@ class SimpleLoaderTest extends TestCase
         ;
         $fileLoader = $fileLoaderProphecy->reveal();
 
-        $loader = new SimpleLoader($fileLoader);
+        $loader = new SimpleFileLoader($fileLoader);
         $result = $loader->load($files);
 
         Assert::eq(
@@ -182,7 +182,7 @@ class SimpleLoaderTest extends TestCase
         ;
         $fileLoader = $fileLoaderProphecy->reveal();
 
-        $loader = new SimpleLoader($fileLoader);
+        $loader = new SimpleFileLoader($fileLoader);
         $result = $loader->load($files, $parameters, $objects);
 
         Assert::eq(

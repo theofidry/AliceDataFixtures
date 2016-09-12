@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/5.5/phpunit.xsd"
-         bootstrap="tests/Bridge/Doctrine/autoload.php"
+         bootstrap="vendor/autoload.php"
          colors="true"
          forceCoversAnnotation="true"
          verbose="true">
-
-    <php>
-        <env name="DB_DRIVER" value="pdo_mysql" />
-        <env name="DB_USER" value="root" />
-        <env name="DB_PASSWORD" value="" />
-        <env name="DB_NAME" value="fidry_alice_data_fixtures" />
-    </php>
 
     <testsuites>
         <testsuite name="Test Suite">
@@ -21,11 +14,8 @@
 
     <groups>
         <include>
-            <group>doctrine</group>
+            <group>symfony</group>
         </include>
-        <exclude>
-            <group>unit</group>
-        </exclude>
     </groups>
 
     <filter>

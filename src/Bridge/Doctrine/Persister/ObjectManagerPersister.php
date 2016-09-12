@@ -2,6 +2,7 @@
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
 use Fidry\AliceDataFixtures\PersisterInterface;
 
@@ -17,12 +18,9 @@ final class ObjectManagerPersister implements PersisterInterface
      */
     private $persistableClasses;
 
-    /**
-     * @param ObjectManager $objectManager
-     */
-    public function __construct(ObjectManager $objectManager)
+    public function __construct(ManagerRegistry $managerRegistry)
     {
-        $this->objectManager = $objectManager;
+        $this->objectManager = $managerRegistry->getManager();
         $this->persistableClasses = array_flip($this->getPersistableClasses());
     }
     /**

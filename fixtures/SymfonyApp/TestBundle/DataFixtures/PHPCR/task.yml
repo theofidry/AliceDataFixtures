@@ -1,5 +1,0 @@
-Hautelook\AliceBundle\Tests\SymfonyApp\TestBundle\Document\Task:
-    task{1..10}:
-        id: <?php realpath(__DIR__.'/../../Domain/Task/test') ?>
-#        description: <text()>
-        done: <boolean()>

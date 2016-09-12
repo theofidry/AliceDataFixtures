@@ -15,6 +15,7 @@
     <groups>
         <exclude>
             <group>doctrine</group>
+            <group>symfony</group>
         </exclude>
     </groups>
 

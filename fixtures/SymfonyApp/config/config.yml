@@ -1,9 +1,0 @@
-framework:
-    secret: test
-    router: ~
-    form: ~
-    validation:
-        enabled: true
-        enable_annotations: true
-    session: ~
-    test: ~

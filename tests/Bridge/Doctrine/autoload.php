@@ -17,7 +17,7 @@ $entityManager = EntityManager::create(
         'driver' => false !== getenv('DB_DRIVER')? getenv('DB_DRIVER') : 'pdo_mysql',
         'user' => false !== getenv('DB_USER')? getenv('DB_USER') : 'root',
         'password' => false !== getenv('DB_PASSWORD')? getenv('DB_PASSWORD') : null,
-        'dbname' => false !== getenv('DB_NAME')? getenv('DB_NAME') : 'alice_persistence',
+        'dbname' => false !== getenv('DB_NAME')? getenv('DB_NAME') : 'fidry_alice_data_fixtures',
     ],
     $config
 );

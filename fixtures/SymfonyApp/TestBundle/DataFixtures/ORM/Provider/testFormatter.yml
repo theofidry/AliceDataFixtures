@@ -1,3 +1,0 @@
-Hautelook\AliceBundle\Tests\SymfonyApp\TestBundle\Entity\Brand:
-    brand{1..10}:
-        name: <testLoaderFormatter()>

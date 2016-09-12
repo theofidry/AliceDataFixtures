@@ -10,6 +10,7 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Persistence\DummyManagerRegistry;
 use Fidry\AliceDataFixtures\PersisterInterface;
 use Webmozart\Assert\Assert;
 
@@ -38,7 +39,7 @@ class ObjectManagerPersisterTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->entityManager = $GLOBALS['entityManager'];
-        $this->persister = new ObjectManagerPersister($this->entityManager);
+        $this->persister = new ObjectManagerPersister(new DummyManagerRegistry($this->entityManager));
         $this->purger = new ORMPurger($this->entityManager);
     }
 
