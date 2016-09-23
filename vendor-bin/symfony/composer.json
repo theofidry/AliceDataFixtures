@@ -4,6 +4,7 @@
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "symfony/symfony": "^3.1",
-        "theofidry/composer-inheritance-plugin": "^1.0@dev"
+        "theofidry/composer-inheritance-plugin": "^1.0@dev",
+        "theofidry/psysh-bundle": "^2.0"
     }
 }
