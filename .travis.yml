@@ -76,20 +76,24 @@ install:
   - |
     if [ -n "$DOCTRINE_VERSION" ]; then
         composer bin doctrine require --no-update doctrine/orm "doctrine/orm:${DOCTRINE_VERSION}"
+
         PHPUNIT_CONFIG='phpunit_doctrine.xml.dist'
         PHPUNIT_BIN='vendor-bin/doctrine/vendor/phpunit/phpunit/phpunit'
     fi
   - |
     if [ -n "$SYMFONY_VERSION" ]; then
         composer bin symfony require --no-update symfony/symfony "symfony/symfony:${SYMFONY_VERSION}"
+
         PHPUNIT_CONFIG='phpunit_symfony.xml.dist'
         PHPUNIT_BIN='vendor-bin/symfony/vendor/phpunit/phpunit/phpunit'
     fi
   - composer bin all update --prefer-dist $COMPOSER_FLAGS
+  - mysql -u root -e "create database IF NOT EXISTS fidry_alice_data_fixtures;"
   - |
-    if [ -n "$DOCTRINE_VERSION" ] || [ -n "$SYMFONY_VERSION" ]; then
-        mysql -u root -e "create database IF NOT EXISTS fidry_alice_data_fixtures;"
-        php vendor/bin/doctrine o:s:c
+    if [ -n "$DOCTRINE_VERSION" ]; then
+        php vendor-bin/doctrine/vendor/doctrine/orm/bin/doctrine o:s:c
+    elif [ -n "$SYMFONY_VERSION" ]; then
+        php bin/console d:s:c
     fi
 
 script:
