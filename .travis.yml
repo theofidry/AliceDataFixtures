@@ -53,6 +53,7 @@ before_install:
     if [ "nightly" != "$TRAVIS_PHP_VERSION" ]; then
         phpenv config-rm xdebug.ini
     fi
+  - PHPUNIT_BIN='vendor/bin/phpunit'
   - PHPUNIT_CONFIG='phpunit.xml.dist'
   - PHPUNIT_FLAGS='--stop-on-failure --verbose'
 
@@ -62,11 +63,13 @@ install:
     if [ -n "$DOCTRINE_VERSION" ]; then
         composer bin doctrine require --no-update doctrine/orm "doctrine/orm:${DOCTRINE_VERSION}"
         PHPUNIT_CONFIG='phpunit_doctrine.xml.dist'
+        PHPUNIT_BIN='vendor-bin/doctrine/vendor/phpunit/phpunit/phpunit'
     fi
   - |
     if [ -n "$SYMFONY_VERSION" ]; then
         composer bin symfony require --no-update symfony/symfony "symfony/symfony:${SYMFONY_VERSION}"
         PHPUNIT_CONFIG='phpunit_symfony.xml.dist'
+        PHPUNIT_BIN='vendor-bin/symfony/vendor/phpunit/phpunit/phpunit'
     fi
   - composer bin all update --prefer-dist $COMPOSER_FLAGS
   - |
@@ -78,9 +81,9 @@ install:
 script:
   - |
     if [ -n "$COVERAGE" ]; then
-        phpdbg -qrr vendor/bin/phpunit -c $PHPUNIT_CONFIG $PHPUNIT_FLAGS --testdox --coverage-text
+        phpdbg -qrr $PHPUNIT_BIN -c $PHPUNIT_CONFIG $PHPUNIT_FLAGS --testdox --coverage-text
     else
-        vendor/bin/phpunit -c $PHPUNIT_CONFIG $PHPUNIT_FLAGS
+        $PHPUNIT_BIN -c $PHPUNIT_CONFIG $PHPUNIT_FLAGS
     fi
 
 notifications:

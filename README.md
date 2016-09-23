@@ -6,12 +6,15 @@ AliceDataFixtures
 [![Package version](https://img.shields.io/packagist/vpre/theofidry/alice-data-fixtures.svg?style=flat-square)](https://packagist.org/packages/theofidry/alice-data-fixtures)
 [![Build Status](https://img.shields.io/travis/theofidry/AliceDataFixtures/master.svg?style=flat-square)](https://travis-ci.org/theofidry/AliceDataFixtures?branch=master)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/hautelook/AliceBundle?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![license](https://img.shields.io/badge/license-MIT-red.svg?style=flat-square)](LICENSE)
+
 
 ## Documentation
 
 1. [Install](#installation)
     1. [Symfony Bundle](#symfony)
 1. [Basic usage](#basic-usage)
+1. [Contributing](#contributing)
 
 
 ## Installation
@@ -37,6 +40,7 @@ composer require --dev theofidry/alice-persistence doctrine/orm doctrine/data-fi
 ```
 
 If you are working with Doctrine ORM, you need to install the following packages as well:
+
 
 ### Symfony
 
@@ -100,6 +104,8 @@ $objects = $loader->load($files);
 // $objects is now an array of persisted `Dummy` and `RelatedDummy`
 ```
 
-## License
 
-[![license](https://img.shields.io/badge/license-MIT-red.svg?style=flat-square)](LICENSE)
+## Contributing
+
+Clone the project, install the dependencies and use `bin/test.sh` to run all the tests!
+
