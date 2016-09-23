@@ -11,6 +11,7 @@
 
 namespace Fidry\AliceDataFixtures\Loader;
 
+use Fidry\AliceDataFixtures\Alice\Loader\FakeFileLoader;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Nelmio\Alice\FileLoaderInterface;
 use Nelmio\Alice\ObjectBag;
@@ -20,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 
 /**
- * @covers \Fidry\AliceDataFixtures\Loader\SimpleFileLoader
+ * @covers \Fidry\AliceDataFixtures\Loader\SimpleLoader
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
@@ -28,7 +29,15 @@ class SimpleLoaderTest extends TestCase
 {
     public function testIsALoader()
     {
-        $this->assertTrue(is_a(SimpleFileLoader::class, LoaderInterface::class, true));
+        $this->assertTrue(is_a(SimpleLoader::class, LoaderInterface::class, true));
+    }
+
+    /**
+     * @expectedException \DomainException
+     */
+    public function testIsNotClonable()
+    {
+        clone new SimpleLoader(new FakeFileLoader());
     }
 
     public function testDecoratesAliceLoaderToLoadEachFileGivenAndReturnsTheObjectsLoaded()
@@ -52,7 +61,7 @@ class SimpleLoaderTest extends TestCase
         /** @var FileLoaderInterface $fileLoader */
         $fileLoader = $fileLoaderProphecy->reveal();
 
-        $loader = new SimpleFileLoader($fileLoader);
+        $loader = new SimpleLoader($fileLoader);
         $result = $loader->load($files);
 
         $this->assertEquals(
@@ -111,7 +120,7 @@ class SimpleLoaderTest extends TestCase
         ;
         $fileLoader = $fileLoaderProphecy->reveal();
 
-        $loader = new SimpleFileLoader($fileLoader);
+        $loader = new SimpleLoader($fileLoader);
         $result = $loader->load($files);
 
         $this->assertEquals(
@@ -183,7 +192,7 @@ class SimpleLoaderTest extends TestCase
         ;
         $fileLoader = $fileLoaderProphecy->reveal();
 
-        $loader = new SimpleFileLoader($fileLoader);
+        $loader = new SimpleLoader($fileLoader);
         $result = $loader->load($files, $parameters, $objects);
 
         $this->assertEquals(

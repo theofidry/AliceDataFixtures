@@ -15,6 +15,9 @@ use Fidry\AliceDataFixtures\Loader\ErrorTracker;
 use Fidry\AliceDataFixtures\Loader\FileTracker;
 use Nelmio\Alice\Throwable\LoadingThrowable;
 
+/**
+ * @author Théo FIDRY <theo.fidry@gmail.com>
+ */
 class MaxPassReachedException extends \RuntimeException implements LoadingThrowable
 {
     /**

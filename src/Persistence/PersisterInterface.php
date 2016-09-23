@@ -1,7 +1,10 @@
 <?php
 
-namespace Fidry\AliceDataFixtures;
+namespace Fidry\AliceDataFixtures\Persistence;
 
+/**
+ * @author Jordi Boggiano <j.boggiano@seld.be>
+ */
 interface PersisterInterface
 {
     /**

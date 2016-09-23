@@ -4,7 +4,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
-use Fidry\AliceDataFixtures\PersisterInterface;
+use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 
 final class ObjectManagerPersister implements PersisterInterface
 {

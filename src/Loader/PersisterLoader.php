@@ -12,21 +12,27 @@
 namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\LoaderInterface;
-use Fidry\AliceDataFixtures\PersisterInterface;
+use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\ProcessorInterface;
+use Nelmio\Alice\NotClonableTrait;
 
 /**
+ * Loader decorating another loader to add a persistence layer.
+ *
+ * @author Jordi Boggiano <j.boggiano@seld.be>
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 final class PersisterLoader implements LoaderInterface
 {
+    use NotClonableTrait;
+
     /**
      * @var LoaderInterface
      */
     private $loader;
 
     /**
-     * @var PersisterInterface
+     * @var \Fidry\AliceDataFixtures\Persistence\PersisterInterface
      */
     private $persister;
 
@@ -60,14 +66,15 @@ final class PersisterLoader implements LoaderInterface
             foreach ($this->processors as $processor) {
                 $processor->preProcess($object);
             }
-
             $this->persister->persist($object);
+        }
+        $this->persister->flush();
 
+        foreach ($objects as $object) {
             foreach ($this->processors as $processor) {
                 $processor->postProcess($object);
             }
         }
-        $this->persister->flush();
 
         return $objects;
     }

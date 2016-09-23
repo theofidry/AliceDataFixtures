@@ -29,6 +29,14 @@ class FileResolverLoaderTest extends TestCase
         $this->assertTrue(is_a(FileResolverLoader::class, LoaderInterface::class, true));
     }
 
+    /**
+     * @expectedException \DomainException
+     */
+    public function testIsNotClonable()
+    {
+        clone new FileResolverLoader(new FakeLoader(), new FakeFileResolver(), []);
+    }
+
     public function testResolvesTheFilesBeforePassingThemToTheDecoratedLoader()
     {
         $files = [

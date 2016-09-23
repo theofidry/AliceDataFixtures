@@ -15,15 +15,20 @@ use Fidry\AliceDataFixtures\Exception\MaxPassReachedException;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Nelmio\Alice\Exception\Generator\Resolver\UnresolvableValueDuringGenerationException;
 use Nelmio\Alice\FileLoaderInterface;
+use Nelmio\Alice\NotClonableTrait;
 use Nelmio\Alice\ObjectBag;
 use Nelmio\Alice\ObjectSet;
 use Nelmio\Alice\ParameterBag;
 
 /**
+ * Alternative to {@se SimpleLoader} to load the files in a smarter way.
+ *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-final class MultiPassFileLoader implements LoaderInterface
+final class MultiPassLoader implements LoaderInterface
 {
+    use NotClonableTrait;
+
     /**
      * @var FileLoaderInterface
      */
