@@ -4,6 +4,7 @@
          bootstrap="vendor-bin/symfony/vendor/autoload.php"
          colors="true"
          forceCoversAnnotation="true"
+         stopOnFailure="true"
          verbose="true">
 
     <testsuites>

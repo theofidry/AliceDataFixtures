@@ -13,11 +13,12 @@
     ],
     "require": {
         "php": "~7.0.0 || ~7.1.0",
-        "nelmio/alice": "^3.0@dev"
+        "nelmio/alice": "^3.0@dev",
+        "phpspec/prophecy": "^1.6",
+        "phpunit/phpunit": "^5.5"
     },
     "require-dev": {
-        "bamarni/composer-bin-plugin": "dev-master",
-        "phpunit/phpunit": "^5.5"
+        "bamarni/composer-bin-plugin": "dev-master"
     },
     "suggest": {
         "doctrine/orm": "To use Doctrine ORM"
