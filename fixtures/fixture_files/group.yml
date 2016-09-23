@@ -1,0 +1,2 @@
+Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Group:
+    group{1..10}: {}

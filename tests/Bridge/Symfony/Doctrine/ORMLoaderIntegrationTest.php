@@ -23,6 +23,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * @group symfony
  * @group doctrine
+ *
+ * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class ORMLoaderIntegrationTest extends TestCase
 {
@@ -74,6 +76,37 @@ class ORMLoaderIntegrationTest extends TestCase
     {
         $this->loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/user_group.yml',
+        ]);
+
+        $users = $this->doctrine->getRepository(User::class)->findAll();
+        $groups = $this->doctrine->getRepository(Group::class)->findAll();
+
+        $this->assertEquals(10, count($users));
+        $this->assertEquals(10, count($groups));
+    }
+
+    public function testBidirectionalRelationshipsDeclaredInDifferentFiles()
+    {
+        $this->loader->load([
+            __DIR__.'/../../../../fixtures/fixture_files/user_with_group.yml',
+            __DIR__.'/../../../../fixtures/fixture_files/group.yml',
+        ]);
+
+        $users = $this->doctrine->getRepository(User::class)->findAll();
+        $groups = $this->doctrine->getRepository(Group::class)->findAll();
+
+        $this->assertEquals(10, count($users));
+        $this->assertEquals(10, count($groups));
+    }
+
+    /**
+     * @expectedException \Fidry\AliceDataFixtures\Exception\MaxPassReachedException
+     */
+    public function testBidirectionalRelationshipsDeclaredInDifferentFilesWithCyclingDependence()
+    {
+        $this->loader->load([
+            __DIR__.'/../../../../fixtures/fixture_files/user_with_group.yml',
+            __DIR__.'/../../../../fixtures/fixture_files/group_with_user.yml',
         ]);
 
         $users = $this->doctrine->getRepository(User::class)->findAll();
