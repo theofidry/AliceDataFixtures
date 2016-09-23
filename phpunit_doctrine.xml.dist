@@ -4,6 +4,7 @@
          bootstrap="tests/Bridge/Doctrine/autoload.php"
          colors="true"
          forceCoversAnnotation="true"
+         stopOnFailure="true"
          verbose="true">
 
     <php>

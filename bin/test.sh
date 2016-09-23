@@ -9,6 +9,8 @@
 # file that was distributed with this source code.
 #
 
+set -ex
+
 mysql -u root -e "drop database fidry_alice_data_fixtures;"
 mysql -u root -e "create database fidry_alice_data_fixtures;"
 php vendor/bin/doctrine o:s:c
