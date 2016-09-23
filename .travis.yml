@@ -63,6 +63,10 @@ before_install:
 
       return $STATUS
     }
+  - |
+    if [ "$TRAVIS_PHP_VERSION" = "nightly" ]; then
+        COMPOSER_FLAGS="$COMPOSER_FLAGS --ignore-platform-reqs"
+    fi
   - PHPUNIT_BIN='vendor/bin/phpunit'
   - PHPUNIT_CONFIG='phpunit.xml.dist'
   - PHPUNIT_FLAGS='--stop-on-failure --verbose'
