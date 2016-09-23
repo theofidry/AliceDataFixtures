@@ -1,5 +1,3 @@
-sudo: false
-
 language: php
 
 cache:
@@ -45,7 +43,6 @@ matrix:
   allow_failures:
     - php: nightly
     - env: SYMFONY_VERSION='^3.2@dev'
-    - env: COMPOSER_FLAGS='--prefer-lowest' # TODO: make them pass
 
 before_install:
   - set -eo pipefail
@@ -100,4 +97,4 @@ script:
     fi
 
 notifications:
-    email: false
+  email: false
