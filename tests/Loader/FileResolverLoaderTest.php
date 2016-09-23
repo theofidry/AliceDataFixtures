@@ -35,7 +35,7 @@ class FileResolverLoaderTest extends TestCase
      */
     public function testIsNotClonable()
     {
-        clone new FileResolverLoader(new FakeLoader(), new FakeFileResolver(), []);
+        clone new FileResolverLoader(new FakeLoader(), new FakeFileResolver());
     }
 
     public function testResolvesTheFilesBeforePassingThemToTheDecoratedLoader()
