@@ -11,7 +11,7 @@
 
 namespace Fidry\AliceDataFixtures\Persistence;
 
-use Fidry\AliceDataFixtures\NotCallableTrait;
+use Nelmio\Alice\NotCallableTrait;
 
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
