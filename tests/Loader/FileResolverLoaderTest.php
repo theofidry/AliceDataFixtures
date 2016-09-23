@@ -14,6 +14,7 @@ namespace Fidry\AliceDataFixtures\Loader;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\File\Resolver\DummyResolver;
 use Fidry\AliceDataFixtures\FileResolverInterface;
+use Fidry\AliceDataFixtures\Resolver\FakeFileResolver;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 
@@ -34,7 +35,7 @@ class FileResolverLoaderTest extends TestCase
      */
     public function testIsNotClonable()
     {
-        clone new FileResolverLoader(new FakeLoader(), new FakeFileResolver(), []);
+        clone new FileResolverLoader(new FakeLoader(), new FakeFileResolver());
     }
 
     public function testResolvesTheFilesBeforePassingThemToTheDecoratedLoader()

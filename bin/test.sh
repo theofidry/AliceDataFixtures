@@ -11,8 +11,10 @@
 
 set -ex
 
-mysql -u root -e "drop database fidry_alice_data_fixtures;"
-mysql -u root -e "create database fidry_alice_data_fixtures;"
+mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
+rm -rf fixtures/Bridge/Symfony/cache/*
+
+mysql -u root -e "CREATE DATABASE fidry_alice_data_fixtures;"
 php bin/console d:s:c
 
 vendor/bin/phpunit -c phpunit.xml.dist
