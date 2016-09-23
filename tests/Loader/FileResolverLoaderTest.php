@@ -18,7 +18,9 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 
 /**
- * @covers Fidry\AliceDataFixtures\Loader\FileResolverLoader
+ * @covers \Fidry\AliceDataFixtures\Loader\FileResolverLoader
+ *
+ * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class FileResolverLoaderTest extends TestCase
 {

@@ -15,8 +15,9 @@ use Fidry\AliceDataFixtures\PersisterInterface;
 
 /**
  * @covers Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
- *
  * @group doctrine
+ *
+ * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class ObjectManagerPersisterTest extends \PHPUnit_Framework_TestCase
 {

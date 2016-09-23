@@ -20,7 +20,9 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 
 /**
- * @covers Fidry\AliceDataFixtures\Loader\SimpleFileLoader
+ * @covers \Fidry\AliceDataFixtures\Loader\SimpleFileLoader
+ *
+ * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class SimpleLoaderTest extends TestCase
 {

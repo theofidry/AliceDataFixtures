@@ -1,0 +1,3 @@
+Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Group:
+    group{1..10}:
+        users: <numberBetween(2, 5)>x @user*

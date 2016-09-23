@@ -18,7 +18,9 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 
 /**
- * @covers Fidry\AliceDataFixtures\Loader\PersisterLoader
+ * @covers \Fidry\AliceDataFixtures\Loader\PersisterLoader
+ *
+ * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class PersisterLoaderTest extends TestCase
 {
