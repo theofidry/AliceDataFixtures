@@ -16,6 +16,7 @@ set_time_limit(0);
 
 require_once __DIR__.'/../vendor-bin/symfony/vendor/autoload.php';
 
+use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineOrmKernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
@@ -30,6 +31,6 @@ if ($debug) {
 
 error_reporting(E_ALL & ~E_USER_DEPRECATED);
 
-$kernel = new \Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\AppKernel($env, $debug);
+$kernel = new DoctrineOrmKernel($env, $debug);
 $application = new Application($kernel);
 $application->run($input);

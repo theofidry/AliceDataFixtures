@@ -13,7 +13,7 @@ set -ex
 
 mysql -u root -e "drop database fidry_alice_data_fixtures;"
 mysql -u root -e "create database fidry_alice_data_fixtures;"
-php vendor/bin/doctrine o:s:c
+php bin/console d:s:c
 
 vendor/bin/phpunit -c phpunit.xml.dist
 vendor-bin/doctrine/vendor/phpunit/phpunit/phpunit -c phpunit_doctrine.xml.dist

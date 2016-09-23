@@ -13,6 +13,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
+use Fidry\PsyshBundle\PsyshBundle;
 use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -27,6 +28,7 @@ class DoctrineOrmKernel extends Kernel
             new NelmioAliceBundle(),
             new FidryAliceDataFixturesBundle(),
             new DoctrineBundle(),
+            new PsyshBundle(),
         ];
 
         return $bundles;
