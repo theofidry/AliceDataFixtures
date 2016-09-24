@@ -14,6 +14,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Doctrine\Common\DataFixtures\Purger\PurgerInterface as DoctrinePurgerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 
 /**
@@ -21,7 +22,7 @@ use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
  *
  * @author Vincent CHALAMON <vincentchalamon@gmail.com>
  */
-final class OrmPurger implements PurgerInterface
+final class OrmPurger implements PurgerInterface, PurgerFactoryInterface
 {
     /**
      * @var DoctrinePurgerInterface
@@ -51,8 +52,35 @@ final class OrmPurger implements PurgerInterface
     /**
      * @inheritdoc
      */
+    public function withDeletePurgeMode(PurgerInterface $purger): PurgerInterface
+    {
+        $clone = clone $this;
+        $clone->purger->setPurgeMode(DoctrineOrmPurger::PURGE_MODE_DELETE);
+
+        return $clone;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function withTruncatePurgeMode(PurgerInterface $purger): PurgerInterface
+    {
+        $clone = clone $this;
+        $clone->purger->setPurgeMode(DoctrineOrmPurger::PURGE_MODE_TRUNCATE);
+
+        return $clone;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function purge()
     {
         $this->purger->purge();
+    }
+
+    public function __clone()
+    {
+        $this->purger = clone $this->purger;
     }
 }
