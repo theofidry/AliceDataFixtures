@@ -28,6 +28,14 @@
             <argument type="service" id="nelmio_alice.file_loader" />
         </service>
 
+        <service id="fidry_alice_data_fixtures.loader.persister"
+                 class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
+                 lazy="true" >
+            <argument type="service" id="fidry_alice_data_fixtures.loader.multipass_file" />
+            <argument type="service" id="fidry_alice_data_fixtures.persistence.persister" />
+            <!-- Processors are injected via a Compiler pass -->
+        </service>
+
     </services>
 
 </container>
