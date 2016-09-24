@@ -17,23 +17,15 @@
                  alias="fidry_alice_data_fixtures.loader.persister" />
 
         <service id="fidry_alice_data_fixtures.loader.multipass_file"
-                 class="Fidry\AliceDataFixtures\Loader\MultiPassFileLoader"
+                 class="Fidry\AliceDataFixtures\Loader\MultiPassLoader"
                  lazy="true" >
             <argument type="service" id="nelmio_alice.file_loader" />
         </service>
 
         <service id="fidry_alice_data_fixtures.loader.simple_file"
-                 class="Fidry\AliceDataFixtures\Loader\SimpleFileLoader"
+                 class="Fidry\AliceDataFixtures\Loader\SimpleLoader"
                  lazy="true" >
             <argument type="service" id="nelmio_alice.file_loader" />
-        </service>
-
-        <service id="fidry_alice_data_fixtures.loader.persister"
-                 class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
-                 lazy="true" >
-            <argument type="service" id="fidry_alice_data_fixtures.loader.multipass_file" />
-            <argument type="service" id="fidry_alice_data_fixtures.persister" />
-            <!-- Processors are injected via a Compiler pass -->
         </service>
 
     </services>

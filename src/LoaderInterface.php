@@ -14,14 +14,12 @@ namespace Fidry\AliceDataFixtures;
 use Nelmio\Alice\Throwable\LoadingThrowable;
 
 /**
- * The loader is class responsible for loading the fixtures files into objects and persist them into the database.
- *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 interface LoaderInterface
 {
     /**
-     * Loads the fixtures files.
+     * Loads the fixtures files and return the loaded objects.
      *
      * @param string[] $fixturesFiles Path to the fixtures files to loads.
      * @param array    $parameters
@@ -29,7 +27,7 @@ interface LoaderInterface
      *
      * @throws LoadingThrowable
      *
-     * @return array|\object[] Persisted objects
+     * @return object[]
      */
     public function load(array $fixturesFiles, array $parameters = [], array $objects = []): array;
 }

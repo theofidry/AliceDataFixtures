@@ -12,7 +12,10 @@
 namespace Fidry\AliceDataFixtures\Loader;
 
 /**
+ * Utility class to keep track of the files being loaded.
+ *
  * @private
+ * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 final class FileTracker
 {

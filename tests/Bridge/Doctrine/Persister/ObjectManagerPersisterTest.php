@@ -11,10 +11,10 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Persistence\DummyManagerRegistry;
-use Fidry\AliceDataFixtures\PersisterInterface;
+use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 
 /**
- * @covers Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
+ * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
  * @group doctrine
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>

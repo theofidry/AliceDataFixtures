@@ -12,7 +12,8 @@
 namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\LoaderInterface;
-use Fidry\AliceDataFixtures\PersisterInterface;
+use Fidry\AliceDataFixtures\Persistence\FakePersister;
+use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\ProcessorInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
@@ -27,6 +28,14 @@ class PersisterLoaderTest extends TestCase
     public function testIsALoader()
     {
         $this->assertTrue(is_a(PersisterLoader::class, LoaderInterface::class, true));
+    }
+
+    /**
+     * @expectedException \DomainException
+     */
+    public function testIsNotClonable()
+    {
+        clone new PersisterLoader(new FakeLoader(), new FakePersister(), []);
     }
 
     public function testDecoratesALoaderAndProcessAndPersistEachLoadedObjectBeforeReturningThem()
@@ -50,7 +59,7 @@ class PersisterLoaderTest extends TestCase
         $persisterProphecy = $this->prophesize(PersisterInterface::class);
         $persisterProphecy->persist($dummy)->shouldBeCalled();
         $persisterProphecy->flush()->shouldBeCalled();
-        /** @var PersisterInterface $persister */
+        /** @var \Fidry\AliceDataFixtures\Persistence\PersisterInterface $persister */
         $persister = $persisterProphecy->reveal();
 
         $firstProcessorProphecy = $this->prophesize(ProcessorInterface::class);

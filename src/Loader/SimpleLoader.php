@@ -13,16 +13,21 @@ namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Nelmio\Alice\FileLoaderInterface;
+use Nelmio\Alice\NotClonableTrait;
 use Nelmio\Alice\ObjectBag;
 use Nelmio\Alice\ObjectSet;
 use Nelmio\Alice\ParameterBag;
 
 /**
+ * Minimalistic loader implementation.
+ *
  * @author Baldur Rensch <brensch@gmail.com>
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-final class SimpleFileLoader implements LoaderInterface
+final class SimpleLoader implements LoaderInterface
 {
+    use NotClonableTrait;
+
     /**
      * @var FileLoaderInterface
      */

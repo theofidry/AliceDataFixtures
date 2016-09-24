@@ -24,7 +24,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 
 /**
- * @covers \Fidry\AliceDataFixtures\Loader\MultiPassFileLoader
+ * @covers \Fidry\AliceDataFixtures\Loader\MultiPassLoader
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
@@ -32,7 +32,15 @@ class MultiPassFileLoaderTest extends TestCase
 {
     public function testIsALoader()
     {
-        $this->assertTrue(is_a(MultiPassFileLoader::class, LoaderInterface::class, true));
+        $this->assertTrue(is_a(MultiPassLoader::class, LoaderInterface::class, true));
+    }
+
+    /**
+     * @expectedException \DomainException
+     */
+    public function testIsNotClonable()
+    {
+        clone new MultiPassLoader(new FakeFileLoader());
     }
 
     /**
@@ -41,7 +49,7 @@ class MultiPassFileLoaderTest extends TestCase
     public function testMaxPassGivenMustBeAStrictlyPositiveInteger(int $maxPass, string $expectedExceptionMessage = null)
     {
         try {
-            new MultiPassFileLoader(new FakeFileLoader(), $maxPass);
+            new MultiPassLoader(new FakeFileLoader(), $maxPass);
             if (null !== $expectedExceptionMessage) {
                 $this->fail('Expected exception to be thrown.');
             }
@@ -58,7 +66,7 @@ class MultiPassFileLoaderTest extends TestCase
     {
         $expected = [];
 
-        $loader = new MultiPassFileLoader(new FakeFileLoader());
+        $loader = new MultiPassLoader(new FakeFileLoader());
         $actual = $loader->load([]);
 
         $this->assertEquals($expected, $actual);
@@ -69,7 +77,7 @@ class MultiPassFileLoaderTest extends TestCase
         $parameters = [];
         $expected = $objects = ['dummy' => new \stdClass()];
 
-        $loader = new MultiPassFileLoader(new FakeFileLoader());
+        $loader = new MultiPassLoader(new FakeFileLoader());
         $actual = $loader->load([], $parameters, $objects);
 
         $this->assertEquals($expected, $actual);
@@ -91,7 +99,7 @@ class MultiPassFileLoaderTest extends TestCase
 
         $expected = ['dummy' => new \stdClass()];
 
-        $loader = new MultiPassFileLoader($fileLoader);
+        $loader = new MultiPassLoader($fileLoader);
         $actual = $loader->load($files);
 
         $this->assertEquals($expected, $actual);
@@ -203,7 +211,7 @@ class MultiPassFileLoaderTest extends TestCase
 
         $expected = $objectsReturnedBySecondLoadOfFile3;
 
-        $loader = new MultiPassFileLoader($fileLoader);
+        $loader = new MultiPassLoader($fileLoader);
         $actual = $loader->load($files, $parameters, $objects);
 
         $this->assertEquals($expected, $actual);
@@ -223,7 +231,7 @@ class MultiPassFileLoaderTest extends TestCase
         /** @var FileLoaderInterface $fileLoader */
         $fileLoader = $fileLoaderProphecy->reveal();
 
-        $loader = new MultiPassFileLoader($fileLoader);
+        $loader = new MultiPassLoader($fileLoader);
         $loader->load($files);
     }
 
@@ -241,7 +249,7 @@ class MultiPassFileLoaderTest extends TestCase
         /** @var FileLoaderInterface $fileLoader */
         $fileLoader = $fileLoaderProphecy->reveal();
 
-        $loader = new MultiPassFileLoader($fileLoader);
+        $loader = new MultiPassLoader($fileLoader);
         try {
             $loader->load($files);
             $this->fail('Expected exception to be thrown.');
