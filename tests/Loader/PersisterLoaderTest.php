@@ -13,6 +13,7 @@ namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\FakePersister;
+use Fidry\AliceDataFixtures\Persistence\PersisterAwareInterface;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\ProcessorInterface;
 use PHPUnit\Framework\TestCase;
@@ -30,12 +31,35 @@ class PersisterLoaderTest extends TestCase
         $this->assertTrue(is_a(PersisterLoader::class, LoaderInterface::class, true));
     }
 
+    public function testIsPersisterAware()
+    {
+        $this->assertTrue(is_a(PersisterLoader::class, PersisterAwareInterface::class, true));
+    }
+
     /**
      * @expectedException \DomainException
      */
     public function testIsNotClonable()
     {
         clone new PersisterLoader(new FakeLoader(), new FakePersister(), []);
+    }
+
+    public function testNamedConstructorIsImmutable()
+    {
+        /** @var \Fidry\AliceDataFixtures\Persistence\PersisterInterface $persister */
+        $persister = $this->prophesize(PersisterInterface::class)->reveal();
+
+        $loader = new PersisterLoader(new FakeLoader(), new FakePersister(), []);
+        $newLoader = $loader->withPersister($persister);
+
+        $this->assertEquals(
+            new PersisterLoader(new FakeLoader(), new FakePersister(), []),
+            $loader
+        );
+        $this->assertEquals(
+            new PersisterLoader(new FakeLoader(), $persister, []),
+            $newLoader
+        );
     }
 
     public function testDecoratesALoaderAndProcessAndPersistEachLoadedObjectBeforeReturningThem()

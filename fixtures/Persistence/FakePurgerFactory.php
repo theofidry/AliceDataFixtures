@@ -23,15 +23,7 @@ class FakePurgerFactory implements PurgerFactoryInterface
     /**
      * @inheritdoc
      */
-    public function withDeletePurgeMode(PurgerInterface $purger): PurgerInterface
-    {
-        $this->__call(__METHOD__, func_get_args());
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function withTruncatePurgeMode(PurgerInterface $purger): PurgerInterface
+    public function create(PurgeMode $mode, PurgerInterface $purger = null): PurgerInterface
     {
         $this->__call(__METHOD__, func_get_args());
     }

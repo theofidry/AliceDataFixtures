@@ -12,6 +12,7 @@
 namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\LoaderInterface;
+use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use Nelmio\Alice\NotClonableTrait;
@@ -38,19 +39,12 @@ final class PurgerLoader implements LoaderInterface
      */
     private $purgerFactory;
 
-    /**
-     * @var PurgerInterface
-     */
-    private $purger;
-
     public function __construct(
         LoaderInterface $decoratedLoader,
-        PurgerFactoryInterface $purgerFactory,
-        PurgerInterface $purger
+        PurgerFactoryInterface $purgerFactory
     ) {
         $this->loader = $decoratedLoader;
         $this->purgerFactory = $purgerFactory;
-        $this->purger = $purger;
     }
 
     /**
@@ -58,34 +52,15 @@ final class PurgerLoader implements LoaderInterface
      *
      * {@inheritdoc}
      */
-    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], int $purgeMode = null): array
+    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
     {
-        $purger = $this->createPurger($this->purgerFactory, $this->purger, $purgeMode);
+        if (null === $purgeMode) {
+            $purgeMode = PurgeMode::createDeleteMode();
+        }
+
+        $purger = $this->purgerFactory->create($purgeMode);
         $purger->purge();
 
         return $this->loader->load($fixturesFiles, $parameters, $objects);
-    }
-
-    private function createPurger(
-        PurgerFactoryInterface $purgerFactory,
-        PurgerInterface $purger,
-        int $purgeMode = null
-    ): PurgerInterface
-    {
-        if (null === $purgeMode) {
-            return $purger;
-        }
-
-        if (self::PURGE_MODE_DELETE === $purgeMode) {
-            return $purgerFactory->withDeletePurgeMode($purger);
-        }
-
-        if (self::PURGE_MODE_TRUNCATE === $purgeMode) {
-            return $purgerFactory->withTruncatePurgeMode($purger);
-        }
-
-        throw new \InvalidArgumentException(
-            sprintf('Unknown purge mode "%d"', $purgeMode)
-        );
     }
 }

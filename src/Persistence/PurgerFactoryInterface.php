@@ -16,7 +16,14 @@ namespace Fidry\AliceDataFixtures\Persistence;
  */
 interface PurgerFactoryInterface
 {
-    public function withDeletePurgeMode(PurgerInterface $purger): PurgerInterface;
-
-    public function withTruncatePurgeMode(PurgerInterface $purger): PurgerInterface;
+    /**
+     * Creates a new purger with the given purger mode. As the purger is stateful, it may be useful sometimes to create
+     * a new purger with the same state as an existing one and just have control on the purge mode.
+     *
+     * @param PurgeMode            $mode
+     * @param PurgerInterface|null $purger
+     *
+     * @return PurgerInterface
+     */
+    public function create(PurgeMode $mode, PurgerInterface $purger = null): PurgerInterface;
 }
