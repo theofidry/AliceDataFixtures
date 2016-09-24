@@ -1,72 +1,45 @@
-# Processors
+# Purge data
 
-Processors allow you to process objects before and/or after they are persisted. Processors
-must implement the [`Fidry\AliceDataFixtures\ProcessorInterface`](../src/ProcessorInterface.php).
-
-Here is an example where we may use this feature to make sure passwords are properly
-hashed on a `User`:
+If you wish to purge the data of your database, all you need is an `Doctrine\ORM\EntityManagerInterface`!
 
 ```php
-namespace MyApp\DataFixtures\Processor;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\OrmPurger;
+use Fidry\AliceDataFixtures\Loader;
 
-use Fidry\AliceDataFixtures\ProcessorInterface;
-use MyApp\Hasher\PasswordHashInterface;
-use User;
+$manager = $container->get('doctrine')->getManager();
+$loader = $container->get('fidry_alice_data_fixtures.loader');
 
-final class UserProcessor implements ProcessorInterface
-{
-    /**
-     * @var PasswordHashInterface
-     */
-    private $passwordHasher;
+$purger = new OrmPurger($manager);
+$loader = new PurgerLoader($loader, $purger, $purger);
 
-    /**
-     * @param PasswordHashInterface $passwordHasher
-     */
-    public function __construct(PasswordHashInterface $passwordHasher)
-    {
-        $this->passwordHasher = $passwordHasher;
-    }
+$loader->load([
+    'path/to/src/AppBundle/Resources/fixtures/dummy.yml',
+    'path/to/src/AppBundle/Resources/fixtures/related_dummy.yml',
+]);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function preProcess($object)
-    {
-        if (false === $object instanceof User) {
-            return;
-        }
+$loader->load([
+    'path/to/src/AppBundle/Resources/fixtures/dummy.yml',
+    'path/to/src/AppBundle/Resources/fixtures/related_dummy.yml',
+    [],
+    [],
+    PurgerLoader::PURGE_MODE_DELETE
+]);
 
-        $object->password = $this->passwordHasher->hash($object->password);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function postProcess($object)
-    {
-        // do nothing
-    }
-}
+$loader->load([
+    'path/to/src/AppBundle/Resources/fixtures/dummy.yml',
+    'path/to/src/AppBundle/Resources/fixtures/related_dummy.yml',
+    [],
+    [],
+    PurgerLoader::PURGE_MODE_TRUNCATE
+]);
 ```
 
-In Symfony, if you wish to register the processor above you need to tag it with the
-`fidry_alice_data_fixtures.processor` tag:
+If no purge mode is specified, the default purge mode is used. Otherwise you can use the `PurgerLoader` constants
+to specify the purge mode (delete or truncate).
 
-```yaml
-# app/config/services.yml
+Beware that the truncate will often fail on the foreign keys check if you did not properly setup the cascade delete
+and other issues you may encounter with relationships with Doctrine ORM. Note that they are neither this library or
+Doctrine faults: those are issues related to your domain and you alone may solve them.
 
-services:
-    alice.processor.user:
-        class: AppBundle\DataFixtures\Processor\UserProcessor
-        arguments:
-          - '@password_hasher'
-        tags: [ { name: fidry_alice_data_fixtures.processor } ]
-```
-
-Previous chapter: [Customize Data Generation](customizing-data-generation.md)<br />
+Previous chapter: [Processors](processors.md)<br />
 Go back to [Table of Contents](../README.md#table-of-contents)
-
-
-Previous chapter: [Custom Faker providers](faker-providers.md)<br />
-Next chapter: [DoctrineFixturesBundle support](doctrine-fixtures-bundle.md)

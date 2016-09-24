@@ -14,6 +14,9 @@ AliceDataFixtures
 1. [Install](#installation)
     1. [Symfony Bundle](#symfony)
 1. [Basic usage](#basic-usage)
+1. Advanced usage
+    1. [Processors](doc/processors.md)
+    1. [Purge data](doc/purge_data.md)
 1. [Contributing](#contributing)
 
 
@@ -103,6 +106,8 @@ $objects = $loader->load($files);
 
 // $objects is now an array of persisted `Dummy` and `RelatedDummy`
 ```
+
+[Check more advanced doc](#documentation).
 
 
 ## Contributing
