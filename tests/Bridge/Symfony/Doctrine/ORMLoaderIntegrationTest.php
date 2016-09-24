@@ -17,6 +17,7 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Group;
 use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\User;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineOrmKernel;
+use Fidry\AliceDataFixtures\Loader\PurgerLoader;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -64,6 +65,25 @@ class ORMLoaderIntegrationTest extends TestCase
     public function testLoadAFile()
     {
         $this->loader->load([
+            __DIR__.'/../../../../fixtures/fixture_files/dummy.yml',
+        ]);
+
+        $result = $this->doctrine->getRepository(Dummy::class)->findAll();
+
+        $this->assertEquals(1, count($result));
+    }
+
+    public function testLoadAFileWithPurger()
+    {
+        $dummy = new Dummy();
+        $dummyManager = $this->doctrine->getManager();
+        $dummyManager->persist($dummy);
+        $dummyManager->flush();
+        $dummyManager->clear();
+
+        $purger = new \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\OrmPurger($dummyManager);
+        $loader = new PurgerLoader($this->loader, $purger, $purger);
+        $loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/dummy.yml',
         ]);
 

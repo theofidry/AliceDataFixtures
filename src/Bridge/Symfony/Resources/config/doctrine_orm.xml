@@ -13,13 +13,27 @@
 
     <services>
 
-        <service id="fidry_alice_data_fixtures.persister"
-                 alias="fidry_alice_data_fixtures.persister.object_manager_persister" />
+        <service id="fidry_alice_data_fixtures.persistence.persister"
+                 alias="fidry_alice_data_fixtures.persistence.persister.object_manager_persister" />
 
-        <service id="fidry_alice_data_fixtures.persister.object_manager_persister"
+        <service id="fidry_alice_data_fixtures.persistence.persister.object_manager_persister"
                  class="Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister"
-                 lazy="true" >
+                 lazy="true">
             <argument type="service" id="doctrine" />
+        </service>
+
+        <service id="fidry_alice_data_fixtures.persistence.purger.orm_purger"
+                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\OrmPurger"
+                 lazy="true">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+        </service>
+
+        <service id="fidry_alice_data_fixtures.loader.persister"
+                 class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
+                 lazy="true" >
+            <argument type="service" id="fidry_alice_data_fixtures.loader.multipass_file" />
+            <argument type="service" id="fidry_alice_data_fixtures.persistence.persister" />
+            <!-- Processors are injected via a Compiler pass -->
         </service>
 
     </services>
