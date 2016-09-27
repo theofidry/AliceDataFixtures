@@ -31,3 +31,10 @@ rm -rf fixtures/Bridge/Symfony/cache/*
 php bin/console d:s:c
 
 vendor-bin/symfony/vendor/phpunit/phpunit/phpunit -c phpunit_symfony.xml.dist
+
+mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
+mysql -u root -e "CREATE DATABASE fidry_alice_data_fixtures;"
+php bin/eloquent_migrate
+
+vendor-bin/eloquent/vendor/phpunit/phpunit/phpunit -c phpunit_eloquent.xml.dist
+
