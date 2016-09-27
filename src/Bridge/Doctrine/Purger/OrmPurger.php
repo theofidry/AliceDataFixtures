@@ -14,8 +14,10 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Doctrine\Common\DataFixtures\Purger\PurgerInterface as DoctrinePurgerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
+use Nelmio\Alice\NotClonableTrait;
 
 /**
  * Bridge for Doctrine ORM purger.
@@ -24,51 +26,51 @@ use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
  */
 final class OrmPurger implements PurgerInterface, PurgerFactoryInterface
 {
+    use NotClonableTrait;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $manager;
+
     /**
      * @var DoctrinePurgerInterface
      */
     private $purger;
 
-    public function __construct(EntityManagerInterface $manager)
+    public function __construct(EntityManagerInterface $manager, PurgeMode $purgeMode)
     {
-        $this->purger = new DoctrineORMPurger($manager);
+        $this->manager = $manager;
+        $this->purger = new DoctrineOrmPurger($manager);
+        $this->purger->setPurgeMode($purgeMode);
     }
 
-    public static function fromPurger(DoctrineORMPurger $purger): self
+    public function create(PurgeMode $mode, PurgerInterface $purger = null): PurgerInterface
     {
-        if (null !== $manager = $purger->getObjectManager()) {
+        if (null === $purger) {
+            return new self($this->manager, $mode);
+        }
+
+        if ($purger instanceof DoctrineOrmPurger) {
+            $manager = $purger->getObjectManager();
+        } elseif ($purger instanceof self) {
+            $manager = $purger->manager;
+        } else {
+            throw new \InvalidArgumentException(
+                'Expected purger to be either and instance of "%s" or "%s". Got "%s".',
+                DoctrineOrmPurger::class,
+                __CLASS__
+            );
+        }
+
+        if (null === $manager) {
             throw new \InvalidArgumentException(
                 'Expected purger "%s" to have an object manager, got "null" instead.',
                 get_class($purger)
             );
         }
 
-        $instance = new self($manager);
-        $instance->purger = $purger;
-
-        return $instance;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function withDeletePurgeMode(PurgerInterface $purger): PurgerInterface
-    {
-        $clone = clone $this;
-        $clone->purger->setPurgeMode(DoctrineOrmPurger::PURGE_MODE_DELETE);
-
-        return $clone;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function withTruncatePurgeMode(PurgerInterface $purger): PurgerInterface
-    {
-        $clone = clone $this;
-        $clone->purger->setPurgeMode(DoctrineOrmPurger::PURGE_MODE_TRUNCATE);
-
-        return $clone;
+        return new self($manager, $mode);
     }
 
     /**

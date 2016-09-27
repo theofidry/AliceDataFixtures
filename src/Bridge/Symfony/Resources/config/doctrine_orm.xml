@@ -19,7 +19,7 @@
         <service id="fidry_alice_data_fixtures.persistence.persister.object_manager_persister"
                  class="Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister"
                  lazy="true">
-            <argument type="service" id="doctrine" />
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
 
         <service id="fidry_alice_data_fixtures.persistence.purger.orm_purger"

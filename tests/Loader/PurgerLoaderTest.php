@@ -14,9 +14,12 @@ namespace Fidry\AliceDataFixtures\Loader;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\FakePurger;
 use Fidry\AliceDataFixtures\Persistence\FakePurgerFactory;
+use Fidry\AliceDataFixtures\Persistence\PurgeMode;
+use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\Prophecy\ObjectProphecy;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\PurgerLoader
@@ -35,20 +38,20 @@ class PurgerLoaderTest extends TestCase
      */
     public function testIsNotClonable()
     {
-        clone new PurgerLoader(new FakeLoader(), new FakePurgerFactory(), new FakePurger());
+        clone new PurgerLoader(new FakeLoader(), new FakePurgerFactory());
     }
 
     public function testPurgesTheDatabaseBeforeLoadingTheFixturesAndReturningTheResult()
     {
-        $this->markTestIncomplete('TODO');
         $files = [
             'fixtures1.yml',
         ];
         $parameters = ['foo' => 'bar'];
         $objects = ['dummy' => new \stdClass()];
+        $purgeMode = PurgeMode::createTruncateMode();
 
-        $loaderProphecy = $this->prophesize(LoaderInterface::class);
-        $loaderProphecy
+        $decoratedLoaderProphecy = $this->prophesize(LoaderInterface::class);
+        $decoratedLoaderProphecy
             ->load($files, $parameters, $objects)
             ->willReturn(
                 $expected = [
@@ -57,20 +60,72 @@ class PurgerLoaderTest extends TestCase
                 ]
             )
         ;
-        /** @var LoaderInterface $loader */
-        $loader = $loaderProphecy->reveal();
+        /** @var LoaderInterface $decoratedLoader */
+        $decoratedLoader = $decoratedLoaderProphecy->reveal();
 
+        /** @var PurgerInterface|ObjectProphecy $purgerProphecy */
         $purgerProphecy = $this->prophesize(PurgerInterface::class);
         $purgerProphecy->purge()->shouldBeCalled();
         /** @var PurgerInterface $purger */
         $purger = $purgerProphecy->reveal();
 
-        $loader = new PurgerLoader($loader, $purger);
-        $actual = $loader->load($files, $parameters, $objects);
+        /** @var PurgerFactoryInterface|ObjectProphecy $purgerFactoryProphecy */
+        $purgerFactoryProphecy = $this->prophesize(PurgerFactoryInterface::class);
+        $purgerFactoryProphecy->create($purgeMode)->willReturn($purger);
+        /** @var PurgerFactoryInterface $purgerFactory */
+        $purgerFactory = $purgerFactoryProphecy->reveal();
+
+        $loader = new PurgerLoader($decoratedLoader, $purgerFactory);
+        $actual = $loader->load($files, $parameters, $objects, $purgeMode);
 
         $this->assertEquals($expected, $actual);
 
-        $loaderProphecy->load(Argument::cetera())->shouldHaveBeenCalledTimes(1);
+        $decoratedLoaderProphecy->load(Argument::cetera())->shouldHaveBeenCalledTimes(1);
+        $purgerFactoryProphecy->create(Argument::cetera())->shouldHaveBeenCalledTimes(1);
+        $purgerProphecy->purge()->shouldHaveBeenCalledTimes(1);
+    }
+
+    public function testIfNoPurgeModeIsGivenThenUseDeleteByDefault()
+    {
+        $files = [
+            'fixtures1.yml',
+        ];
+        $parameters = ['foo' => 'bar'];
+        $objects = ['dummy' => new \stdClass()];
+        $purgeMode = null;
+
+        $decoratedLoaderProphecy = $this->prophesize(LoaderInterface::class);
+        $decoratedLoaderProphecy
+            ->load($files, $parameters, $objects)
+            ->willReturn(
+                $expected = [
+                    'dummy' => new \stdClass(),
+                    'another_dummy' => new \stdClass(),
+                ]
+            )
+        ;
+        /** @var LoaderInterface $decoratedLoader */
+        $decoratedLoader = $decoratedLoaderProphecy->reveal();
+
+        /** @var PurgerInterface|ObjectProphecy $purgerProphecy */
+        $purgerProphecy = $this->prophesize(PurgerInterface::class);
+        $purgerProphecy->purge()->shouldBeCalled();
+        /** @var PurgerInterface $purger */
+        $purger = $purgerProphecy->reveal();
+
+        /** @var PurgerFactoryInterface|ObjectProphecy $purgerFactoryProphecy */
+        $purgerFactoryProphecy = $this->prophesize(PurgerFactoryInterface::class);
+        $purgerFactoryProphecy->create(PurgeMode::createDeleteMode())->willReturn($purger);
+        /** @var PurgerFactoryInterface $purgerFactory */
+        $purgerFactory = $purgerFactoryProphecy->reveal();
+
+        $loader = new PurgerLoader($decoratedLoader, $purgerFactory);
+        $actual = $loader->load($files, $parameters, $objects, $purgeMode);
+
+        $this->assertEquals($expected, $actual);
+
+        $decoratedLoaderProphecy->load(Argument::cetera())->shouldHaveBeenCalledTimes(1);
+        $purgerFactoryProphecy->create(Argument::cetera())->shouldHaveBeenCalledTimes(1);
         $purgerProphecy->purge()->shouldHaveBeenCalledTimes(1);
     }
 }

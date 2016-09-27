@@ -16,18 +16,9 @@
 
     <testsuites>
         <testsuite name="Test Suite">
-            <directory>tests</directory>
+            <directory>tests/Bridge/Doctrine</directory>
         </testsuite>
     </testsuites>
-
-    <groups>
-        <include>
-            <group>doctrine</group>
-        </include>
-        <exclude>
-            <group>symfony</group>
-        </exclude>
-    </groups>
 
     <filter>
         <whitelist>

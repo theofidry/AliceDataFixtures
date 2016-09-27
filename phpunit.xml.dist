@@ -10,15 +10,9 @@
     <testsuites>
         <testsuite name="Test Suite">
             <directory>tests</directory>
+            <exclude>tests/Bridge</exclude>
         </testsuite>
     </testsuites>
-
-    <groups>
-        <exclude>
-            <group>doctrine</group>
-            <group>symfony</group>
-        </exclude>
-    </groups>
 
     <filter>
         <whitelist>
