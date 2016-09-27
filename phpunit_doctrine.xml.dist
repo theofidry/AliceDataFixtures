@@ -4,6 +4,7 @@
          bootstrap="tests/Bridge/Doctrine/autoload.php"
          colors="true"
          forceCoversAnnotation="true"
+         beStrictAboutCoversAnnotation="true"
          stopOnFailure="true"
          verbose="true">
 
@@ -22,12 +23,7 @@
 
     <filter>
         <whitelist>
-            <directory>./</directory>
-            <exclude>
-                <directory>vendor</directory>
-                <directory>tests</directory>
-                <directory>fixtures</directory>
-            </exclude>
+            <directory>src/Bridge/Doctrine</directory>
         </whitelist>
     </filter>
 

@@ -42,7 +42,7 @@ final class OrmPurger implements PurgerInterface, PurgerFactoryInterface
     {
         $this->manager = $manager;
         $this->purger = new DoctrineOrmPurger($manager);
-        $this->purger->setPurgeMode($purgeMode);
+        $this->purger->setPurgeMode($purgeMode->getValue());
     }
 
     public function create(PurgeMode $mode, PurgerInterface $purger = null): PurgerInterface
@@ -79,10 +79,5 @@ final class OrmPurger implements PurgerInterface, PurgerFactoryInterface
     public function purge()
     {
         $this->purger->purge();
-    }
-
-    public function __clone()
-    {
-        $this->purger = clone $this->purger;
     }
 }

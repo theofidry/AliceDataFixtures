@@ -4,6 +4,7 @@
          bootstrap="vendor/autoload.php"
          colors="true"
          forceCoversAnnotation="true"
+         beStrictAboutCoversAnnotation="true"
          stopOnFailure="true"
          verbose="true">
 
@@ -16,11 +17,9 @@
 
     <filter>
         <whitelist>
-            <directory>./</directory>
+            <directory>src</directory>
             <exclude>
-                <directory>vendor</directory>
-                <directory>tests</directory>
-                <directory>fixtures</directory>
+                <directory>src/Bridge</directory>
             </exclude>
         </whitelist>
     </filter>
