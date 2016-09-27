@@ -1,0 +1,12 @@
+{
+    "autoload-dev": {
+        "files": [
+            "../../migrations"
+        ]
+    },
+    "require-dev": {
+        "illuminate/database": "^5.0",
+        "theofidry/composer-inheritance-plugin": "^1.0@dev",
+        "illuminate/filesystem": "^5.0"
+    }
+}
