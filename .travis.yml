@@ -24,27 +24,44 @@ matrix:
     - php: '7.0'
       env:
         - COVERAGE='true'
-        - DOCTRINE_VERSION='^2.5'
+        - DOCTRINE_VERSION='~2.5'
         - COMPOSER_FLAGS='--prefer-lowest'
 
     - php: '7.0'
       env:
-        - DOCTRINE_VERSION='^2.5'
+        - DOCTRINE_VERSION='~2.5'
+
+    # Eloquent bridge
+    - php: '7.0'
+      env:
+        - COVERAGE='true'
+        - ELOQUENT_VERSION='~5.0'
+        - COMPOSER_FLAGS='--prefer-lowest'
+    - php: '7.0'
+      env:
+        - ELOQUENT_VERSION='~5.1'
+    - php: '7.0'
+      env:
+        - ELOQUENT_VERSION='~5.2'
+    - php: '7.0'
+      env:
+        - ELOQUENT_VERSION='~5.3@dev'
 
     # Symfony bridge
     - php: '7.0'
       env:
         - COVERAGE='true'
-        - SYMFONY_VERSION='^3.0'
+        - SYMFONY_VERSION='~3.0'
         - COMPOSER_FLAGS='--prefer-lowest'
     - php: '7.0'
-      env: SYMFONY_VERSION='^3.1'
+      env: SYMFONY_VERSION='~3.1'
     - php: '7.0'
-      env: SYMFONY_VERSION='^3.2@dev'
+      env: SYMFONY_VERSION='~3.2@dev'
 
   allow_failures:
     - php: nightly
-    - env: SYMFONY_VERSION='^3.2@dev'
+    - env: ELOQUENT_VERSION='~5.3@dev'
+    - env: SYMFONY_VERSION='~3.2@dev'
 
 before_install:
   - set -eo pipefail
@@ -83,6 +100,13 @@ install:
         PHPUNIT_BIN='vendor-bin/doctrine/vendor/phpunit/phpunit/phpunit'
     fi
   - |
+    if [ -n "$ELOQUENT_VERSION" ]; then
+        composer bin symfony require --no-update symfony/symfony "illuminate/database:${ELOQUENT_VERSION}"
+
+        PHPUNIT_CONFIG='phpunit_eloquent.xml.dist'
+        PHPUNIT_BIN='vendor-bin/eloquent/vendor/phpunit/phpunit/phpunit'
+    fi
+  - |
     if [ -n "$SYMFONY_VERSION" ]; then
         composer bin symfony require --no-update symfony/symfony "symfony/symfony:${SYMFONY_VERSION}"
 
@@ -94,6 +118,8 @@ install:
   - |
     if [ -n "$DOCTRINE_VERSION" ]; then
         php vendor-bin/doctrine/vendor/doctrine/orm/bin/doctrine o:s:c
+    elif [ -n "$ELOQUENT_VERSION" ]; then
+        php bin/eloquent_migrate
     elif [ -n "$SYMFONY_VERSION" ]; then
         php bin/console d:s:c
     fi
