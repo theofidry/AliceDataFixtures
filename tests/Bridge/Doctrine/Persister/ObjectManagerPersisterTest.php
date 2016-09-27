@@ -14,7 +14,6 @@ use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
- * @group doctrine
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */

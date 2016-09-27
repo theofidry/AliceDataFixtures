@@ -24,9 +24,6 @@ use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @group symfony
- * @group doctrine
- *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class ORMLoaderIntegrationTest extends TestCase
