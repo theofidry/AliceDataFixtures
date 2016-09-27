@@ -45,20 +45,9 @@ rm -rf fixtures/Bridge/Symfony/cache/*
 
 vendor-bin/symfony/vendor/phpunit/phpunit/phpunit -c phpunit_symfony.xml.dist
 
-
-log "Symfony with Doctrine"
 mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
 mysql -u root -e "CREATE DATABASE fidry_alice_data_fixtures;"
-rm -rf fixtures/Bridge/Symfony/cache/*
-php bin/console d:s:c -k=DoctrineKernel
+php bin/eloquent_migrate
 
-vendor-bin/symfony/vendor/phpunit/phpunit/phpunit -c phpunit_symfony_doctrine.xml.dist
+vendor-bin/eloquent/vendor/phpunit/phpunit/phpunit -c phpunit_eloquent.xml.dist
 
-
-log "Symfony with Eloquent"
-mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
-mysql -u root -e "CREATE DATABASE fidry_alice_data_fixtures;"
-rm -rf fixtures/Bridge/Symfony/cache/*
-php bin/console eloquent:migrate:install -k=EloquentKernel
-
-vendor-bin/eloquent/vendor/phpunit/phpunit/phpunit -c phpunit_symfony_eloquent.xml.dist
