@@ -12,7 +12,6 @@
 namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\LoaderInterface;
-use Fidry\AliceDataFixtures\Persistence\FakePurger;
 use Fidry\AliceDataFixtures\Persistence\FakePurgerFactory;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
@@ -23,6 +22,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\PurgerLoader
+ * @uses \Fidry\AliceDataFixtures\Persistence\PurgeMode
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */

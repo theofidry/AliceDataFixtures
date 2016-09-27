@@ -25,6 +25,9 @@ use Prophecy\Argument;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\MultiPassLoader
+ * @uses \Fidry\AliceDataFixtures\Loader\ErrorTracker
+ * @uses \Fidry\AliceDataFixtures\Loader\FileTracker
+ * @uses \Fidry\AliceDataFixtures\Exception\MaxPassReachedException
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
