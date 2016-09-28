@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Fidry\AliceDataFixtures package.
+ *
+ * (c) Théo FIDRY <theo.fidry@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 require_once __DIR__.'/../../../vendor-bin/doctrine/vendor/autoload.php';
 
 use Doctrine\ORM\Tools\Setup;
@@ -22,4 +31,4 @@ $entityManager = EntityManager::create(
     $config
 );
 
-$GLOBALS['entityManager'] = $entityManager;
+$GLOBALS['entity_manager'] = $entityManager;

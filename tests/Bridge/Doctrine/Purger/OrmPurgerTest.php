@@ -3,6 +3,8 @@
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
+use Doctrine\ORM\EntityManager;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\ORM\FakeEntityManager;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
@@ -45,5 +47,28 @@ class OrmPurgerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(DoctrineOrmPurger::class, $decoratedPurger);
         $this->assertEquals($manager, $decoratedPurger->getObjectManager());
         $this->assertEquals(DoctrineOrmPurger::PURGE_MODE_TRUNCATE, $decoratedPurger->getPurgeMode());
+    }
+
+    public function testEmptyDatabase()
+    {
+        /** @var EntityManager $manager */
+        $manager = $GLOBALS['entity_manager'];
+
+        $dummy = new Dummy();
+        $manager->persist($dummy);
+        $manager->flush();
+
+        $this->assertEquals(1, count($manager->getRepository(Dummy::class)->findAll()));
+
+        $purger = new OrmPurger($manager, PurgeMode::createDeleteMode());
+        $purger->purge();
+
+        $this->assertEquals(0, count($manager->getRepository(Dummy::class)->findAll()));
+
+        // Ensures the schema has been restored
+        $dummy = new Dummy();
+        $manager->persist($dummy);
+        $manager->flush();
+        $this->assertEquals(1, count($manager->getRepository(Dummy::class)->findAll()));
     }
 }
