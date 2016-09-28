@@ -11,8 +11,8 @@
 
 namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Persister;
 
-use Fidry\AliceDataFixtures\Bridge\Eloquent\AnotherDummy;
-use Fidry\AliceDataFixtures\Bridge\Eloquent\Dummy;
+use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
+use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\Dummy;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Illuminate\Database\Migrations\Migrator;
 

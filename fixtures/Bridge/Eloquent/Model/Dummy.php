@@ -9,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Fidry\AliceDataFixtures\Bridge\Eloquent;
+namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Model;
 
+use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
 use Illuminate\Database\Eloquent\Model;
 
 /**

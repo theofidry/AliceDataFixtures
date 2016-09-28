@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Fidry\AliceDataFixtures\Bridge\Eloquent;
+namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Model;
 

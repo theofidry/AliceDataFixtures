@@ -64,5 +64,11 @@ class OrmPurgerTest extends \PHPUnit_Framework_TestCase
         $purger->purge();
 
         $this->assertEquals(0, count($manager->getRepository(Dummy::class)->findAll()));
+
+        // Ensures the schema has been restored
+        $dummy = new Dummy();
+        $manager->persist($dummy);
+        $manager->flush();
+        $this->assertEquals(1, count($manager->getRepository(Dummy::class)->findAll()));
     }
 }
