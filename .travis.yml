@@ -91,8 +91,6 @@ before_install:
   - PHPUNIT_FLAGS='--stop-on-failure --verbose'
 
 install:
-  - ls /home/travis/build/theofidry/AliceDataFixtures/vendor-bin/eloquent/vendor/composer/../../../migrations
-
   - composer update --prefer-dist $COMPOSER_FLAGS
   - |
     if [ -n "$DOCTRINE_VERSION" ]; then
