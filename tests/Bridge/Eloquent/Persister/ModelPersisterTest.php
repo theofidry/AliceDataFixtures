@@ -98,8 +98,13 @@ class ModelPersisterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, AnotherDummy::all()->count());
     }
 
-    public function provideNonPersistableModels()
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected object to be an instance of "Illuminate\Database\Eloquent\Model", got "stdClass" instead.
+     */
+    public function testCannotPersistANonModelObject()
     {
-        yield 'POJO' => [new \stdClass()];
+        $object = new \stdClass();
+        $this->persister->persist($object);
     }
 }
