@@ -122,6 +122,8 @@ before_install:
   - PHPUNIT_FLAGS='--stop-on-failure --verbose'
 
 install:
+  - ls /home/travis/build/theofidry/AliceDataFixtures/vendor-bin/eloquent/vendor/composer/../../../migrations
+
   - composer update --prefer-dist $COMPOSER_FLAGS
 
   - |
@@ -135,10 +137,6 @@ install:
     # Eloquent bridge
     elif [ -n "$ELOQUENT_VERSION" ] && [ -z "$SYMFONY_VERSION"]; then
         composer bin eloquent require --dev --no-update "illuminate/database:${ELOQUENT_VERSION}"
-
-        ls /home/travis/build/theofidry/AliceDataFixtures/vendor-bin/eloquent/vendor/composer/../../../../migrations;
-        ls /home/travis/build/theofidry/AliceDataFixtures/vendor-bin/eloquent/vendor/composer/../../../../../migrations
-        ls /home/travis/build/theofidry/AliceDataFixtures/vendor-bin/eloquent/vendor/composer/../../../migrations
 
         PHPUNIT_CONFIG='phpunit_eloquent.xml.dist'
         PHPUNIT_BIN='vendor-bin/eloquent/vendor/phpunit/phpunit/phpunit'
