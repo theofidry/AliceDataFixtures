@@ -1,6 +1,6 @@
 {
     "autoload-dev": {
-        "files": [
+        "classmap": [
             "../../migrations"
         ]
     },
