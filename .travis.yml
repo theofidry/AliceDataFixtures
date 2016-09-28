@@ -24,44 +24,44 @@ matrix:
     - php: '7.0'
       env:
         - COVERAGE='true'
-        - DOCTRINE_VERSION='~2.5'
+        - DOCTRINE_VERSION='~2.5.0'
         - COMPOSER_FLAGS='--prefer-lowest'
 
     - php: '7.0'
       env:
-        - DOCTRINE_VERSION='~2.5'
+        - DOCTRINE_VERSION='~2.5.0'
 
     # Eloquent bridge
     - php: '7.0'
       env:
         - COVERAGE='true'
-        - ELOQUENT_VERSION='~5.0'
+        - ELOQUENT_VERSION='~5.0.0'
         - COMPOSER_FLAGS='--prefer-lowest'
     - php: '7.0'
       env:
-        - ELOQUENT_VERSION='~5.1'
+        - ELOQUENT_VERSION='~5.1.0'
     - php: '7.0'
       env:
-        - ELOQUENT_VERSION='~5.2'
+        - ELOQUENT_VERSION='~5.2.0'
     - php: '7.0'
       env:
-        - ELOQUENT_VERSION='~5.3@dev'
+        - ELOQUENT_VERSION='~5.3.0@dev'
 
     # Symfony bridge
     - php: '7.0'
       env:
         - COVERAGE='true'
-        - SYMFONY_VERSION='~3.0'
+        - SYMFONY_VERSION='~3.0.0'
         - COMPOSER_FLAGS='--prefer-lowest'
     - php: '7.0'
-      env: SYMFONY_VERSION='~3.1'
+      env: SYMFONY_VERSION='~3.1.0'
     - php: '7.0'
-      env: SYMFONY_VERSION='~3.2@dev'
+      env: SYMFONY_VERSION='~3.2.0@dev'
 
   allow_failures:
     - php: nightly
-    - env: ELOQUENT_VERSION='~5.3@dev'
-    - env: SYMFONY_VERSION='~3.2@dev'
+    - env: ELOQUENT_VERSION='~5.3.0@dev'
+    - env: SYMFONY_VERSION='~3.2.0@dev'
 
 before_install:
   - set -eo pipefail
@@ -102,6 +102,10 @@ install:
   - |
     if [ -n "$ELOQUENT_VERSION" ]; then
         composer bin symfony require --no-update symfony/symfony "illuminate/database:${ELOQUENT_VERSION}"
+
+        ls /home/travis/build/theofidry/AliceDataFixtures/vendor-bin/eloquent/vendor/composer/../../../../migrations;
+        ls /home/travis/build/theofidry/AliceDataFixtures/vendor-bin/eloquent/vendor/composer/../../../../../migrations
+        ls /home/travis/build/theofidry/AliceDataFixtures/vendor-bin/eloquent/vendor/composer/../../../migrations
 
         PHPUNIT_CONFIG='phpunit_eloquent.xml.dist'
         PHPUNIT_BIN='vendor-bin/eloquent/vendor/phpunit/phpunit/phpunit'
