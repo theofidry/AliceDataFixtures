@@ -103,6 +103,10 @@ install:
     if [ -n "$ELOQUENT_VERSION" ]; then
         composer bin symfony require --no-update symfony/symfony "illuminate/database:${ELOQUENT_VERSION}"
 
+        ls /home/travis/build/theofidry/AliceDataFixtures/vendor-bin/eloquent/vendor/composer/../../../../migrations;
+        ls /home/travis/build/theofidry/AliceDataFixtures/vendor-bin/eloquent/vendor/composer/../../../../../migrations
+        ls /home/travis/build/theofidry/AliceDataFixtures/vendor-bin/eloquent/vendor/composer/../../../migrations
+
         PHPUNIT_CONFIG='phpunit_eloquent.xml.dist'
         PHPUNIT_BIN='vendor-bin/eloquent/vendor/phpunit/phpunit/phpunit'
     fi
