@@ -17,6 +17,7 @@ use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\EloquentKernel;
 use Fidry\AliceDataFixtures\Loader\PurgerLoader;
 use Fidry\AliceDataFixtures\LoaderInterface;
+use Illuminate\Database\DatabaseManager;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -38,12 +39,18 @@ class ORMLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
      */
     private $loader;
 
+    /**
+     * @var DatabaseManager
+     */
+    private $databaseManager;
+
     public function setUp()
     {
         $this->kernel = new EloquentKernel('eloquent', true);
         $this->kernel->boot();
         $this->kernel->getContainer()->get('wouterj_eloquent.initializer')->initialize();
         $this->kernel->getContainer()->get('wouterj_eloquent')->setAsGlobal();
+        $this->databaseManager = $this->kernel->getContainer()->get('wouterj_eloquent.database_manager');
 
         $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.eloquent');
         $this->execute([
@@ -83,6 +90,11 @@ class ORMLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
 
         $purger = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.persistence.purger.eloquent.model_purger');
         $loader = new PurgerLoader($this->loader, $purger);
+        // Disable foreign keys check
+        // This is usually a bad idea as you have to deal *how* your entities are deleted
+        // And doing that can lead to broken entities
+        // However in this context we unset ALL entities and it's for testing purpose
+        // Not a real application where deleting an application should be handled properly
         $loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/eloquent_another_dummy.yml',
         ]);
@@ -108,7 +120,7 @@ class ORMLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertEquals(10, Dummy::all()->count());
-        $this->assertEquals(10, AnotherDummy::all()->count());
+        $this->assertEquals(1, AnotherDummy::all()->count());
     }
 
     private function execute(array $input)
