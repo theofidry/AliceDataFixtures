@@ -47,17 +47,17 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
 
         $this->assertInstanceOf(
             OrmPurger::class,
-            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.persistence.purger.doctrine.orm_purger')
+            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.persistence.purger.orm_purger')
         );
 
         $this->assertInstanceOf(
             ObjectManagerPersister::class,
-            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister')
+            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.persistence.persister.object_manager_persister')
         );
 
         $this->assertInstanceOf(
             PersisterLoader::class,
-            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.doctrine')
+            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.orm_persister')
         );
     }
 }

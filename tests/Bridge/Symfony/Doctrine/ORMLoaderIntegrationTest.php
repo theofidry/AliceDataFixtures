@@ -49,7 +49,7 @@ class ORMLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
         $this->kernel = new DoctrineKernel('doctrine', true);
         $this->kernel->boot();
 
-        $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.doctrine');
+        $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.orm_persister');
         $this->doctrine = $this->kernel->getContainer()->get('doctrine');
     }
 
