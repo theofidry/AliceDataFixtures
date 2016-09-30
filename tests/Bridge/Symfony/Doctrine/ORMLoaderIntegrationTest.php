@@ -17,21 +17,20 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\OrmPurger;
 use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Group;
 use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\User;
-use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineOrmKernel;
+use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
 use Fidry\AliceDataFixtures\Loader\PurgerLoader;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class ORMLoaderIntegrationTest extends TestCase
+class ORMLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var DoctrineOrmKernel
+     * @var DoctrineKernel
      */
     private $kernel;
 
@@ -47,10 +46,10 @@ class ORMLoaderIntegrationTest extends TestCase
 
     public function setUp()
     {
-        $this->kernel = new DoctrineOrmKernel('test', true);
+        $this->kernel = new DoctrineKernel('doctrine', true);
         $this->kernel->boot();
 
-        $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader');
+        $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.orm_persister');
         $this->doctrine = $this->kernel->getContainer()->get('doctrine');
     }
 

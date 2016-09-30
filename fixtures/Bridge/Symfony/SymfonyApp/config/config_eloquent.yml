@@ -1,0 +1,10 @@
+wouterj_eloquent:
+    connections:
+        default:
+            driver: mysql
+            host: localhost
+            database: fidry_alice_data_fixtures
+            username: root
+            password:
+            prefix: ~
+    eloquent: true

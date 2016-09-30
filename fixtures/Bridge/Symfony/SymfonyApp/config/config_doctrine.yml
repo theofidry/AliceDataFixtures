@@ -1,7 +1,3 @@
-fidry_alice_data_fixtures:
-    db_drivers:
-        doctrine_orm: true
-
 doctrine:
     dbal:
         default_connection: default

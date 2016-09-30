@@ -11,24 +11,21 @@
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
-use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
-use Fidry\PsyshBundle\PsyshBundle;
-use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
-class DoctrineOrmKernel extends Kernel
+/**
+ * @author Théo FIDRY <theo.fidry@gmail.com>
+ */
+class InvalidKernel extends Kernel
 {
     public function registerBundles()
     {
         $bundles = [
             new FrameworkBundle(),
-            new NelmioAliceBundle(),
             new FidryAliceDataFixturesBundle(),
-            new DoctrineBundle(),
-            new PsyshBundle(),
         ];
 
         return $bundles;
@@ -37,6 +34,5 @@ class DoctrineOrmKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/config/config.yml');
-        $loader->load(__DIR__.'/config/config_doctrine_orm.yml');
     }
 }

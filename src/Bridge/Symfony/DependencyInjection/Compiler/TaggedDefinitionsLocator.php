@@ -15,11 +15,17 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
+ * Utility class to locate tagged service definitions.
+ *
+ * @private
  * @internal
+ * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 final class TaggedDefinitionsLocator
 {
     /**
+     * Finds service definitions tagged by a given tag name.
+     *
      * @param ContainerBuilder $container
      * @param string           $tagName
      *

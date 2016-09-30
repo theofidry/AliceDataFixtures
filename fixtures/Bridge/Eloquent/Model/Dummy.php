@@ -11,7 +11,6 @@
 
 namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Model;
 
-use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
 use Illuminate\Database\Eloquent\Model;
 
 /**

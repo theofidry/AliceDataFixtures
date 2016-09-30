@@ -15,7 +15,8 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * @internal
+ * @private
+ * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 final class RegisterTagServicesPass implements CompilerPassInterface
 {
@@ -46,6 +47,10 @@ final class RegisterTagServicesPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
+        if (false === $container->hasDefinition($this->registry)) {
+            return;
+        }
+
         $registry = $container->findDefinition($this->registry);
         $taggedServices = $this->taggedDefinitionsLocator->findReferences($container, $this->tagName);
 
