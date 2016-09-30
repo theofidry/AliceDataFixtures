@@ -16,25 +16,29 @@ use Illuminate\Database\Schema\Blueprint;
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class CreateAnotherDummiesTable extends Migration
+class AnotherDummyFk extends Migration
 {
     public function up()
     {
         Manager::schema()
-            ->create(
+            ->table(
                 'another_dummies',
                 function(Blueprint $table) {
-                    $table->increments('id');
-                    $table->string('address');
+                    $table->integer('dummy_id')->unsigned()->nullable();
+                    $table->foreign('dummy_id', 'another_dummies_dummy_id_foreign')->references('id')->on('dummies');
                 }
             )
         ;
     }
-
     public function down()
     {
         Manager::schema()
-            ->drop('another_dummies')
+            ->table(
+                'another_dummies',
+                function(Blueprint $table) {
+                    $table->dropForeign('another_dummies_dummy_id_foreign');
+                }
+            )
         ;
     }
 }

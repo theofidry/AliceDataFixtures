@@ -5,7 +5,6 @@ namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Purger;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Migration\FakeMigrationRepository;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\MigratorFactory;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
-use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\Dummy;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
@@ -53,7 +52,7 @@ class ModelPurgerTest extends \PHPUnit_Framework_TestCase
 
         /** @var Migrator|ObjectProphecy $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
-        $migratorProphecy->rollback($migrationPath)->shouldBeCalled();
+        $migratorProphecy->reset()->shouldBeCalled();
         $migratorProphecy->run($migrationPath)->shouldBeCalled();
         /** @var Migrator $migrator */
         $migrator = $migratorProphecy->reveal();
@@ -62,7 +61,7 @@ class ModelPurgerTest extends \PHPUnit_Framework_TestCase
         $purger->purge();
 
         $migrationRepositoryProphecy->repositoryExists()->shouldHaveBeenCalledTimes(1);
-        $migratorProphecy->rollback(Argument::cetera())->shouldHaveBeenCalledTimes(1);
+        $migratorProphecy->reset()->shouldHaveBeenCalledTimes(1);
         $migratorProphecy->run(Argument::cetera())->shouldHaveBeenCalledTimes(1);
     }
 
@@ -79,7 +78,7 @@ class ModelPurgerTest extends \PHPUnit_Framework_TestCase
 
         /** @var Migrator|ObjectProphecy $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
-        $migratorProphecy->rollback($migrationPath)->shouldBeCalled();
+        $migratorProphecy->reset()->shouldBeCalled();
         $migratorProphecy->run($migrationPath)->shouldBeCalled();
         /** @var Migrator $migrator */
         $migrator = $migratorProphecy->reveal();
@@ -89,7 +88,7 @@ class ModelPurgerTest extends \PHPUnit_Framework_TestCase
 
         $migrationRepositoryProphecy->repositoryExists()->shouldHaveBeenCalledTimes(1);
         $migrationRepositoryProphecy->createRepository()->shouldHaveBeenCalledTimes(1);
-        $migratorProphecy->rollback(Argument::cetera())->shouldHaveBeenCalledTimes(1);
+        $migratorProphecy->reset()->shouldHaveBeenCalledTimes(1);
         $migratorProphecy->run(Argument::cetera())->shouldHaveBeenCalledTimes(1);
     }
 
@@ -97,7 +96,7 @@ class ModelPurgerTest extends \PHPUnit_Framework_TestCase
     {
         /** @var Migrator|ObjectProphecy $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
-        $migratorProphecy->rollback(Argument::cetera())->shouldNotBeCalled();
+        $migratorProphecy->reset()->shouldNotBeCalled();
         /** @var Migrator $migrator */
         $migrator = $migratorProphecy->reveal();
 
@@ -124,7 +123,7 @@ class ModelPurgerTest extends \PHPUnit_Framework_TestCase
 
         /** @var Migrator|ObjectProphecy $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
-        $migratorProphecy->rollback(Argument::cetera())->shouldNotBeCalled();
+        $migratorProphecy->reset()->shouldNotBeCalled();
         /** @var Migrator $migrator */
         $migrator = $migratorProphecy->reveal();
 

@@ -29,10 +29,16 @@ class AnotherDummy extends Model
     protected $fillable = [
         'id',
         'address',
+        'dummy',
     ];
 
     /**
      * @inheritdoc
      */
     public $timestamps = false;
+
+    public function dummy()
+    {
+        return $this->belongsTo(Dummy::class);
+    }
 }

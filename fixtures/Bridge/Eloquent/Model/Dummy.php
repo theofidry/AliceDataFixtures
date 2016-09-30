@@ -40,4 +40,12 @@ class Dummy extends Model
     {
         return $this->belongsTo(AnotherDummy::class);
     }
+
+    public function setAnotherDummy(AnotherDummy $anotherDummy)
+    {
+        if (null === $anotherDummy->id) {
+            $anotherDummy->save();
+        }
+        $this->anotherDummy()->associate($anotherDummy);
+    }
 }

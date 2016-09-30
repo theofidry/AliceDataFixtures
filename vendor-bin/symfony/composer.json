@@ -1,4 +1,9 @@
 {
+    "autoload-dev": {
+        "classmap": [
+            "../../migrations"
+        ]
+    },
     "require-dev": {
         "doctrine/data-fixtures": "^1.2",
         "doctrine/doctrine-bundle": "^1.6",

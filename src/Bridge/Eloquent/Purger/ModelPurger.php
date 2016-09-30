@@ -69,7 +69,7 @@ final class ModelPurger implements PurgerInterface, PurgerFactoryInterface
      */
     public function purge()
     {
-        $this->migrator->rollback($this->migrationPath);
+        $this->migrator->reset();
 
         if (false === $this->repository->repositoryExists()) {
             $this->repository->createRepository();
