@@ -50,6 +50,7 @@ matrix:
     - php: '7.0'
       env:
         - ELOQUENT_VERSION='~5.3.0@dev'
+        - ALLOW_FAILURE='true'
 
     # Symfony bridge
     - php: '7.0'
@@ -60,7 +61,9 @@ matrix:
     - php: '7.0'
       env: SYMFONY_VERSION='~3.1.0'
     - php: '7.0'
-      env: SYMFONY_VERSION='~3.2.0@dev'
+      env:
+        - SYMFONY_VERSION='~3.2.0@dev'
+        - ALLOW_FAILURE='true'
 
     # Symfony bridge with Doctrine
     - php: '7.0'
@@ -88,7 +91,7 @@ matrix:
 
   allow_failures:
     - php: nightly
-    - env: ELOQUENT_VERSION='~5.3.0@dev' SYMFONY_VERSION='~3.2.0@dev'
+    - env: ALLOW_FAILURE='true'
 
 before_install:
   - set -eo pipefail
