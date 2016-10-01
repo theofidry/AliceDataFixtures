@@ -7,7 +7,6 @@ cache:
 php:
   - '7.0'
   - '7.1'
-  - nightly
 
 services:
   - mysql
