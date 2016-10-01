@@ -7,9 +7,14 @@ cache:
 php:
   - '7.0'
   - '7.1'
+  - nightly
 
 services:
   - mysql
+
+branches:
+    only:
+        - master
 
 matrix:
   fast_finish: true
