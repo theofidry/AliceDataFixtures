@@ -12,82 +12,84 @@ php:
 services:
   - mysql
 
+branches:
+    only:
+        - master
+
 matrix:
   fast_finish: true
   include:
-#    - php: '7.0'
-#      env:
-#        - COVERAGE='true'
-#        - COMPOSER_FLAGS='--prefer-lowest'
-#
-#    # Doctrine bridge
-#    - php: '7.0'
-#      env:
-#        - COVERAGE='true'
-#        - DOCTRINE_VERSION='~2.5.0'
-#        - COMPOSER_FLAGS='--prefer-lowest'
-#
-#    - php: '7.0'
-#      env:
-#        - DOCTRINE_VERSION='~2.5.0'
-#
-#    # Eloquent bridge
-#    - php: '7.0'
-#      env:
-#        - COVERAGE='true'
-#        - ELOQUENT_VERSION='~5.0.0'
-#        - COMPOSER_FLAGS='--prefer-lowest'
-#    - php: '7.0'
-#      env:
-#        - ELOQUENT_VERSION='~5.1.0'
-#    - php: '7.0'
-#      env:
-#        - ELOQUENT_VERSION='~5.2.0'
+    - php: '7.0'
+      env:
+        - COVERAGE='true'
+        - COMPOSER_FLAGS='--prefer-lowest'
+
+    # Doctrine bridge
+    - php: '7.0'
+      env:
+        - COVERAGE='true'
+        - DOCTRINE_VERSION='~2.5.0'
+        - COMPOSER_FLAGS='--prefer-lowest'
+
+    - php: '7.0'
+      env:
+        - DOCTRINE_VERSION='~2.5.0'
+
+    # Eloquent bridge
+    - php: '7.0'
+      env:
+        - COVERAGE='true'
+        - ELOQUENT_VERSION='~5.0.0'
+        - COMPOSER_FLAGS='--prefer-lowest'
+    - php: '7.0'
+      env:
+        - ELOQUENT_VERSION='~5.1.0'
+    - php: '7.0'
+      env:
+        - ELOQUENT_VERSION='~5.2.0'
     - php: '7.0'
       env:
         - ELOQUENT_VERSION='~5.3.0@dev'
-        - _ALLOW_FAILURE='true'
 
-#    # Symfony bridge
-#    - php: '7.0'
-#      env:
-#        - COVERAGE='true'
-#        - SYMFONY_VERSION='~3.0.0'
-#        - COMPOSER_FLAGS='--prefer-lowest'
-#    - php: '7.0'
-#      env: SYMFONY_VERSION='~3.1.0'
+    # Symfony bridge
     - php: '7.0'
       env:
-        - SYMFONY_VERSION='~3.2.0@dev'
-        - _ALLOW_FAILURE='true'
+        - COVERAGE='true'
+        - SYMFONY_VERSION='~3.0.0'
+        - COMPOSER_FLAGS='--prefer-lowest'
+    - php: '7.0'
+      env: SYMFONY_VERSION='~3.1.0'
+    - php: '7.0'
+      env: SYMFONY_VERSION='~3.2.0@dev'
 
-#    # Symfony bridge with Doctrine
-#    - php: '7.0'
-#      env:
-#        - COVERAGE='true'
-#        - DOCTRINE_VERSION='~2.5.0'
-#        - SYMFONY_VERSION='~3.0.0'
-#        - COMPOSER_FLAGS='--prefer-lowest'
-#    - php: '7.0'
-#      env:
-#        - DOCTRINE_VERSION='~2.5.0'
-#        - SYMFONY_VERSION='~3.1.0'
-#
-#    # Symfony bridge with Eloquent
-#    - php: '7.0'
-#      env:
-#        - COVERAGE='true'
-#        - ELOQUENT_VERSION='~5.0.0'
-#        - SYMFONY_VERSION='~3.0.0'
-#        - COMPOSER_FLAGS='--prefer-lowest'
-#    - php: '7.0'
-#      env:
-#        - ELOQUENT_VERSION='~5.0.0'
-#        - SYMFONY_VERSION='~3.1.0'
+    # Symfony bridge with Doctrine
+    - php: '7.0'
+      env:
+        - COVERAGE='true'
+        - DOCTRINE_VERSION='~2.5.0'
+        - SYMFONY_VERSION='~3.0.0'
+        - COMPOSER_FLAGS='--prefer-lowest'
+    - php: '7.0'
+      env:
+        - DOCTRINE_VERSION='~2.5.0'
+        - SYMFONY_VERSION='~3.1.0'
+
+    # Symfony bridge with Eloquent
+    - php: '7.0'
+      env:
+        - COVERAGE='true'
+        - ELOQUENT_VERSION='~5.0.0'
+        - SYMFONY_VERSION='~3.0.0'
+        - COMPOSER_FLAGS='--prefer-lowest'
+    - php: '7.0'
+      env:
+        - ELOQUENT_VERSION='~5.0.0'
+        - SYMFONY_VERSION='~3.1.0'
 
   allow_failures:
     - php: nightly
-    - env: _ALLOW_FAILURE='true'
+    - env: ELOQUENT_VERSION='~5.3.0@dev'
+    - env: SYMFONY_VERSION='~3.2.0@dev'
 
 before_install:
   - set -eo pipefail
