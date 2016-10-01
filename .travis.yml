@@ -88,8 +88,9 @@ matrix:
 
   allow_failures:
     - php: nightly
-    - env: ELOQUENT_VERSION='~5.3.0@dev'
-    - env: SYMFONY_VERSION='~3.2.0@dev'
+    - env:
+      - ELOQUENT_VERSION='~5.3.0@dev'
+      - SYMFONY_VERSION='~3.2.0@dev'
 
 before_install:
   - set -eo pipefail
