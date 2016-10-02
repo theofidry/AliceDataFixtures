@@ -15,11 +15,15 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * @internal
+ * @private
+ * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 final class Configuration implements ConfigurationInterface
 {
-    const ORM_DRIVER = 'doctrine_orm';
+    /** @private */
+    const DOCTRINE_ORM_DRIVER = 'doctrine_orm';
+    /** @private */
+    const ELOQUENT_ORM_DRIVER = 'eloquent_orm';
 
     /**
      * @inheritdoc
@@ -36,7 +40,10 @@ final class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->cannotBeOverwritten()
                     ->children()
-                        ->booleanNode(self::ORM_DRIVER)
+                        ->booleanNode(self::DOCTRINE_ORM_DRIVER)
+                            ->defaultValue(null)
+                        ->end()
+                        ->booleanNode(self::ELOQUENT_ORM_DRIVER)
                             ->defaultValue(null)
                         ->end()
                     ->end()

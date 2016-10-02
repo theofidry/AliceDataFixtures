@@ -11,7 +11,6 @@
 
 namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Model;
 
-use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -40,5 +39,13 @@ class Dummy extends Model
     public function anotherDummy()
     {
         return $this->belongsTo(AnotherDummy::class);
+    }
+
+    public function setAnotherDummy(AnotherDummy $anotherDummy)
+    {
+        if (null === $anotherDummy->id) {
+            $anotherDummy->save();
+        }
+        $this->anotherDummy()->associate($anotherDummy);
     }
 }

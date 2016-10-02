@@ -1,7 +1,7 @@
 Fidry\AliceDataFixtures\Bridge\Symfony\Entity\User:
     user{1..10}:
-        groups: <numberBetween(2, 5)>x @group*
+        groups: '<numberBetween(2, 5)>x @group*'
 
 Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Group:
     group{1..10}:
-        users: <numberBetween(2, 5)>x @user*
+        users: '<numberBetween(2, 5)>x @user*'

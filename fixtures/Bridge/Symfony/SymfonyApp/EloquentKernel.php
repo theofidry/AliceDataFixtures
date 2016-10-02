@@ -12,12 +12,17 @@
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
+use Fidry\PsyshBundle\PsyshBundle;
 use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
+use WouterJ\EloquentBundle\WouterJEloquentBundle;
 
-class AppKernel extends Kernel
+/**
+ * @author Théo FIDRY <theo.fidry@gmail.com>
+ */
+class EloquentKernel extends Kernel
 {
     public function registerBundles()
     {
@@ -25,6 +30,8 @@ class AppKernel extends Kernel
             new FrameworkBundle(),
             new NelmioAliceBundle(),
             new FidryAliceDataFixturesBundle(),
+            new WouterJEloquentBundle(),
+            new PsyshBundle(),
         ];
 
         return $bundles;
@@ -33,5 +40,6 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/config/config.yml');
+        $loader->load(__DIR__.'/config/config_eloquent.yml');
     }
 }

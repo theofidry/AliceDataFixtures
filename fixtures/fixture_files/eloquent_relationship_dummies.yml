@@ -1,0 +1,8 @@
+Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy:
+    another_dummy{1..10}:
+        address: '<current()>'
+
+Fidry\AliceDataFixtures\Bridge\Eloquent\Model\Dummy:
+    dummy{1..10}:
+        name: '<current()>'
+        anotherDummy: '@another_dummy*'

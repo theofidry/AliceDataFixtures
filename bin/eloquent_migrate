@@ -12,4 +12,4 @@
 
 require_once __DIR__.'/../tests/Bridge/Eloquent/autoload.php';
 
-$GLOBALS['migrator']->run(['migrations']);
+$GLOBALS['migrator']->run('migrations');

@@ -10,17 +10,13 @@
 
     <testsuites>
         <testsuite name="Test Suite">
-            <directory>tests/Bridge/Symfony</directory>
-            <exclude>tests/Bridge/Symfony/Doctrine</exclude>
-            <exclude>tests/Bridge/Symfony/Eloquent</exclude>
+            <directory>tests/Bridge/Symfony/Doctrine</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>src/Bridge/Symfony</directory>
-            <exclude>tests/Bridge/Symfony/Doctrine</exclude>
-            <exclude>tests/Bridge/Symfony/Eloquent</exclude><exclude></exclude>
+            <directory>src/Bridge/Symfony/Doctrine</directory>
         </whitelist>
     </filter>
 

@@ -15,6 +15,9 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler\Register
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+/**
+ * @author Théo FIDRY <theo.fidry@gmail.com>
+ */
 final class FidryAliceDataFixturesBundle extends Bundle
 {
     /**
@@ -26,7 +29,13 @@ final class FidryAliceDataFixturesBundle extends Bundle
 
         $container->addCompilerPass(
             new RegisterTagServicesPass(
-                'fidry_alice_data_fixtures.loader.persister',
+                'fidry_alice_data_fixtures.loader.doctrine',
+                'fidry_alice_data_fixtures.processor'
+            )
+        );
+        $container->addCompilerPass(
+            new RegisterTagServicesPass(
+                'fidry_alice_data_fixtures.loader.eloquent',
                 'fidry_alice_data_fixtures.processor'
             )
         );
