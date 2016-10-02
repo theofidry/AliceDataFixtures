@@ -13,6 +13,8 @@ AliceDataFixtures
 
 1. [Install](#installation)
     1. [Symfony Bundle](#symfony)
+        1. [Doctrine ORM](#doctrine-orm)
+        1. [Eloquent ORM](#eloquent-orm)
 1. [Basic usage](#basic-usage)
 1. Advanced usage
     1. [Processors](doc/processors.md)
@@ -40,15 +42,43 @@ composer require --dev theofidry/alice-persistence
 
 composer require --dev theofidry/alice-persistence doctrine/orm doctrine/data-fixtures
 
+# If you are using Eloquent ORM:
+composer require --dev theofidry/alice-persistence illuminate/database
 ```
-
-If you are working with Doctrine ORM, you need to install the following packages as well:
 
 
 ### Symfony
 
-This library ships with a Symfony bundle. To use it with Doctrine do not forget to install `doctrine/doctrine-bundle`
+This library ships with a Symfony bundle `FidryAliceDataFixturesBundle`.
+
+
+#### Doctrine ORM
+
+To use it with Doctrine do not forget to install `doctrine/doctrine-bundle`
 and enable the `DoctrineBundle` (done by default in Symfony Standard Edition).
+
+Then, enable the bundle by updating your `app/AppKernel.php` file to enable the bundle:
+
+```php
+<?php
+// app/AppKernel.php
+
+public function registerBundles()
+{
+    //...
+    if (in_array($this->getEnvironment(), ['dev', 'test'])) {
+        //...
+        $bundles[] = new Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle();
+    }
+
+    return $bundles;
+}
+```
+
+#### Eloquent ORM
+
+To use it with Eloquent do not forget to install `illuminate/database` and
+`WouterJEloquentBundle` (`wouterj/eloquent-bundle`).
 
 Then, enable the bundle by updating your `app/AppKernel.php` file to enable the bundle:
 
@@ -71,10 +101,7 @@ public function registerBundles()
 
 ## Basic usage
 
-Assuming you are using [Doctrine](http://www.doctrine-project.org/projects/orm.html), make sure you
-have the [`doctrine/doctrine-bundle`](https://github.com/doctrine/DoctrineBundle) and [`doctrine/data-fixtures`](https://github.com/doctrine/data-fixtures) packages installed.
-
-Then create a fixture file in `src/AppBundle/Resources/fixtures`:
+Create a fixture file in `src/AppBundle/Resources/fixtures`:
 
 ```yaml
 # src/AppBundle/Resources/fixtures/dummy.yml
@@ -101,7 +128,8 @@ $files = [
     'path/to/src/AppBundle/Resources/fixtures/related_dummy.yml',
 ];
 
-$loader = $container->get('fidry_alice_data_fixtures.loader');
+$loader = $container->get('fidry_alice_data_fixtures.doctrine.persister_loader'); // For Doctrine ORM
+$loader = $container->get('fidry_alice_data_fixtures.eloquent.persister_loader'); // For Eloquent ORM
 $objects = $loader->load($files);
 
 // $objects is now an array of persisted `Dummy` and `RelatedDummy`

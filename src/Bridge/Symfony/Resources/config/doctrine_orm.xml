@@ -32,12 +32,19 @@
             <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
 
-        <service id="fidry_alice_data_fixtures.loader.doctrine"
+        <service id="fidry_alice_data_fixtures.doctrine.persister_loader"
                  class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
                  lazy="true" >
             <argument type="service" id="fidry_alice_data_fixtures.loader.multipass_file" />
             <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister" />
             <!-- Processors are injected via a Compiler pass -->
+        </service>
+
+        <service id="fidry_alice_data_fixtures.doctrine.purger_loader"
+                 class="Fidry\AliceDataFixtures\Loader\PurgerLoader"
+                 lazy="true" >
+            <argument type="service" id="fidry_alice_data_fixtures.doctrine.persister_loader" />
+            <argument type="service" id="fidry_alice_data_fixtures.persistence.purger.doctrine.orm_purger" />
         </service>
 
     </services>
