@@ -52,7 +52,7 @@ class ORMLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
         $this->kernel->getContainer()->get('wouterj_eloquent')->setAsGlobal();
         $this->databaseManager = $this->kernel->getContainer()->get('wouterj_eloquent.database_manager');
 
-        $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.eloquent');
+        $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.eloquent.persister_loader');
         $this->execute([
             'command' => 'eloquent:migrate',
             '--path' => 'migrations',
@@ -88,8 +88,7 @@ class ORMLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
             'address' => 'hello',
         ]);
 
-        $purger = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.persistence.purger.eloquent.model_purger');
-        $loader = new PurgerLoader($this->loader, $purger);
+        $loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.eloquent.purger_loader');
         // Disable foreign keys check
         // This is usually a bad idea as you have to deal *how* your entities are deleted
         // And doing that can lead to broken entities

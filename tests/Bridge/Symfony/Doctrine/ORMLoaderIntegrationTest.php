@@ -49,7 +49,7 @@ class ORMLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
         $this->kernel = new DoctrineKernel('doctrine', true);
         $this->kernel->boot();
 
-        $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.doctrine');
+        $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.doctrine.persister_loader');
         $this->doctrine = $this->kernel->getContainer()->get('doctrine');
     }
 
@@ -87,8 +87,7 @@ class ORMLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
         // However in this context we unset ALL entities and it's for testing purpose
         // Not a real application where deleting an application should be handled properly
         $this->doctrine->getConnection()->exec('SET FOREIGN_KEY_CHECKS=0;');
-        $purger = new OrmPurger($dummyManager, PurgeMode::createDeleteMode());
-        $loader = new PurgerLoader($this->loader, $purger);
+        $loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.doctrine.purger_loader');
         $loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/dummy.yml',
         ]);

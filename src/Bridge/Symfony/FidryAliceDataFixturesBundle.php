@@ -29,13 +29,13 @@ final class FidryAliceDataFixturesBundle extends Bundle
 
         $container->addCompilerPass(
             new RegisterTagServicesPass(
-                'fidry_alice_data_fixtures.loader.doctrine',
+                'fidry_alice_data_fixtures.doctrine.persister_loader',
                 'fidry_alice_data_fixtures.processor'
             )
         );
         $container->addCompilerPass(
             new RegisterTagServicesPass(
-                'fidry_alice_data_fixtures.loader.eloquent',
+                'fidry_alice_data_fixtures.eloquent.persister_loader',
                 'fidry_alice_data_fixtures.processor'
             )
         );

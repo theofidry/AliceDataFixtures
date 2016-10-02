@@ -14,7 +14,6 @@ namespace Fidry\AliceDataFixtures\Loader;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
-use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use Nelmio\Alice\NotClonableTrait;
 
 /**

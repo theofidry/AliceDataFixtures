@@ -16,6 +16,7 @@ use Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundleTest as NakedFidryAliceDataFixturesBundleTest;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\EloquentKernel;
 use Fidry\AliceDataFixtures\Loader\PersisterLoader;
+use Fidry\AliceDataFixtures\Loader\PurgerLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -57,7 +58,12 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
 
         $this->assertInstanceOf(
             PersisterLoader::class,
-            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.eloquent')
+            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.eloquent.persister_loader')
+        );
+
+        $this->assertInstanceOf(
+            PurgerLoader::class,
+            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.eloquent.purger_loader')
         );
     }
 }

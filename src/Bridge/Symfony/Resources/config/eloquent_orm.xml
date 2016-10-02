@@ -37,12 +37,19 @@
             <argument type="service" id="wouterj_eloquent.database_manager" />
         </service>
 
-        <service id="fidry_alice_data_fixtures.loader.eloquent"
+        <service id="fidry_alice_data_fixtures.eloquent.persister_loader"
                  class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
                  lazy="true" >
             <argument type="service" id="fidry_alice_data_fixtures.loader.multipass_file" />
             <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.eloquent.model_persister" />
             <!-- Processors are injected via a Compiler pass -->
+        </service>
+
+        <service id="fidry_alice_data_fixtures.eloquent.purger_loader"
+                 class="Fidry\AliceDataFixtures\Loader\PurgerLoader"
+                 lazy="true" >
+            <argument type="service" id="fidry_alice_data_fixtures.eloquent.persister_loader" />
+            <argument type="service" id="fidry_alice_data_fixtures.persistence.purger.eloquent.model_purger" />
         </service>
 
     </services>

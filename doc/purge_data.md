@@ -1,16 +1,11 @@
 # Purge data
 
-If you wish to purge the data of your database, all you need is an `Doctrine\ORM\EntityManagerInterface`!
+If you wish to purge the data of your database, you can use a purger.
 
 ```php
-use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\OrmPurger;
-use Fidry\AliceDataFixtures\Loader;
-
-$manager = $container->get('doctrine')->getManager();
-$loader = $container->get('fidry_alice_data_fixtures.loader');
-
-$purger = new OrmPurger($manager);
-$loader = new PurgerLoader($loader, $purger, $purger);
+$loader = $container->get('fidry_alice_data_fixtures.doctrine.purger_loader');
+// Or
+$loader = $container->get('fidry_alice_data_fixtures.eloquent.purger_loader');
 
 $loader->load([
     'path/to/src/AppBundle/Resources/fixtures/dummy.yml',
