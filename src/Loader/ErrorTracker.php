@@ -19,6 +19,9 @@ namespace Fidry\AliceDataFixtures\Loader;
  */
 final class ErrorTracker
 {
+    /**
+     * @var array<string, \Throwable>
+     */
     private $stack = [];
 
     public function register(string $filePath, \Throwable $error)
@@ -27,9 +30,12 @@ final class ErrorTracker
             $this->stack[$filePath] = [];
         }
 
-        $this->stack[$filePath][] = $error->getMessage();
+        $this->stack[$filePath][] = $error;
     }
 
+    /**
+     * @return array<string, \Throwable>
+     */
     public function getStack(): array
     {
         return $this->stack;

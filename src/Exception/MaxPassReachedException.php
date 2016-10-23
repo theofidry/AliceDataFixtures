@@ -21,6 +21,25 @@ use Nelmio\Alice\Throwable\LoadingThrowable;
 class MaxPassReachedException extends \RuntimeException implements LoadingThrowable
 {
     /**
+     * @var array<string, \Throwable>
+     */
+    private $stack = [];
+
+    public function __construct($message, $code = 0, \Throwable $previous = null, ErrorTracker $errorTracker = null)
+    {
+        parent::__construct($message, $code, $previous);
+
+        if (null !== $errorTracker) {
+            $this->stack = $errorTracker->getStack();
+        }
+    }
+
+    public function getStack(): array
+    {
+        return $this->stack;
+    }
+
+    /**
      * @param int             $limit
      * @param FileTracker     $fileTracker
      * @param ErrorTracker    $errorTracker
@@ -39,7 +58,8 @@ class MaxPassReachedException extends \RuntimeException implements LoadingThrowa
         return new static(
             static::createMessage($limit, $fileTracker, $errorTracker),
             $code,
-            $previous
+            $previous,
+            $errorTracker
         );
     }
 

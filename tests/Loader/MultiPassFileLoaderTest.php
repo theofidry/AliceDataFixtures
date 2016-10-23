@@ -257,10 +257,12 @@ class MultiPassFileLoaderTest extends TestCase
             $loader->load($files);
             $this->fail('Expected exception to be thrown.');
         } catch (MaxPassReachedException $exception) {
-            $this->assertEquals(<<<EOF
+            $this->assertContains(<<<EOF
 Loading files limit of 15 reached. Could not load the following files:
 foo:
- - hello
+ - Nelmio\Alice\Exception\Generator\Resolver\UnresolvableValueDuringGenerationException: hello in /Users/Theo/Sites/GitHub/Alice/AliceDataFixtures/tests/Loader/MultiPassFileLoaderTest.php:249
+Stack trace:
+#0 [internal function]: Fidry\AliceDataFixtures\Loader\MultiPassFileLoaderTest->testIfFilesCannotBeReloadedTheLoadingStopsWhenTheLimitIsReached()
 EOF
                 , $exception->getMessage()
             );
