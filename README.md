@@ -11,7 +11,7 @@ AliceDataFixtures
 
 ## Documentation
 
-1. [Install](#installation)
+1. [Installation](#installation)
     1. [Symfony Bundle](#symfony)
         1. [Doctrine ORM](#doctrine-orm)
         1. [Eloquent ORM](#eloquent-orm)
