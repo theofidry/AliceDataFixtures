@@ -24,28 +24,20 @@ AliceDataFixtures
 
 ## Installation
 
-First you need install appropriate database managers (if you didn't install it yet), according to your project requirements.
-Check the documentation [here](doc/install.md).
-
-You can use [Composer](https://getcomposer.org/) to install the bundle to your project:
+You can use [Composer](https://getcomposer.org/) to install the library to your project:
 
 ```bash
-composer require --dev hautelook/alice-bundle doctrine/data-fixtures
+composer require --dev "theofidry/alice-data-fixtures:^1.0@dev"
+
+# with Doctrine
+composer require --dev "theofidry/alice-data-fixtures:^1.0@dev" \
+  doctrine/orm \
+  doctrine/data-fixtures
+
+# with Eloquent
+composer require --dev "theofidry/alice-data-fixtures:^1.0@dev" \
+  illuminate/database
 ```
-
-Then you can install the library:
-
-```bash
-composer require --dev theofidry/alice-persistence
-
-# If you are using Doctrine ORM:
-
-composer require --dev theofidry/alice-persistence doctrine/orm doctrine/data-fixtures
-
-# If you are using Eloquent ORM:
-composer require --dev theofidry/alice-persistence illuminate/database
-```
-
 
 ### Symfony
 
@@ -65,9 +57,15 @@ Then, enable the bundle by updating your `app/AppKernel.php` file to enable the 
 
 public function registerBundles()
 {
-    //...
+    $bundles = [
+        new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+        // ...
+        new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+    ];
+
     if (in_array($this->getEnvironment(), ['dev', 'test'])) {
         //...
+        $bundles[] = new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
         $bundles[] = new Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle();
     }
 
@@ -88,6 +86,18 @@ Then, enable the bundle by updating your `app/AppKernel.php` file to enable the 
 
 public function registerBundles()
 {
+    $bundles = [
+        new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+        // ...
+        new WouterJ\EloquentBundle\WouterJEloquentBundle(),
+    ];
+
+    if (in_array($this->getEnvironment(), ['dev', 'test'])) {
+        //...
+        $bundles[] = new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
+        $bundles[] = new Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle();
+    }
+
     //...
     if (in_array($this->getEnvironment(), ['dev', 'test'])) {
         //...
