@@ -52,7 +52,7 @@ class ModelPurgerTest extends \PHPUnit_Framework_TestCase
 
         /** @var Migrator|ObjectProphecy $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
-        $migratorProphecy->reset()->shouldBeCalled();
+        $migratorProphecy->reset($migrationPath)->shouldBeCalled();
         $migratorProphecy->run($migrationPath)->shouldBeCalled();
         /** @var Migrator $migrator */
         $migrator = $migratorProphecy->reveal();
@@ -61,7 +61,7 @@ class ModelPurgerTest extends \PHPUnit_Framework_TestCase
         $purger->purge();
 
         $migrationRepositoryProphecy->repositoryExists()->shouldHaveBeenCalledTimes(1);
-        $migratorProphecy->reset()->shouldHaveBeenCalledTimes(1);
+        $migratorProphecy->reset(Argument::cetera())->shouldHaveBeenCalledTimes(1);
         $migratorProphecy->run(Argument::cetera())->shouldHaveBeenCalledTimes(1);
     }
 
@@ -78,7 +78,7 @@ class ModelPurgerTest extends \PHPUnit_Framework_TestCase
 
         /** @var Migrator|ObjectProphecy $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
-        $migratorProphecy->reset()->shouldBeCalled();
+        $migratorProphecy->reset($migrationPath)->shouldBeCalled();
         $migratorProphecy->run($migrationPath)->shouldBeCalled();
         /** @var Migrator $migrator */
         $migrator = $migratorProphecy->reveal();
@@ -88,7 +88,7 @@ class ModelPurgerTest extends \PHPUnit_Framework_TestCase
 
         $migrationRepositoryProphecy->repositoryExists()->shouldHaveBeenCalledTimes(1);
         $migrationRepositoryProphecy->createRepository()->shouldHaveBeenCalledTimes(1);
-        $migratorProphecy->reset()->shouldHaveBeenCalledTimes(1);
+        $migratorProphecy->reset(Argument::cetera())->shouldHaveBeenCalledTimes(1);
         $migratorProphecy->run(Argument::cetera())->shouldHaveBeenCalledTimes(1);
     }
 
@@ -96,7 +96,7 @@ class ModelPurgerTest extends \PHPUnit_Framework_TestCase
     {
         /** @var Migrator|ObjectProphecy $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
-        $migratorProphecy->reset()->shouldNotBeCalled();
+        $migratorProphecy->reset(Argument::cetera())->shouldNotBeCalled();
         /** @var Migrator $migrator */
         $migrator = $migratorProphecy->reveal();
 
@@ -123,7 +123,7 @@ class ModelPurgerTest extends \PHPUnit_Framework_TestCase
 
         /** @var Migrator|ObjectProphecy $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
-        $migratorProphecy->reset()->shouldNotBeCalled();
+        $migratorProphecy->reset(Argument::cetera())->shouldNotBeCalled();
         /** @var Migrator $migrator */
         $migrator = $migratorProphecy->reveal();
 
@@ -151,6 +151,11 @@ class ModelPurgerTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyDatabase()
     {
+        $purger = new ModelPurger($GLOBALS['repository'], 'migrations', $GLOBALS['migrator']);
+        // Doing a purge here is just to make the test slightly more robust when being run multiple times
+        // The real purge test is done at the next one
+        $purger->purge();
+
         AnotherDummy::create([
             'address' => 'Wonderlands',
         ]);
