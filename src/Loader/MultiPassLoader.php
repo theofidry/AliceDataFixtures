@@ -24,8 +24,10 @@ use Nelmio\Alice\ParameterBag;
  * Alternative to {@se SimpleLoader} to load the files in a smarter way.
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
+ *
+ * @final
  */
-final class MultiPassLoader implements LoaderInterface
+/*final*/ class MultiPassLoader implements LoaderInterface
 {
     use NotClonableTrait;
 

@@ -17,48 +17,68 @@ log() {
     echo -en "${INFO_COLOR}${message}${NO_COLOR}\n";
 }
 
+refreshDatabase() {
+    mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures; CREATE DATABASE fidry_alice_data_fixtures;"
+}
+
 set -ex
 
+if [ -n "$COVERAGE" ]; then
+    PHPUNI_PREFIX="phpdbg -qrr"
+fi
+
 log "Core library"
-vendor/bin/phpunit -c phpunit.xml.dist
+$PHPUNI_PREFIX vendor/bin/phpunit -c phpunit.xml.dist $PHPUNIT_FLAGS
 
 
 log "Doctrine bridge"
-mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
-mysql -u root -e "CREATE DATABASE fidry_alice_data_fixtures;"
+refreshDatabase
 vendor-bin/doctrine/bin/doctrine o:s:c
 
-vendor-bin/doctrine/bin/phpunit -c phpunit_doctrine.xml.dist
+$PHPUNI_PREFIX vendor-bin/doctrine/bin/phpunit -c phpunit_doctrine.xml.dist $PHPUNIT_FLAGS
 
 
 log "Eloquent bridge"
-mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
-mysql -u root -e "CREATE DATABASE fidry_alice_data_fixtures;"
+refreshDatabase
 php bin/eloquent_migrate
 
-vendor-bin/eloquent/bin/phpunit -c phpunit_eloquent.xml.dist
+$PHPUNI_PREFIX vendor-bin/eloquent/bin/phpunit -c phpunit_eloquent.xml.dist $PHPUNIT_FLAGS
 
 
 log "Symfony bridge"
-mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
+refreshDatabase
 rm -rf fixtures/Bridge/Symfony/cache/*
 
-vendor-bin/symfony/bin/phpunit -c phpunit_symfony.xml.dist
+$PHPUNI_PREFIX vendor-bin/symfony/bin/phpunit -c phpunit_symfony.xml.dist $PHPUNIT_FLAGS
 
 
 log "Symfony with Doctrine"
-mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
-mysql -u root -e "CREATE DATABASE fidry_alice_data_fixtures;"
+refreshDatabase
 rm -rf fixtures/Bridge/Symfony/cache/*
 php bin/console d:s:c -k=DoctrineKernel
 
-vendor-bin/symfony/bin/phpunit -c phpunit_symfony_doctrine.xml.dist
+vendor-bin/symfony/bin/phpunit -c phpunit_symfony_doctrine.xml.dist $PHPUNIT_FLAGS
 
 
 log "Symfony with Eloquent"
-mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
-mysql -u root -e "CREATE DATABASE fidry_alice_data_fixtures;"
+refreshDatabase
 rm -rf fixtures/Bridge/Symfony/cache/*
 php bin/console eloquent:migrate:install -k=EloquentKernel
 
-vendor-bin/eloquent/bin/phpunit -c phpunit_symfony_eloquent.xml.dist
+$PHPUNI_PREFIX vendor-bin/eloquent/bin/phpunit -c phpunit_symfony_eloquent.xml.dist $PHPUNIT_FLAGS
+
+
+log "Symfony with Proxy Manager and Doctrine"
+refreshDatabase
+rm -rf fixtures/Bridge/Symfony/cache/*
+php bin/console d:s:c -k=DoctrineKernel
+
+$PHPUNI_PREFIX vendor-bin/proxy-manager/bin/phpunit -c phpunit_symfony_proxy_manager_with_doctrine.xml.dist $PHPUNIT_FLAGS
+
+
+log "Symfony with Proxy Manager"
+refreshDatabase
+rm -rf fixtures/Bridge/Symfony/cache/*
+php bin/console eloquent:migrate:install -k=EloquentKernel
+
+$PHPUNI_PREFIX vendor-bin/proxy-manager/bin/phpunit -c phpunit_symfony_proxy_manager_with_eloquent.xml.dist $PHPUNIT_FLAGS

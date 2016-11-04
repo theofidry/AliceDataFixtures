@@ -22,8 +22,10 @@ use Nelmio\Alice\NotClonableTrait;
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  * @author Théo FIDRY <theo.fidry@gmail.com>
+ *
+ * @final
  */
-final class PersisterLoader implements LoaderInterface, PersisterAwareInterface
+/*final*/ class PersisterLoader implements LoaderInterface, PersisterAwareInterface
 {
     use NotClonableTrait;
 

@@ -20,8 +20,10 @@ use Nelmio\Alice\NotClonableTrait;
  * Loader decorating another loader to purge the database before loading.
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
+ *
+ * @final
  */
-final class PurgerLoader implements LoaderInterface
+/*final*/ class PurgerLoader implements LoaderInterface
 {
     use NotClonableTrait;
 

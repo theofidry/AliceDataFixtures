@@ -1,0 +1,21 @@
+{
+    "autoload-dev": {
+        "classmap": [
+            "../../migrations"
+        ]
+    },
+    "require-dev": {
+        "doctrine/data-fixtures": "^1.2",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/orm": "^2.5",
+        "ocramius/proxy-manager": "^2.0",
+        "symfony/symfony": "^3.1",
+        "theofidry/composer-inheritance-plugin": "^1.0@dev",
+        "theofidry/psysh-bundle": "^2.0@dev",
+        "wouterj/eloquent-bundle": "^1.0@dev"
+    },
+    "config": {
+        "bin-dir": "bin",
+        "sort-packages": true
+    }
+}
