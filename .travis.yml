@@ -39,17 +39,11 @@ matrix:
     - php: '7.0'
       env:
         - COVERAGE='true'
-        - ELOQUENT_VERSION='~5.0.0'
+        - ELOQUENT_VERSION='~5.3.0'
         - COMPOSER_FLAGS='--prefer-lowest'
     - php: '7.0'
       env:
-        - ELOQUENT_VERSION='~5.1.0'
-    - php: '7.0'
-      env:
-        - ELOQUENT_VERSION='~5.2.0'
-    - php: '7.0'
-      env:
-        - ELOQUENT_VERSION='~5.3.0@dev'
+        - ELOQUENT_VERSION='~5.3.0'
 
     # Symfony bridge
     - php: '7.0'
@@ -78,12 +72,12 @@ matrix:
     - php: '7.0'
       env:
         - COVERAGE='true'
-        - ELOQUENT_VERSION='~5.0.0'
+        - ELOQUENT_VERSION='~5.3.0'
         - SYMFONY_VERSION='~3.0.0'
         - COMPOSER_FLAGS='--prefer-lowest'
     - php: '7.0'
       env:
-        - ELOQUENT_VERSION='~5.0.0'
+        - ELOQUENT_VERSION='~5.3.0'
         - SYMFONY_VERSION='~3.1.0'
 
   allow_failures:

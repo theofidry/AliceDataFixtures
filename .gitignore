@@ -7,4 +7,6 @@ phpunit.xml
 .php_cs.cache
 .phar/
 vendor-bin/*/vendor/
+vendor-bin/*/bin/
 dist/
+

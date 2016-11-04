@@ -43,7 +43,7 @@ class ModelPersisterTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        $this->migrator->reset();
+        $this->migrator->reset('migrations');
         $this->migrator->run('migrations');
     }
 
