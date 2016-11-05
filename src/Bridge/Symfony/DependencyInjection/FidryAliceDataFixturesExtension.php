@@ -24,7 +24,14 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 final class FidryAliceDataFixturesExtension extends Extension
 {
+    /** @private */
     const SERVICES_DIR = __DIR__.'/../Resources/config';
+    /** @private */
+    const NELMIO_ALICE_BUNDLE_CLASS = 'Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle';
+    /** @private */
+    const DOCTRINE_ORM_BUNDLE_CLASS = 'Doctrine\Bundle\DoctrineBundle\DoctrineBundle';
+    /** @private */
+    const WOUTERJ_ELOQUENT_BUNDLE_CLASS = 'WouterJ\EloquentBundle\WouterJEloquentBundle';
 
     /**
      * @inheritdoc
@@ -35,11 +42,12 @@ final class FidryAliceDataFixturesExtension extends Extension
         $processedConfiguration = $this->processConfiguration($configuration, $configs);
         $bundles = array_flip($container->getParameter('kernel.bundles'));
 
-        if (false === array_key_exists('Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle', $bundles)) {
+        if (false === array_key_exists(self::NELMIO_ALICE_BUNDLE_CLASS, $bundles)) {
             throw new \LogicException(
                 sprintf(
-                    'Cannot register "%s" without "Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle".',
-                    FidryAliceDataFixturesBundle::class
+                    'Cannot register "%s" without "%s".',
+                    FidryAliceDataFixturesBundle::class,
+                    self::NELMIO_ALICE_BUNDLE_CLASS
                 )
             );
         }
@@ -59,10 +67,13 @@ final class FidryAliceDataFixturesExtension extends Extension
             return;
         }
 
-        $doctrineBundleIsRegistered = array_key_exists('Doctrine\Bundle\DoctrineBundle\DoctrineBundle', $bundles);
+        $doctrineBundleIsRegistered = array_key_exists(self::DOCTRINE_ORM_BUNDLE_CLASS, $bundles);
         if ($isEnabled && false === $doctrineBundleIsRegistered) {
             throw new \LogicException(
-                'Cannot enable doctrine driver as the bundle "Doctrine\Bundle\DoctrineBundle\DoctrineBundle" is missing'
+                sprintf(
+                    'Cannot enable doctrine driver as the bundle "%s" is missing',
+                    self::DOCTRINE_ORM_BUNDLE_CLASS
+                )
             );
         }
 
@@ -79,10 +90,13 @@ final class FidryAliceDataFixturesExtension extends Extension
             return;
         }
 
-        $doctrineBundleIsRegistered = array_key_exists('WouterJ\EloquentBundle\WouterJEloquentBundle', $bundles);
+        $doctrineBundleIsRegistered = array_key_exists(self::WOUTERJ_ELOQUENT_BUNDLE_CLASS, $bundles);
         if ($isEnabled && false === $doctrineBundleIsRegistered) {
             throw new \LogicException(
-                'Cannot enable doctrine driver as the bundle "WouterJ\EloquentBundle\WouterJEloquentBundle" is missing'
+                sprintf(
+                    'Cannot enable doctrine driver as the bundle "%s" is missing',
+                    self::WOUTERJ_ELOQUENT_BUNDLE_CLASS
+                )
             );
         }
 

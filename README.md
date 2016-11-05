@@ -15,6 +15,7 @@ AliceDataFixtures
     1. [Symfony Bundle](#symfony)
         1. [Doctrine ORM](#doctrine-orm)
         1. [Eloquent ORM](#eloquent-orm)
+        1. [Configuration](#configuration)
 1. [Basic usage](#basic-usage)
 1. Advanced usage
     1. [Processors](doc/processors.md)
@@ -31,13 +32,14 @@ composer require --dev "theofidry/alice-data-fixtures:^1.0@dev"
 
 # with Doctrine
 composer require --dev "theofidry/alice-data-fixtures:^1.0@dev" \
-  doctrine/orm \
+  doctrine/orm:^2.5 \
   doctrine/data-fixtures
 
 # with Eloquent
 composer require --dev "theofidry/alice-data-fixtures:^1.0@dev" \
-  illuminate/database
+  illuminate/database:~5.3.0
 ```
+
 
 ### Symfony
 
@@ -107,6 +109,25 @@ public function registerBundles()
     return $bundles;
 }
 ```
+
+
+### Configuration
+
+The full configuration reference is:
+
+```yaml
+# app/config/config.yml
+
+# Default config
+fidry_alice_data_fixtures:
+    db_drivers:
+        doctrine_orm: ~
+        eloquent_orm: ~
+```
+
+For each driver, is the appropriate bundle is detected, e.g. DoctrineORMBundle for Doctrine and WouterJEloquentBundle
+for Eloquent, the services related to those driver will be enabled. If you want to skip those checks you can turn
+a specific driver to `true` instead. If you want to disable a specific driver, simply force the value `false` instead.
 
 
 ## Basic usage
