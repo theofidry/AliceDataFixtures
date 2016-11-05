@@ -23,8 +23,10 @@ use Nelmio\Alice\ParameterBag;
  *
  * @author Baldur Rensch <brensch@gmail.com>
  * @author Théo FIDRY <theo.fidry@gmail.com>
+ *
+ * @final
  */
-final class SimpleLoader implements LoaderInterface
+/*final*/ class SimpleLoader implements LoaderInterface
 {
     use NotClonableTrait;
 

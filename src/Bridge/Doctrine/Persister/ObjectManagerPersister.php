@@ -17,8 +17,10 @@ use Nelmio\Alice\NotClonableTrait;
 
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
+ *
+ * @final
  */
-final class ObjectManagerPersister implements PersisterInterface
+/*final*/ class ObjectManagerPersister implements PersisterInterface
 {
     use NotClonableTrait;
 

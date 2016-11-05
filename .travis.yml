@@ -24,158 +24,48 @@ matrix:
         - COVERAGE='true'
         - COMPOSER_FLAGS='--prefer-lowest'
 
-    # Doctrine bridge
     - php: '7.0'
-      env:
-        - COVERAGE='true'
-        - DOCTRINE_VERSION='~2.5.0'
-        - COMPOSER_FLAGS='--prefer-lowest'
-
+      env: SYMFONY_VERSION='~2.7.0'
     - php: '7.0'
-      env:
-        - DOCTRINE_VERSION='~2.5.0'
-
-    # Eloquent bridge
-    - php: '7.0'
-      env:
-        - COVERAGE='true'
-        - ELOQUENT_VERSION='~5.3.0'
-        - COMPOSER_FLAGS='--prefer-lowest'
-    - php: '7.0'
-      env:
-        - ELOQUENT_VERSION='~5.3.0'
-
-    # Symfony bridge
-    - php: '7.0'
-      env:
-        - COVERAGE='true'
-        - SYMFONY_VERSION='~3.0.0'
-        - COMPOSER_FLAGS='--prefer-lowest'
+      env: SYMFONY_VERSION='~2.8.0'
     - php: '7.0'
       env: SYMFONY_VERSION='~3.1.0'
     - php: '7.0'
       env: SYMFONY_VERSION='~3.2.0@dev'
 
-    # Symfony bridge with Doctrine
-    - php: '7.0'
-      env:
-        - COVERAGE='true'
-        - DOCTRINE_VERSION='~2.5.0'
-        - SYMFONY_VERSION='~3.0.0'
-        - COMPOSER_FLAGS='--prefer-lowest'
-    - php: '7.0'
-      env:
-        - DOCTRINE_VERSION='~2.5.0'
-        - SYMFONY_VERSION='~3.1.0'
-
-    # Symfony bridge with Eloquent
-    - php: '7.0'
-      env:
-        - COVERAGE='true'
-        - ELOQUENT_VERSION='~5.3.0'
-        - SYMFONY_VERSION='~3.0.0'
-        - COMPOSER_FLAGS='--prefer-lowest'
-    - php: '7.0'
-      env:
-        - ELOQUENT_VERSION='~5.3.0'
-        - SYMFONY_VERSION='~3.1.0'
-
   allow_failures:
     - php: nightly
-    - php: '7.0'
-      env: ELOQUENT_VERSION='~5.3.0@dev'
-    - php: '7.0'
-      env: SYMFONY_VERSION='~3.2.0@dev'
+    - php: '7.1'
+    - Âenv: SYMFONY_VERSION='~3.2.0@dev'
 
 before_install:
   - set -eo pipefail
   - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-  # From https://github.com/travis-ci/travis-ci/issues/5780#issuecomment-196308406
-  - |
-    XDEBUG_INI="/home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini"
-    if [ ! -f "$XDEBUG_INI" ]; then
-        return
+  - phpenv config-rm xdebug.ini || true
+  - if [ "$TRAVIS_PHP_VERSION" = "nightly" ]; then
+        COMPOSER_FLAGS="$COMPOSER_FLAGS --ignore-platform-reqs";
     fi
-    function composer()
-    {
-      mv $XDEBUG_INI ~/xdebug.ini
-      COMPOSER="$(which composer)"
-      $COMPOSER "$@"
-      STATUS=$?
-      mv ~/xdebug.ini $XDEBUG_INI
-
-      return $STATUS
-    }
-  - |
-    if [ "$TRAVIS_PHP_VERSION" = "nightly" ]; then
-        COMPOSER_FLAGS="$COMPOSER_FLAGS --ignore-platform-reqs"
-    fi
-  - PHPUNIT_BIN='vendor/bin/phpunit'
-  - PHPUNIT_CONFIG='phpunit.xml.dist'
   - PHPUNIT_FLAGS='--stop-on-failure --verbose'
 
 install:
   - composer update --prefer-dist $COMPOSER_FLAGS
-
-  - |
-    # Doctrine bridge
-    if [ -n "$DOCTRINE_VERSION" ] && [ -z "$SYMFONY_VERSION"]; then
-        composer bin doctrine require --dev --no-update "doctrine/orm:${DOCTRINE_VERSION}"
-
-        PHPUNIT_CONFIG='phpunit_doctrine.xml.dist'
-        PHPUNIT_BIN='vendor-bin/doctrine/vendor/phpunit/phpunit/phpunit'
-
-    # Eloquent bridge
-    elif [ -n "$ELOQUENT_VERSION" ] && [ -z "$SYMFONY_VERSION"]; then
-        composer bin eloquent require --dev --no-update "illuminate/database:${ELOQUENT_VERSION}"
-
-        PHPUNIT_CONFIG='phpunit_eloquent.xml.dist'
-        PHPUNIT_BIN='vendor-bin/eloquent/vendor/phpunit/phpunit/phpunit'
-
-    # Symfony bridge
-    elif [ -n "$SYMFONY_VERSION" ]; then
-        composer bin symfony require --dev --no-update symfony/symfony "symfony/symfony:${SYMFONY_VERSION}"
-
-        PHPUNIT_CONFIG='phpunit_symfony.xml.dist'
-        PHPUNIT_BIN='vendor-bin/symfony/vendor/phpunit/phpunit/phpunit'
-
-        # Symfony bridge with Doctrine
-        if [ -n "$DOCTRINE_VERSION" ]; then
-            composer bin symfony require --dev --no-update "doctrine/orm:${DOCTRINE_VERSION}"
-        fi
-        if [ -n "$ELOQUENT_VERSION" ]; then
-            composer bin symfony require --dev --no-update "illuminate/database:${ELOQUENT_VERSION}"
-        fi
+  - if [ -n "$SYMFONY_VERSION" ]; then
+        composer bin symfony require --dev --no-update "symfony/symfony:${SYMFONY_VERSION}";
+        composer bin proxy-manager require --dev --no-update "symfony/symfony:${SYMFONY_VERSION}";
     fi
-
+  - if [ -n "$ELOQUENT_VERSION" ]; then
+        composer bin eloquent require --dev --no-update "illuminate/database:${ELOQUENT_VERSION}";
+        composer bin symfony require --dev --no-update "illuminate/database:${ELOQUENT_VERSION}";
+        composer bin proxy-manager require --dev --no-update "illuminate/database:${ELOQUENT_VERSION}";
+    fi
+  - if [ -n "$DOCTRINE_VERSION" ]; then
+        composer bin doctrine require --dev --no-update "doctrine/orm:${DOCTRINE_VERSION}";
+        composer bin symfony require --dev --no-update "doctrine/orm:${DOCTRINE_VERSION}";
+        composer bin proxy-manager require --dev --no-update "doctrine/orm:${DOCTRINE_VERSION}";
+    fi
   - composer bin all update --prefer-dist $COMPOSER_FLAGS
-  - mysql -u root -e "create database IF NOT EXISTS fidry_alice_data_fixtures;"
 
-  - |
-    # Doctrine bridge
-    if [ -n "$DOCTRINE_VERSION" ] && [ -z "$SYMFONY_VERSION"]; then
-        php vendor-bin/doctrine/vendor/doctrine/orm/bin/doctrine o:s:c
-
-    # Eloquent bridge
-    elif [ -n "$ELOQUENT_VERSION" ] && [ -z "$SYMFONY_VERSION"]; then
-        php bin/eloquent_migrate
-
-    # Symfony with Doctrine
-    elif [ -n "$SYMFONY_VERSION" ] && [ -n "$DOCTRINE_VERSION"]; then
-        php bin/console d:s:c -k=DoctrineKernel
-
-    # Symfony with Eloquent
-    elif [ -n "$SYMFONY_VERSION" ] && [ -n "$ELOQUENT_VERSION" ]; then
-        php bin/console eloquent:migrate:install -k=EloquentKernel
-    fi
-
-script:
-  - |
-    if [ -n "$COVERAGE" ]; then
-        phpdbg -qrr $PHPUNIT_BIN -c $PHPUNIT_CONFIG $PHPUNIT_FLAGS --testdox --coverage-text
-    else
-        $PHPUNIT_BIN -c $PHPUNIT_CONFIG $PHPUNIT_FLAGS
-    fi
+script: bin/test.sh
 
 notifications:
   email: false

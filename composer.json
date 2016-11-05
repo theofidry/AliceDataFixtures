@@ -1,6 +1,6 @@
 {
     "name": "theofidry/alice-data-fixtures",
-    "description": "Nelmio alice extension to persist the loaded fixtures",
+    "description": "Nelmio alice extension to persist the loaded fixtures.",
     "keywords": ["Fixture", "ORM", "Alice", "Faker", "data", "tests"],
     "type": "library",
     "license": "MIT",
@@ -13,18 +13,15 @@
     ],
     "require": {
         "php": "~7.0.0 || ~7.1.0",
-        "nelmio/alice": "^3.0@dev",
-        "phpspec/prophecy": "^1.6",
-        "phpunit/phpunit": "^5.5"
+        "nelmio/alice": "^3.0@dev"
     },
     "require-dev": {
-        "bamarni/composer-bin-plugin": "^1.0"
+        "bamarni/composer-bin-plugin": "^1.0",
+        "phpunit/phpunit": "^5.5",
+        "symfony/phpunit-bridge": "^3.1"
     },
     "suggest": {
         "doctrine/orm": "To use Doctrine ORM"
-    },
-    "scripts": {
-        "post-install-cmd": ["@composer bin all install --ansi"]
     },
     "autoload": {
         "psr-4": { "Fidry\\AliceDataFixtures\\": "src" }

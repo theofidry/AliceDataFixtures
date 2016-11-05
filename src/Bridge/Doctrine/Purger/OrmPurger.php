@@ -23,8 +23,10 @@ use Nelmio\Alice\NotClonableTrait;
  * Bridge for Doctrine ORM purger.
  *
  * @author Vincent CHALAMON <vincentchalamon@gmail.com>
+ *
+ * @final
  */
-final class OrmPurger implements PurgerInterface, PurgerFactoryInterface
+/*final*/ class OrmPurger implements PurgerInterface, PurgerFactoryInterface
 {
     use NotClonableTrait;
 

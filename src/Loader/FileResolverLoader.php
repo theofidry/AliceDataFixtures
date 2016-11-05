@@ -19,8 +19,10 @@ use Nelmio\Alice\NotClonableTrait;
  * Decorates another loader to resolve files before loading them.
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
+ *
+ * @final
  */
-final class FileResolverLoader implements LoaderInterface
+/*final*/ class FileResolverLoader implements LoaderInterface
 {
     use NotClonableTrait;
 

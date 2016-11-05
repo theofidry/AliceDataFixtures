@@ -31,8 +31,11 @@ class DoctrineKernel extends Kernel
             new NelmioAliceBundle(),
             new FidryAliceDataFixturesBundle(),
             new DoctrineBundle(),
-            new PsyshBundle(),
         ];
+
+        if (class_exists('Fidry\PsyshBundle\PsyshBundle')) {
+            $bundles[] = new PsyshBundle();
+        }
 
         return $bundles;
     }
