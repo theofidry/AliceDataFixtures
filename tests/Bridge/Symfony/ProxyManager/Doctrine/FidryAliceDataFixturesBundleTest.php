@@ -19,6 +19,7 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundleTest as N
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
 use Fidry\AliceDataFixtures\Loader\PersisterLoader;
 use Fidry\AliceDataFixtures\Loader\PurgerLoader;
+use Fidry\AliceDataFixtures\Util;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -35,7 +36,10 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
 
     public function setUp()
     {
-        $this->kernel = new DoctrineKernel('doctrine', true);
+        $this->kernel = new DoctrineKernel(
+            Util::normalize(get_called_class()).__FUNCTION__,
+            true
+        );
         $this->kernel->boot();
     }
 

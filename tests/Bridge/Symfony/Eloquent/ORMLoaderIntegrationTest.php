@@ -16,6 +16,7 @@ namespace Fidry\AlicePersistence\Bridge\Symfony\Eloquent;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\EloquentKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
+use Fidry\AliceDataFixtures\Util;
 use Illuminate\Database\DatabaseManager;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -45,7 +46,10 @@ class ORMLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->kernel = new EloquentKernel('eloquent', true);
+        $this->kernel = new EloquentKernel(
+            Util::normalize(get_called_class()).__FUNCTION__,
+            true
+        );
         $this->kernel->boot();
         $this->kernel->getContainer()->get('wouterj_eloquent.initializer')->initialize();
         $this->kernel->getContainer()->get('wouterj_eloquent')->setAsGlobal();

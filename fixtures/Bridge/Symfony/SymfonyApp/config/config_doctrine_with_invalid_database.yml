@@ -1,0 +1,26 @@
+#
+# This file is part of the Fidry\AliceDataFixtures package.
+#
+# (c) Théo FIDRY <theo.fidry@gmail.com>
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+#
+
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver: pdo_mysql
+                dbname: unknown
+                user: root
+                password: ~
+    orm:
+        auto_mapping: true
+        mappings:
+            fixture_entities:
+                type: xml
+                dir: '%kernel.root_dir%/config/doctrine'
+                is_bundle: false
+                prefix: Fidry\AliceDataFixtures\Bridge\Symfony\Entity

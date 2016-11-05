@@ -13,12 +13,9 @@ declare(strict_types = 1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\Doctrine;
 
-use Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister;
-use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\OrmPurger;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundleTest as NakedFidryAliceDataFixturesBundleTest;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
-use Fidry\AliceDataFixtures\Loader\PersisterLoader;
-use Fidry\AliceDataFixtures\Loader\PurgerLoader;
+use Fidry\AliceDataFixtures\Util;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -35,7 +32,10 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
 
     public function setUp()
     {
-        $this->kernel = new DoctrineKernel('doctrine', true);
+        $this->kernel = new DoctrineKernel(
+            Util::normalize(get_called_class()).__FUNCTION__,
+            true
+        );
         $this->kernel->boot();
     }
 
@@ -48,24 +48,24 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
     {
         parent::testServiceRegistration();
 
-        $this->assertInstanceOf(
-            OrmPurger::class,
-            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.persistence.purger.doctrine.orm_purger')
+        $this->assertServiceIsInstanceOf(
+            \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\OrmPurger::class,
+            'fidry_alice_data_fixtures.persistence.purger.doctrine.orm_purger'
         );
 
-        $this->assertInstanceOf(
-            ObjectManagerPersister::class,
-            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister')
+        $this->assertServiceIsInstanceOf(
+            \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister::class,
+            'fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister'
         );
 
-        $this->assertInstanceOf(
-            PersisterLoader::class,
-            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.doctrine.persister_loader')
+        $this->assertServiceIsInstanceOf(
+            \Fidry\AliceDataFixtures\Loader\PersisterLoader::class,
+            'fidry_alice_data_fixtures.doctrine.persister_loader'
         );
 
-        $this->assertInstanceOf(
-            PurgerLoader::class,
-            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.doctrine.purger_loader')
+        $this->assertServiceIsInstanceOf(
+            \Fidry\AliceDataFixtures\Loader\PurgerLoader::class,
+            'fidry_alice_data_fixtures.doctrine.purger_loader'
         );
     }
 }

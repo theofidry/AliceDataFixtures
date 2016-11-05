@@ -13,12 +13,9 @@ declare(strict_types = 1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\Eloquent;
 
-use Fidry\AliceDataFixtures\Bridge\Eloquent\Persister\ModelPersister;
-use Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundleTest as NakedFidryAliceDataFixturesBundleTest;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\EloquentKernel;
-use Fidry\AliceDataFixtures\Loader\PersisterLoader;
-use Fidry\AliceDataFixtures\Loader\PurgerLoader;
+use Fidry\AliceDataFixtures\Util;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -35,7 +32,10 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
 
     public function setUp()
     {
-        $this->kernel = new EloquentKernel('eloquent', true);
+        $this->kernel = new EloquentKernel(
+            Util::normalize(get_called_class()).__FUNCTION__,
+            true
+        );
         $this->kernel->boot();
     }
 
@@ -48,24 +48,24 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
     {
         parent::testServiceRegistration();
 
-        $this->assertInstanceOf(
-            ModelPurger::class,
-            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.persistence.purger.eloquent.model_purger')
+        $this->assertServiceIsInstanceOf(
+            \Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger::class,
+            'fidry_alice_data_fixtures.persistence.purger.eloquent.model_purger'
         );
 
-        $this->assertInstanceOf(
-            ModelPersister::class,
-            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.persistence.persister.eloquent.model_persister')
+        $this->assertServiceIsInstanceOf(
+            \Fidry\AliceDataFixtures\Bridge\Eloquent\Persister\ModelPersister::class,
+            'fidry_alice_data_fixtures.persistence.persister.eloquent.model_persister'
         );
 
-        $this->assertInstanceOf(
-            PersisterLoader::class,
-            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.eloquent.persister_loader')
+        $this->assertServiceIsInstanceOf(
+            \Fidry\AliceDataFixtures\Loader\PersisterLoader::class,
+            'fidry_alice_data_fixtures.eloquent.persister_loader'
         );
 
-        $this->assertInstanceOf(
-            PurgerLoader::class,
-            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.eloquent.purger_loader')
+        $this->assertServiceIsInstanceOf(
+            \Fidry\AliceDataFixtures\Loader\PurgerLoader::class,
+            'fidry_alice_data_fixtures.eloquent.purger_loader'
         );
     }
 }

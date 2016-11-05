@@ -20,8 +20,10 @@ use Nelmio\Alice\NotClonableTrait;
 
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
+ *
+ * @final
  */
-final class ModelPersister implements PersisterInterface
+/*final*/ class ModelPersister implements PersisterInterface
 {
     use NotClonableTrait;
 

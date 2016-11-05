@@ -10,7 +10,7 @@
         "doctrine/orm": "^2.5",
         "symfony/symfony": "^3.1",
         "theofidry/composer-inheritance-plugin": "^1.0@dev",
-        "theofidry/psysh-bundle": "^2.0@dev",
+        "theofidry/psysh-bundle": "^2.0",
         "wouterj/eloquent-bundle": "^1.0@dev"
     },
     "config": {
