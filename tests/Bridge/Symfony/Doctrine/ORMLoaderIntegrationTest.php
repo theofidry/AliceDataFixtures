@@ -20,6 +20,7 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Group;
 use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\User;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
+use Fidry\AliceDataFixtures\Util;
 
 /**
  * @coversNothing
@@ -45,7 +46,10 @@ class ORMLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->kernel = new DoctrineKernel('doctrine', true);
+        $this->kernel = new DoctrineKernel(
+            Util::normalize(get_called_class()).__FUNCTION__,
+            true
+        );
         $this->kernel->boot();
 
         $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.doctrine.persister_loader');

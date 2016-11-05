@@ -1,0 +1,19 @@
+#
+# This file is part of the Fidry\AliceDataFixtures package.
+#
+# (c) Théo FIDRY <theo.fidry@gmail.com>
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+#
+
+wouterj_eloquent:
+    connections:
+        default:
+            driver: mysql
+            host: localhost
+            database: unknown
+            username: root
+            password:
+            prefix: ~
+    eloquent: true

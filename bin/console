@@ -46,7 +46,7 @@ $serverArgs = array_values($serverArgs);
 $kernelClass = 'Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\\'.$kernelInput;
 
 $input = new ArgvInput();
-$env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: $kernelInput);
+$env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'console'.$kernelInput);
 $debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('--no-debug', '')) && $env !== 'prod';
 
 if ($debug) {

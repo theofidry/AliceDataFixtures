@@ -15,8 +15,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony;
 
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\InvalidKernel;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\NakedKernel;
-use Fidry\AliceDataFixtures\Loader\MultiPassLoader;
-use Fidry\AliceDataFixtures\Loader\SimpleLoader;
+use Fidry\AliceDataFixtures\Util;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -37,7 +36,10 @@ class FidryAliceDataFixturesBundleTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->kernel = new NakedKernel('InvalidKernel', true);
+        $this->kernel = new NakedKernel(
+            Util::normalize(get_called_class()).__FUNCTION__,
+            true
+        );
         $this->kernel->boot();
     }
 
@@ -48,14 +50,14 @@ class FidryAliceDataFixturesBundleTest extends \PHPUnit_Framework_TestCase
 
     public function testServiceRegistration()
     {
-        $this->assertInstanceOf(
-            MultiPassLoader::class,
-            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.multipass_file')
+        $this->assertServiceIsInstanceOf(
+            \Fidry\AliceDataFixtures\Loader\MultiPassLoader::class,
+            'fidry_alice_data_fixtures.loader.multipass_file'
         );
 
-        $this->assertInstanceOf(
-            SimpleLoader::class,
-            $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.simple_file')
+        $this->assertServiceIsInstanceOf(
+            \Fidry\AliceDataFixtures\Loader\SimpleLoader::class,
+            'fidry_alice_data_fixtures.loader.simple_file'
         );
     }
 
@@ -65,8 +67,19 @@ class FidryAliceDataFixturesBundleTest extends \PHPUnit_Framework_TestCase
      */
     public function testCannotBootIfNelmioAliceBundleIsNotRegistered()
     {
-        $kernel = new InvalidKernel('NewInvalidKernel', true);
+        $kernel = new InvalidKernel(
+            Util::normalize(get_called_class()).__FUNCTION__,
+            true
+        );
         $kernel->boot();
         $kernel->shutdown();
+    }
+
+    final protected function assertServiceIsInstanceOf(string $serviceClass, string $serviceId)
+    {
+        $this->assertInstanceOf(
+            $serviceClass,
+            $this->kernel->getContainer()->get($serviceId)
+        );
     }
 }

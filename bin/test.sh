@@ -82,3 +82,8 @@ rm -rf fixtures/Bridge/Symfony/cache/*
 php bin/console eloquent:migrate:install -k=EloquentKernel
 
 $PHPUNI_PREFIX vendor-bin/proxy-manager/bin/phpunit -c phpunit_symfony_proxy_manager_with_eloquent.xml.dist $PHPUNIT_FLAGS
+
+
+log "Cleanup"
+rm -rf fixtures/Bridge/Symfony/cache/*
+refreshDatabase

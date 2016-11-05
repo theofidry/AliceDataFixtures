@@ -23,6 +23,7 @@
             <directory>tests/Bridge/Symfony</directory>
             <exclude>tests/Bridge/Symfony/Doctrine</exclude>
             <exclude>tests/Bridge/Symfony/Eloquent</exclude>
+            <exclude>tests/Bridge/Symfony/ProxyManager</exclude>
         </testsuite>
     </testsuites>
 
@@ -30,7 +31,8 @@
         <whitelist>
             <directory>src/Bridge/Symfony</directory>
             <exclude>tests/Bridge/Symfony/Doctrine</exclude>
-            <exclude>tests/Bridge/Symfony/Eloquent</exclude><exclude></exclude>
+            <exclude>tests/Bridge/Symfony/Eloquent</exclude>
+            <exclude>tests/Bridge/Symfony/ProxyManager</exclude>
         </whitelist>
     </filter>
 

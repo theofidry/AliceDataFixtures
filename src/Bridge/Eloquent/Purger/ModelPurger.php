@@ -22,8 +22,10 @@ use Nelmio\Alice\NotClonableTrait;
 
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
+ *
+ * @final
  */
-final class ModelPurger implements PurgerInterface, PurgerFactoryInterface
+/*final*/ class ModelPurger implements PurgerInterface, PurgerFactoryInterface
 {
     use NotClonableTrait;
 
