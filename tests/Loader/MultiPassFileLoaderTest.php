@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\Alice\Exception\RootLoadingException;
@@ -260,9 +262,7 @@ class MultiPassFileLoaderTest extends TestCase
             $this->assertContains(<<<EOF
 Loading files limit of 15 reached. Could not load the following files:
 foo:
- - Nelmio\Alice\Exception\Generator\Resolver\UnresolvableValueDuringGenerationException: hello in /Users/Theo/Sites/GitHub/Alice/AliceDataFixtures/tests/Loader/MultiPassFileLoaderTest.php:249
-Stack trace:
-#0 [internal function]: Fidry\AliceDataFixtures\Loader\MultiPassFileLoaderTest->testIfFilesCannotBeReloadedTheLoadingStopsWhenTheLimitIsReached()
+ - Nelmio\Alice\Exception\Generator\Resolver\UnresolvableValueDuringGenerationException: hello in 
 EOF
                 , $exception->getMessage()
             );

@@ -9,10 +9,14 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Entity;
 
 /**
  * @Entity
+ *
+ * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class DummySubClass extends MappedSuperclassDummy
 {

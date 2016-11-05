@@ -9,10 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Fidry\AlicePersistence\Bridge\Symfony\Eloquent;
 
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
-use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\EloquentKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Illuminate\Database\DatabaseManager;

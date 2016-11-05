@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\Exception\MaxPassReachedException;
