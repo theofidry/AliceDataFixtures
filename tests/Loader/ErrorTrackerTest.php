@@ -28,18 +28,18 @@ class ErrorTrackerTest extends \PHPUnit_Framework_TestCase
     public function testKeepsTrackOfErrors()
     {
         $tracker = new ErrorTracker();
-        $tracker->register('foo', new \Exception($message0 = 'foo exception'));
-        $tracker->register('bar', new \Exception($message1 = 'bar exception 0'));
-        $tracker->register('bar', new \Exception($message2 = 'bar exception 1'));
+        $tracker->register('foo', $exception0 = new \Exception('foo exception'));
+        $tracker->register('bar', $exception1 = new \Exception('bar exception 0'));
+        $tracker->register('bar', $exception2 = new \Exception('bar exception 1'));
 
         $this->assertEquals(
             [
                 'foo' => [
-                    $message0,
+                    $exception0,
                 ],
                 'bar' => [
-                    $message1,
-                    $message2,
+                    $exception1,
+                    $exception2,
                 ]
             ],
             $tracker->getStack()
