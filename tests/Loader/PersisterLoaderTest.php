@@ -89,14 +89,14 @@ class PersisterLoaderTest extends TestCase
         $persister = $persisterProphecy->reveal();
 
         $firstProcessorProphecy = $this->prophesize(ProcessorInterface::class);
-        $firstProcessorProphecy->preProcess($dummy)->shouldBeCalled();
-        $firstProcessorProphecy->postProcess($dummy)->shouldBeCalled();
+        $firstProcessorProphecy->preProcess('dummy', $dummy)->shouldBeCalled();
+        $firstProcessorProphecy->postProcess('dummy', $dummy)->shouldBeCalled();
         /** @var ProcessorInterface $firstProcessor */
         $firstProcessor = $firstProcessorProphecy->reveal();
 
         $secondProcessorProphecy = $this->prophesize(ProcessorInterface::class);
-        $secondProcessorProphecy->preProcess($dummy)->shouldBeCalled();
-        $secondProcessorProphecy->postProcess($dummy)->shouldBeCalled();
+        $secondProcessorProphecy->preProcess('dummy', $dummy)->shouldBeCalled();
+        $secondProcessorProphecy->postProcess('dummy', $dummy)->shouldBeCalled();
         /** @var ProcessorInterface $secondProcessor */
         $secondProcessor = $secondProcessorProphecy->reveal();
 

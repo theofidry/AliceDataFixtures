@@ -75,17 +75,17 @@ use Nelmio\Alice\NotClonableTrait;
     {
         $objects = $this->loader->load($fixturesFiles, $parameters, $objects);
 
-        foreach ($objects as $object) {
+        foreach ($objects as $id => $object) {
             foreach ($this->processors as $processor) {
-                $processor->preProcess($object);
+                $processor->preProcess($id, $object);
             }
             $this->persister->persist($object);
         }
         $this->persister->flush();
 
-        foreach ($objects as $object) {
+        foreach ($objects as $id => $object) {
             foreach ($this->processors as $processor) {
-                $processor->postProcess($object);
+                $processor->postProcess($id, $object);
             }
         }
 
