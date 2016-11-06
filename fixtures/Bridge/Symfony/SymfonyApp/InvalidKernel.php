@@ -16,12 +16,11 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class InvalidKernel extends Kernel
+class InvalidKernel extends IsolatedKernel
 {
     public function registerBundles()
     {

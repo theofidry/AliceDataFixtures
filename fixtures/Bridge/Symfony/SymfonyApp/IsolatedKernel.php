@@ -11,15 +11,20 @@
 
 declare(strict_types = 1);
 
-namespace Fidry\AliceDataFixtures;
+namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
+
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class Util
+abstract class IsolatedKernel extends Kernel
 {
-    public static function normalize(string $class): string
+    /**
+     * @return static
+     */
+    public static function create()
     {
-        return str_replace('\\', '', $class);
+        return new static(uniqid(), true);
     }
 }

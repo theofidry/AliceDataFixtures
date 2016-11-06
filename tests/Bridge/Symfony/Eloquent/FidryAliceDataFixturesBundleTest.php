@@ -32,10 +32,7 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
 
     public function setUp()
     {
-        $this->kernel = new EloquentKernel(
-            Util::normalize(get_called_class()).__FUNCTION__,
-            true
-        );
+        $this->kernel = EloquentKernel::create();
         $this->kernel->boot();
     }
 
