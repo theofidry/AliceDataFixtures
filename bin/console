@@ -19,6 +19,7 @@ require_once __DIR__.'/../vendor-bin/symfony/vendor/autoload.php';
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 $serverArgs = &$_SERVER['argv'];
 $kernelInput = 'NakedKernel';
@@ -46,7 +47,7 @@ $serverArgs = array_values($serverArgs);
 $kernelClass = 'Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\\'.$kernelInput;
 
 $input = new ArgvInput();
-$env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'console'.$kernelInput);
+$env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: uniqid());
 $debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('--no-debug', '')) && $env !== 'prod';
 
 if ($debug) {
@@ -55,7 +56,9 @@ if ($debug) {
 
 error_reporting(E_ALL & ~E_USER_DEPRECATED);
 
+/** @var KernelInterface $kernel */
 $kernel = new $kernelClass($env, $debug);
 $application = new Application($kernel);
 
 $application->run($input);
+$kernel->shutdown();

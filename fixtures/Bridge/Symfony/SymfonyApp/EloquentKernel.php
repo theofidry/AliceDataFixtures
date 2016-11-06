@@ -18,13 +18,12 @@ use Fidry\PsyshBundle\PsyshBundle;
 use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\HttpKernel\Kernel;
 use WouterJ\EloquentBundle\WouterJEloquentBundle;
 
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class EloquentKernel extends Kernel
+class EloquentKernel extends IsolatedKernel
 {
     public function registerBundles()
     {

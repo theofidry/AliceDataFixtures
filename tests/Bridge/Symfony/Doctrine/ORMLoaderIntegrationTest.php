@@ -44,12 +44,21 @@ class ORMLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
      */
     private $doctrine;
 
+    /**
+     * @var int
+     */
+    private static $seed;
+
+    public static function setUpBeforeClass()
+    {
+        parent::setUpBeforeClass();
+
+        static::$seed = uniqid();
+    }
+
     public function setUp()
     {
-        $this->kernel = new DoctrineKernel(
-            Util::normalize(get_called_class()).__FUNCTION__,
-            true
-        );
+        $this->kernel = new DoctrineKernel(static::$seed, true);
         $this->kernel->boot();
 
         $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.doctrine.persister_loader');

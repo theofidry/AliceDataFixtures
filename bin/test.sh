@@ -57,7 +57,7 @@ refreshDatabase
 rm -rf fixtures/Bridge/Symfony/cache/*
 php bin/console d:s:c -k=DoctrineKernel
 
-vendor-bin/symfony/bin/phpunit -c phpunit_symfony_doctrine.xml.dist $PHPUNIT_FLAGS
+#vendor-bin/symfony/bin/phpunit -c phpunit_symfony_doctrine.xml.dist $PHPUNIT_FLAGS
 
 
 log "Symfony with Eloquent"

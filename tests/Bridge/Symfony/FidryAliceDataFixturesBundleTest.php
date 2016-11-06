@@ -15,7 +15,6 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony;
 
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\InvalidKernel;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\NakedKernel;
-use Fidry\AliceDataFixtures\Util;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -36,10 +35,7 @@ class FidryAliceDataFixturesBundleTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->kernel = new NakedKernel(
-            Util::normalize(get_called_class()).__FUNCTION__,
-            true
-        );
+        $this->kernel = NakedKernel::create();
         $this->kernel->boot();
     }
 
@@ -67,10 +63,7 @@ class FidryAliceDataFixturesBundleTest extends \PHPUnit_Framework_TestCase
      */
     public function testCannotBootIfNelmioAliceBundleIsNotRegistered()
     {
-        $kernel = new InvalidKernel(
-            Util::normalize(get_called_class()).__FUNCTION__,
-            true
-        );
+        $kernel = InvalidKernel::create();
         $kernel->boot();
         $kernel->shutdown();
     }
