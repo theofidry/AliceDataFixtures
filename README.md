@@ -28,15 +28,15 @@ AliceDataFixtures
 You can use [Composer](https://getcomposer.org/) to install the library to your project:
 
 ```bash
-composer require --dev "theofidry/alice-data-fixtures:^1.0@dev"
+composer require --dev "theofidry/alice-data-fixtures:^1.0@beta" "nelmio/alice:^3.0@beta"
 
 # with Doctrine
-composer require --dev "theofidry/alice-data-fixtures:^1.0@dev" \
+composer require --dev "theofidry/alice-data-fixtures:^1.0@beta" \
   doctrine/orm:^2.5 \
   doctrine/data-fixtures
 
 # with Eloquent
-composer require --dev "theofidry/alice-data-fixtures:^1.0@dev" \
+composer require --dev "theofidry/alice-data-fixtures:^1.0@beta" \
   illuminate/database:~5.3.0
 ```
 
