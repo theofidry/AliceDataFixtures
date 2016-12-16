@@ -16,7 +16,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Persister;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Model;
-use Nelmio\Alice\NotClonableTrait;
+use Nelmio\Alice\IsAServiceTrait;
 
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
@@ -25,7 +25,7 @@ use Nelmio\Alice\NotClonableTrait;
  */
 /*final*/ class ModelPersister implements PersisterInterface
 {
-    use NotClonableTrait;
+    use IsAServiceTrait;
 
     /**
      * @var DatabaseManager

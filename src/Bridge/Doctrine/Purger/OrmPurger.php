@@ -19,7 +19,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
-use Nelmio\Alice\NotClonableTrait;
+use Nelmio\Alice\IsAServiceTrait;
 
 /**
  * Bridge for Doctrine ORM purger.
@@ -30,7 +30,7 @@ use Nelmio\Alice\NotClonableTrait;
  */
 /*final*/ class OrmPurger implements PurgerInterface, PurgerFactoryInterface
 {
-    use NotClonableTrait;
+    use IsAServiceTrait;
 
     /**
      * @var EntityManagerInterface

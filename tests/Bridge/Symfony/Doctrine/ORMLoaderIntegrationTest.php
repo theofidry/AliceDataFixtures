@@ -20,7 +20,6 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Group;
 use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\User;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
-use Fidry\AliceDataFixtures\Util;
 
 /**
  * @coversNothing

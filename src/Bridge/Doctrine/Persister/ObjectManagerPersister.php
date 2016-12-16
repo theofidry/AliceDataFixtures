@@ -15,7 +15,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
-use Nelmio\Alice\NotClonableTrait;
+use Nelmio\Alice\IsAServiceTrait;
 
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
@@ -24,7 +24,7 @@ use Nelmio\Alice\NotClonableTrait;
  */
 /*final*/ class ObjectManagerPersister implements PersisterInterface
 {
-    use NotClonableTrait;
+    use IsAServiceTrait;
 
     /**
      * @var ObjectManager

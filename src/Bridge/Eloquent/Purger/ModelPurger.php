@@ -18,7 +18,7 @@ use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
-use Nelmio\Alice\NotClonableTrait;
+use Nelmio\Alice\IsAServiceTrait;
 
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
@@ -27,7 +27,7 @@ use Nelmio\Alice\NotClonableTrait;
  */
 /*final*/ class ModelPurger implements PurgerInterface, PurgerFactoryInterface
 {
-    use NotClonableTrait;
+    use IsAServiceTrait;
 
     /**
      * @var Migrator

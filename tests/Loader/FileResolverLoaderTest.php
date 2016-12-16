@@ -33,7 +33,7 @@ class FileResolverLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException \DomainException
+     * @expectedException \Nelmio\Alice\Throwable\Exception\UnclonableException
      */
     public function testIsNotClonable()
     {
