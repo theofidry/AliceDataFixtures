@@ -63,6 +63,14 @@ class ObjectManagerPersisterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException \Nelmio\Alice\Throwable\Exception\UnclonableException
+     */
+    public function testIsNotClonable()
+    {
+        clone $this->persister;
+    }
+
+    /**
      * @dataProvider provideEntities
      */
     public function testCanPersistAnEntity($entity)

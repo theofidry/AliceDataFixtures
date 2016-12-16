@@ -17,11 +17,11 @@ use Fidry\AliceDataFixtures\Alice\Exception\RootLoadingException;
 use Fidry\AliceDataFixtures\Alice\Loader\FakeFileLoader;
 use Fidry\AliceDataFixtures\Exception\MaxPassReachedException;
 use Fidry\AliceDataFixtures\LoaderInterface;
-use Nelmio\Alice\Exception\Generator\Resolver\UnresolvableValueDuringGenerationException;
 use Nelmio\Alice\FileLoaderInterface;
 use Nelmio\Alice\ObjectBag;
 use Nelmio\Alice\ObjectSet;
 use Nelmio\Alice\ParameterBag;
+use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringGenerationException;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 
@@ -41,7 +41,7 @@ class MultiPassFileLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException \DomainException
+     * @expectedException \Nelmio\Alice\Throwable\Exception\UnclonableException
      */
     public function testIsNotClonable()
     {
@@ -262,7 +262,7 @@ class MultiPassFileLoaderTest extends TestCase
             $this->assertContains(<<<EOF
 Loading files limit of 15 reached. Could not load the following files:
 foo:
- - Nelmio\Alice\Exception\Generator\Resolver\UnresolvableValueDuringGenerationException: hello in 
+ - Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringGenerationException: hello in
 EOF
                 , $exception->getMessage()
             );

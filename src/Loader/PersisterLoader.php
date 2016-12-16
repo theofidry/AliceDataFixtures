@@ -17,7 +17,7 @@ use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\PersisterAwareInterface;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\ProcessorInterface;
-use Nelmio\Alice\NotClonableTrait;
+use Nelmio\Alice\IsAServiceTrait;
 
 /**
  * Loader decorating another loader to add a persistence layer.
@@ -29,7 +29,7 @@ use Nelmio\Alice\NotClonableTrait;
  */
 /*final*/ class PersisterLoader implements LoaderInterface, PersisterAwareInterface
 {
-    use NotClonableTrait;
+    use IsAServiceTrait;
 
     /**
      * @var LoaderInterface

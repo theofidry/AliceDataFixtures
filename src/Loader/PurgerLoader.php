@@ -16,7 +16,7 @@ namespace Fidry\AliceDataFixtures\Loader;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
-use Nelmio\Alice\NotClonableTrait;
+use Nelmio\Alice\IsAServiceTrait;
 
 /**
  * Loader decorating another loader to purge the database before loading.
@@ -27,7 +27,7 @@ use Nelmio\Alice\NotClonableTrait;
  */
 /*final*/ class PurgerLoader implements LoaderInterface
 {
-    use NotClonableTrait;
+    use IsAServiceTrait;
 
     const PURGE_MODE_DELETE = 1;
     const PURGE_MODE_TRUNCATE = 2;

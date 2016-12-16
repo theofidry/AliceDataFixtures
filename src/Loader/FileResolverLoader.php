@@ -15,7 +15,7 @@ namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\FileResolverInterface;
-use Nelmio\Alice\NotClonableTrait;
+use Nelmio\Alice\IsAServiceTrait;
 
 /**
  * Decorates another loader to resolve files before loading them.
@@ -26,7 +26,7 @@ use Nelmio\Alice\NotClonableTrait;
  */
 /*final*/ class FileResolverLoader implements LoaderInterface
 {
-    use NotClonableTrait;
+    use IsAServiceTrait;
 
     /**
      * @var LoaderInterface

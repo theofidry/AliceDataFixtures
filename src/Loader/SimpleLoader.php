@@ -15,7 +15,7 @@ namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Nelmio\Alice\FileLoaderInterface;
-use Nelmio\Alice\NotClonableTrait;
+use Nelmio\Alice\IsAServiceTrait;
 use Nelmio\Alice\ObjectBag;
 use Nelmio\Alice\ObjectSet;
 use Nelmio\Alice\ParameterBag;
@@ -30,7 +30,7 @@ use Nelmio\Alice\ParameterBag;
  */
 /*final*/ class SimpleLoader implements LoaderInterface
 {
-    use NotClonableTrait;
+    use IsAServiceTrait;
 
     /**
      * @var FileLoaderInterface
