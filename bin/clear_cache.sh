@@ -9,4 +9,4 @@
 # file that was distributed with this source code.
 #
 
-rm -rf fixtures/Bridge/Symfony/cache/*
+rm -rf fixtures/Bridge/Symfony/SymfonyApp/cache/*
