@@ -14,9 +14,12 @@ declare(strict_types = 1);
 namespace Fidry\AliceDataFixtures\Persistence\Persister;
 
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use Nelmio\Alice\IsAServiceTrait;
 
 final class NullPersister implements PersisterInterface
 {
+    use IsAServiceTrait;
+
     /**
      * @inheritdoc
      */
