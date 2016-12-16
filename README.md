@@ -67,7 +67,7 @@ public function registerBundles()
 
     if (in_array($this->getEnvironment(), ['dev', 'test'])) {
         //...
-        $bundles[] = new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
+        $bundles[] = new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle();
         $bundles[] = new Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle();
     }
 
@@ -96,7 +96,7 @@ public function registerBundles()
 
     if (in_array($this->getEnvironment(), ['dev', 'test'])) {
         //...
-        $bundles[] = new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
+        $bundles[] = new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle();
         $bundles[] = new Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle();
     }
 
