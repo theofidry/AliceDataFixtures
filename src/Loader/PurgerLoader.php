@@ -55,13 +55,23 @@ use Nelmio\Alice\IsAServiceTrait;
      *
      * {@inheritdoc}
      */
-    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
-    {
-        if (null === $purgeMode) {
-            $purgeMode = PurgeMode::createDeleteMode();
+    public function load(
+        array $fixturesFiles,
+        array $parameters = [],
+        array $objects = [],
+        PurgeMode $purgeMode = null
+    ): array {
+        if (null !== $purgeMode) {
+            $purger = $this->purgerFactory->create($purgeMode);
+        } else {
+            if ($this->purgerFactory instanceof PurgerFactoryInterface) {
+                $purger = $this->purgerFactory;
+            } else {
+                $purgeMode = PurgeMode::createDeleteMode();
+                $purger = $this->purgerFactory->create($purgeMode);
+            }
         }
 
-        $purger = $this->purgerFactory->create($purgeMode);
         $purger->purge();
 
         return $this->loader->load($fixturesFiles, $parameters, $objects);
