@@ -22,14 +22,14 @@
         <service id="fidry_alice_data_fixtures.persistence.purger.doctrine.orm_purger"
                  class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\OrmPurger"
                  lazy="true">
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="fidry_alice_data_fixtures.persistence.purger_mode" />
         </service>
 
         <service id="fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister"
                  class="Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister"
                  lazy="true">
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
 
         <service id="fidry_alice_data_fixtures.doctrine.persister_loader"
