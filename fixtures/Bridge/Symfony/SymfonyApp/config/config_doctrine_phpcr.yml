@@ -1,0 +1,38 @@
+#
+# This file is part of the Fidry\AliceDataFixtures package.
+#
+# (c) Théo FIDRY <theo.fidry@gmail.com>
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+#
+
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver: pdo_mysql
+                dbname: fidry_alice_data_fixtures
+                user: root
+                password: ~
+
+doctrine_phpcr:
+    session:
+        backend:
+            type: doctrinedbal
+        workspace: default
+        username: admin
+        password: admin
+    odm:
+        auto_mapping: true
+        mappings:
+            fixture_documents:
+                type: xml
+                dir: '%kernel.root_dir%/config/doctrine'
+                is_bundle: false
+                prefix: Fidry\AliceDataFixtures\Bridge\Symfony\PhpCrDocument
+
+fidry_alice_data_fixtures:
+    db_drivers:
+        doctrine_orm: false

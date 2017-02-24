@@ -11,6 +11,7 @@ php:
 
 services:
   - mysql
+  - mongodb
 
 branches:
     only:
@@ -42,10 +43,8 @@ before_install:
   - set -eo pipefail
   - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - phpenv config-rm xdebug.ini || true
-  - if [ "$TRAVIS_PHP_VERSION" = "nightly" ]; then
-        COMPOSER_FLAGS="$COMPOSER_FLAGS --ignore-platform-reqs";
-    fi
   - PHPUNIT_FLAGS='--stop-on-failure --verbose'
+  - pecl install -f mongodb-stable
 
 install:
   - composer update --prefer-dist $COMPOSER_FLAGS
@@ -63,7 +62,7 @@ install:
         composer bin symfony require --dev --no-update "doctrine/orm:${DOCTRINE_VERSION}";
         composer bin proxy-manager require --dev --no-update "doctrine/orm:${DOCTRINE_VERSION}";
     fi
-  - composer bin all update --prefer-dist $COMPOSER_FLAGS
+  - composer bin all update --prefer-dist --ignore-platform-reqs $COMPOSER_FLAGS
 
 script: bin/test.sh
 

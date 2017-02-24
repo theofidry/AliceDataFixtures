@@ -1,0 +1,20 @@
+<!--
+  ~ This file is part of the Fidry\AliceDataFixtures package.
+  ~
+  ~ (c) Théo FIDRY <theo.fidry@gmail.com>
+  ~
+  ~ For the full copyright and license information, please view the LICENSE
+  ~ file that was distributed with this source code.
+  -->
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/phpcr-odm/phpcr-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/phpcr-odm/phpcr-mapping
+                  https://github.com/doctrine/phpcr-odm/raw/master/doctrine-phpcr-odm-mapping.xsd">
+
+    <document name="Fidry\AliceDataFixtures\Bridge\Symfony\PhpCrDocument\Dummy">
+        <id name="id">
+            <generator strategy="ASSIGNED" />
+        </id>
+    </document>
+
+</doctrine-mapping>

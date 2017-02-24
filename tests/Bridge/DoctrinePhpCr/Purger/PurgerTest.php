@@ -11,29 +11,30 @@
 
 declare(strict_types = 1);
 
-namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
+namespace Fidry\AliceDataFixtures\Bridge\DoctrinePhpCr\Purger;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
-use Doctrine\ORM\EntityManager;
-use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
-use Fidry\AliceDataFixtures\Bridge\Doctrine\ORM\FakeEntityManager;
+use Doctrine\Common\DataFixtures\Purger\PHPCRPurger;
+use Doctrine\ODM\PHPCR\DocumentManager;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\Dummy;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 
 /**
- * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\OrmPurger
+ * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger
  */
-class OrmPurgerTest extends \PHPUnit_Framework_TestCase
+class PurgerTest extends \PHPUnit_Framework_TestCase
 {
     public function testIsAPurger()
     {
-        $this->assertTrue(is_a(OrmPurger::class, PurgerInterface::class, true));
+        $this->assertTrue(is_a(Purger::class, PurgerInterface::class, true));
     }
 
     public function testIsAPurgerFactory()
     {
-        $this->assertTrue(is_a(OrmPurger::class, PurgerFactoryInterface::class, true));
+        $this->assertTrue(is_a(Purger::class, PurgerFactoryInterface::class, true));
     }
 
     /**
@@ -41,43 +42,43 @@ class OrmPurgerTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsNotClonable()
     {
-        clone new OrmPurger(new FakeEntityManager(), PurgeMode::createDeleteMode());
+        clone new Purger($this->prophesize(DocumentManager::class)->reveal());
     }
 
     public function testCreatesADoctrineOrmPurgerWithTheAppropriateManagerAndPurgeMode()
     {
-        $manager = new FakeEntityManager();
-        $purgeMode = PurgeMode::createTruncateMode();
-        $purger = new OrmPurger($manager, $purgeMode);
+        $manager = $this->prophesize(DocumentManager::class)->reveal();
+        $purger = new Purger($manager);
 
         $decoratedPurgerReflection = (new \ReflectionObject($purger))->getProperty('purger');
         $decoratedPurgerReflection->setAccessible(true);
         /** @var DoctrineOrmPurger $decoratedPurger */
         $decoratedPurger = $decoratedPurgerReflection->getValue($purger);
 
-        $this->assertInstanceOf(DoctrineOrmPurger::class, $decoratedPurger);
+        $this->assertInstanceOf(PHPCRPurger::class, $decoratedPurger);
         $this->assertEquals($manager, $decoratedPurger->getObjectManager());
-        $this->assertEquals(DoctrineOrmPurger::PURGE_MODE_TRUNCATE, $decoratedPurger->getPurgeMode());
     }
 
     public function testEmptyDatabase()
     {
-        /** @var EntityManager $manager */
-        $manager = $GLOBALS['entity_manager'];
+        /** @var DocumentManager $manager */
+        $manager = $GLOBALS['document_manager'];
 
         $dummy = new Dummy();
+        $dummy->id = '/dummy_'.uniqid();
         $manager->persist($dummy);
         $manager->flush();
 
         $this->assertEquals(1, count($manager->getRepository(Dummy::class)->findAll()));
 
-        $purger = new OrmPurger($manager, PurgeMode::createDeleteMode());
+        $purger = new Purger($manager, PurgeMode::createDeleteMode());
         $purger->purge();
 
         $this->assertEquals(0, count($manager->getRepository(Dummy::class)->findAll()));
 
         // Ensures the schema has been restored
         $dummy = new Dummy();
+        $dummy->id = '/dummy_'.uniqid();
         $manager->persist($dummy);
         $manager->flush();
         $this->assertEquals(1, count($manager->getRepository(Dummy::class)->findAll()));

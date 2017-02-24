@@ -73,12 +73,12 @@ use Nelmio\Alice\IsAServiceTrait;
      */
     public function purge()
     {
-        $this->migrator->reset($this->migrationPath);
+        $this->migrator->reset([$this->migrationPath]);
 
         if (false === $this->repository->repositoryExists()) {
             $this->repository->createRepository();
         }
 
-        $this->migrator->run($this->migrationPath);
+        $this->migrator->run([$this->migrationPath]);
     }
 }

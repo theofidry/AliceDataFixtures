@@ -1,0 +1,44 @@
+<!--
+  ~ This file is part of the Fidry\AliceDataFixtures package.
+  ~
+  ~ (c) Théo FIDRY <theo.fidry@gmail.com>
+  ~
+  ~ For the full copyright and license information, please view the LICENSE
+  ~ file that was distributed with this source code.
+  -->
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="fidry_alice_data_fixtures.persistence.purger.doctrine_phpcr.odm_purger"
+                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger"
+                 lazy="true">
+            <argument type="service" id="doctrine_phpcr.odm.document_manager" />
+        </service>
+
+        <service id="fidry_alice_data_fixtures.persistence.persister.doctrine_phpcr.object_manager_persister"
+                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister"
+                 lazy="true">
+            <argument type="service" id="doctrine_phpcr.odm.document_manager" />
+        </service>
+
+        <service id="fidry_alice_data_fixtures.doctrine_phpcr.persister_loader"
+                 class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
+                 lazy="true" >
+            <argument type="service" id="fidry_alice_data_fixtures.loader.multipass_file" />
+            <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.doctrine_phpcr.object_manager_persister" />
+            <!-- Processors are injected via a Compiler pass -->
+        </service>
+
+        <service id="fidry_alice_data_fixtures.doctrine_phpcr.purger_loader"
+                 class="Fidry\AliceDataFixtures\Loader\PurgerLoader"
+                 lazy="true" >
+            <argument type="service" id="fidry_alice_data_fixtures.doctrine_phpcr.persister_loader" />
+            <argument type="service" id="fidry_alice_data_fixtures.persistence.purger.doctrine_phpcr.odm_purger" />
+        </service>
+
+    </services>
+
+</container>

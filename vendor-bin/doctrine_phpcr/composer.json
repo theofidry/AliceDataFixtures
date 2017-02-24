@@ -1,0 +1,14 @@
+{
+    "require-dev": {
+        "doctrine/data-fixtures": "^1.2",
+        "doctrine/dbal": "^2.5",
+        "doctrine/phpcr-odm": "^1.4",
+        "jackalope/jackalope-doctrine-dbal": "^1.2",
+        "symfony/console": "^2.5",
+        "theofidry/composer-inheritance-plugin": "^1.0@dev"
+    },
+    "config": {
+        "bin-dir": "bin",
+        "sort-packages": true
+    }
+}

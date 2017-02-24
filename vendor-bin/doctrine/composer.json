@@ -1,12 +1,4 @@
 {
-    "autoload": {
-        "psr-4": {
-            "Fidry\\AliceDataFixtures\\": [
-                "./../../fixtures",
-                "./../../tests"
-            ]
-        }
-    },
     "require-dev": {
         "doctrine/data-fixtures": "^1.2",
         "doctrine/orm": "^2.5",

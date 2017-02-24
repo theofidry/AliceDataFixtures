@@ -25,6 +25,10 @@ final class Configuration implements ConfigurationInterface
     /** @private */
     const DOCTRINE_ORM_DRIVER = 'doctrine_orm';
     /** @private */
+    const DOCTRINE_MONGODB_ODM_DRIVER = 'doctrine_mongodb_odm';
+    /** @private */
+    const DOCTRINE_PHPCR_ODM_DRIVER = 'doctrine_phpcr_odm';
+    /** @private */
     const ELOQUENT_ORM_DRIVER = 'eloquent_orm';
 
     /**
@@ -43,6 +47,12 @@ final class Configuration implements ConfigurationInterface
                     ->cannotBeOverwritten()
                     ->children()
                         ->booleanNode(self::DOCTRINE_ORM_DRIVER)
+                            ->defaultValue(null)
+                        ->end()
+                        ->booleanNode(self::DOCTRINE_MONGODB_ODM_DRIVER)
+                            ->defaultValue(null)
+                        ->end()
+                        ->booleanNode(self::DOCTRINE_PHPCR_ODM_DRIVER)
                             ->defaultValue(null)
                         ->end()
                         ->booleanNode(self::ELOQUENT_ORM_DRIVER)

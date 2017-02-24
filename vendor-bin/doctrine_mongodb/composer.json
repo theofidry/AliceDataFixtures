@@ -1,0 +1,13 @@
+{
+    "require-dev": {
+        "alcaeus/mongo-php-adapter": "^1.0.10",
+        "doctrine/data-fixtures": "^1.2",
+        "doctrine/mongodb": "^1.4",
+        "doctrine/mongodb-odm": "^1.1",
+        "theofidry/composer-inheritance-plugin": "^1.0@dev"
+    },
+    "config": {
+        "bin-dir": "bin",
+        "sort-packages": true
+    }
+}
