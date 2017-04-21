@@ -79,9 +79,12 @@ use Nelmio\Alice\IsAServiceTrait;
 
     /**
      * @inheritdoc
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function purge()
     {
+        $this->manager->getConnection()->prepare('SET FOREIGN_KEY_CHECKS = 0;')->execute();
         $this->purger->purge();
+        $this->manager->getConnection()->prepare('SET FOREIGN_KEY_CHECKS = 1;')->execute();
     }
 }
