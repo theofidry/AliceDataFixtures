@@ -27,6 +27,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $expected = [
             'db_drivers' => [
                 'doctrine_orm' => null,
+                'doctrine_mongodb_odm' => null,
+                'doctrine_phpcr_odm' => null,
                 'eloquent_orm' => null,
             ],
         ];
@@ -41,6 +43,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $expected = [
             'db_drivers' => [
                 'doctrine_orm' => true,
+                'doctrine_mongodb_odm' => false,
+                'doctrine_phpcr_odm' => false,
                 'eloquent_orm' => false,
             ],
         ];
@@ -50,6 +54,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'fidry_alice_data_fixtures' => [
                     'db_drivers' => [
                         'doctrine_orm' => true,
+                        'doctrine_mongodb_odm' => false,
+                        'doctrine_phpcr_odm' => false,
                         'eloquent_orm' => false,
                     ],
                 ],

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ This file is part of the Fidry\AliceDataFixtures package.
+  ~
+  ~ (c) Théo FIDRY <theo.fidry@gmail.com>
+  ~
+  ~ For the full copyright and license information, please view the LICENSE
+  ~ file that was distributed with this source code.
+  -->
+
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/5.5/phpunit.xsd"
+         bootstrap="tests/Bridge/DoctrineMongoDB/autoload.php"
+         colors="true"
+         forceCoversAnnotation="true"
+         beStrictAboutCoversAnnotation="true"
+         stopOnFailure="true"
+         verbose="true">
+
+    <testsuites>
+        <testsuite name="Test Suite">
+            <directory>tests/Bridge/DoctrineMongoDB</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>src/Bridge/Doctrine</directory>
+        </whitelist>
+    </filter>
+
+</phpunit>

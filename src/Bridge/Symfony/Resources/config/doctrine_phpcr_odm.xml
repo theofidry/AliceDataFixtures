@@ -12,39 +12,31 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-
-        <service id="fidry_alice_data_fixtures.persistence.purger_mode"
-                 class="Fidry\AliceDataFixtures\Persistence\PurgeMode"
-                 public="false">
-            <factory class="Fidry\AliceDataFixtures\Persistence\PurgeMode" method="createDeleteMode" />
-        </service>
-
-        <service id="fidry_alice_data_fixtures.persistence.purger.doctrine.orm_purger"
+        <service id="fidry_alice_data_fixtures.persistence.purger.doctrine_phpcr.odm_purger"
                  class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger"
                  lazy="true">
-            <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument type="service" id="fidry_alice_data_fixtures.persistence.purger_mode" />
+            <argument type="service" id="doctrine_phpcr.odm.document_manager" />
         </service>
 
-        <service id="fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister"
+        <service id="fidry_alice_data_fixtures.persistence.persister.doctrine_phpcr.object_manager_persister"
                  class="Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister"
                  lazy="true">
-            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="doctrine_phpcr.odm.document_manager" />
         </service>
 
-        <service id="fidry_alice_data_fixtures.doctrine.persister_loader"
+        <service id="fidry_alice_data_fixtures.doctrine_phpcr.persister_loader"
                  class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
                  lazy="true" >
             <argument type="service" id="fidry_alice_data_fixtures.loader.multipass_file" />
-            <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister" />
+            <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.doctrine_phpcr.object_manager_persister" />
             <!-- Processors are injected via a Compiler pass -->
         </service>
 
-        <service id="fidry_alice_data_fixtures.doctrine.purger_loader"
+        <service id="fidry_alice_data_fixtures.doctrine_phpcr.purger_loader"
                  class="Fidry\AliceDataFixtures\Loader\PurgerLoader"
                  lazy="true" >
-            <argument type="service" id="fidry_alice_data_fixtures.doctrine.persister_loader" />
-            <argument type="service" id="fidry_alice_data_fixtures.persistence.purger.doctrine.orm_purger" />
+            <argument type="service" id="fidry_alice_data_fixtures.doctrine_phpcr.persister_loader" />
+            <argument type="service" id="fidry_alice_data_fixtures.persistence.purger.doctrine_phpcr.odm_purger" />
         </service>
 
     </services>

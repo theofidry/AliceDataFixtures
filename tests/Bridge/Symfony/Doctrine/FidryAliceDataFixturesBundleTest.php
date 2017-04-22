@@ -45,7 +45,7 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
         parent::testServiceRegistration();
 
         $this->assertServiceIsInstanceOf(
-            \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\OrmPurger::class,
+            \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger::class,
             'fidry_alice_data_fixtures.persistence.purger.doctrine.orm_purger'
         );
 

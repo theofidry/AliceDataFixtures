@@ -1,0 +1,16 @@
+<!--
+  ~ This file is part of the Fidry\AliceDataFixtures package.
+  ~
+  ~ (c) Théo FIDRY <theo.fidry@gmail.com>
+  ~
+  ~ For the full copyright and license information, please view the LICENSE
+  ~ file that was distributed with this source code.
+  -->
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                        http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+
+    <embedded-document name="Fidry\AliceDataFixtures\Bridge\Symfony\MongoDocument\DummyEmbeddable" />
+
+</doctrine-mongo-mapping>

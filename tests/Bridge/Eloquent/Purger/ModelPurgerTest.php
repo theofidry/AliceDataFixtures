@@ -63,8 +63,8 @@ class ModelPurgerTest extends \PHPUnit_Framework_TestCase
 
         /** @var Migrator|ObjectProphecy $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
-        $migratorProphecy->reset($migrationPath)->shouldBeCalled();
-        $migratorProphecy->run($migrationPath)->shouldBeCalled();
+        $migratorProphecy->reset([$migrationPath])->shouldBeCalled();
+        $migratorProphecy->run([$migrationPath])->shouldBeCalled();
         /** @var Migrator $migrator */
         $migrator = $migratorProphecy->reveal();
 
@@ -89,8 +89,8 @@ class ModelPurgerTest extends \PHPUnit_Framework_TestCase
 
         /** @var Migrator|ObjectProphecy $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
-        $migratorProphecy->reset($migrationPath)->shouldBeCalled();
-        $migratorProphecy->run($migrationPath)->shouldBeCalled();
+        $migratorProphecy->reset([$migrationPath])->shouldBeCalled();
+        $migratorProphecy->run([$migrationPath])->shouldBeCalled();
         /** @var Migrator $migrator */
         $migrator = $migratorProphecy->reveal();
 
