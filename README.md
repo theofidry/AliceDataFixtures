@@ -122,6 +122,8 @@ The full configuration reference is:
 fidry_alice_data_fixtures:
     db_drivers:
         doctrine_orm: ~
+        doctrine_mongodb_odm: ~
+        doctrine_phpcr_odm: ~
         eloquent_orm: ~
 ```
 
@@ -160,6 +162,8 @@ $files = [
 ];
 
 $loader = $container->get('fidry_alice_data_fixtures.doctrine.persister_loader'); // For Doctrine ORM
+$loader = $container->get('fidry_alice_data_fixtures.doctrine_mongodb.persister_loader'); // For Doctrine MongoDB ODM
+$loader = $container->get('fidry_alice_data_fixtures.doctrine_phpcr.persister_loader'); // For Doctrine PHPCR
 $loader = $container->get('fidry_alice_data_fixtures.eloquent.persister_loader'); // For Eloquent ORM
 $objects = $loader->load($files);
 
