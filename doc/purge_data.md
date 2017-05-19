@@ -36,5 +36,7 @@ Beware that the truncate will often fail on the foreign keys check if you did no
 and other issues you may encounter with relationships with Doctrine ORM. Note that they are neither this library or
 Doctrine faults: those are issues related to your domain and you alone may solve them.
 
+Purge mode is ignored when using Doctrine MongoDB or PHPCR ODMs.
+
 Previous chapter: [Processors](processors.md)<br />
 Go back to [Table of Contents](../README.md#table-of-contents)
