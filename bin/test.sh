@@ -35,6 +35,8 @@ set -ex
 
 if [ -n "$COVERAGE" ]; then
     PHPUNIT_PREFIX="phpdbg -qrr"
+else
+    PHPUNIT_PREFIX="php -d zend.enable_gc=0"
 fi
 
 log "Core library"
