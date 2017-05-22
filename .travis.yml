@@ -63,7 +63,6 @@ install:
         composer bin proxy-manager require --dev --no-update "doctrine/orm:${DOCTRINE_VERSION}";
     fi
   - composer bin all update --prefer-dist --ignore-platform-reqs $COMPOSER_FLAGS
-  - vendor-bin/covers-validator/bin/covers-validator -c $PHPUNIT_CONFIG
 
 script: bin/test.sh
 
