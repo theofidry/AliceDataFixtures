@@ -15,6 +15,7 @@ namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\NotCallableTrait;
+use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
@@ -26,7 +27,7 @@ class FakeLoader implements LoaderInterface
     /**
      * @inheritdoc
      */
-    public function load(array $fixturesFiles, array $parameters = [], array $objects = []): array
+    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
     {
         $this->__call(__METHOD__, func_get_args());
     }

@@ -38,7 +38,7 @@ if [ -n "$COVERAGE" ]; then
 fi
 
 log "Core library"
-$PHPUNIT_PREFIX vendor/bin/phpunit -c phpunit.xml.dist $PHPUNIT_FLAGS
+$PHPUNIT_PREFIX bin/phpunit -c phpunit.xml.dist $PHPUNIT_FLAGS
 
 
 log "Doctrine bridge"

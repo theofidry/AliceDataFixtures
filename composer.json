@@ -1,7 +1,14 @@
 {
     "name": "theofidry/alice-data-fixtures",
     "description": "Nelmio alice extension to persist the loaded fixtures.",
-    "keywords": ["Fixture", "ORM", "Alice", "Faker", "data", "tests"],
+    "keywords": [
+        "Fixture",
+        "ORM",
+        "Alice",
+        "Faker",
+        "data",
+        "tests"
+    ],
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -25,7 +32,9 @@
         "doctrine/orm": "To use Doctrine ORM"
     },
     "autoload": {
-        "psr-4": { "Fidry\\AliceDataFixtures\\": "src" }
+        "psr-4": {
+            "Fidry\\AliceDataFixtures\\": "src"
+        }
     },
     "autoload-dev": {
         "psr-4": {
@@ -35,14 +44,16 @@
             ]
         }
     },
+    "config": {
+        "bin-dir": "bin",
+        "sort-packages": true
+    },
     "extra": {
         "bamarni-bin": {
             "bin-links": false
         },
         "branch-alias": {
             "dev-master": "1.x-dev"
-        },
-        "bin-dir": "bin",
-        "sort-packages": true
+        }
     }
 }

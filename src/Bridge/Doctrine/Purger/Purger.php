@@ -56,6 +56,9 @@ use Nelmio\Alice\IsAServiceTrait;
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function create(PurgeMode $mode, PurgerInterface $purger = null): PurgerInterface
     {
         if (null === $purger) {

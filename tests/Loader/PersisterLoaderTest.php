@@ -20,6 +20,7 @@ use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\ProcessorInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use stdClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\PersisterLoader
@@ -72,10 +73,10 @@ class PersisterLoaderTest extends TestCase
 
         $loaderProphecy = $this->prophesize(LoaderInterface::class);
         $loaderProphecy
-            ->load($files, [], [])
+            ->load($files, [], [], null)
             ->willReturn(
                 [
-                    'dummy' => $dummy = new \stdClass(),
+                    'dummy' => $dummy = new stdClass(),
                 ]
             )
         ;
@@ -105,7 +106,7 @@ class PersisterLoaderTest extends TestCase
 
         $this->assertEquals(
             [
-                'dummy' => new \stdClass(),
+                'dummy' => new stdClass(),
             ],
             $result
         );
@@ -128,15 +129,15 @@ class PersisterLoaderTest extends TestCase
             'injected' => true,
         ];
         $objects = [
-            'injected' => new \stdClass(),
+            'injected' => new stdClass(),
         ];
 
         $loaderProphecy = $this->prophesize(LoaderInterface::class);
         $loaderProphecy
-            ->load($files, $parameters, $objects)
+            ->load($files, $parameters, $objects, null)
             ->willReturn(
                 [
-                    'dummy' => $dummy = new \stdClass(),
+                    'dummy' => $dummy = new stdClass(),
                 ]
             )
         ;
@@ -152,7 +153,7 @@ class PersisterLoaderTest extends TestCase
 
         $this->assertEquals(
             [
-                'dummy' => new \stdClass(),
+                'dummy' => new stdClass(),
             ],
             $result
         );

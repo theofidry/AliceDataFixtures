@@ -64,6 +64,6 @@ use Nelmio\Alice\IsAServiceTrait;
         $purger = $this->purgerFactory->create($purgeMode);
         $purger->purge();
 
-        return $this->loader->load($fixturesFiles, $parameters, $objects);
+        return $this->loader->load($fixturesFiles, $parameters, $objects, $purgeMode);
     }
 }

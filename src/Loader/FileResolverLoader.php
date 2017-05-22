@@ -15,6 +15,7 @@ namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\FileResolverInterface;
+use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Nelmio\Alice\IsAServiceTrait;
 
 /**
@@ -49,10 +50,10 @@ use Nelmio\Alice\IsAServiceTrait;
      *
      * {@inheritdoc}
      */
-    public function load(array $fixturesFiles, array $parameters = [], array $objects = []): array
+    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
     {
         $fixturesFiles = $this->fileResolver->resolve($fixturesFiles);
 
-        return $this->loader->load($fixturesFiles, $parameters, $objects);
+        return $this->loader->load($fixturesFiles, $parameters, $objects, $purgeMode);
     }
 }

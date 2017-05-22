@@ -1,0 +1,9 @@
+{
+    "require-dev": {
+        "ockcyp/covers-validator": "^0.5"
+    },
+    "config": {
+        "bin-dir": "bin",
+        "sort-packages": true
+    }
+}

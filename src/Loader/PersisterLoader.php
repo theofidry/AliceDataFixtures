@@ -16,6 +16,7 @@ namespace Fidry\AliceDataFixtures\Loader;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\PersisterAwareInterface;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\ProcessorInterface;
 use Nelmio\Alice\IsAServiceTrait;
 
@@ -37,7 +38,7 @@ use Nelmio\Alice\IsAServiceTrait;
     private $loader;
 
     /**
-     * @var \Fidry\AliceDataFixtures\Persistence\PersisterInterface
+     * @var PersisterInterface
      */
     private $persister;
 
@@ -71,9 +72,9 @@ use Nelmio\Alice\IsAServiceTrait;
      *
      * {@inheritdoc}
      */
-    public function load(array $fixturesFiles, array $parameters = [], array $objects = []): array
+    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
     {
-        $objects = $this->loader->load($fixturesFiles, $parameters, $objects);
+        $objects = $this->loader->load($fixturesFiles, $parameters, $objects, $purgeMode);
 
         foreach ($objects as $id => $object) {
             foreach ($this->processors as $processor) {

@@ -4,7 +4,7 @@
         "doctrine/data-fixtures": "^1.2",
         "doctrine/mongodb": "^1.4",
         "doctrine/mongodb-odm": "^1.1",
-        "theofidry/composer-inheritance-plugin": "^1.0@dev"
+        "theofidry/composer-inheritance-plugin": "^1.0"
     },
     "config": {
         "bin-dir": "bin",

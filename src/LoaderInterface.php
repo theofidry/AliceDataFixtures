@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace Fidry\AliceDataFixtures;
 
-use Nelmio\Alice\Throwable\LoadingThrowable;
+use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
@@ -23,13 +23,12 @@ interface LoaderInterface
     /**
      * Loads the fixtures files and return the loaded objects.
      *
-     * @param string[] $fixturesFiles Path to the fixtures files to loads.
-     * @param array    $parameters
-     * @param array    $objects
-     *
-     * @throws LoadingThrowable
+     * @param string[]       $fixturesFiles Path to the fixtures files to loads.
+     * @param array          $parameters
+     * @param array          $objects
+     * @param PurgeMode|null $purgeMode
      *
      * @return object[]
      */
-    public function load(array $fixturesFiles, array $parameters = [], array $objects = []): array;
+    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array;
 }
