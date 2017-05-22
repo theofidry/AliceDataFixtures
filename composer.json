@@ -20,7 +20,7 @@
     ],
     "require": {
         "php": "~7.0.0 || ~7.1.0",
-        "nelmio/alice": "^3.0-beta.5@beta"
+        "nelmio/alice": "^3.0@rc"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.0",
