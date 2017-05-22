@@ -2,7 +2,7 @@ language: php
 
 cache:
   directories:
-    - "$HOME/.composer/cache"
+    - $HOME/.composer/cache/files
 
 php:
   - '7.0'
@@ -32,12 +32,12 @@ matrix:
     - php: '7.0'
       env: SYMFONY_VERSION='~3.2.0'
     - php: '7.0'
-      env: SYMFONY_VERSION='~3.3.0@dev'
+      env: SYMFONY_VERSION='~3.3.0@rc'
 
   allow_failures:
     - php: nightly
     - php: '7.1'
-    - Âenv: SYMFONY_VERSION='~3.3.0@dev'
+    - Âenv: SYMFONY_VERSION='~3.3.0@rc'
 
 before_install:
   - set -eo pipefail
