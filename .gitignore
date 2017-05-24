@@ -4,8 +4,9 @@
 /phpunit.xml
 /.php_cs.cache
 /.phar/
-/vendor-bin/*/vendor/
 /vendor-bin/*/bin/
+/vendor-bin/*/vendor/
+/vendor-bin/*/composer.lock
 /dist/
 /bin/
 !/bin/clear_cache.sh
