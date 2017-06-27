@@ -13,17 +13,19 @@ declare(strict_types = 1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Processor;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Configuration
  */
-class ConfigurationTest extends \PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     public function testDefaultValues()
     {
         $configuration = new Configuration();
         $processor = new Processor();
+
         $expected = [
             'db_drivers' => [
                 'doctrine_orm' => null,
@@ -32,7 +34,9 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'eloquent_orm' => null,
             ],
         ];
+
         $actual = $processor->processConfiguration($configuration, []);
+
         $this->assertEquals($expected, $actual);
     }
 
@@ -40,6 +44,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         $configuration = new Configuration();
         $processor = new Processor();
+
         $expected = [
             'db_drivers' => [
                 'doctrine_orm' => true,
@@ -48,6 +53,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'eloquent_orm' => false,
             ],
         ];
+
         $actual = $processor->processConfiguration(
             $configuration,
             [
@@ -61,6 +67,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 ],
             ]
         );
+
         $this->assertEquals($expected, $actual);
     }
 }
