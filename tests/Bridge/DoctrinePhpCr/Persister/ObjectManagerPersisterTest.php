@@ -21,13 +21,14 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class ObjectManagerPersisterTest extends \PHPUnit_Framework_TestCase
+class ObjectManagerPersisterTest extends TestCase
 {
     /**
      * @var ObjectManagerPersister

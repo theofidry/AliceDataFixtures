@@ -20,13 +20,14 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Group;
 use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\User;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class ORMLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
+class ORMLoaderIntegrationTest extends TestCase
 {
     /**
      * @var DoctrineKernel

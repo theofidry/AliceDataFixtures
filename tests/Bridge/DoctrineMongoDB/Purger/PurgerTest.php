@@ -17,11 +17,12 @@ use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger
  */
-class PurgerTest extends \PHPUnit_Framework_TestCase
+class PurgerTest extends TestCase
 {
     public function testCreatesADoctrineOdmPurgerWithTheAppropriateManager()
     {

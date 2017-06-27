@@ -18,6 +18,7 @@ use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\EloquentKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Illuminate\Database\DatabaseManager;
+use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -27,7 +28,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class ORMLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
+class ORMLoaderIntegrationTest extends TestCase
 {
     /**
      * @var EloquentKernel

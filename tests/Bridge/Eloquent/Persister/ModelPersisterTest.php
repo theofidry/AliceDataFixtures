@@ -17,6 +17,7 @@ use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\Dummy;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Illuminate\Database\Migrations\Migrator;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Eloquent\Persister\ModelPersister
@@ -25,7 +26,7 @@ use Illuminate\Database\Migrations\Migrator;
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class ModelPersisterTest extends \PHPUnit_Framework_TestCase
+class ModelPersisterTest extends TestCase
 {
     /**
      * @var ModelPersister

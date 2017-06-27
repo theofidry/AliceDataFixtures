@@ -22,13 +22,14 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class ObjectManagerPersisterTest extends \PHPUnit_Framework_TestCase
+class ObjectManagerPersisterTest extends TestCase
 {
     /**
      * @var ObjectManagerPersister

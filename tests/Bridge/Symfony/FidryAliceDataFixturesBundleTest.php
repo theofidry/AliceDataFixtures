@@ -15,6 +15,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony;
 
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\InvalidKernel;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\NakedKernel;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -26,7 +27,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class FidryAliceDataFixturesBundleTest extends \PHPUnit_Framework_TestCase
+class FidryAliceDataFixturesBundleTest extends TestCase
 {
     /**
      * @var KernelInterface

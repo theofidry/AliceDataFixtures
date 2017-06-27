@@ -18,13 +18,14 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Fidry\AliceDataFixtures\Bridge\Symfony\MongoDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineMongodbKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class MongodbLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
+class MongodbLoaderIntegrationTest extends TestCase
 {
     /**
      * @var DoctrineMongodbKernel

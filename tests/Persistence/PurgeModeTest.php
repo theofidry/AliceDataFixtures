@@ -12,13 +12,14 @@
 declare(strict_types = 1);
 
 namespace Fidry\AliceDataFixtures\Persistence;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Persistence\PurgeMode
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class PurgeModeTest extends \PHPUnit_Framework_TestCase
+class PurgeModeTest extends TestCase
 {
     /**
      * @expectedException \InvalidArgumentException

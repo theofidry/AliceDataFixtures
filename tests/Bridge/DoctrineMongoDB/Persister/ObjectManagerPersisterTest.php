@@ -23,13 +23,14 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\DummyWithEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class ObjectManagerPersisterTest extends \PHPUnit_Framework_TestCase
+class ObjectManagerPersisterTest extends TestCase
 {
     /**
      * @var ObjectManagerPersister

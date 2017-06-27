@@ -20,11 +20,12 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\ORM\FakeEntityManager;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger
  */
-class PurgerTest extends \PHPUnit_Framework_TestCase
+class PurgerTest extends TestCase
 {
     public function testIsAPurger()
     {

@@ -14,13 +14,14 @@ declare(strict_types = 1);
 namespace Fidry\AliceDataFixtures\Persistence\Persister;
 
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Persistence\Persister\NullPersister
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class NullPersisterTest extends \PHPUnit_Framework_TestCase
+class NullPersisterTest extends TestCase
 {
     public function testIsAPersister()
     {
