@@ -1,6 +1,6 @@
 {
     "require-dev": {
-        "ockcyp/covers-validator": "^0.5"
+        "ockcyp/covers-validator": "^0.6.1"
     },
     "config": {
         "bin-dir": "bin",
