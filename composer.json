@@ -19,8 +19,8 @@
         }
     ],
     "require": {
-        "php": "~7.0.0 || ~7.1.0",
-        "nelmio/alice": "^3.0@rc"
+        "php": "^7.0.0",
+        "nelmio/alice": "^3.0-rc1@rc"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.0",
