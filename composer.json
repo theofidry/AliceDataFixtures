@@ -29,7 +29,21 @@
         "symfony/phpunit-bridge": "^3.3.2"
     },
     "suggest": {
-        "doctrine/orm": "To use Doctrine ORM"
+        "doctrine/data-fixtures": "To use Doctrine",
+
+        "doctrine/orm": "To use Doctrine ORM",
+
+        "alcaeus/mongo-php-adapter": "To use Doctrine with the MongoDB flavour",
+        "doctrine/mongodb": "To use Doctrine with the MongoDB flavour",
+        "doctrine/mongodb-odm": "To use Doctrine with the MongoDB flavour",
+
+        "doctrine/dbal": "To use Doctrine with the PHPCR flavour",
+        "doctrine/phpcr-odm": "To use Doctrine with the PHPCR flavour",
+        "jackalope/jackalope-doctrine-dbal": "To use Doctrine with the PHPCR flavour",
+
+        "illuminate/database": "To use Eloquent",
+
+        "ocramius/proxy-manager": "To avoid database connection on kernel boot"
     },
     "autoload": {
         "psr-4": {

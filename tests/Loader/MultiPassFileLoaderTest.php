@@ -17,6 +17,7 @@ use Fidry\AliceDataFixtures\Alice\Exception\RootLoadingException;
 use Fidry\AliceDataFixtures\Alice\Loader\FakeFileLoader;
 use Fidry\AliceDataFixtures\Exception\MaxPassReachedException;
 use Fidry\AliceDataFixtures\LoaderInterface;
+use InvalidArgumentException;
 use Nelmio\Alice\FileLoaderInterface;
 use Nelmio\Alice\ObjectBag;
 use Nelmio\Alice\ObjectSet;
@@ -55,16 +56,19 @@ class MultiPassFileLoaderTest extends TestCase
     {
         try {
             new MultiPassLoader(new FakeFileLoader(), $maxPass);
+
             if (null !== $expectedExceptionMessage) {
                 $this->fail('Expected exception to be thrown.');
             }
-        } catch (\InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             if (null === $expectedExceptionMessage) {
                 $this->fail('Did not except exception to be thrown.');
             }
 
             $this->assertEquals($expectedExceptionMessage, $exception->getMessage());
         }
+
+        $this->assertTrue(true, 'Everything is fine.');
     }
 
     public function testReturnsAnEmptySetIfNoFileGiven()

@@ -92,6 +92,7 @@ class ObjectManagerPersisterTest extends TestCase
         try {
             $this->entityManager->persist($dummy);
             $this->entityManager->flush();
+
             $this->fail('Expected exception to be thrown.');
         } catch (ORMInvalidArgumentException $exception) {
             // Expected result
@@ -100,6 +101,8 @@ class ObjectManagerPersisterTest extends TestCase
 
         $this->persister->persist($dummy);
         $this->persister->flush();
+
+        $this->assertTrue(true, 'Everything is fine.');
     }
 
     public function provideEntities()
