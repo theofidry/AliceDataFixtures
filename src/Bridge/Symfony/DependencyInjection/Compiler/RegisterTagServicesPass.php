@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler;
 
@@ -18,6 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * @private
+ *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 final class RegisterTagServicesPass implements CompilerPassInterface

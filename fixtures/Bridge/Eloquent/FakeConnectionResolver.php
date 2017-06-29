@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Eloquent;
 
@@ -45,6 +45,5 @@ class FakeConnectionResolver implements ConnectionResolverInterface
     public function setDefaultConnection($name)
     {
         $this->__call(__METHOD__, func_get_args());
-
     }
 }

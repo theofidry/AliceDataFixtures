@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Migrations\Migration;
@@ -25,19 +25,20 @@ class AnotherDummyFk extends Migration
         Manager::schema()
             ->table(
                 'another_dummies',
-                function(Blueprint $table) {
+                function (Blueprint $table) {
                     $table->integer('dummy_id')->unsigned()->nullable();
                     $table->foreign('dummy_id', 'another_dummies_dummy_id_foreign')->references('id')->on('dummies');
                 }
             )
         ;
     }
+
     public function down()
     {
         Manager::schema()
             ->table(
                 'another_dummies',
-                function(Blueprint $table) {
+                function (Blueprint $table) {
                     $table->dropForeign('another_dummies_dummy_id_foreign');
                 }
             )

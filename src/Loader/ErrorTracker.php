@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
 
@@ -17,6 +17,7 @@ namespace Fidry\AliceDataFixtures\Loader;
  * Utility class to keep track of the errors stacked while trying to load a given file.
  *
  * @private
+ *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 final class ErrorTracker

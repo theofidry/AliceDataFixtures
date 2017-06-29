@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\Bundle;
 
@@ -27,5 +27,4 @@ class DoctrineBundle extends Bundle
 
         $container->addCompilerPass(new DoctrineConnectionlessPass());
     }
-
 }

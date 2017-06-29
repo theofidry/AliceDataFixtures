@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
 
@@ -28,6 +28,7 @@ use Prophecy\Argument;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\MultiPassLoader
+ *
  * @uses \Fidry\AliceDataFixtures\Loader\ErrorTracker
  * @uses \Fidry\AliceDataFixtures\Loader\FileTracker
  * @uses \Fidry\AliceDataFixtures\Exception\MaxPassReachedException

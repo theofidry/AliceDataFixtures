@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
 
-use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\File\Resolver\DummyResolver;
 use Fidry\AliceDataFixtures\FileResolverInterface;
+use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Resolver\FakeFileResolver;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;

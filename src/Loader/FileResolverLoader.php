@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
 
-use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\FileResolverInterface;
+use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Nelmio\Alice\IsAServiceTrait;
 

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
 
@@ -56,7 +56,9 @@ use Nelmio\Alice\IsAServiceTrait;
     {
         $this->loader = $decoratedLoader;
         $this->persister = $persister;
-        $this->processors = (function (ProcessorInterface ...$processors) { return $processors; })(...$processors);
+        $this->processors = (function (ProcessorInterface ...$processors) {
+            return $processors;
+        })(...$processors);
     }
 
     /**

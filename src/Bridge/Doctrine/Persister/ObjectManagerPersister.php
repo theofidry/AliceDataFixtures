@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
@@ -41,6 +41,7 @@ use Nelmio\Alice\IsAServiceTrait;
         $this->objectManager = $manager;
         $this->persistableClasses = array_flip($this->getPersistableClasses($manager));
     }
+
     /**
      * @inheritDoc
      */
