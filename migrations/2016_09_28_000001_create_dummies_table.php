@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Migrations\Migration;
@@ -25,7 +25,7 @@ class CreateDummiesTable extends Migration
         Manager::schema()
             ->create(
                 'dummies',
-                function(Blueprint $table) {
+                function (Blueprint $table) {
                     $table->increments('id');
                     $table->string('name');
                     $table->integer('another_dummy_id')->unsigned();
@@ -34,6 +34,7 @@ class CreateDummiesTable extends Migration
             )
         ;
     }
+
     public function down()
     {
         Manager::schema()->drop('dummies');

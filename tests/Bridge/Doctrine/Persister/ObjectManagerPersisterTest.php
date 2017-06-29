@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
@@ -22,13 +22,14 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class ObjectManagerPersisterTest extends \PHPUnit_Framework_TestCase
+class ObjectManagerPersisterTest extends TestCase
 {
     /**
      * @var ObjectManagerPersister
@@ -91,6 +92,7 @@ class ObjectManagerPersisterTest extends \PHPUnit_Framework_TestCase
         try {
             $this->entityManager->persist($dummy);
             $this->entityManager->flush();
+
             $this->fail('Expected exception to be thrown.');
         } catch (ORMInvalidArgumentException $exception) {
             // Expected result
@@ -99,6 +101,8 @@ class ObjectManagerPersisterTest extends \PHPUnit_Framework_TestCase
 
         $this->persister->persist($dummy);
         $this->persister->flush();
+
+        $this->assertTrue(true, 'Everything is fine.');
     }
 
     public function provideEntities()

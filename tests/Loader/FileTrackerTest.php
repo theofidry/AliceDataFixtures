@@ -9,16 +9,18 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\FileTracker
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class FileTrackerTest extends \PHPUnit_Framework_TestCase
+class FileTrackerTest extends TestCase
 {
     public function testReturnsAllUnloadedFiles()
     {
@@ -56,7 +58,6 @@ class FileTrackerTest extends \PHPUnit_Framework_TestCase
         $tracker->markAsLoaded('bar');
         $this->assertTrue($tracker->allFilesHaveBeenLoaded());
     }
-
 
     public function testIsDeepClonable()
     {

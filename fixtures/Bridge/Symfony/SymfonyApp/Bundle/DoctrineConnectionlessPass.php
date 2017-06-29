@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\Bundle;
 
@@ -31,7 +31,6 @@ class DoctrineConnectionlessPass implements CompilerPassInterface
             $proxyCacheWarmerDefinition = $container->findDefinition('doctrine.orm.proxy_cache_warmer');
             $proxyCacheWarmerDefinition->clearTag('kernel.cache_warmer');
         } catch (ServiceNotFoundException $exception) {
-
         }
     }
 }

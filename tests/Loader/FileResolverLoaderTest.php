@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
 
-use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\File\Resolver\DummyResolver;
 use Fidry\AliceDataFixtures\FileResolverInterface;
+use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Resolver\FakeFileResolver;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
@@ -58,7 +58,7 @@ class FileResolverLoaderTest extends TestCase
 
         $loaderProphecy = $this->prophesize(LoaderInterface::class);
         $loaderProphecy
-            ->load($resolvedFiles, [], [])
+            ->load($resolvedFiles, [], [], null)
             ->willReturn(
                 [
                     'dummy' => $dummy = new \stdClass(),
@@ -96,7 +96,7 @@ class FileResolverLoaderTest extends TestCase
 
         $loaderProphecy = $this->prophesize(LoaderInterface::class);
         $loaderProphecy
-            ->load($files, $parameters, $objects)
+            ->load($files, $parameters, $objects, null)
             ->willReturn(
                 [
                     'dummy' => $dummy = new \stdClass(),
@@ -107,7 +107,7 @@ class FileResolverLoaderTest extends TestCase
         $loader = $loaderProphecy->reveal();
 
         $loader = new FileResolverLoader($loader, new DummyResolver());
-        $result = $loader->load($files, $parameters, $objects);
+        $result = $loader->load($files, $parameters, $objects, null);
 
         $this->assertEquals(
             [

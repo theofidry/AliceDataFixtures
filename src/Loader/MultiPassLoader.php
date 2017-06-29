@@ -9,12 +9,13 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\Exception\MaxPassReachedException;
 use Fidry\AliceDataFixtures\LoaderInterface;
+use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Nelmio\Alice\FileLoaderInterface;
 use Nelmio\Alice\IsAServiceTrait;
 use Nelmio\Alice\ObjectBag;
@@ -67,7 +68,7 @@ use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringG
      *
      * @throws \Fidry\AliceDataFixtures\Exception\MaxPassReachedException
      */
-    public function load(array $fixturesFiles, array $parameters = [], array $objects = []): array
+    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
     {
         $errorTracker = new ErrorTracker();
         $filesTracker = new FileTracker(...$fixturesFiles);

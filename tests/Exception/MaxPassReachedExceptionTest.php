@@ -9,19 +9,20 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Exception;
 
 use Fidry\AliceDataFixtures\Loader\ErrorTracker;
 use Nelmio\Alice\Throwable\LoadingThrowable;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Exception\MaxPassReachedException
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class MaxPassReachedExceptionTest extends \PHPUnit_Framework_TestCase
+class MaxPassReachedExceptionTest extends TestCase
 {
     public function testIsARuntimeException()
     {

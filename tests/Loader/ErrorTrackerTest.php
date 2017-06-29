@@ -9,16 +9,18 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\ErrorTracker
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class ErrorTrackerTest extends \PHPUnit_Framework_TestCase
+class ErrorTrackerTest extends TestCase
 {
     public function testCanGetStackOfATrackerEvenIfNoErrorHasBeenRegistered()
     {

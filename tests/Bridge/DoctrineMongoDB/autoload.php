@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 require_once __DIR__.'/../../../vendor-bin/doctrine_mongodb/vendor/autoload.php';
 
@@ -21,9 +21,9 @@ use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 AnnotationDriver::registerAnnotationClasses();
 
 $config = new Configuration();
-$config->setProxyDir(sys_get_temp_dir().'/mongo_proxies_'.crc32((string)mt_rand()));
+$config->setProxyDir(sys_get_temp_dir().'/mongo_proxies_'.crc32((string) mt_rand()));
 $config->setProxyNamespace('Proxies');
-$config->setHydratorDir(sys_get_temp_dir().'/mongo_hydrators_'.crc32((string)mt_rand()));
+$config->setHydratorDir(sys_get_temp_dir().'/mongo_hydrators_'.crc32((string) mt_rand()));
 $config->setHydratorNamespace('Hydrators');
 $config->setMetadataDriverImpl(AnnotationDriver::create(__DIR__.'/../../../fixtures/Bridge/Doctrine/MongoDocument'));
 $config->setDefaultDB('fidry_alice_data_fixtures');

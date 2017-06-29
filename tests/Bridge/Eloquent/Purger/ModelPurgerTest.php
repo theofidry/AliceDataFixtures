@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Purger;
 
@@ -21,6 +21,7 @@ use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 
@@ -31,7 +32,7 @@ use Prophecy\Prophecy\ObjectProphecy;
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class ModelPurgerTest extends \PHPUnit_Framework_TestCase
+class ModelPurgerTest extends TestCase
 {
     public function testIsAPurger()
     {

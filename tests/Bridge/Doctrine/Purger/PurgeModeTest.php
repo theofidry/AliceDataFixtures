@@ -9,19 +9,20 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class PurgeModeTest extends \PHPUnit_Framework_TestCase
+class PurgeModeTest extends TestCase
 {
     public function testThePurgerModesValueIsSynchronizedWithDoctrinePurgerMode()
     {

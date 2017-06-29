@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
 
@@ -21,9 +21,11 @@ use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
+use stdClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\PurgerLoader
+ *
  * @uses \Fidry\AliceDataFixtures\Persistence\PurgeMode
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
@@ -49,16 +51,16 @@ class PurgerLoaderTest extends TestCase
             'fixtures1.yml',
         ];
         $parameters = ['foo' => 'bar'];
-        $objects = ['dummy' => new \stdClass()];
+        $objects = ['dummy' => new stdClass()];
         $purgeMode = PurgeMode::createTruncateMode();
 
         $decoratedLoaderProphecy = $this->prophesize(LoaderInterface::class);
         $decoratedLoaderProphecy
-            ->load($files, $parameters, $objects)
+            ->load($files, $parameters, $objects, $purgeMode)
             ->willReturn(
                 $expected = [
-                    'dummy' => new \stdClass(),
-                    'another_dummy' => new \stdClass(),
+                    'dummy' => new stdClass(),
+                    'another_dummy' => new stdClass(),
                 ]
             )
         ;
@@ -93,16 +95,16 @@ class PurgerLoaderTest extends TestCase
             'fixtures1.yml',
         ];
         $parameters = ['foo' => 'bar'];
-        $objects = ['dummy' => new \stdClass()];
+        $objects = ['dummy' => new stdClass()];
         $purgeMode = null;
 
         $decoratedLoaderProphecy = $this->prophesize(LoaderInterface::class);
         $decoratedLoaderProphecy
-            ->load($files, $parameters, $objects)
+            ->load($files, $parameters, $objects, PurgeMode::createDeleteMode())
             ->willReturn(
                 $expected = [
-                    'dummy' => new \stdClass(),
-                    'another_dummy' => new \stdClass(),
+                    'dummy' => new stdClass(),
+                    'another_dummy' => new stdClass(),
                 ]
             )
         ;

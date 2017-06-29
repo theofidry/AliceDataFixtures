@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 require_once __DIR__.'/../../../vendor-bin/doctrine/vendor/autoload.php';
 
-use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 
 $config = Setup::createAnnotationMetadataConfiguration(
     [

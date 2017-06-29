@@ -1,7 +1,14 @@
 {
     "name": "theofidry/alice-data-fixtures",
     "description": "Nelmio alice extension to persist the loaded fixtures.",
-    "keywords": ["Fixture", "ORM", "Alice", "Faker", "data", "tests"],
+    "keywords": [
+        "Fixture",
+        "ORM",
+        "Alice",
+        "Faker",
+        "data",
+        "tests"
+    ],
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -12,20 +19,36 @@
         }
     ],
     "require": {
-        "php": "~7.0.0 || ~7.1.0",
-        "nelmio/alice": "^3.0-beta.5@beta"
+        "php": "^7.0.0",
+        "nelmio/alice": "^3.0-rc1@rc"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.0",
-        "phpunit/phpunit": "^5.5",
-        "phpspec/prophecy": "^1.6",
-        "symfony/phpunit-bridge": "^3.1"
+        "phpunit/phpunit": "^6.0",
+        "phpspec/prophecy": "^1.7",
+        "symfony/phpunit-bridge": "^3.3.2"
     },
     "suggest": {
-        "doctrine/orm": "To use Doctrine ORM"
+        "doctrine/data-fixtures": "To use Doctrine",
+
+        "doctrine/orm": "To use Doctrine ORM",
+
+        "alcaeus/mongo-php-adapter": "To use Doctrine with the MongoDB flavour",
+        "doctrine/mongodb": "To use Doctrine with the MongoDB flavour",
+        "doctrine/mongodb-odm": "To use Doctrine with the MongoDB flavour",
+
+        "doctrine/dbal": "To use Doctrine with the PHPCR flavour",
+        "doctrine/phpcr-odm": "To use Doctrine with the PHPCR flavour",
+        "jackalope/jackalope-doctrine-dbal": "To use Doctrine with the PHPCR flavour",
+
+        "illuminate/database": "To use Eloquent",
+
+        "ocramius/proxy-manager": "To avoid database connection on kernel boot"
     },
     "autoload": {
-        "psr-4": { "Fidry\\AliceDataFixtures\\": "src" }
+        "psr-4": {
+            "Fidry\\AliceDataFixtures\\": "src"
+        }
     },
     "autoload-dev": {
         "psr-4": {
@@ -35,14 +58,16 @@
             ]
         }
     },
+    "config": {
+        "bin-dir": "bin",
+        "sort-packages": true
+    },
     "extra": {
         "bamarni-bin": {
             "bin-links": false
         },
         "branch-alias": {
             "dev-master": "1.x-dev"
-        },
-        "bin-dir": "bin",
-        "sort-packages": true
+        }
     }
 }

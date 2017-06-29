@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
 
@@ -64,6 +64,6 @@ use Nelmio\Alice\IsAServiceTrait;
         $purger = $this->purgerFactory->create($purgeMode);
         $purger->purge();
 
-        return $this->loader->load($fixturesFiles, $parameters, $objects);
+        return $this->loader->load($fixturesFiles, $parameters, $objects, $purgeMode);
     }
 }

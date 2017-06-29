@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
 
@@ -17,6 +17,7 @@ use Fidry\AliceDataFixtures\Alice\Exception\RootLoadingException;
 use Fidry\AliceDataFixtures\Alice\Loader\FakeFileLoader;
 use Fidry\AliceDataFixtures\Exception\MaxPassReachedException;
 use Fidry\AliceDataFixtures\LoaderInterface;
+use InvalidArgumentException;
 use Nelmio\Alice\FileLoaderInterface;
 use Nelmio\Alice\ObjectBag;
 use Nelmio\Alice\ObjectSet;
@@ -27,6 +28,7 @@ use Prophecy\Argument;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\MultiPassLoader
+ *
  * @uses \Fidry\AliceDataFixtures\Loader\ErrorTracker
  * @uses \Fidry\AliceDataFixtures\Loader\FileTracker
  * @uses \Fidry\AliceDataFixtures\Exception\MaxPassReachedException
@@ -55,16 +57,19 @@ class MultiPassFileLoaderTest extends TestCase
     {
         try {
             new MultiPassLoader(new FakeFileLoader(), $maxPass);
+
             if (null !== $expectedExceptionMessage) {
                 $this->fail('Expected exception to be thrown.');
             }
-        } catch (\InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             if (null === $expectedExceptionMessage) {
                 $this->fail('Did not except exception to be thrown.');
             }
 
             $this->assertEquals($expectedExceptionMessage, $exception->getMessage());
         }
+
+        $this->assertTrue(true, 'Everything is fine.');
     }
 
     public function testReturnsAnEmptySetIfNoFileGiven()

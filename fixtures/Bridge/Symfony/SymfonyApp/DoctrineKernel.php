@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
@@ -34,7 +34,7 @@ class DoctrineKernel extends IsolatedKernel
             new DoctrineBundle(),
         ];
 
-        if (class_exists('Fidry\PsyshBundle\PsyshBundle')) {
+        if (class_exists(PsyshBundle::class)) {
             $bundles[] = new PsyshBundle();
         }
 

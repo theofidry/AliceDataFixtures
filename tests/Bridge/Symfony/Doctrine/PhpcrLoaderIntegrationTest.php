@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Fidry\AlicePersistence\Bridge\Symfony\Doctrine;
 
@@ -18,13 +18,14 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Fidry\AliceDataFixtures\Bridge\Symfony\PhpCrDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrinePhpcrKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-class PhpcrLoaderIntegrationTest extends \PHPUnit_Framework_TestCase
+class PhpcrLoaderIntegrationTest extends TestCase
 {
     /**
      * @var DoctrinePhpcrKernel

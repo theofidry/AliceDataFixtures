@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 require_once __DIR__.'/../../../vendor-bin/eloquent/vendor/autoload.php';
 
@@ -48,4 +48,3 @@ $GLOBALS['resolver'] = $resolver;
 $GLOBALS['repository'] = $repository;
 $GLOBALS['file_system'] = $fileSystem;
 $GLOBALS['migrator'] = $migrator;
-
