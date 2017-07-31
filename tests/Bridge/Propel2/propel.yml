@@ -1,0 +1,18 @@
+propel:
+    database:
+        connections:
+            default:
+                adapter: sqlite
+                dsn: sqlite:tests/Bridge/Propel2/generated/propel.sq3
+                user: root
+                password: 
+                settings:
+                    charset: utf8
+    paths:
+        schemaDir: tests/Bridge/Propel2/schema
+        phpDir: tests/Bridge/Propel2/generated/models
+        phpConfDir: tests/Bridge/Propel2/generated/conf
+        sqlDir: tests/Bridge/Propel2/generated/sql
+    generator:
+        schema:
+            autoPackage: true

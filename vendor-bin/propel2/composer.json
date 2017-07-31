@@ -1,0 +1,15 @@
+{
+    "autoload-dev": {
+        "classmap": [
+            "../../tests/Bridge/Propel2/generated/models"
+        ]
+    },
+    "require-dev": {
+        "propel/propel": "@alpha",
+        "theofidry/composer-inheritance-plugin": "^1.0"
+    },
+    "config": {
+        "bin-dir": "bin",
+        "sort-packages": true
+    }
+}

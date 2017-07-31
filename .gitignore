@@ -19,3 +19,4 @@
 !/bin/eloquent_rollback
 !/bin/test.sh
 !/bin/cs.sh
+/tests/Bridge/Propel2/generated
