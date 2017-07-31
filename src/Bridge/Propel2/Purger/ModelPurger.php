@@ -20,6 +20,7 @@ use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
 use Nelmio\Alice\IsAServiceTrait;
 use Propel\Runtime\Propel;
+use Propel\Runtime\Connection\ConnectionInterface;
 
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
@@ -31,12 +32,18 @@ use Propel\Runtime\Propel;
     use IsAServiceTrait;
 
     /**
+     * @var ConnectionInterface
+     */
+    private $connection;
+
+    /**
      * @var string
      */
     private $generatedSqlPath;
 
-    public function __construct(string $generatedSqlPath)
+    public function __construct(ConnectionInterface $connection, string $generatedSqlPath)
     {
+        $this->connection = $connection;
         $this->generatedSqlPath = $generatedSqlPath;
     }
 
@@ -53,8 +60,7 @@ use Propel\Runtime\Propel;
      */
     public function purge()
     {
-        $connection = Propel::getConnection();
-        $sqlPath = sprintf('%s/%s.sql', $this->generatedSqlPath, $connection->getName());
+        $sqlPath = sprintf('%s/%s.sql', $this->generatedSqlPath, $this->connection->getName());
 
         if (false === file_exists($sqlPath)) {
             throw new \RuntimeException(sprintf(
@@ -63,6 +69,7 @@ use Propel\Runtime\Propel;
             ));
         }
 
-        $connection->exec(file_get_contents($sqlPath));
+        $this->connection->exec(file_get_contents($sqlPath));
     }
 }
+

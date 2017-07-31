@@ -18,6 +18,7 @@ use Nelmio\Alice\IsAServiceTrait;
 use Propel\Runtime\Connection\ConnectionManagerSingle;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Propel;
+use Propel\Runtime\Connection\ConnectionInterface;
 
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
@@ -29,17 +30,18 @@ use Propel\Runtime\Propel;
     use IsAServiceTrait;
 
     /**
-     * @var ConnectionManagerSingle
+     * @var ConnectionInterface
      */
-    private $connectionManager;
+    private $connection;
 
     /**
      * @var Model[]
      */
     private $persistedModels = [];
 
-    public function __construct()
+    public function __construct(ConnectionInterface $connection)
     {
+        $this->connection = $connection;
     }
 
     /**
@@ -66,7 +68,7 @@ use Propel\Runtime\Propel;
     public function flush()
     {
         $models = $this->persistedModels;
-        Propel::getConnection()->transaction(
+        $this->connection->transaction(
             function () use ($models) {
                 foreach ($models as $model) {
                     $model->save();

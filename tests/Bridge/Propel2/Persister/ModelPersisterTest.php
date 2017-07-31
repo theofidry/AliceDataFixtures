@@ -21,6 +21,7 @@ use Fidry\AliceDataFixtures\Bridge\Propel2\PropelTestCase;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use PHPUnit\Framework\TestCase;
 use Propel\Runtime\Connection\ConnectionManagerSingle;
+use Propel\Runtime\Propel;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Propel2\Persister\ModelPersister
@@ -41,7 +42,7 @@ class ModelPersisterTest extends PropelTestCase
 
     public function setUp()
     {
-        $this->persister = new ModelPersister();
+        $this->persister = new ModelPersister(Propel::getConnection());
         $this->initDatabase();
     }
 

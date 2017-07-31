@@ -24,6 +24,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Fidry\AliceDataFixtures\Bridge\Propel2\Purger\ModelPurger;
+use Propel\Runtime\Propel;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger
@@ -32,6 +33,16 @@ use Fidry\AliceDataFixtures\Bridge\Propel2\Purger\ModelPurger;
  */
 class ModelPurgerTest extends TestCase
 {
+    /**
+     * @var ModelPurger
+     */
+    private $purger;
+
+    public function setUp()
+    {
+        $this->purger = new ModelPurger(Propel::getConnection(), __DIR__ . '/../generated/sql');
+    }
+
     public function testIsAPurger()
     {
         $this->assertTrue(is_a(ModelPurger::class, PurgerInterface::class, true));
@@ -47,7 +58,7 @@ class ModelPurgerTest extends TestCase
      */
     public function testIsNotClonable()
     {
-        clone new ModelPurger('foo');
+        clone $this->purger;
     }
 
     public function testPurge()
@@ -57,8 +68,7 @@ class ModelPurgerTest extends TestCase
         $this->assertCount(1, AuthorQuery::create()->find());
         $this->assertCount(1, BookQuery::create()->find());
 
-        $purger = new ModelPurger(__DIR__ . '/../generated/sql');
-        $purger->purge();
+        $this->purger->purge();
 
         $this->assertCount(0, AuthorQuery::create()->find());
         $this->assertCount(0, BookQuery::create()->find());
