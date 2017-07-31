@@ -2,8 +2,8 @@ propel:
     database:
         connections:
             default:
-                adapter: sqlite
-                dsn: sqlite:tests/Bridge/Propel2/generated/propel.sq3
+                adapter: mysql
+                dsn: mysql:dbname=fidry_alice_data_fixtures;user=rppt
                 user: root
                 password: 
                 settings:

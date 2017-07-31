@@ -42,12 +42,7 @@ class ModelPersisterTest extends PropelTestCase
     public function setUp()
     {
         $this->persister = new ModelPersister();
-        $this->backupDatabase();
-    }
-
-    public function tearDown()
-    {
-        $this->restoreDatabase();
+        $this->initDatabase();
     }
 
     public function testIsAPersister()

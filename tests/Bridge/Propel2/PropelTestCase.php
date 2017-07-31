@@ -3,28 +3,13 @@
 namespace Fidry\AliceDataFixtures\Bridge\Propel2;
 
 use PHPUnit\Framework\TestCase;
+use Propel\Runtime\Propel;
 
 abstract class PropelTestCase extends TestCase
 {
-    private function dbPath()
+    protected function initDatabase()
     {
-        return __DIR__ . '/generated/propel.sq3';
-    }
-
-    private function backupDbPath()
-    {
-        return $this->dbPath() . '.back';
-    }
-
-    protected function backupDatabase()
-    {
-
-        if (file_exists($this->dbPath())) {
-            copy($this->dbPath(), $this->backupDbPath());
-        }
-    }
-    protected function restoreDatabase()
-    {
-        copy($this->backupDbPath(), $this->dbPath());
+        $connection = Propel::getConnection('default');
+        $connection->exec(file_get_contents(__DIR__ . '/generated/sql/default.sql'));
     }
 }
