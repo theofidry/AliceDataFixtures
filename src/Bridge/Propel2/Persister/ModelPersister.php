@@ -21,7 +21,7 @@ use Propel\Runtime\Propel;
 use Propel\Runtime\Connection\ConnectionInterface;
 
 /**
- * @author Théo FIDRY <theo.fidry@gmail.com>
+ * @author Daniel Leech <daniel@dantleech.com>
  *
  * @final
  */

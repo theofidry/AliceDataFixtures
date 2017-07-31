@@ -21,4 +21,4 @@
 !/bin/test.sh
 !/bin/cs.sh
 /tests/Bridge/Propel2/generated
-!/tests/Bridge/Propel2/generated/models
+/tests/Bridge/Propel2/Model/*
