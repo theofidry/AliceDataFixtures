@@ -1,0 +1,4 @@
+vendor-bin/propel2/bin/propel --config-dir=tests/Bridge/Propel2 config:convert
+vendor-bin/propel2/bin/propel --config-dir=tests/Bridge/Propel2 model:build
+vendor-bin/propel2/bin/propel --config-dir=tests/Bridge/Propel2 sql:build
+vendor-bin/propel2/bin/propel --config-dir=tests/Bridge/Propel2 sql:insert

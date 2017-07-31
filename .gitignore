@@ -17,6 +17,7 @@
 !/bin/doctrine_purge
 !/bin/eloquent_migrate
 !/bin/eloquent_rollback
+!/bin/propel_init
 !/bin/test.sh
 !/bin/cs.sh
 /tests/Bridge/Propel2/generated
