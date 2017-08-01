@@ -2,7 +2,6 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="Fidry\AliceDataFixtures\Bridge\Propel2\Model"
-          package="fixtures.bridge.propel2"
         >
     <table name="book" phpName="Book">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>

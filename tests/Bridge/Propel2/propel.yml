@@ -13,6 +13,3 @@ propel:
         phpDir: tests/Bridge/Propel2/Model
         phpConfDir: tests/Bridge/Propel2/generated/conf
         sqlDir: tests/Bridge/Propel2/generated/sql
-    generator:
-        schema:
-            autoPackage: true
