@@ -35,11 +35,6 @@ class ModelPersisterTest extends PropelTestCase
      */
     private $persister;
 
-    /**
-     * @var string
-     */
-    private $dbPath;
-
     public function setUp()
     {
         $this->persister = new ModelPersister(Propel::getConnection());

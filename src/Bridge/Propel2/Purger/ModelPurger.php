@@ -52,6 +52,15 @@ use Propel\Runtime\Connection\ConnectionInterface;
      */
     public function create(PurgeMode $mode, PurgerInterface $purger = null): PurgerInterface
     {
+        if ($mode == PurgeMode::createDeleteMode()) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Cannot purge database in delete mode with "%s" (not supported).',
+                    __CLASS__
+                )
+            );
+        }
+
         return new self();
     }
 
@@ -63,13 +72,14 @@ use Propel\Runtime\Connection\ConnectionInterface;
         $sqlPath = sprintf('%s/%s.sql', $this->generatedSqlPath, $this->connection->getName());
 
         if (false === file_exists($sqlPath)) {
-            throw new \RuntimeException(sprintf(
-                'No propel generated SQL file exists at "%s", do you need to generate it?',
-                $sqlPath
-            ));
+            throw new \RuntimeException(
+                sprintf(
+                    'No propel generated SQL file exists at "%s", do you need to generate it?',
+                    $sqlPath
+                )
+            );
         }
 
         $this->connection->exec(file_get_contents($sqlPath));
     }
 }
-

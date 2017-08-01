@@ -54,6 +54,24 @@ class ModelPurgerTest extends TestCase
     }
 
     /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Cannot purge database in delete mode
+     */
+    public function testCannotPurgeInDeleteMode()
+    {
+        $this->purger->create(PurgeMode::createDeleteMode());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage No propel generated SQL file exists
+     */
+    public function testSqlDoesNotExist()
+    {
+        (new ModelPurger(Propel::getConnection(), 'asdasd'))->purge();
+    }
+
+    /**
      * @expectedException \Nelmio\Alice\Throwable\Exception\UnclonableException
      */
     public function testIsNotClonable()
