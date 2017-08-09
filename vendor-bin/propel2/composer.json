@@ -5,7 +5,7 @@
         ]
     },
     "require-dev": {
-        "propel/propel": "@alpha",
+        "propel/propel": "^2.0@alpha",
         "theofidry/composer-inheritance-plugin": "^1.0"
     },
     "config": {
