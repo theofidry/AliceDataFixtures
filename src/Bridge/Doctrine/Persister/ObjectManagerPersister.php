@@ -58,7 +58,6 @@ use Nelmio\Alice\IsAServiceTrait;
     public function flush()
     {
         $this->objectManager->flush();
-        $this->objectManager->clear();
     }
 
     /**
