@@ -25,13 +25,14 @@ use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Fidry\AliceDataFixtures\Bridge\Propel2\Purger\ModelPurger;
 use Propel\Runtime\Propel;
+use Fidry\AliceDataFixtures\Bridge\Propel2\PropelTestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger
  *
  * @author Daniel Leech <daniel@dantleech.com>
  */
-class ModelPurgerTest extends TestCase
+class ModelPurgerTest extends PropelTestCase
 {
     /**
      * @var ModelPurger
@@ -41,6 +42,7 @@ class ModelPurgerTest extends TestCase
     public function setUp()
     {
         $this->purger = new ModelPurger(Propel::getConnection(), __DIR__ . '/../generated/sql');
+        $this->initDatabase();
     }
 
     public function testIsAPurger()
