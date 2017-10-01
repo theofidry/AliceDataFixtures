@@ -12,4 +12,4 @@
 declare(strict_types=1);
 
 require_once __DIR__.'/../../../vendor-bin/propel2/vendor/autoload.php';
-require_once __DIR__.'/generated/conf/config.php';
+require_once __DIR__.'/../../../fixtures/Bridge/Propel2/generated/conf/config.php';

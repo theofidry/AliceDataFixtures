@@ -9,7 +9,7 @@ propel:
                 settings:
                     charset: utf8
     paths:
-        schemaDir: tests/Bridge/Propel2/schema
-        phpDir: tests/Bridge/Propel2/Model
-        phpConfDir: tests/Bridge/Propel2/generated/conf
-        sqlDir: tests/Bridge/Propel2/generated/sql
+        schemaDir:  fixtures/Bridge/Propel2/schema
+        phpDir:     fixtures/Bridge/Propel2/Model
+        phpConfDir: fixtures/Bridge/Propel2/generated/conf
+        sqlDir:     fixtures/Bridge/Propel2/generated/sql

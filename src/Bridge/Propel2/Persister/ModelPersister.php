@@ -14,11 +14,12 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Propel2\Persister;
 
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use InvalidArgumentException;
 use Nelmio\Alice\IsAServiceTrait;
-use Propel\Runtime\Connection\ConnectionManagerSingle;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
-use Propel\Runtime\Propel;
 use Propel\Runtime\Connection\ConnectionInterface;
+use Propel\Runtime\Connection\ConnectionManagerSingle;
+use Propel\Runtime\Propel;
 
 /**
  * @author Daniel Leech <daniel@dantleech.com>
@@ -50,7 +51,7 @@ use Propel\Runtime\Connection\ConnectionInterface;
     public function persist($object)
     {
         if (false === $object instanceof ActiveRecordInterface) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf(
                     'Expected object to be an instance of "%s", got "%s" instead.',
                     ActiveRecordInterface::class,

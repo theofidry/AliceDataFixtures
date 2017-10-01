@@ -41,7 +41,10 @@ class ModelPurgerTest extends PropelTestCase
 
     public function setUp()
     {
-        $this->purger = new ModelPurger(Propel::getConnection(), __DIR__ . '/../generated/sql');
+        $this->purger = new ModelPurger(
+            Propel::getConnection(),
+            __DIR__ . '/../../../../fixtures/Bridge/Propel2/generated/sql'
+        );
         $this->initDatabase();
     }
 

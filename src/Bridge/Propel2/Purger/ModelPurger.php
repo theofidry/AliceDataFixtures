@@ -18,9 +18,11 @@ use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
+use InvalidArgumentException;
 use Nelmio\Alice\IsAServiceTrait;
-use Propel\Runtime\Propel;
 use Propel\Runtime\Connection\ConnectionInterface;
+use Propel\Runtime\Propel;
+use RuntimeException;
 
 /**
  * @author Daniel Leech <daniel@dantleech.com>
@@ -53,7 +55,7 @@ use Propel\Runtime\Connection\ConnectionInterface;
     public function create(PurgeMode $mode, PurgerInterface $purger = null): PurgerInterface
     {
         if ($mode == PurgeMode::createDeleteMode()) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf(
                     'Cannot purge database in delete mode with "%s" (not supported).',
                     __CLASS__
@@ -72,7 +74,7 @@ use Propel\Runtime\Connection\ConnectionInterface;
         $sqlPath = sprintf('%s/%s.sql', $this->generatedSqlPath, $this->connection->getName());
 
         if (false === file_exists($sqlPath)) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 sprintf(
                     'No propel generated SQL file exists at "%s", do you need to generate it?',
                     $sqlPath

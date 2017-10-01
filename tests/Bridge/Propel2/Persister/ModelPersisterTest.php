@@ -22,6 +22,7 @@ use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use PHPUnit\Framework\TestCase;
 use Propel\Runtime\Connection\ConnectionManagerSingle;
 use Propel\Runtime\Propel;
+use stdClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Propel2\Persister\ModelPersister
@@ -89,12 +90,12 @@ class ModelPersisterTest extends PropelTestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Expected object to be an instance of "Propel\Runtime\ActiveRecord\ActiveRecordInterface", got "stdClass" instead.
      */
     public function testCannotPersistANonModelObject()
     {
-        $object = new \stdClass();
+        $object = new stdClass();
         $this->persister->persist($object);
     }
 }

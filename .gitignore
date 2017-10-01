@@ -20,5 +20,5 @@
 !/bin/propel_init
 !/bin/test.sh
 !/bin/cs.sh
-/tests/Bridge/Propel2/generated
-/tests/Bridge/Propel2/Model/Fidry
+/fixtures/Bridge/Propel2/generated
+/fixtures/Bridge/Propel2/Model/Fidry

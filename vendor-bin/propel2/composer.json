@@ -1,7 +1,7 @@
 {
     "autoload-dev": {
         "classmap": [
-            "../../tests/Bridge/Propel2/Model"
+            "fixtures/Bridge/Propel2/Model"
         ]
     },
     "require-dev": {
