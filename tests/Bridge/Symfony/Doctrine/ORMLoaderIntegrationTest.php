@@ -137,9 +137,6 @@ class ORMLoaderIntegrationTest extends TestCase
         $this->assertEquals(10, count($groups));
     }
 
-    /**
-     * @expectedException \Fidry\AliceDataFixtures\Exception\MaxPassReachedException
-     */
     public function testBidirectionalRelationshipsDeclaredInDifferentFilesWithCyclingDependence()
     {
         $this->loader->load([
