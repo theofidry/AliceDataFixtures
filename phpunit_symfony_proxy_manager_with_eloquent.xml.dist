@@ -10,13 +10,18 @@
   -->
 
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/5.5/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
          bootstrap="vendor-bin/proxy-manager/vendor/autoload.php"
          colors="true"
          forceCoversAnnotation="true"
          beStrictAboutCoversAnnotation="true"
+         beStrictAboutTestsThatDoNotTestAnything="false"
          stopOnFailure="true"
          verbose="true">
+
+    <php>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="0" />
+    </php>
 
     <testsuites>
         <testsuite name="Test Suite">

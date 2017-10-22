@@ -18,6 +18,7 @@ use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
+use InvalidArgumentException;
 use Nelmio\Alice\IsAServiceTrait;
 
 /**
@@ -57,7 +58,7 @@ use Nelmio\Alice\IsAServiceTrait;
     public function create(PurgeMode $mode, PurgerInterface $purger = null): PurgerInterface
     {
         if (PurgeMode::createTruncateMode() == $mode) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf(
                     'Cannot purge database in truncate mode with "%s" (not supported).',
                     __CLASS__

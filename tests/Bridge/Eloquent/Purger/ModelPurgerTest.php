@@ -24,6 +24,7 @@ use Illuminate\Database\Migrations\Migrator;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
+use ReflectionClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger
@@ -44,12 +45,9 @@ class ModelPurgerTest extends TestCase
         $this->assertTrue(is_a(ModelPurger::class, PurgerFactoryInterface::class, true));
     }
 
-    /**
-     * @expectedException \Nelmio\Alice\Throwable\Exception\UnclonableException
-     */
     public function testIsNotClonable()
     {
-        clone new ModelPurger(new FakeMigrationRepository(), '', MigratorFactory::create());
+        $this->assertFalse((new ReflectionClass(ModelPurger::class))->isCloneable());
     }
 
     public function testRollbackAndRunMigrationsForPurgingTheDatabase()

@@ -19,6 +19,7 @@ use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Resolver\FakeFileResolver;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use ReflectionClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\FileResolverLoader
@@ -32,12 +33,9 @@ class FileResolverLoaderTest extends TestCase
         $this->assertTrue(is_a(FileResolverLoader::class, LoaderInterface::class, true));
     }
 
-    /**
-     * @expectedException \Nelmio\Alice\Throwable\Exception\UnclonableException
-     */
     public function testIsNotClonable()
     {
-        clone new FileResolverLoader(new FakeLoader(), new FakeFileResolver());
+        $this->assertFalse((new ReflectionClass(FileResolverLoader::class))->isCloneable());
     }
 
     public function testResolvesTheFilesBeforePassingThemToTheDecoratedLoader()

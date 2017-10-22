@@ -25,6 +25,7 @@ use Nelmio\Alice\ParameterBag;
 use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringGenerationException;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use ReflectionClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\MultiPassLoader
@@ -42,12 +43,9 @@ class MultiPassFileLoaderTest extends TestCase
         $this->assertTrue(is_a(MultiPassLoader::class, LoaderInterface::class, true));
     }
 
-    /**
-     * @expectedException \Nelmio\Alice\Throwable\Exception\UnclonableException
-     */
     public function testIsNotClonable()
     {
-        clone new MultiPassLoader(new FakeFileLoader());
+        $this->assertFalse((new ReflectionClass(MultiPassLoader::class))->isCloneable());
     }
 
     /**

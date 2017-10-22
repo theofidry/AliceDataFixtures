@@ -21,6 +21,7 @@ use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger
@@ -37,12 +38,9 @@ class PurgerTest extends TestCase
         $this->assertTrue(is_a(Purger::class, PurgerFactoryInterface::class, true));
     }
 
-    /**
-     * @expectedException \Nelmio\Alice\Throwable\Exception\UnclonableException
-     */
     public function testIsNotClonable()
     {
-        clone new Purger(new FakeEntityManager(), PurgeMode::createDeleteMode());
+        $this->assertFalse((new ReflectionClass(Purger::class))->isCloneable());
     }
 
     public function testCreatesADoctrineOrmPurgerWithTheAppropriateManagerAndPurgeMode()

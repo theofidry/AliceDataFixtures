@@ -25,18 +25,14 @@ matrix:
         - COVERAGE='true'
         - COMPOSER_FLAGS='--prefer-lowest'
 
-    - php: '7.0'
-      env: SYMFONY_VERSION='~2.7.0'
-    - php: '7.0'
-      env: SYMFONY_VERSION='~2.8.0'
-    - php: '7.0'
-      env: SYMFONY_VERSION='~3.2.0'
-    - php: '7.0'
+    - php: '7.1'
       env: SYMFONY_VERSION='~3.3.0'
+    - php: '7.1'
+      env: SYMFONY_VERSION='~3.4.0@dev'
 
   allow_failures:
     - php: nightly
-    - php: '7.1'
+    - env: SYMFONY_VERSION='~3.4.0@dev'
 
 before_install:
   - set -eo pipefail

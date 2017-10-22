@@ -163,10 +163,12 @@ $files = [
     'path/to/src/AppBundle/Resources/fixtures/related_dummy.yml',
 ];
 
-$loader = $container->get('fidry_alice_data_fixtures.doctrine.persister_loader'); // For Doctrine ORM
-$loader = $container->get('fidry_alice_data_fixtures.doctrine_mongodb.persister_loader'); // For Doctrine MongoDB ODM
-$loader = $container->get('fidry_alice_data_fixtures.doctrine_phpcr.persister_loader'); // For Doctrine PHPCR
-$loader = $container->get('fidry_alice_data_fixtures.eloquent.persister_loader'); // For Eloquent ORM
+// Choose your loader
+$loader = $container->get('fidry_alice_data_fixtures.doctrine.loader');         // For Doctrine ORM
+$loader = $container->get('fidry_alice_data_fixtures.doctrine_mongodb.loader'); // For Doctrine MongoDB ODM
+$loader = $container->get('fidry_alice_data_fixtures.doctrine_phpcr.loader');   // For Doctrine PHPCR
+$loader = $container->get('fidry_alice_data_fixtures.eloquent.loader');         // For Eloquent ORM
+
 $objects = $loader->load($files);
 
 // $objects is now an array of persisted `Dummy` and `RelatedDummy`

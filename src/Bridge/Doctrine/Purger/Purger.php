@@ -24,6 +24,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
+use InvalidArgumentException;
 use Nelmio\Alice\IsAServiceTrait;
 
 /**
@@ -70,7 +71,7 @@ use Nelmio\Alice\IsAServiceTrait;
         } elseif ($purger instanceof self) {
             $manager = $purger->manager;
         } else {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf(
                     'Expected purger to be either and instance of "%s" or "%s". Got "%s".',
                     DoctrinePurgerInterface::class,
@@ -80,7 +81,7 @@ use Nelmio\Alice\IsAServiceTrait;
         }
 
         if (null === $manager) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf(
                     'Expected purger "%s" to have an object manager, got "null" instead.',
                     get_class($purger)
@@ -113,7 +114,7 @@ use Nelmio\Alice\IsAServiceTrait;
             return new DoctrineMongoDBPurger($manager);
         }
 
-        throw new \InvalidArgumentException(
+        throw new InvalidArgumentException(
             sprintf(
                 'Cannot create a purger for ObjectManager of class %s',
                 get_class($manager)

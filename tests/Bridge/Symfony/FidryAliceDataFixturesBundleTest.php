@@ -45,6 +45,9 @@ class FidryAliceDataFixturesBundleTest extends TestCase
         $this->kernel->shutdown();
     }
 
+    /**
+     * @group legacy
+     */
     public function testServiceRegistration()
     {
         $this->assertServiceIsInstanceOf(
@@ -54,7 +57,7 @@ class FidryAliceDataFixturesBundleTest extends TestCase
 
         $this->assertServiceIsInstanceOf(
             \Fidry\AliceDataFixtures\Loader\SimpleLoader::class,
-            'fidry_alice_data_fixtures.loader.simple_file'
+            'fidry_alice_data_fixtures.loader.simple'
         );
     }
 

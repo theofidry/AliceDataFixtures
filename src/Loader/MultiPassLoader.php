@@ -16,6 +16,7 @@ namespace Fidry\AliceDataFixtures\Loader;
 use Fidry\AliceDataFixtures\Exception\MaxPassReachedException;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
+use InvalidArgumentException;
 use Nelmio\Alice\FileLoaderInterface;
 use Nelmio\Alice\IsAServiceTrait;
 use Nelmio\Alice\ObjectBag;
@@ -29,6 +30,7 @@ use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringG
  * @author Théo FIDRY <theo.fidry@gmail.com>
  *
  * @final
+ * @deprecated As of nelmio/alice 3.1.0 this class is unneeded. Will be removed in future versions.
  */
 /*final*/ class MultiPassLoader implements LoaderInterface
 {
@@ -48,7 +50,7 @@ use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringG
     {
         $this->loader = $fileLoader;
         if ($maxPass <= 0) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf(
                     'The maximum number of pass done to load multiple files is expected to be an integer superior'
                     .' or equal to 1. Got "%d" instead.',
@@ -66,7 +68,7 @@ use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringG
      *
      * {@inheritdoc}
      *
-     * @throws \Fidry\AliceDataFixtures\Exception\MaxPassReachedException
+     * @throws MaxPassReachedException
      */
     public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
     {
