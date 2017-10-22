@@ -54,7 +54,7 @@ class FidryAliceDataFixturesBundleTest extends TestCase
 
         $this->assertServiceIsInstanceOf(
             \Fidry\AliceDataFixtures\Loader\SimpleLoader::class,
-            'fidry_alice_data_fixtures.loader.simple_file'
+            'fidry_alice_data_fixtures.loader.file'
         );
     }
 
