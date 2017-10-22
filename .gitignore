@@ -1,6 +1,7 @@
 /vendor/
 /composer.lock
 /coverage.xml
+/fixtures/Bridge/Symfony/SymfonyApp/cache/*
 /phpunit.xml
 /.php_cs.cache
 /.phar/
