@@ -19,6 +19,10 @@
          stopOnFailure="true"
          verbose="true">
 
+    <php>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="1" />
+    </php>
+
     <testsuites>
         <testsuite name="Test Suite">
             <directory>tests/Bridge/Symfony/Eloquent</directory>
