@@ -45,6 +45,9 @@ class FidryAliceDataFixturesBundleTest extends TestCase
         $this->kernel->shutdown();
     }
 
+    /**
+     * @group legacy
+     */
     public function testServiceRegistration()
     {
         $this->assertServiceIsInstanceOf(
