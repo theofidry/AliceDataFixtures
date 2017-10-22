@@ -13,6 +13,11 @@
 
     <services>
 
+        <service id="fidry_alice_data_fixtures.doctrine.loader"
+                 alias="fidry_alice_data_fixtures.doctrine.persister_loader"
+                 public="true" />
+
+
         <service id="fidry_alice_data_fixtures.persistence.purger_mode"
                  class="Fidry\AliceDataFixtures\Persistence\PurgeMode"
                  public="false">
@@ -35,7 +40,7 @@
         <service id="fidry_alice_data_fixtures.doctrine.persister_loader"
                  class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
                  lazy="true" >
-            <argument type="service" id="fidry_alice_data_fixtures.loader.multipass_file" />
+            <argument type="service" id="fidry_alice_data_fixtures.loader.simple" />
             <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister" />
             <!-- Processors are injected via a Compiler pass -->
         </service>

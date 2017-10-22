@@ -16,6 +16,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Persister;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
 use Nelmio\Alice\IsAServiceTrait;
 
 /**
@@ -48,7 +49,7 @@ use Nelmio\Alice\IsAServiceTrait;
     public function persist($object)
     {
         if (false === $object instanceof Model) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf(
                     'Expected object to be an instance of "%s", got "%s" instead.',
                     Model::class,

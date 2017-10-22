@@ -15,11 +15,8 @@ namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
-use Nelmio\Alice\FileLoaderInterface;
+use Nelmio\Alice\FilesLoaderInterface;
 use Nelmio\Alice\IsAServiceTrait;
-use Nelmio\Alice\ObjectBag;
-use Nelmio\Alice\ObjectSet;
-use Nelmio\Alice\ParameterBag;
 
 /**
  * Minimalistic loader implementation.
@@ -34,13 +31,13 @@ use Nelmio\Alice\ParameterBag;
     use IsAServiceTrait;
 
     /**
-     * @var FileLoaderInterface
+     * @var FilesLoaderInterface
      */
-    private $fileLoader;
+    private $filesLoader;
 
-    public function __construct(FileLoaderInterface $fileLoader)
+    public function __construct(FilesLoaderInterface $fileLoader)
     {
-        $this->fileLoader = $fileLoader;
+        $this->filesLoader = $fileLoader;
     }
 
     /**
@@ -50,15 +47,6 @@ use Nelmio\Alice\ParameterBag;
      */
     public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
     {
-        $objectSet = new ObjectSet(new ParameterBag($parameters), new ObjectBag($objects));
-        foreach ($fixturesFiles as $fixturesFile) {
-            $objectSet = $this->fileLoader->loadFile(
-                $fixturesFile,
-                $objectSet->getParameters(),
-                $objectSet->getObjects()
-            );
-        }
-
-        return $objectSet->getObjects();
+        return $this->filesLoader->loadFiles($fixturesFiles, $parameters, $objects)->getObjects();
     }
 }

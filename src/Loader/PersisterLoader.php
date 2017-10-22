@@ -82,6 +82,7 @@ use Nelmio\Alice\IsAServiceTrait;
             foreach ($this->processors as $processor) {
                 $processor->preProcess($id, $object);
             }
+
             $this->persister->persist($object);
         }
         $this->persister->flush();
