@@ -15,6 +15,7 @@ namespace Fidry\AliceDataFixtures\Persistence\Persister;
 
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Persistence\Persister\NullPersister
@@ -28,11 +29,8 @@ class NullPersisterTest extends TestCase
         $this->assertTrue(is_a(NullPersister::class, PersisterInterface::class, true));
     }
 
-    /**
-     * @expectedException \Nelmio\Alice\Throwable\Exception\UnclonableException
-     */
     public function testIsNotClonable()
     {
-        clone new NullPersister();
+        $this->assertFalse((new ReflectionClass(NullPersister::class))->isCloneable());
     }
 }

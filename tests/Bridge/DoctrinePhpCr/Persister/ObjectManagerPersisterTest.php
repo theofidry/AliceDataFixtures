@@ -22,6 +22,7 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
@@ -62,12 +63,9 @@ class ObjectManagerPersisterTest extends TestCase
         $this->assertTrue(is_a(ObjectManagerPersister::class, PersisterInterface::class, true));
     }
 
-    /**
-     * @expectedException \Nelmio\Alice\Throwable\Exception\UnclonableException
-     */
     public function testIsNotClonable()
     {
-        clone $this->persister;
+        $this->assertFalse((new ReflectionClass(ObjectManagerPersister::class))->isCloneable());
     }
 
     /**

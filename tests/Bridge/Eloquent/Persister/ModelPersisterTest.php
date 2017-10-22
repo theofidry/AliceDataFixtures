@@ -18,6 +18,7 @@ use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\Dummy;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Illuminate\Database\Migrations\Migrator;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Eloquent\Persister\ModelPersister
@@ -55,12 +56,9 @@ class ModelPersisterTest extends TestCase
         $this->assertTrue(is_a(ModelPersister::class, PersisterInterface::class, true));
     }
 
-    /**
-     * @expectedException \Nelmio\Alice\Throwable\Exception\UnclonableException
-     */
     public function testIsClonable()
     {
-        clone $this->persister;
+        $this->assertFalse((new ReflectionClass(ModelPersister::class))->isCloneable());
     }
 
     public function testCanPersistAModel()

@@ -20,6 +20,7 @@ use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\ProcessorInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use ReflectionClass;
 use stdClass;
 
 /**
@@ -39,12 +40,9 @@ class PersisterLoaderTest extends TestCase
         $this->assertTrue(is_a(PersisterLoader::class, PersisterAwareInterface::class, true));
     }
 
-    /**
-     * @expectedException \Nelmio\Alice\Throwable\Exception\UnclonableException
-     */
     public function testIsNotClonable()
     {
-        clone new PersisterLoader(new FakeLoader(), new FakePersister(), []);
+        $this->assertFalse((new ReflectionClass(PersisterLoader::class))->isCloneable());
     }
 
     public function testNamedConstructorIsImmutable()

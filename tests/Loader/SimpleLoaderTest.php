@@ -16,11 +16,14 @@ namespace Fidry\AliceDataFixtures\Loader;
 use Fidry\AliceDataFixtures\Alice\Loader\FakeFileLoader;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Nelmio\Alice\FileLoaderInterface;
+use Nelmio\Alice\FilesLoaderInterface;
 use Nelmio\Alice\ObjectBag;
 use Nelmio\Alice\ObjectSet;
 use Nelmio\Alice\ParameterBag;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use ReflectionClass;
+use stdClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\SimpleLoader
@@ -34,12 +37,9 @@ class SimpleLoaderTest extends TestCase
         $this->assertTrue(is_a(SimpleLoader::class, LoaderInterface::class, true));
     }
 
-    /**
-     * @expectedException \Nelmio\Alice\Throwable\Exception\UnclonableException
-     */
     public function testIsNotClonable()
     {
-        clone new SimpleLoader(new FakeFileLoader());
+        $this->assertFalse((new ReflectionClass(SimpleLoader::class))->isCloneable());
     }
 
     public function testDecoratesAliceLoaderToLoadEachFileGivenAndReturnsTheObjectsLoaded()
@@ -48,164 +48,31 @@ class SimpleLoaderTest extends TestCase
             'fixtures1.yml',
         ];
 
-        $fileLoaderProphecy = $this->prophesize(FileLoaderInterface::class);
-        $fileLoaderProphecy
-            ->loadFile($files[0], [], [])
+        $filesLoaderProphecy = $this->prophesize(FilesLoaderInterface::class);
+        $filesLoaderProphecy
+            ->loadFiles($files, [], [])
             ->willReturn(
                 new ObjectSet(
                     new ParameterBag(),
                     new ObjectBag([
-                        'dummy' => new \stdClass(),
+                        'dummy' => new stdClass(),
                     ])
                 )
             )
         ;
-        /** @var FileLoaderInterface $fileLoader */
-        $fileLoader = $fileLoaderProphecy->reveal();
+        /** @var FilesLoaderInterface $filesLoader */
+        $filesLoader = $filesLoaderProphecy->reveal();
 
-        $loader = new SimpleLoader($fileLoader);
+        $loader = new SimpleLoader($filesLoader);
         $result = $loader->load($files);
 
         $this->assertEquals(
             [
-                'dummy' => new \stdClass(),
+                'dummy' => new stdClass(),
             ],
             $result
         );
 
-        $fileLoaderProphecy->loadFile(Argument::cetera())->shouldHaveBeenCalledTimes(1);
-    }
-
-    public function testParametersAndObjectsLoadedAreReinjectedBetweenEachLoader()
-    {
-        $files = [
-            'fixtures1.yml',
-            'fixtures2.yml',
-        ];
-
-        $fileLoaderProphecy = $this->prophesize(FileLoaderInterface::class);
-        $fileLoaderProphecy
-            ->loadFile($files[0], [], [])
-            ->willReturn(
-                new ObjectSet(
-                    new ParameterBag([
-                        'first' => true,
-                    ]),
-                    new ObjectBag([
-                        'first' => new \stdClass(),
-                    ])
-                )
-            )
-        ;
-        $fileLoaderProphecy
-            ->loadFile(
-                $files[1],
-                [
-                    'first' => true,
-                ],
-                [
-                    'first' => new \stdClass(),
-                ]
-            )
-            ->willReturn(
-                new ObjectSet(
-                    new ParameterBag([
-                        'first' => true,
-                        'second' => true,
-                    ]),
-                    new ObjectBag([
-                        'first' => new \stdClass(),
-                        'second' => new \stdClass(),
-                    ])
-                )
-            )
-        ;
-        $fileLoader = $fileLoaderProphecy->reveal();
-
-        $loader = new SimpleLoader($fileLoader);
-        $result = $loader->load($files);
-
-        $this->assertEquals(
-            [
-                'first' => new \stdClass(),
-                'second' => new \stdClass(),
-            ],
-            $result
-        );
-
-        $fileLoaderProphecy->loadFile(Argument::cetera())->shouldHaveBeenCalledTimes(2);
-    }
-
-    public function testParametersAndObjectsPassedAndLoadedAreReinjectedBetweenEachLoader()
-    {
-        $files = [
-            'fixtures1.yml',
-            'fixtures2.yml',
-        ];
-        $parameters = [
-            'injected' => true,
-        ];
-        $objects = [
-            'injected' => new \stdClass(),
-        ];
-
-        $fileLoaderProphecy = $this->prophesize(FileLoaderInterface::class);
-        $fileLoaderProphecy
-            ->loadFile($files[0], $parameters, $objects)
-            ->willReturn(
-                new ObjectSet(
-                    new ParameterBag([
-                        'injected' => true,
-                        'first' => true,
-                    ]),
-                    new ObjectBag([
-                        'injected' => new \stdClass(),
-                        'first' => new \stdClass(),
-                    ])
-                )
-            )
-        ;
-        $fileLoaderProphecy
-            ->loadFile(
-                $files[1],
-                [
-                    'injected' => true,
-                    'first' => true,
-                ],
-                [
-                    'injected' => new \stdClass(),
-                    'first' => new \stdClass(),
-                ]
-            )
-            ->willReturn(
-                new ObjectSet(
-                    new ParameterBag([
-                        'injected' => true,
-                        'first' => true,
-                        'second' => true,
-                    ]),
-                    new ObjectBag([
-                        'injected' => new \stdClass(),
-                        'first' => new \stdClass(),
-                        'second' => new \stdClass(),
-                    ])
-                )
-            )
-        ;
-        $fileLoader = $fileLoaderProphecy->reveal();
-
-        $loader = new SimpleLoader($fileLoader);
-        $result = $loader->load($files, $parameters, $objects);
-
-        $this->assertEquals(
-            [
-                'injected' => new \stdClass(),
-                'first' => new \stdClass(),
-                'second' => new \stdClass(),
-            ],
-            $result
-        );
-
-        $fileLoaderProphecy->loadFile(Argument::cetera())->shouldHaveBeenCalledTimes(2);
+        $filesLoaderProphecy->loadFiles(Argument::cetera())->shouldHaveBeenCalledTimes(1);
     }
 }
