@@ -96,6 +96,7 @@ test_symfony_doctrine_bridge: bin/console \
 							  vendor-bin/eloquent/bin/phpunit \
 							  remove_sf_cache \
 							  refresh_mysql_db \
+							  refresh_mongodb_db \
 							  refresh_phpcr
 	php bin/console doctrine:schema:create --kernel=DoctrineKernel
 
