@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Purger;
 
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Migration\FakeMigrationRepository;
-use Fidry\AliceDataFixtures\Bridge\Eloquent\MigratorFactory;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;

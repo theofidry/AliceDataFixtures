@@ -19,6 +19,7 @@ namespace Fidry\AliceDataFixtures\Loader;
  * @private
  *
  * @author Théo FIDRY <theo.fidry@gmail.com>
+ *
  * @deprecated
  */
 final class FileTracker

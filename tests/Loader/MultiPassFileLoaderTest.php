@@ -262,12 +262,14 @@ class MultiPassFileLoaderTest extends TestCase
             $loader->load($files);
             $this->fail('Expected exception to be thrown.');
         } catch (MaxPassReachedException $exception) {
-            $this->assertContains(<<<EOF
+            $this->assertContains(
+                <<<EOF
 Loading files limit of 15 reached. Could not load the following files:
 foo:
  - Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringGenerationException: hello in
 EOF
-                , $exception->getMessage()
+                ,
+                $exception->getMessage()
             );
         }
     }
