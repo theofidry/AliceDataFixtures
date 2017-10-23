@@ -18,6 +18,7 @@
             "homepage": "https://github.com/theofidry"
         }
     ],
+
     "require": {
         "php": "^7.0.0",
         "nelmio/alice": "^3.1"
@@ -28,6 +29,7 @@
         "phpspec/prophecy": "^1.7",
         "symfony/phpunit-bridge": "^3.3.2"
     },
+
     "suggest": {
         "doctrine/data-fixtures": "To use Doctrine",
 
@@ -45,6 +47,7 @@
 
         "ocramius/proxy-manager": "To avoid database connection on kernel boot"
     },
+
     "autoload": {
         "psr-4": {
             "Fidry\\AliceDataFixtures\\": "src"
@@ -58,6 +61,7 @@
             ]
         }
     },
+
     "config": {
         "bin-dir": "bin",
         "sort-packages": true

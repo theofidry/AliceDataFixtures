@@ -2,6 +2,8 @@
 /composer.lock
 /coverage.xml
 /fixtures/Bridge/Symfony/SymfonyApp/cache/*
+/fixtures/Bridge/MongoDB/data/*
+!/fixtures/Bridge/MongoDB/data/.gitkeep
 /phpunit.xml
 /.php_cs.cache
 /.phar/
