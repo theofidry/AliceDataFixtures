@@ -59,7 +59,7 @@ install:
     fi
   - composer bin all update --prefer-dist --ignore-platform-reqs $COMPOSER_FLAGS
 
-script: bin/test.sh
+script: make test
 
 notifications:
   email: false

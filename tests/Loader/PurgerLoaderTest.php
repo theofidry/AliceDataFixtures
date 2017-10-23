@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\LoaderInterface;
-use Fidry\AliceDataFixtures\Persistence\FakePurgerFactory;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;

@@ -30,6 +30,7 @@ use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringG
  * @author Théo FIDRY <theo.fidry@gmail.com>
  *
  * @final
+ *
  * @deprecated As of nelmio/alice 3.1.0 this class is unneeded. Will be removed in future versions.
  */
 /*final*/ class MultiPassLoader implements LoaderInterface

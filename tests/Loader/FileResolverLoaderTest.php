@@ -16,7 +16,6 @@ namespace Fidry\AliceDataFixtures\Loader;
 use Fidry\AliceDataFixtures\File\Resolver\DummyResolver;
 use Fidry\AliceDataFixtures\FileResolverInterface;
 use Fidry\AliceDataFixtures\LoaderInterface;
-use Fidry\AliceDataFixtures\Resolver\FakeFileResolver;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use ReflectionClass;

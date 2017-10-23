@@ -19,7 +19,7 @@
                  lazy="true" >
             <argument type="service" id="nelmio_alice.file_loader" />
 
-            <deprecated>The service %service_id% is deprecated and will be removed in future versions.</deprecated>
+            <deprecated>The service "%service_id%" is deprecated and will be removed in future versions.</deprecated>
         </service>
 
         <service id="fidry_alice_data_fixtures.loader.simple"

@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
 
-use Fidry\AliceDataFixtures\Alice\Loader\FakeFileLoader;
 use Fidry\AliceDataFixtures\LoaderInterface;
-use Nelmio\Alice\FileLoaderInterface;
 use Nelmio\Alice\FilesLoaderInterface;
 use Nelmio\Alice\ObjectBag;
 use Nelmio\Alice\ObjectSet;
