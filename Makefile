@@ -27,7 +27,7 @@ refresh_mongodb_db:
 	mongo fidry_alice_data_fixtures --eval "db.dropDatabase();"
 
 refresh_phpcr:		## Refresh the MongoDB PHPCR database used
-refresh_phpcr:
+refresh_phpcr: vendor-bin/doctrine_phpcr/bin/phpcrodm
 	mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures; CREATE DATABASE fidry_alice_data_fixtures;"
 	php vendor-bin/doctrine_phpcr/bin/phpcrodm jackalope:init:dbal --force
 	php vendor-bin/doctrine_phpcr/bin/phpcrodm doctrine:phpcr:register-system-node-types
@@ -92,8 +92,7 @@ test_symfony_bridge: vendor-bin/eloquent/bin/phpunit \
 	vendor-bin/symfony/bin/phpunit -c phpunit_symfony.xml.dist
 
 test_symfony_doctrine_bridge:			## Run the tests for the Symfony Doctrine bridge
-test_symfony_doctrine_bridge: bin/console \
-							  vendor-bin/eloquent/bin/phpunit \
+test_symfony_doctrine_bridge: vendor-bin/symfony/bin/phpunit \
 							  remove_sf_cache \
 							  refresh_mysql_db \
 							  refresh_mongodb_db \
@@ -104,7 +103,7 @@ test_symfony_doctrine_bridge: bin/console \
 
 test_symfony_eloquent_bridge:			## Run the tests for the Symfony Eloquent bridge
 test_symfony_eloquent_bridge: bin/console \
-							  vendor-bin/eloquent/bin/phpunit \
+							  vendor-bin/symfony/bin/phpunit \
 							  remove_sf_cache refresh_mysql_db
 	php bin/console eloquent:migrate:install --kernel=EloquentKernel
 
@@ -185,6 +184,9 @@ vendor-bin/doctrine_phpcr/composer.lock: vendor-bin/doctrine_phpcr/composer.json
 vendor-bin/doctrine_phpcr/bin/phpunit: vendor-bin/doctrine_phpcr/composer.lock
 	composer bin doctrine_phpcr install
 
+vendor-bin/doctrine_phpcr/bin/phpcrodm: vendor-bin/doctrine_phpcr/composer.lock
+	composer bin doctrine_phpcr install
+
 
 vendor-bin/eloquent/composer.lock: vendor-bin/eloquent/composer.json
 	@echo vendor-bin/eloquent/composer.lock is not up to date.
@@ -197,10 +199,10 @@ vendor-bin/symfony/composer.lock: vendor-bin/symfony/composer.json
 	@echo vendor-bin/symfony/composer.lock is not up to date.
 
 vendor-bin/symfony/bin/phpunit: vendor-bin/symfony/composer.lock
-	composer bin symfony install
+	composer bin symfony install --ignore-platform-reqs
 
 bin/console: vendor-bin/symfony/composer.lock
-	composer bin symfony install
+	composer bin symfony install --ignore-platform-reqs
 
 
 vendor-bin/proxy-manager/composer.lock: vendor-bin/proxy-manager/composer.json
