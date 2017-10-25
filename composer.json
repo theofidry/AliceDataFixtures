@@ -25,8 +25,9 @@
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.0",
-        "phpunit/phpunit": "^6.0",
+        "composer/composer": "^1.5",
         "phpspec/prophecy": "^1.7",
+        "phpunit/phpunit": "^6.0",
         "symfony/phpunit-bridge": "^3.3.2"
     },
 

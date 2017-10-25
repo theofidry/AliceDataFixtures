@@ -23,7 +23,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @coversNothing
  *
- * @author Théo FIDRY <theo.fidry@gmail.com>
+ * @requires extension mongodb
  */
 class MongodbLoaderIntegrationTest extends TestCase
 {
