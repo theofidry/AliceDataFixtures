@@ -27,7 +27,7 @@ refresh_mongodb_db:
 	mongo fidry_alice_data_fixtures --eval "db.dropDatabase();"
 
 refresh_phpcr:		## Refresh the MongoDB PHPCR database used
-refresh_phpcr:
+refresh_phpcr: vendor-bin/doctrine_phpcr/vendor/phpcrodm
 	mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures; CREATE DATABASE fidry_alice_data_fixtures;"
 	php vendor-bin/doctrine_phpcr/bin/phpcrodm jackalope:init:dbal --force
 	php vendor-bin/doctrine_phpcr/bin/phpcrodm doctrine:phpcr:register-system-node-types
@@ -60,72 +60,84 @@ test_core: vendor/phpunit \
 	bin/phpunit
 
 test_doctrine_bridge:				## Run the tests for the Doctrine bridge
-test_doctrine_bridge: vendor-bin/doctrine/bin/phpunit \
-				      refresh_mysql_db
+test_doctrine_bridge: vendor-bin/doctrine/vendor/phpunit
+	$(MAKE) remove_sf_cache
+	$(MAKE) refresh_mysql_db
+
 	vendor-bin/doctrine/bin/doctrine orm:schema-tool:create
 
 	vendor-bin/doctrine/bin/phpunit -c phpunit_doctrine.xml.dist
 
 test_doctrine_odm_bridge:			## Run the tests for the Doctrine ODM bridge
-test_doctrine_odm_bridge: vendor-bin/doctrine_mongodb/bin/phpunit \
-						  refresh_mongodb_db
+test_doctrine_odm_bridge: vendor-bin/doctrine_mongodb/vendor/phpunit
+	$(MAKE) remove_sf_cache
+	$(MAKE) refresh_mongodb_db
+
 	vendor-bin/doctrine_mongodb/bin/phpunit -c phpunit_doctrine_mongodb.xml.dist
 
 test_doctrine_phpcr_bridge:			## Run the tests for the Doctrine Mongodb PHPCR bridge
-test_doctrine_phpcr_bridge: vendor-bin/doctrine_mongodb/bin/phpunit \
-							refresh_phpcr
+test_doctrine_phpcr_bridge: vendor-bin/doctrine_mongodb/vendor/phpunit
+	$(MAKE) remove_sf_cache
+	$(MAKE) refresh_phpcr
+
 	vendor-bin/doctrine_phpcr/bin/phpunit -c phpunit_doctrine_phpcr.xml.dist
 
 test_eloquent_bridge:				## Run the tests for the Eloquent bridge
-test_eloquent_bridge: vendor-bin/eloquent/bin/phpunit \
-					  refresh_mysql_db
+test_eloquent_bridge: vendor-bin/eloquent/vendor/phpunit
+	$(MAKE) remove_sf_cache
+	$(MAKE) refresh_mysql_db
+
 	php bin/eloquent_migrate
 
 	vendor-bin/eloquent/bin/phpunit -c phpunit_eloquent.xml.dist
 
 test_symfony_bridge:				## Run the tests for the Symfony bridge
-test_symfony_bridge: vendor-bin/eloquent/bin/phpunit \
-					 vendor-bin/covers-validator/vendor \
-					 remove_sf_cache
+test_symfony_bridge: vendor-bin/eloquent/vendor/phpunit \
+					 vendor-bin/covers-validator/vendor
 	$(COVERS_VALIDATOR) -c phpunit_symfony.xml.dist
+	$(MAKE) remove_sf_cache
 
 	vendor-bin/symfony/bin/phpunit -c phpunit_symfony.xml.dist
 
 test_symfony_doctrine_bridge:			## Run the tests for the Symfony Doctrine bridge
-test_symfony_doctrine_bridge: bin/console \
-							  vendor-bin/eloquent/bin/phpunit \
-							  remove_sf_cache \
-							  refresh_mysql_db \
-							  refresh_mongodb_db \
-							  refresh_phpcr
+test_symfony_doctrine_bridge: vendor-bin/symfony/vendor/phpunit
+	$(MAKE) remove_sf_cache
+	$(MAKE) refresh_mysql_db
+	$(MAKE) refresh_mongodb_db
+	$(MAKE) refresh_phpcr
+
 	php bin/console doctrine:schema:create --kernel=DoctrineKernel
 
 	vendor-bin/symfony/bin/phpunit -c phpunit_symfony_doctrine.xml.dist
 
 test_symfony_eloquent_bridge:			## Run the tests for the Symfony Eloquent bridge
 test_symfony_eloquent_bridge: bin/console \
-							  vendor-bin/eloquent/bin/phpunit \
-							  remove_sf_cache refresh_mysql_db
+							  vendor-bin/symfony/vendor/phpunit
+	$(MAKE) remove_sf_cache
+	$(MAKE) refresh_mysql_db
+
 	php bin/console eloquent:migrate:install --kernel=EloquentKernel
 
 	vendor-bin/symfony/bin/phpunit -c phpunit_symfony_eloquent.xml.dist
 
 test_symfony_doctrine_bridge_proxy_manager:	## Run the tests for the Symfony Doctrine bridge with Proxy Manager
 test_symfony_doctrine_bridge_proxy_manager: bin/console \
-											vendor-bin/proxy-manager/bin/phpunit \
-											remove_sf_cache \
-											refresh_mysql_db \
-											refresh_phpcr \
-											refresh_mongodb_db
+											vendor-bin/proxy-manager/vendor/phpunit
+	$(MAKE) remove_sf_cache
+	$(MAKE) refresh_mysql_db
+	$(MAKE) refresh_mongodb_db
+	$(MAKE) refresh_phpcr
+
 	php bin/console doctrine:schema:create --kernel=DoctrineKernel
 
 	vendor-bin/proxy-manager/bin/phpunit -c phpunit_symfony_proxy_manager_with_doctrine.xml.dist
 
 test_symfony_eloquent_bridge_proxy_manager:	## Run the tests for the Symfony Eloquent bridge with Proxy Manager
 test_symfony_eloquent_bridge_proxy_manager: bin/console \
-											vendor-bin/proxy-manager/bin/phpunit \
-											remove_sf_cache \
-											refresh_mysql_db
+											vendor-bin/proxy-manager/vendor/phpunit
+	$(MAKE) remove_sf_cache
+	$(MAKE) refresh_mysql_db
+
 	php bin/console eloquent:migrate:install --kernel=EloquentKernel
 
 	vendor-bin/proxy-manager/bin/phpunit -c phpunit_symfony_proxy_manager_with_eloquent.xml.dist
@@ -168,43 +180,46 @@ vendor-bin/php-cs-fixer/vendor: vendor-bin/php-cs-fixer/composer.lock
 vendor-bin/doctrine/composer.lock: vendor-bin/doctrine/composer.json
 	@echo vendor-bin/doctrine/composer.lock is not up to date.
 
-vendor-bin/doctrine/bin/phpunit: vendor-bin/doctrine/composer.lock
+vendor-bin/doctrine/vendor/phpunit: vendor-bin/doctrine/composer.lock
 	composer bin doctrine install
 
 
 vendor-bin/doctrine_mongodb/composer.lock: vendor-bin/doctrine_mongodb/composer.json
 	@echo vendor-bin/doctrine_mongodb/composer.lock is not up to date.
 
-vendor-bin/doctrine_mongodb/bin/phpunit: vendor-bin/doctrine_mongodb/composer.lock
+vendor-bin/doctrine_mongodb/vendor/phpunit: vendor-bin/doctrine_mongodb/composer.lock
 	composer bin doctrine_mongodb install
 
 
 vendor-bin/doctrine_phpcr/composer.lock: vendor-bin/doctrine_phpcr/composer.json
 	@echo vendor-bin/doctrine_phpcr/composer.lock is not up to date.
 
-vendor-bin/doctrine_phpcr/bin/phpunit: vendor-bin/doctrine_phpcr/composer.lock
+vendor-bin/doctrine_phpcr/vendor/phpunit: vendor-bin/doctrine_phpcr/composer.lock
+	composer bin doctrine_phpcr install
+
+vendor-bin/doctrine_phpcr/vendor/phpcrodm: vendor-bin/doctrine_phpcr/composer.lock
 	composer bin doctrine_phpcr install
 
 
 vendor-bin/eloquent/composer.lock: vendor-bin/eloquent/composer.json
 	@echo vendor-bin/eloquent/composer.lock is not up to date.
 
-vendor-bin/eloquent/bin/phpunit: vendor-bin/eloquent/composer.lock
+vendor-bin/eloquent/vendor/phpunit: vendor-bin/eloquent/composer.lock
 	composer bin eloquent install
 
 
 vendor-bin/symfony/composer.lock: vendor-bin/symfony/composer.json
 	@echo vendor-bin/symfony/composer.lock is not up to date.
 
-vendor-bin/symfony/bin/phpunit: vendor-bin/symfony/composer.lock
-	composer bin symfony install
+vendor-bin/symfony/vendor/phpunit: vendor-bin/symfony/composer.lock
+	composer bin symfony install --ignore-platform-reqs
 
 bin/console: vendor-bin/symfony/composer.lock
-	composer bin symfony install
+	composer bin symfony install --ignore-platform-reqs
 
 
 vendor-bin/proxy-manager/composer.lock: vendor-bin/proxy-manager/composer.json
 	@echo vendor-bin/proxy-manager/composer.lock is not up to date.
 
-vendor-bin/proxy-manager/bin/phpunit: vendor-bin/proxy-manager/composer.lock
+vendor-bin/proxy-manager/vendor/phpunit: vendor-bin/proxy-manager/composer.lock
 	composer bin proxy-manager install

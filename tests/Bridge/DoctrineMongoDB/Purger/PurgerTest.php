@@ -21,6 +21,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger
+ *
+ * @requires extension monogdb
  */
 class PurgerTest extends TestCase
 {

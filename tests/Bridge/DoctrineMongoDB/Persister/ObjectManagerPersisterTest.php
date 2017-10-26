@@ -29,7 +29,7 @@ use ReflectionClass;
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
  *
- * @author Théo FIDRY <theo.fidry@gmail.com>
+ * @requires extension mongodb
  */
 class ObjectManagerPersisterTest extends TestCase
 {
