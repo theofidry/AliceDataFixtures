@@ -60,7 +60,8 @@ test_core: vendor/phpunit \
 	bin/phpunit
 
 test_doctrine_bridge:				## Run the tests for the Doctrine bridge
-test_doctrine_bridge: vendor-bin/doctrine/vendor/phpunit
+test_doctrine_bridge: vendor/bamarni \
+					  vendor-bin/doctrine/vendor/phpunit
 	$(MAKE) remove_sf_cache
 	$(MAKE) refresh_mysql_db
 
@@ -69,21 +70,24 @@ test_doctrine_bridge: vendor-bin/doctrine/vendor/phpunit
 	vendor-bin/doctrine/bin/phpunit -c phpunit_doctrine.xml.dist
 
 test_doctrine_odm_bridge:			## Run the tests for the Doctrine ODM bridge
-test_doctrine_odm_bridge: vendor-bin/doctrine_mongodb/vendor/phpunit
+test_doctrine_odm_bridge: vendor/bamarni \
+						  vendor-bin/doctrine_mongodb/vendor/phpunit
 	$(MAKE) remove_sf_cache
 	$(MAKE) refresh_mongodb_db
 
 	vendor-bin/doctrine_mongodb/bin/phpunit -c phpunit_doctrine_mongodb.xml.dist
 
 test_doctrine_phpcr_bridge:			## Run the tests for the Doctrine Mongodb PHPCR bridge
-test_doctrine_phpcr_bridge: vendor-bin/doctrine_mongodb/vendor/phpunit
+test_doctrine_phpcr_bridge: vendor/bamarni \
+							vendor-bin/doctrine_mongodb/vendor/phpunit
 	$(MAKE) remove_sf_cache
 	$(MAKE) refresh_phpcr
 
 	vendor-bin/doctrine_phpcr/bin/phpunit -c phpunit_doctrine_phpcr.xml.dist
 
 test_eloquent_bridge:				## Run the tests for the Eloquent bridge
-test_eloquent_bridge: vendor-bin/eloquent/vendor/phpunit
+test_eloquent_bridge: vendor/bamarni \
+					  vendor-bin/eloquent/vendor/phpunit
 	$(MAKE) remove_sf_cache
 	$(MAKE) refresh_mysql_db
 
@@ -92,7 +96,8 @@ test_eloquent_bridge: vendor-bin/eloquent/vendor/phpunit
 	vendor-bin/eloquent/bin/phpunit -c phpunit_eloquent.xml.dist
 
 test_symfony_bridge:				## Run the tests for the Symfony bridge
-test_symfony_bridge: vendor-bin/symfony/vendor/phpunit \
+test_symfony_bridge: vendor/bamarni \
+					 vendor-bin/symfony/vendor/phpunit \
 					 vendor-bin/covers-validator/vendor
 	$(COVERS_VALIDATOR) -c phpunit_symfony.xml.dist
 	$(MAKE) remove_sf_cache
@@ -100,7 +105,8 @@ test_symfony_bridge: vendor-bin/symfony/vendor/phpunit \
 	vendor-bin/symfony/bin/phpunit -c phpunit_symfony.xml.dist
 
 test_symfony_doctrine_bridge:			## Run the tests for the Symfony Doctrine bridge
-test_symfony_doctrine_bridge: vendor-bin/symfony/vendor/phpunit
+test_symfony_doctrine_bridge: vendor/bamarni \
+							  vendor-bin/symfony/vendor/phpunit
 	$(MAKE) remove_sf_cache
 	$(MAKE) refresh_mysql_db
 	$(MAKE) refresh_mongodb_db
@@ -111,7 +117,8 @@ test_symfony_doctrine_bridge: vendor-bin/symfony/vendor/phpunit
 	vendor-bin/symfony/bin/phpunit -c phpunit_symfony_doctrine.xml.dist
 
 test_symfony_eloquent_bridge:			## Run the tests for the Symfony Eloquent bridge
-test_symfony_eloquent_bridge: bin/console \
+test_symfony_eloquent_bridge: vendor/bamarni \
+							  bin/console \
 							  vendor-bin/symfony/vendor/phpunit
 	$(MAKE) remove_sf_cache
 	$(MAKE) refresh_mysql_db
@@ -121,7 +128,8 @@ test_symfony_eloquent_bridge: bin/console \
 	vendor-bin/symfony/bin/phpunit -c phpunit_symfony_eloquent.xml.dist
 
 test_symfony_doctrine_bridge_proxy_manager:	## Run the tests for the Symfony Doctrine bridge with Proxy Manager
-test_symfony_doctrine_bridge_proxy_manager: bin/console \
+test_symfony_doctrine_bridge_proxy_manager: vendor/bamarni \
+										    bin/console \
 											vendor-bin/proxy-manager/vendor/phpunit
 	$(MAKE) remove_sf_cache
 	$(MAKE) refresh_mysql_db
@@ -133,7 +141,8 @@ test_symfony_doctrine_bridge_proxy_manager: bin/console \
 	vendor-bin/proxy-manager/bin/phpunit -c phpunit_symfony_proxy_manager_with_doctrine.xml.dist
 
 test_symfony_eloquent_bridge_proxy_manager:	## Run the tests for the Symfony Eloquent bridge with Proxy Manager
-test_symfony_eloquent_bridge_proxy_manager: bin/console \
+test_symfony_eloquent_bridge_proxy_manager: vendor/bamarni \
+											bin/console \
 											vendor-bin/proxy-manager/vendor/phpunit
 	$(MAKE) remove_sf_cache
 	$(MAKE) refresh_mysql_db
@@ -160,6 +169,9 @@ composer.lock: composer.json
 	@echo compose.lock is not up to date.
 
 vendor/phpunit: composer.lock
+	composer update $(COMPOSER_FLAGS)
+
+vendor/bamarni: composer.lock
 	composer update $(COMPOSER_FLAGS)
 
 
