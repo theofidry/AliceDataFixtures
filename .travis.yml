@@ -5,7 +5,6 @@ cache:
     - $HOME/.composer/cache/files
 
 php:
-  - '7.0'
   - '7.1'
   - nightly
 
@@ -20,7 +19,7 @@ branches:
 matrix:
   fast_finish: true
   include:
-    - php: '7.0'
+    - php: '7.1'
       env:
         - COVERAGE='true'
         - COMPOSER_FLAGS='--prefer-lowest'
@@ -57,7 +56,6 @@ install:
         composer bin symfony require --dev --no-update "doctrine/orm:${DOCTRINE_VERSION}";
         composer bin proxy-manager require --dev --no-update "doctrine/orm:${DOCTRINE_VERSION}";
     fi
-  - composer bin all update --prefer-dist --ignore-platform-reqs $COMPOSER_FLAGS
 
 script: make test
 
