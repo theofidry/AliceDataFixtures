@@ -3,7 +3,7 @@
         "alcaeus/mongo-php-adapter": "^1.1.0",
         "doctrine/data-fixtures": "^1.2",
         "doctrine/mongodb": "^1.4",
-        "doctrine/mongodb-odm": "^1.1",
+        "doctrine/mongodb-odm": "^1.1.7",
         "theofidry/composer-inheritance-plugin": "^1.0"
     },
     "config": {

@@ -11,8 +11,8 @@ help:
 ## Commands
 ##---------------------------------------------------------------------------
 
-cleanup:		## Removes all created artefacts
-cleanup:
+clean:		## Removes all created artefacts
+clean:
 	mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
 	mongo fidry_alice_data_fixtures --eval "db.dropDatabase();"
 
@@ -188,7 +188,7 @@ vendor-bin/doctrine_mongodb/composer.lock: vendor-bin/doctrine_mongodb/composer.
 	@echo vendor-bin/doctrine_mongodb/composer.lock is not up to date.
 
 vendor-bin/doctrine_mongodb/vendor/phpunit: vendor-bin/doctrine_mongodb/composer.lock
-	composer bin doctrine_mongodb install
+	composer bin doctrine_mongodb install --ignore-platform-reqs
 
 
 vendor-bin/doctrine_phpcr/composer.lock: vendor-bin/doctrine_phpcr/composer.json
