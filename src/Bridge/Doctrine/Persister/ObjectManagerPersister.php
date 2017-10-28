@@ -32,14 +32,13 @@ use Nelmio\Alice\IsAServiceTrait;
     private $objectManager;
 
     /**
-     * @var array Values are FQCN of persistable objects
+     * @var array|null Values are FQCN of persistable objects
      */
     private $persistableClasses;
 
     public function __construct(ObjectManager $manager)
     {
         $this->objectManager = $manager;
-        $this->persistableClasses = array_flip($this->getPersistableClasses($manager));
     }
 
     /**
@@ -47,6 +46,10 @@ use Nelmio\Alice\IsAServiceTrait;
      */
     public function persist($object)
     {
+        if (null === $this->persistableClasses) {
+            $this->persistableClasses = array_flip($this->getPersistableClasses($this->objectManager));
+        }
+
         if (isset($this->persistableClasses[get_class($object)])) {
             $this->objectManager->persist($object);
         }
