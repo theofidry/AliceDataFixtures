@@ -222,4 +222,4 @@ vendor-bin/proxy-manager/composer.lock: vendor-bin/proxy-manager/composer.json
 	@echo vendor-bin/proxy-manager/composer.lock is not up to date.
 
 vendor-bin/proxy-manager/vendor/phpunit: vendor-bin/proxy-manager/composer.lock
-	composer bin proxy-manager install $(COMPOSER_FLAGS)
+	composer bin proxy-manager install --ignore-platform-reqs $(COMPOSER_FLAGS)
