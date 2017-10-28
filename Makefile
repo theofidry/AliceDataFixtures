@@ -188,6 +188,7 @@ vendor-bin/doctrine_mongodb/composer.lock: vendor-bin/doctrine_mongodb/composer.
 	@echo vendor-bin/doctrine_mongodb/composer.lock is not up to date.
 
 vendor-bin/doctrine_mongodb/vendor/phpunit: vendor-bin/doctrine_mongodb/composer.lock
+	composer bin doctrine_mongodb update --ignore-platform-reqs $(COMPOSER_FLAGS) || true
 	composer bin doctrine_mongodb update --ignore-platform-reqs $(COMPOSER_FLAGS)
 
 
@@ -205,6 +206,7 @@ vendor-bin/eloquent/composer.lock: vendor-bin/eloquent/composer.json
 	@echo vendor-bin/eloquent/composer.lock is not up to date.
 
 vendor-bin/eloquent/vendor/phpunit: vendor-bin/eloquent/composer.lock
+	composer bin eloquent update $(COMPOSER_FLAGS) || true
 	composer bin eloquent update $(COMPOSER_FLAGS)
 
 
@@ -212,9 +214,11 @@ vendor-bin/symfony/composer.lock: vendor-bin/symfony/composer.json
 	@echo vendor-bin/symfony/composer.lock is not up to date.
 
 vendor-bin/symfony/vendor/phpunit: vendor-bin/symfony/composer.lock
+	composer bin symfony update --ignore-platform-reqs $(COMPOSER_FLAGS) || true
 	composer bin symfony update --ignore-platform-reqs $(COMPOSER_FLAGS)
 
 bin/console: vendor-bin/symfony/composer.lock
+	composer bin symfony update --ignore-platform-reqs $(COMPOSER_FLAGS) || true
 	composer bin symfony update --ignore-platform-reqs $(COMPOSER_FLAGS)
 
 
@@ -222,4 +226,5 @@ vendor-bin/proxy-manager/composer.lock: vendor-bin/proxy-manager/composer.json
 	@echo vendor-bin/proxy-manager/composer.lock is not up to date.
 
 vendor-bin/proxy-manager/vendor/phpunit: vendor-bin/proxy-manager/composer.lock
+	composer bin proxy-manager update --ignore-platform-reqs $(COMPOSER_FLAGS) || true
 	composer bin proxy-manager update --ignore-platform-reqs $(COMPOSER_FLAGS)

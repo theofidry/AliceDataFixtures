@@ -15,7 +15,7 @@
         "doctrine/phpcr-odm": "^1.4",
         "jackalope/jackalope-doctrine-dbal": "^1.2",
         "symfony/symfony": "^3.1",
-        "theofidry/composer-inheritance-plugin": "^1.1"
+        "theofidry/composer-inheritance-plugin": "^1.0",
         "wouterj/eloquent-bundle": "^1.0@dev"
     },
     "config": {
