@@ -160,66 +160,66 @@ composer.lock: composer.json
 	@echo compose.lock is not up to date.
 
 vendor/phpunit: composer.lock
-	composer install $(COMPOSER_FLAGS)
+	composer update $(COMPOSER_FLAGS)
 
 
 vendor-bin/covers-validator/composer.lock: vendor-bin/covers-validator/composer.json
 	@echo covers-validator composer.lock is not up to date
 
 vendor-bin/covers-validator/vendor: vendor-bin/covers-validator/composer.lock
-	composer bin covers-validator install $(COMPOSER_FLAGS)
+	composer bin covers-validator update $(COMPOSER_FLAGS)
 
 
 vendor-bin/php-cs-fixer/composer.lock: vendor-bin/php-cs-fixer/composer.json
 	@echo php-cs-fixer composer.lock is not up to date.
 
 vendor-bin/php-cs-fixer/vendor: vendor-bin/php-cs-fixer/composer.lock
-	composer bin php-cs-fixer install $(COMPOSER_FLAGS)
+	composer bin php-cs-fixer update $(COMPOSER_FLAGS)
 
 
 vendor-bin/doctrine/composer.lock: vendor-bin/doctrine/composer.json
 	@echo vendor-bin/doctrine/composer.lock is not up to date.
 
 vendor-bin/doctrine/vendor/phpunit: vendor-bin/doctrine/composer.lock
-	composer bin doctrine install $(COMPOSER_FLAGS)
+	composer bin doctrine update $(COMPOSER_FLAGS)
 
 
 vendor-bin/doctrine_mongodb/composer.lock: vendor-bin/doctrine_mongodb/composer.json
 	@echo vendor-bin/doctrine_mongodb/composer.lock is not up to date.
 
 vendor-bin/doctrine_mongodb/vendor/phpunit: vendor-bin/doctrine_mongodb/composer.lock
-	composer bin doctrine_mongodb install --ignore-platform-reqs $(COMPOSER_FLAGS)
+	composer bin doctrine_mongodb update --ignore-platform-reqs $(COMPOSER_FLAGS)
 
 
 vendor-bin/doctrine_phpcr/composer.lock: vendor-bin/doctrine_phpcr/composer.json
 	@echo vendor-bin/doctrine_phpcr/composer.lock is not up to date.
 
 vendor-bin/doctrine_phpcr/vendor/phpunit: vendor-bin/doctrine_phpcr/composer.lock
-	composer bin doctrine_phpcr install $(COMPOSER_FLAGS)
+	composer bin doctrine_phpcr update $(COMPOSER_FLAGS)
 
 vendor-bin/doctrine_phpcr/vendor/phpcrodm: vendor-bin/doctrine_phpcr/composer.lock
-	composer bin doctrine_phpcr install $(COMPOSER_FLAGS)
+	composer bin doctrine_phpcr update $(COMPOSER_FLAGS)
 
 
 vendor-bin/eloquent/composer.lock: vendor-bin/eloquent/composer.json
 	@echo vendor-bin/eloquent/composer.lock is not up to date.
 
 vendor-bin/eloquent/vendor/phpunit: vendor-bin/eloquent/composer.lock
-	composer bin eloquent install $(COMPOSER_FLAGS)
+	composer bin eloquent update $(COMPOSER_FLAGS)
 
 
 vendor-bin/symfony/composer.lock: vendor-bin/symfony/composer.json
 	@echo vendor-bin/symfony/composer.lock is not up to date.
 
 vendor-bin/symfony/vendor/phpunit: vendor-bin/symfony/composer.lock
-	composer bin symfony install --ignore-platform-reqs $(COMPOSER_FLAGS)
+	composer bin symfony update --ignore-platform-reqs $(COMPOSER_FLAGS)
 
 bin/console: vendor-bin/symfony/composer.lock
-	composer bin symfony install --ignore-platform-reqs $(COMPOSER_FLAGS)
+	composer bin symfony update --ignore-platform-reqs $(COMPOSER_FLAGS)
 
 
 vendor-bin/proxy-manager/composer.lock: vendor-bin/proxy-manager/composer.json
 	@echo vendor-bin/proxy-manager/composer.lock is not up to date.
 
 vendor-bin/proxy-manager/vendor/phpunit: vendor-bin/proxy-manager/composer.lock
-	composer bin proxy-manager install --ignore-platform-reqs $(COMPOSER_FLAGS)
+	composer bin proxy-manager update --ignore-platform-reqs $(COMPOSER_FLAGS)

@@ -42,6 +42,7 @@ before_install:
   - pecl install -f mongodb-stable
 
 install:
+  - composer install --prefer-dist $COMPOSER_FLAGS
   - if [ -n "$SYMFONY_VERSION" ]; then
         composer bin symfony require --dev --no-update "symfony/symfony:${SYMFONY_VERSION}";
         composer bin proxy-manager require --dev --no-update "symfony/symfony:${SYMFONY_VERSION}";
