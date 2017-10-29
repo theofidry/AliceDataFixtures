@@ -170,7 +170,9 @@ test_symfony_eloquent_bridge_proxy_manager: vendor/bamarni \
 ##---------------------------------------------------------------------------
 
 cs:             ## Run the CS Fixer
-cs: remove_sf_cache	vendor-bin/php-cs-fixer/vendor
+cs: remove_sf_cache \
+    vendor/bamarni \
+	vendor-bin/php-cs-fixer/vendor
 	$(PHP_CS_FIXER) fix
 
 

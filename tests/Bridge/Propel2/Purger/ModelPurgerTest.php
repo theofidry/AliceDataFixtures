@@ -13,19 +13,14 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Propel2\Purger;
 
-use Fidry\AliceDataFixtures\Persistence\PurgeMode;
-use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
-use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use Fidry\AliceDataFixtures\Bridge\Propel2\Model\Author;
 use Fidry\AliceDataFixtures\Bridge\Propel2\Model\AuthorQuery;
 use Fidry\AliceDataFixtures\Bridge\Propel2\Model\Book;
 use Fidry\AliceDataFixtures\Bridge\Propel2\Model\BookQuery;
-use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
-use Prophecy\Prophecy\ObjectProphecy;
-use Fidry\AliceDataFixtures\Bridge\Propel2\Purger\ModelPurger;
-use Propel\Runtime\Propel;
 use Fidry\AliceDataFixtures\Bridge\Propel2\PropelTestCase;
+use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
+use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
+use Propel\Runtime\Propel;
 use ReflectionClass;
 
 /**

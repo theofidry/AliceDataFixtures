@@ -89,7 +89,7 @@ class ModelPersisterTest extends PropelTestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Expected object to be an instance of "Propel\Runtime\ActiveRecord\ActiveRecordInterface", got "stdClass" instead.
      */
     public function testCannotPersistANonModelObject()

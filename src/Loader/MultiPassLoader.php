@@ -28,6 +28,7 @@ use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringG
  * Alternative to {@se SimpleLoader} to load the files in a smarter way.
  *
  * @final
+ *
  * @deprecated As of nelmio/alice 3.1.0 this class is unneeded. Will be removed in future versions.
  */
 /*final*/ class MultiPassLoader implements LoaderInterface

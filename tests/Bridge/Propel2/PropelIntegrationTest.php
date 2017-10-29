@@ -1,20 +1,30 @@
 <?php
 
+/*
+ * This file is part of the Fidry\AliceDataFixtures package.
+ *
+ * (c) Théo FIDRY <theo.fidry@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Propel2;
 
-use Nelmio\Alice\Loader\SimpleFilesLoader;
-use PHPUnit\Framework\TestCase;
+use Fidry\AliceDataFixtures\Bridge\Propel2\Model\AuthorQuery;
 use Fidry\AliceDataFixtures\Bridge\Propel2\Persister\ModelPersister;
-use Nelmio\Alice\Loader\SimpleFileLoader;
 use Fidry\AliceDataFixtures\Loader\PersisterLoader;
 use Fidry\AliceDataFixtures\Loader\SimpleLoader;
-use Nelmio\Alice\Parser\Chainable\YamlParser;
-use Symfony\Component\Yaml\Parser;
 use Nelmio\Alice\Loader\NativeLoader;
-use Fidry\AliceDataFixtures\Bridge\Propel2\PropelTestCase;
+use Nelmio\Alice\Loader\SimpleFilesLoader;
+use Nelmio\Alice\Parser\Chainable\YamlParser;
 use Propel\Runtime\Propel;
-use Fidry\AliceDataFixtures\Bridge\Propel2\Model\AuthorQuery;
+use Symfony\Component\Yaml\Parser;
 
+/**
+ * @coversNothing
+ */
 class PropelIntegrationTest extends PropelTestCase
 {
     /**
@@ -54,4 +64,3 @@ class PropelIntegrationTest extends PropelTestCase
         $this->assertCount(5, AuthorQuery::create()->find());
     }
 }
-
