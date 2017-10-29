@@ -29,6 +29,7 @@ refresh_mongodb_db:
 refresh_phpcr:		## Refresh the MongoDB PHPCR database used
 refresh_phpcr: vendor-bin/doctrine_phpcr/vendor/phpcrodm
 	mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures; CREATE DATABASE fidry_alice_data_fixtures;"
+
 	php vendor-bin/doctrine_phpcr/bin/phpcrodm jackalope:init:dbal --force
 	php vendor-bin/doctrine_phpcr/bin/phpcrodm doctrine:phpcr:register-system-node-types
 
@@ -38,12 +39,8 @@ remove_sf_cache:
 
 propel_init:		## Initialize Propel
 propel_init: vendor-bin/propel2/bin/propel
-	vendor-bin/propel2/bin/propel --config-dir=tests/Bridge/Propel2 config:convert
-    vendor-bin/propel2/bin/propel --config-dir=tests/Bridge/Propel2 model:build
-    vendor-bin/propel2/bin/propel --config-dir=tests/Bridge/Propel2 sql:build
-    vendor-bin/propel2/bin/propel --config-dir=tests/Bridge/Propel2 sql:insert
-
-    composer bin propel2 dump-autoload
+	bin/propel_init
+	composer bin propel2 dump-autoload
 
 
 ##

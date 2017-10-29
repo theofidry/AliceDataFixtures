@@ -60,15 +60,6 @@ class ModelPurgerTest extends PropelTestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Cannot purge database in delete mode
-     */
-    public function testCannotPurgeInDeleteMode()
-    {
-        $this->purger->create(PurgeMode::createDeleteMode());
-    }
-
-    /**
      * @expectedException \RuntimeException
      * @expectedExceptionMessage No propel generated SQL file exists
      */

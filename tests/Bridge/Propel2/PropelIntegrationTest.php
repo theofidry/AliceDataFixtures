@@ -2,6 +2,7 @@
 
 namespace Fidry\AliceDataFixtures\Bridge\Propel2;
 
+use Nelmio\Alice\Loader\SimpleFilesLoader;
 use PHPUnit\Framework\TestCase;
 use Fidry\AliceDataFixtures\Bridge\Propel2\Persister\ModelPersister;
 use Nelmio\Alice\Loader\SimpleFileLoader;
@@ -21,6 +22,9 @@ class PropelIntegrationTest extends PropelTestCase
      */
     private $loader;
 
+    /**
+     * @inheritdoc
+     */
     public function setUp()
     {
         $this->initDatabase();
@@ -31,7 +35,7 @@ class PropelIntegrationTest extends PropelTestCase
 
         $this->loader = new PersisterLoader(
             new SimpleLoader(
-                new SimpleFileLoader(
+                new SimpleFilesLoader(
                     new YamlParser(new Parser()),
                     new NativeLoader()
                 )
@@ -44,7 +48,7 @@ class PropelIntegrationTest extends PropelTestCase
     public function testLoad()
     {
         $this->loader->load([
-            __DIR__ . '/fixtures/example1.yml'
+            __DIR__.'/../../../fixtures/Bridge/Propel2/files/example1.yml'
         ]);
 
         $this->assertCount(5, AuthorQuery::create()->find());
