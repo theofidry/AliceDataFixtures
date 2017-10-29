@@ -18,19 +18,13 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * @private
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 final class Configuration implements ConfigurationInterface
 {
-    /** @private */
-    const DOCTRINE_ORM_DRIVER = 'doctrine_orm';
-    /** @private */
-    const DOCTRINE_MONGODB_ODM_DRIVER = 'doctrine_mongodb_odm';
-    /** @private */
-    const DOCTRINE_PHPCR_ODM_DRIVER = 'doctrine_phpcr_odm';
-    /** @private */
-    const ELOQUENT_ORM_DRIVER = 'eloquent_orm';
+    public const DOCTRINE_ORM_DRIVER = 'doctrine_orm';
+    public const DOCTRINE_MONGODB_ODM_DRIVER = 'doctrine_mongodb_odm';
+    public const DOCTRINE_PHPCR_ODM_DRIVER = 'doctrine_phpcr_odm';
+    public const ELOQUENT_ORM_DRIVER = 'eloquent_orm';
 
     /**
      * @inheritdoc

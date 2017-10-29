@@ -17,9 +17,6 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 class InvalidKernel extends IsolatedKernel
 {
     public function registerBundles()

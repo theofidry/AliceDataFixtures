@@ -17,8 +17,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Persistence\PurgeMode
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class PurgeModeTest extends TestCase
 {

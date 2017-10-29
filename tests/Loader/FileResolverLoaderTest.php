@@ -19,11 +19,10 @@ use Fidry\AliceDataFixtures\LoaderInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use ReflectionClass;
+use stdClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\FileResolverLoader
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class FileResolverLoaderTest extends TestCase
 {
@@ -58,7 +57,7 @@ class FileResolverLoaderTest extends TestCase
             ->load($resolvedFiles, [], [], null)
             ->willReturn(
                 [
-                    'dummy' => $dummy = new \stdClass(),
+                    'dummy' => $dummy = new stdClass(),
                 ]
             )
         ;
@@ -70,7 +69,7 @@ class FileResolverLoaderTest extends TestCase
 
         $this->assertEquals(
             [
-                'dummy' => new \stdClass(),
+                'dummy' => new stdClass(),
             ],
             $result
         );
@@ -88,7 +87,7 @@ class FileResolverLoaderTest extends TestCase
             'injected' => true,
         ];
         $objects = [
-            'injected' => new \stdClass(),
+            'injected' => new stdClass(),
         ];
 
         $loaderProphecy = $this->prophesize(LoaderInterface::class);
@@ -96,7 +95,7 @@ class FileResolverLoaderTest extends TestCase
             ->load($files, $parameters, $objects, null)
             ->willReturn(
                 [
-                    'dummy' => $dummy = new \stdClass(),
+                    'dummy' => $dummy = new stdClass(),
                 ]
             )
         ;
@@ -108,7 +107,7 @@ class FileResolverLoaderTest extends TestCase
 
         $this->assertEquals(
             [
-                'dummy' => new \stdClass(),
+                'dummy' => new stdClass(),
             ],
             $result
         );

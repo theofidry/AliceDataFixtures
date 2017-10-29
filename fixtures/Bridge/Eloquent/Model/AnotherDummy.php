@@ -15,9 +15,6 @@ namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 class AnotherDummy extends Model
 {
     /**

@@ -18,24 +18,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * @private
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 final class RegisterTagServicesPass implements CompilerPassInterface
 {
-    /**
-     * @var string
-     */
     private $registry;
-
-    /**
-     * @var string
-     */
     private $tagName;
-
-    /**
-     * @var TaggedDefinitionsLocator
-     */
     private $taggedDefinitionsLocator;
 
     public function __construct(string $registry, string $tagName)

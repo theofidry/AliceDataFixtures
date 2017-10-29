@@ -15,9 +15,6 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
 use Symfony\Component\Config\Loader\LoaderInterface;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 class EloquentKernelWithInvalidDatabase extends EloquentKernel
 {
     public function registerContainerConfiguration(LoaderInterface $loader)

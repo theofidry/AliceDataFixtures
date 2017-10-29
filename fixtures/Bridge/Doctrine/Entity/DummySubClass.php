@@ -15,8 +15,6 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Entity;
 
 /**
  * @Entity
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class DummySubClass extends MappedSuperclassDummy
 {

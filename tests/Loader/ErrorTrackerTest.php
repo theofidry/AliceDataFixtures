@@ -13,12 +13,11 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\ErrorTracker
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class ErrorTrackerTest extends TestCase
 {
@@ -32,9 +31,9 @@ class ErrorTrackerTest extends TestCase
     public function testKeepsTrackOfErrors()
     {
         $tracker = new ErrorTracker();
-        $tracker->register('foo', $exception0 = new \Exception('foo exception'));
-        $tracker->register('bar', $exception1 = new \Exception('bar exception 0'));
-        $tracker->register('bar', $exception2 = new \Exception('bar exception 1'));
+        $tracker->register('foo', $exception0 = new Exception('foo exception'));
+        $tracker->register('bar', $exception1 = new Exception('bar exception 0'));
+        $tracker->register('bar', $exception2 = new Exception('bar exception 1'));
 
         $this->assertEquals(
             [
@@ -53,13 +52,13 @@ class ErrorTrackerTest extends TestCase
     public function testIsDeepClonable()
     {
         $tracker = new ErrorTracker();
-        $tracker->register('foo', new \Exception($message0 = 'foo exception'));
+        $tracker->register('foo', new Exception($message0 = 'foo exception'));
 
         $originalTracker = new ErrorTracker();
-        $originalTracker->register('foo', new \Exception($message0 = 'foo exception'));
+        $originalTracker->register('foo', new Exception($message0 = 'foo exception'));
 
         $newTracker = clone $tracker;
-        $newTracker->register('bar', new \Exception($message1 = 'bar exception'));
+        $newTracker->register('bar', new Exception($message1 = 'bar exception'));
 
         $this->assertEquals($originalTracker->getStack(), $tracker->getStack());
         $this->assertNotEquals($tracker->getStack(), $newTracker->getStack());

@@ -26,8 +26,6 @@ use ReflectionClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class ObjectManagerPersisterTest extends TestCase
 {
@@ -46,6 +44,9 @@ class ObjectManagerPersisterTest extends TestCase
      */
     private $purger;
 
+    /**
+     * @inheritdoc
+     */
     public function setUp()
     {
         $this->documentManager = $GLOBALS['document_manager'];
@@ -53,6 +54,9 @@ class ObjectManagerPersisterTest extends TestCase
         $this->purger = new PHPCRPurger($this->documentManager);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function tearDown()
     {
         $this->purger->purge();

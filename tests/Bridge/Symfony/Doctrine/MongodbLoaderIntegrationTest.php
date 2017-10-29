@@ -47,6 +47,9 @@ class MongodbLoaderIntegrationTest extends TestCase
      */
     private static $seed;
 
+    /**
+     * @inheritdoc
+     */
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
@@ -54,6 +57,9 @@ class MongodbLoaderIntegrationTest extends TestCase
         static::$seed = uniqid();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function setUp()
     {
         $this->kernel = new DoctrineMongodbKernel(static::$seed, true);
@@ -63,6 +69,9 @@ class MongodbLoaderIntegrationTest extends TestCase
         $this->doctrine = $this->kernel->getContainer()->get('doctrine_mongodb');
     }
 
+    /**
+     * @inheritdoc
+     */
     public function tearDown()
     {
         $purger = new MongoDBPurger($this->doctrine->getManager());

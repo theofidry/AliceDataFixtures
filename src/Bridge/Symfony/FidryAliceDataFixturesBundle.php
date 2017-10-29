@@ -17,13 +17,10 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler\Register
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 final class FidryAliceDataFixturesBundle extends Bundle
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function build(ContainerBuilder $container)
     {

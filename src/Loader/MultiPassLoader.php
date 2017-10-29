@@ -27,29 +27,18 @@ use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringG
 /**
  * Alternative to {@se SimpleLoader} to load the files in a smarter way.
  *
- * @author Théo FIDRY <theo.fidry@gmail.com>
- *
  * @final
- *
  * @deprecated As of nelmio/alice 3.1.0 this class is unneeded. Will be removed in future versions.
  */
 /*final*/ class MultiPassLoader implements LoaderInterface
 {
     use IsAServiceTrait;
 
-    /**
-     * @var FileLoaderInterface
-     */
     private $loader;
-
-    /**
-     * @var int
-     */
     private $maxPass;
 
     public function __construct(FileLoaderInterface $fileLoader, int $maxPass = 15)
     {
-        $this->loader = $fileLoader;
         if ($maxPass <= 0) {
             throw new InvalidArgumentException(
                 sprintf(
@@ -59,6 +48,8 @@ use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringG
                 )
             );
         }
+
+        $this->loader = $fileLoader;
         $this->maxPass = $maxPass;
     }
 

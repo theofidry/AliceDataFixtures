@@ -15,9 +15,6 @@ namespace Fidry\AliceDataFixtures\Resolver;
 
 use Fidry\AliceDataFixtures\FileResolverInterface;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 class FakeFileResolver implements FileResolverInterface
 {
     /**

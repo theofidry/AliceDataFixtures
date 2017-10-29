@@ -16,9 +16,6 @@ namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Migration;
 use Fidry\AliceDataFixtures\NotCallableTrait;
 use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 class FakeMigrationRepository implements MigrationRepositoryInterface
 {
     use NotCallableTrait;

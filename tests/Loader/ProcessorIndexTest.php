@@ -20,8 +20,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class ProcessorIndexTest extends TestCase
 {

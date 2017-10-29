@@ -19,8 +19,6 @@ use ReflectionClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Persistence\Persister\NullPersister
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class NullPersisterTest extends TestCase
 {

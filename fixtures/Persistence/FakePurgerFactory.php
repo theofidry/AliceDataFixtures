@@ -15,9 +15,6 @@ namespace Fidry\AliceDataFixtures\Persistence;
 
 use Fidry\AliceDataFixtures\NotCallableTrait;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 class FakePurgerFactory implements PurgerFactoryInterface
 {
     use NotCallableTrait;

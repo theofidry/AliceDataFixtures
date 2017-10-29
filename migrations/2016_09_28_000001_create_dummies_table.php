@@ -15,9 +15,6 @@ use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 class CreateDummiesTable extends Migration
 {
     public function up()

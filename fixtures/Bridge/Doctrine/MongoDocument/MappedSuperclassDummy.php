@@ -19,8 +19,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations\MappedSuperclass;
 
 /**
  * @MappedSuperclass()
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class MappedSuperclassDummy
 {

@@ -22,27 +22,14 @@ use InvalidArgumentException;
 use Nelmio\Alice\IsAServiceTrait;
 
 /**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- *
  * @final
  */
 /*final*/ class ModelPurger implements PurgerInterface, PurgerFactoryInterface
 {
     use IsAServiceTrait;
 
-    /**
-     * @var Migrator
-     */
     private $migrator;
-
-    /**
-     * @var string
-     */
     private $migrationPath;
-
-    /**
-     * @var MigrationRepositoryInterface
-     */
     private $repository;
 
     public function __construct(MigrationRepositoryInterface $repository, string $migrationPath, Migrator $migrator)

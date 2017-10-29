@@ -12,24 +12,22 @@
 declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
+use Throwable;
 
 /**
  * Utility class to keep track of the errors stacked while trying to load a given file.
  *
  * @private
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
- *
  * @deprecated
  */
 final class ErrorTracker
 {
     /**
-     * @var array<string, \Throwable>
+     * @var array<string, Throwable>
      */
     private $stack = [];
 
-    public function register(string $filePath, \Throwable $error)
+    public function register(string $filePath, Throwable $error)
     {
         if (false === array_key_exists($filePath, $this->stack)) {
             $this->stack[$filePath] = [];
@@ -39,7 +37,7 @@ final class ErrorTracker
     }
 
     /**
-     * @return array<string, \Throwable>
+     * @return array<string, Throwable>
      */
     public function getStack(): array
     {

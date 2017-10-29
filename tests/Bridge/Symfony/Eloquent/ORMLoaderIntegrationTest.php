@@ -25,8 +25,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * @coversNothing
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class ORMLoaderIntegrationTest extends TestCase
 {
@@ -50,6 +48,9 @@ class ORMLoaderIntegrationTest extends TestCase
      */
     private static $seed;
 
+    /**
+     * @inheritdoc
+     */
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
@@ -57,6 +58,9 @@ class ORMLoaderIntegrationTest extends TestCase
         static::$seed = uniqid();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function setUp()
     {
         $this->kernel = new EloquentKernel(static::$seed, true);
@@ -72,6 +76,9 @@ class ORMLoaderIntegrationTest extends TestCase
         ]);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function tearDown()
     {
         $this->execute([

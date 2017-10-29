@@ -22,8 +22,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class PhpcrLoaderIntegrationTest extends TestCase
 {
@@ -47,6 +45,9 @@ class PhpcrLoaderIntegrationTest extends TestCase
      */
     private static $seed;
 
+    /**
+     * @inheritdoc
+     */
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
@@ -54,6 +55,9 @@ class PhpcrLoaderIntegrationTest extends TestCase
         static::$seed = uniqid();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function setUp()
     {
         $this->kernel = new DoctrinePhpcrKernel(static::$seed, true);
@@ -63,6 +67,9 @@ class PhpcrLoaderIntegrationTest extends TestCase
         $this->doctrine = $this->kernel->getContainer()->get('doctrine_phpcr');
     }
 
+    /**
+     * @inheritdoc
+     */
     public function tearDown()
     {
         $purger = new PHPCRPurger($this->doctrine->getManager());

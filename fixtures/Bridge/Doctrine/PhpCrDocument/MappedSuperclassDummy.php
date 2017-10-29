@@ -19,8 +19,6 @@ use Doctrine\ODM\PHPCR\Mapping\Annotations\MappedSuperclass;
 
 /**
  * @MappedSuperclass()
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class MappedSuperclassDummy
 {

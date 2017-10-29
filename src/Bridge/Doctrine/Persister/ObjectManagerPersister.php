@@ -18,17 +18,12 @@ use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Nelmio\Alice\IsAServiceTrait;
 
 /**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- *
  * @final
  */
 /*final*/ class ObjectManagerPersister implements PersisterInterface
 {
     use IsAServiceTrait;
 
-    /**
-     * @var ObjectManager
-     */
     private $objectManager;
 
     /**
@@ -42,7 +37,7 @@ use Nelmio\Alice\IsAServiceTrait;
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function persist($object)
     {

@@ -39,12 +39,18 @@ class ModelPersisterTest extends TestCase
      */
     private $migrator;
 
+    /**
+     * @inheritdoc
+     */
     public function setUp()
     {
         $this->migrator = $GLOBALS['migrator'];
         $this->persister = new ModelPersister($GLOBALS['manager']->getDatabaseManager());
     }
 
+    /**
+     * @inheritdoc
+     */
     public function tearDown()
     {
         $this->migrator->reset(['migrations']);

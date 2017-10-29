@@ -17,9 +17,6 @@ use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\NotCallableTrait;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 class FakeLoader implements LoaderInterface
 {
     use NotCallableTrait;

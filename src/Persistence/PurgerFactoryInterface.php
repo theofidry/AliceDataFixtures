@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Persistence;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 interface PurgerFactoryInterface
 {
     /**

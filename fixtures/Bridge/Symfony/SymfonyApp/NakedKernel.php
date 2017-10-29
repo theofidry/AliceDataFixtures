@@ -18,9 +18,6 @@ use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 class NakedKernel extends IsolatedKernel
 {
     public function registerBundles()

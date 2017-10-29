@@ -21,22 +21,13 @@ use Nelmio\Alice\IsAServiceTrait;
 /**
  * Decorates another loader to resolve files before loading them.
  *
- * @author Théo FIDRY <theo.fidry@gmail.com>
- *
  * @final
  */
 /*final*/ class FileResolverLoader implements LoaderInterface
 {
     use IsAServiceTrait;
 
-    /**
-     * @var LoaderInterface
-     */
     private $loader;
-
-    /**
-     * @var FileResolverInterface
-     */
     private $fileResolver;
 
     public function __construct(LoaderInterface $decoratedLoader, FileResolverInterface $fileResolver)

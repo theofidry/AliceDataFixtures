@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 interface FileResolverInterface
 {
     /**

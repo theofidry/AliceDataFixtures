@@ -27,8 +27,6 @@ use stdClass;
  * @covers \Fidry\AliceDataFixtures\Loader\PurgerLoader
  *
  * @uses \Fidry\AliceDataFixtures\Persistence\PurgeMode
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class PurgerLoaderTest extends TestCase
 {

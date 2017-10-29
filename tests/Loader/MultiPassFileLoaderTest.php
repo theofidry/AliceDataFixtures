@@ -26,6 +26,7 @@ use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringG
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use ReflectionClass;
+use stdClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\MultiPassLoader
@@ -33,8 +34,6 @@ use ReflectionClass;
  * @uses \Fidry\AliceDataFixtures\Loader\ErrorTracker
  * @uses \Fidry\AliceDataFixtures\Loader\FileTracker
  * @uses \Fidry\AliceDataFixtures\Exception\MaxPassReachedException
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class MultiPassFileLoaderTest extends TestCase
 {
@@ -83,7 +82,7 @@ class MultiPassFileLoaderTest extends TestCase
     public function testReturnsInjectedObjectsAndObjectsIfNoFileGiven()
     {
         $parameters = [];
-        $expected = $objects = ['dummy' => new \stdClass()];
+        $expected = $objects = ['dummy' => new stdClass()];
 
         $loader = new MultiPassLoader(new FakeFileLoader());
         $actual = $loader->load([], $parameters, $objects);
@@ -99,13 +98,13 @@ class MultiPassFileLoaderTest extends TestCase
         $fileLoaderProphecy
             ->loadFile('foo', [], [])
             ->willReturn(
-                new ObjectSet(new ParameterBag(), new ObjectBag(['dummy' => new \stdClass()]))
+                new ObjectSet(new ParameterBag(), new ObjectBag(['dummy' => new stdClass()]))
             )
         ;
         /** @var FileLoaderInterface $fileLoader */
         $fileLoader = $fileLoaderProphecy->reveal();
 
-        $expected = ['dummy' => new \stdClass()];
+        $expected = ['dummy' => new stdClass()];
 
         $loader = new MultiPassLoader($fileLoader);
         $actual = $loader->load($files);
@@ -119,7 +118,7 @@ class MultiPassFileLoaderTest extends TestCase
     {
         $files = ['file1', 'file2', 'file3', 'file4'];
         $parameters = ['foo' => 'bar'];
-        $objects = ['injected' => new \stdClass()];
+        $objects = ['injected' => new stdClass()];
 
         $fileLoaderProphecy = $this->prophesize(FileLoaderInterface::class);
         $fileLoaderProphecy
@@ -131,8 +130,8 @@ class MultiPassFileLoaderTest extends TestCase
                         'file1' => 'pass',
                     ]),
                     new ObjectBag($objectsReturnedByFirstLoadOfFile1 = [
-                        'injected' => new \stdClass(),
-                        'file1' => new \stdClass(),
+                        'injected' => new stdClass(),
+                        'file1' => new stdClass(),
                     ])
                 )
             )
@@ -151,9 +150,9 @@ class MultiPassFileLoaderTest extends TestCase
                         'file2' => 'pass',
                     ]),
                     new ObjectBag($objectsReturnedByFirstLoadOfFile2 = [
-                        'injected' => new \stdClass(),
-                        'file1' => new \stdClass(),
-                        'file2' => new \stdClass(),
+                        'injected' => new stdClass(),
+                        'file1' => new stdClass(),
+                        'file2' => new stdClass(),
                     ])
                 )
             )
@@ -181,10 +180,10 @@ class MultiPassFileLoaderTest extends TestCase
                         'file4' => 'pass',
                     ]),
                     new ObjectBag($objectsReturnedByFirstLoadOfFile4 = [
-                        'injected' => new \stdClass(),
-                        'file1' => new \stdClass(),
-                        'file2' => new \stdClass(),
-                        'file4' => new \stdClass(),
+                        'injected' => new stdClass(),
+                        'file1' => new stdClass(),
+                        'file2' => new stdClass(),
+                        'file4' => new stdClass(),
                     ])
                 )
             )
@@ -205,11 +204,11 @@ class MultiPassFileLoaderTest extends TestCase
                         'file3' => 'pass',
                     ]),
                     new ObjectBag($objectsReturnedBySecondLoadOfFile3 = [
-                        'injected' => new \stdClass(),
-                        'file1' => new \stdClass(),
-                        'file2' => new \stdClass(),
-                        'file4' => new \stdClass(),
-                        'file3' => new \stdClass(),
+                        'injected' => new stdClass(),
+                        'file1' => new stdClass(),
+                        'file2' => new stdClass(),
+                        'file4' => new stdClass(),
+                        'file3' => new stdClass(),
                     ])
                 )
             )

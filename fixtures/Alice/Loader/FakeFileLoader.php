@@ -17,9 +17,6 @@ use Fidry\AliceDataFixtures\NotCallableTrait;
 use Nelmio\Alice\FileLoaderInterface;
 use Nelmio\Alice\ObjectSet;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 class FakeFileLoader implements FileLoaderInterface
 {
     use NotCallableTrait;

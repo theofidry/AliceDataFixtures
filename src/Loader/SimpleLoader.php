@@ -30,9 +30,6 @@ use Nelmio\Alice\IsAServiceTrait;
 {
     use IsAServiceTrait;
 
-    /**
-     * @var FilesLoaderInterface
-     */
     private $filesLoader;
 
     public function __construct(FilesLoaderInterface $fileLoader)

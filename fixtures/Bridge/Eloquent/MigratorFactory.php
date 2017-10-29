@@ -17,9 +17,6 @@ use Fidry\AliceDataFixtures\Bridge\Eloquent\Migration\FakeMigrationRepository;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Filesystem\Filesystem;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 class MigratorFactory
 {
     public static function create(): Migrator

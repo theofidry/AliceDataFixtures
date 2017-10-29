@@ -17,8 +17,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations\Document;
 
 /**
  * @Document()
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class DummySubClass extends MappedSuperclassDummy
 {
