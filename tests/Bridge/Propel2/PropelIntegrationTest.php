@@ -24,8 +24,11 @@ class PropelIntegrationTest extends PropelTestCase
     public function setUp()
     {
         $this->initDatabase();
+
         $connection = Propel::getConnection('default');
+
         $modelPersister = new ModelPersister($connection);
+
         $this->loader = new PersisterLoader(
             new SimpleLoader(
                 new SimpleFileLoader(

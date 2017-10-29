@@ -30,9 +30,6 @@ use Propel\Runtime\Propel;
 {
     use IsAServiceTrait;
 
-    /**
-     * @var ConnectionInterface
-     */
     private $connection;
 
     /**
@@ -69,6 +66,7 @@ use Propel\Runtime\Propel;
     public function flush()
     {
         $models = $this->persistedModels;
+
         $this->connection->transaction(
             function () use ($models) {
                 foreach ($models as $model) {

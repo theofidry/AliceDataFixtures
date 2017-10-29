@@ -26,6 +26,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 use Fidry\AliceDataFixtures\Bridge\Propel2\Purger\ModelPurger;
 use Propel\Runtime\Propel;
 use Fidry\AliceDataFixtures\Bridge\Propel2\PropelTestCase;
+use ReflectionClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger
@@ -76,12 +77,9 @@ class ModelPurgerTest extends PropelTestCase
         (new ModelPurger(Propel::getConnection(), 'asdasd'))->purge();
     }
 
-    /**
-     * @expectedException \Nelmio\Alice\Throwable\Exception\UnclonableException
-     */
     public function testIsNotClonable()
     {
-        clone $this->purger;
+        $this->assertFalse((new ReflectionClass(ModelPurger::class))->isCloneable());
     }
 
     public function testPurge()

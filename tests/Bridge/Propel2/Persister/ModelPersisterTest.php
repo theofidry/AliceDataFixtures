@@ -19,9 +19,8 @@ use Fidry\AliceDataFixtures\Bridge\Propel2\Model\Book;
 use Fidry\AliceDataFixtures\Bridge\Propel2\Model\BookQuery;
 use Fidry\AliceDataFixtures\Bridge\Propel2\PropelTestCase;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
-use PHPUnit\Framework\TestCase;
-use Propel\Runtime\Connection\ConnectionManagerSingle;
 use Propel\Runtime\Propel;
+use ReflectionClass;
 use stdClass;
 
 /**
@@ -47,20 +46,20 @@ class ModelPersisterTest extends PropelTestCase
         $this->assertTrue(is_a(ModelPersister::class, PersisterInterface::class, true));
     }
 
-    /**
-     * @expectedException \Nelmio\Alice\Throwable\Exception\UnclonableException
-     */
-    public function testIsClonable()
+    public function testIsNotClonable()
     {
-        clone $this->persister;
+        $this->assertFalse((new ReflectionClass(ModelPersister::class))->isCloneable());
     }
 
     public function testCanPersistAModel()
     {
         $model = new Author();
         $model->setName('John Steinbeck');
+
         $this->assertNull($model->getId());
+
         $this->persister->persist($model);
+
         $this->assertNull($model->getId());
 
         $this->persister->flush();
@@ -96,6 +95,7 @@ class ModelPersisterTest extends PropelTestCase
     public function testCannotPersistANonModelObject()
     {
         $object = new stdClass();
+
         $this->persister->persist($object);
     }
 }

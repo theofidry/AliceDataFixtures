@@ -33,14 +33,7 @@ use RuntimeException;
 {
     use IsAServiceTrait;
 
-    /**
-     * @var ConnectionInterface
-     */
     private $connection;
-
-    /**
-     * @var string
-     */
     private $generatedSqlPath;
 
     public function __construct(ConnectionInterface $connection, string $generatedSqlPath)
@@ -54,16 +47,9 @@ use RuntimeException;
      */
     public function create(PurgeMode $mode, PurgerInterface $purger = null): PurgerInterface
     {
-        if ($mode == PurgeMode::createDeleteMode()) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Cannot purge database in delete mode with "%s" (not supported).',
-                    __CLASS__
-                )
-            );
-        }
+        // Do nothing
 
-        return new self();
+        return new self($this->connection, $this->generatedSqlPath);
     }
 
     /**
