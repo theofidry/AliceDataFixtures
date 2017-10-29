@@ -17,9 +17,7 @@ AliceDataFixtures
         1. [Eloquent ORM](#eloquent-orm)
         1. [Configuration](#configuration)
 1. [Basic usage](#basic-usage)
-1. Advanced usage
-    1. [Processors](doc/processors.md)
-    1. [Purge data](doc/purge_data.md)
+1. [Processors](#processors)
 1. [Contributing](#contributing)
 
 
@@ -28,17 +26,17 @@ AliceDataFixtures
 You can use [Composer](https://getcomposer.org/) to install the library to your project:
 
 ```bash
-composer require --dev theofidry/alice-data-fixtures:^1.0@beta nelmio/alice:^3.0@rc
+composer require --dev theofidry/alice-data-fixtures:^1.0@beta nelmio/alice:^3.1
 
 # with Doctrine
 composer require --dev theofidry/alice-data-fixtures:^1.0@beta \
-  nelmio/alice:^3.0@rc \
+  nelmio/alice:^3.1 \
   doctrine/orm:^2.5 \
   doctrine/data-fixtures
 
 # with Eloquent
 composer require --dev theofidry/alice-data-fixtures:^1.0@beta \
-  nelmio/alice:^3.0@rc \
+  nelmio/alice:^3.1 \
   illuminate/database:~5.3.0
 ```
 
@@ -164,17 +162,76 @@ $files = [
 ];
 
 // Choose your loader
-$loader = $container->get('fidry_alice_data_fixtures.doctrine.loader');         // For Doctrine ORM
-$loader = $container->get('fidry_alice_data_fixtures.doctrine_mongodb.loader'); // For Doctrine MongoDB ODM
-$loader = $container->get('fidry_alice_data_fixtures.doctrine_phpcr.loader');   // For Doctrine PHPCR
-$loader = $container->get('fidry_alice_data_fixtures.eloquent.loader');         // For Eloquent ORM
+$loader = $container->get('fidry_alice_data_fixtures.loader.doctrine');         // For Doctrine ORM
+$loader = $container->get('fidry_alice_data_fixtures.loader.doctrine_mongodb'); // For Doctrine MongoDB ODM
+$loader = $container->get('fidry_alice_data_fixtures.loader.doctrine_phpcr');   // For Doctrine PHPCR
+$loader = $container->get('fidry_alice_data_fixtures.loader.eloquent');         // For Eloquent ORM
 
+// Purge the objects, create PHP objects from the fixture files and persist them
 $objects = $loader->load($files);
 
 // $objects is now an array of persisted `Dummy` and `RelatedDummy`
 ```
 
-[Check more advanced doc](#documentation).
+
+## Processors
+
+Processors allow you to process objects before and/or after they are persisted. Processors
+must implement the [`Fidry\AliceDataFixtures\ProcessorInterface`](src/ProcessorInterface.php).
+
+Here is an example where we may use this feature to make sure passwords are properly
+hashed on a `User`:
+
+```php
+namespace MyApp\DataFixtures\Processor;
+
+use Fidry\AliceDataFixtures\ProcessorInterface;
+use MyApp\Hasher\PasswordHashInterface;
+use User;
+
+final class UserProcessor implements ProcessorInterface
+{
+    private $passwordHasher;
+
+    public function __construct(PasswordHashInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function preProcess($object)
+    {
+        if (false === $object instanceof User) {
+            return;
+        }
+
+        $object->password = $this->passwordHasher->hash($object->password);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function postProcess($object)
+    {
+        // do nothing
+    }
+}
+```
+
+In Symfony, if you wish to register the processor above you need to tag it with the
+`fidry_alice_data_fixtures.processor` tag:
+
+```yaml
+# app/config/services.yml
+
+services:
+    AppBundle\DataFixtures\Processor\UserProcessor:
+        arguments:
+          - '@password_hasher'
+        tags: [ { name: fidry_alice_data_fixtures.processor } ]
+```
 
 
 ## Contributing

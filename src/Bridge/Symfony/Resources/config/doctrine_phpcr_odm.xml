@@ -12,36 +12,65 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="fidry_alice_data_fixtures.doctrine_phpcr.loader"
+
+        <!-- Loaders -->
+        <service id="fidry_alice_data_fixtures.loader.doctrine_phpcr"
                  alias="fidry_alice_data_fixtures.doctrine_phpcr.persister_loader"
                  public="true" />
 
-
-        <service id="fidry_alice_data_fixtures.persistence.purger.doctrine_phpcr.odm_purger"
-                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger"
-                 lazy="true">
-            <argument type="service" id="doctrine_phpcr.odm.document_manager" />
-        </service>
-
-        <service id="fidry_alice_data_fixtures.persistence.persister.doctrine_phpcr.object_manager_persister"
-                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister"
-                 lazy="true">
-            <argument type="service" id="doctrine_phpcr.odm.document_manager" />
-        </service>
-
-        <service id="fidry_alice_data_fixtures.doctrine_phpcr.persister_loader"
-                 class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
-                 lazy="true" >
-            <argument type="service" id="fidry_alice_data_fixtures.loader.simple" />
-            <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.doctrine_phpcr.object_manager_persister" />
-            <!-- Processors are injected via a Compiler pass -->
+        <service id="fidry_alice_data_fixtures.doctrine_phpcr.loader"
+                  alias="fidry_alice_data_fixtures.loader.doctrine_phpcr">
+            <!--TODO: https://github.com/symfony/symfony/issues/24507-->
+            <!--<deprecated>The service "%service_id%" is deprecated and will be removed in future versions. Use "fidry_alice_data_fixtures.loader.doctrine_phpcr" instead.</deprecated>-->
         </service>
 
         <service id="fidry_alice_data_fixtures.doctrine_phpcr.purger_loader"
                  class="Fidry\AliceDataFixtures\Loader\PurgerLoader"
                  lazy="true" >
             <argument type="service" id="fidry_alice_data_fixtures.doctrine_phpcr.persister_loader" />
-            <argument type="service" id="fidry_alice_data_fixtures.persistence.purger.doctrine_phpcr.odm_purger" />
+            <argument type="service" id="fidry_alice_data_fixtures.persistence.purger_factory.doctrine_phpcr" />
+        </service>
+
+        <service id="fidry_alice_data_fixtures.doctrine_phpcr.persister_loader"
+                 class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
+                 lazy="true" >
+            <argument type="service" id="fidry_alice_data_fixtures.loader.simple" />
+            <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.doctrine_phpcr" />
+            <!-- Processors are injected via a Compiler pass -->
+        </service>
+
+
+        <!-- Purger Factory -->
+
+        <service id="fidry_alice_data_fixtures.persistence.purger_factory.doctrine_phpcr"
+                 alias="fidry_alice_data_fixtures.persistence.doctrine_phpcr.purger.purger_factory"
+                 public="true" />
+
+        <service id="fidry_alice_data_fixtures.persistence.doctrine_phpcr.purger.purger_factory"
+                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger"
+                 lazy="true">
+            <argument type="service" id="doctrine_phpcr.odm.document_manager" />
+        </service>
+
+        <service id="fidry_alice_data_fixtures.persistence.purger.doctrine_phpcr.odm_purger"
+                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger"
+                 lazy="true">
+            <argument type="service" id="doctrine_phpcr.odm.document_manager" />
+
+            <deprecated>The service "%service_id%s" is deprecated and will be removed in future versions. Use "fidry_alice_data_fixtures.persistence.doctrine_phpcr.purger.purger_factory" instead.</deprecated>
+        </service>
+
+
+        <!-- Persisters -->
+
+        <service id="fidry_alice_data_fixtures.persistence.persister.doctrine_phpcr"
+                 alias="fidry_alice_data_fixtures.persistence.persister.doctrine_phpcr.object_manager_persister"
+                 public="true" />
+
+        <service id="fidry_alice_data_fixtures.persistence.persister.doctrine_phpcr.object_manager_persister"
+                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister"
+                 lazy="true">
+            <argument type="service" id="doctrine_phpcr.odm.document_manager" />
         </service>
 
     </services>
