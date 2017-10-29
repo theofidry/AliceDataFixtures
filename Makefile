@@ -11,7 +11,7 @@ help:
 ## Commands
 ##---------------------------------------------------------------------------
 
-clean:		## Removes all created artefacts
+clean:			## Removes all created artefacts
 clean:
 	mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
 	mongo fidry_alice_data_fixtures --eval "db.dropDatabase();"

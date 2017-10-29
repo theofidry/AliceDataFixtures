@@ -25,8 +25,6 @@ use stdClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\PersisterLoader
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class PersisterLoaderTest extends TestCase
 {

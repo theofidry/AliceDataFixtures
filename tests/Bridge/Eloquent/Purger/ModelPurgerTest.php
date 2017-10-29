@@ -29,8 +29,6 @@ use ReflectionClass;
  * @covers \Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger
  *
  * @backupGlobals disabled
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class ModelPurgerTest extends TestCase
 {

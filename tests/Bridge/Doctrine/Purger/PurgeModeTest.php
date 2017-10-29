@@ -19,8 +19,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class PurgeModeTest extends TestCase
 {

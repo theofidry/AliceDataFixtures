@@ -32,19 +32,8 @@ use Nelmio\Alice\IsAServiceTrait;
 {
     use IsAServiceTrait;
 
-    /**
-     * @var LoaderInterface
-     */
     private $loader;
-
-    /**
-     * @var PersisterInterface
-     */
     private $persister;
-
-    /**
-     * @var ProcessorInterface[]
-     */
     private $processors;
 
     /**

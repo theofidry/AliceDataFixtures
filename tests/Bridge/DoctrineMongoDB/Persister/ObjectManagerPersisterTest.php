@@ -48,6 +48,9 @@ class ObjectManagerPersisterTest extends TestCase
      */
     private $purger;
 
+    /**
+     * @inheritdoc
+     */
     public function setUp()
     {
         $this->documentManager = $GLOBALS['document_manager'];
@@ -55,6 +58,9 @@ class ObjectManagerPersisterTest extends TestCase
         $this->purger = new MongoDBPurger($this->documentManager);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function tearDown()
     {
         $this->purger->purge();

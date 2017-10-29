@@ -15,9 +15,6 @@ namespace Fidry\AliceDataFixtures;
 
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 interface LoaderInterface
 {
     /**

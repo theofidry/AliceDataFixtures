@@ -19,8 +19,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Exception\MaxPassReachedException
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class MaxPassReachedExceptionTest extends TestCase
 {

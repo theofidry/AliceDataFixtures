@@ -12,14 +12,12 @@
 declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
+use InvalidArgumentException;
 
 /**
  * Utility class to keep track of the files being loaded.
  *
  * @private
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
- *
  * @deprecated
  */
 final class FileTracker
@@ -28,12 +26,7 @@ final class FileTracker
 
     public function __construct(string ...$files)
     {
-        $files = array_flip($files);
-        foreach ($files as $file => $index) {
-            $files[$file] = false;
-        }
-
-        $this->files = $files;
+        $this->files = array_fill_keys($files, false);
     }
 
     /**
@@ -47,7 +40,7 @@ final class FileTracker
     public function markAsLoaded(string $file)
     {
         if (false === array_key_exists($file, $this->files)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf(
                     'The file "%s" is not being tracked. As such, it cannot be marked as "loaded".',
                     $file

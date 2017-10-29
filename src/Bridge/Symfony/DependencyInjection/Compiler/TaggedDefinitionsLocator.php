@@ -20,10 +20,6 @@ use Symfony\Component\DependencyInjection\Reference;
  * Utility class to locate tagged service definitions.
  *
  * @private
- *
- * @internal
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 final class TaggedDefinitionsLocator
 {

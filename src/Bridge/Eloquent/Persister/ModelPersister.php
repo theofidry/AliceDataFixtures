@@ -20,17 +20,12 @@ use InvalidArgumentException;
 use Nelmio\Alice\IsAServiceTrait;
 
 /**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- *
  * @final
  */
 /*final*/ class ModelPersister implements PersisterInterface
 {
     use IsAServiceTrait;
 
-    /**
-     * @var DatabaseManager
-     */
     private $databaseManager;
 
     /**
@@ -66,14 +61,16 @@ use Nelmio\Alice\IsAServiceTrait;
      */
     public function flush()
     {
-        $models = $this->persistedModels;
-        $this->databaseManager->connection()->transaction(
-            function () use ($models) {
-                foreach ($models as $model) {
+        $persistModels = function () {
+            array_map(
+                function (Model $model): void {
                     $model->push();
-                }
-            }
-        );
+                },
+                $this->persistedModels
+            );
+        };
+
+        $this->databaseManager->connection()->transaction($persistModels);
 
         $this->persistedModels = [];
     }

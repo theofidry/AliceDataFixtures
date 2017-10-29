@@ -19,14 +19,12 @@ use Nelmio\Alice\Throwable\LoadingThrowable;
 use Throwable;
 
 /**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- *
  * @deprecated
  */
 class MaxPassReachedException extends \RuntimeException implements LoadingThrowable
 {
     /**
-     * @var array<string, \Throwable>
+     * @var array<string, Throwable>
      */
     private $stack = [];
 

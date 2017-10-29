@@ -21,25 +21,16 @@ use Nelmio\Alice\IsAServiceTrait;
 /**
  * Loader decorating another loader to purge the database before loading.
  *
- * @author Théo FIDRY <theo.fidry@gmail.com>
- *
  * @final
  */
 /*final*/ class PurgerLoader implements LoaderInterface
 {
     use IsAServiceTrait;
 
-    const PURGE_MODE_DELETE = 1;
-    const PURGE_MODE_TRUNCATE = 2;
+    public const PURGE_MODE_DELETE = 1;
+    public const PURGE_MODE_TRUNCATE = 2;
 
-    /**
-     * @var LoaderInterface
-     */
     private $loader;
-
-    /**
-     * @var PurgerFactoryInterface
-     */
     private $purgerFactory;
 
     public function __construct(

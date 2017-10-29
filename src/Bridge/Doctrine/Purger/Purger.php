@@ -37,24 +37,14 @@ use Nelmio\Alice\IsAServiceTrait;
 {
     use IsAServiceTrait;
 
-    /**
-     * @var ObjectManager
-     */
     private $manager;
-
-    /**
-     * @var DoctrinePurgerInterface
-     */
     private $purger;
 
     public function __construct(ObjectManager $manager, PurgeMode $purgeMode = null)
     {
         $this->manager = $manager;
 
-        $this->purger = static::createPurger($manager);
-        if ($this->purger instanceof DoctrineOrmPurger && null !== $purgeMode) {
-            $this->purger->setPurgeMode($purgeMode->getValue());
-        }
+        $this->purger = static::createPurger($manager, $purgeMode);
     }
 
     /**
@@ -75,7 +65,8 @@ use Nelmio\Alice\IsAServiceTrait;
                 sprintf(
                     'Expected purger to be either and instance of "%s" or "%s". Got "%s".',
                     DoctrinePurgerInterface::class,
-                    __CLASS__
+                    __CLASS__,
+                    get_class($purger)
                 )
             );
         }
@@ -100,10 +91,16 @@ use Nelmio\Alice\IsAServiceTrait;
         $this->purger->purge();
     }
 
-    private static function createPurger(ObjectManager $manager): DoctrinePurgerInterface
+    private static function createPurger(ObjectManager $manager, ?PurgeMode $purgeMode): DoctrinePurgerInterface
     {
         if ($manager instanceof EntityManagerInterface) {
-            return new DoctrineOrmPurger($manager);
+            $purger = new DoctrineOrmPurger($manager);
+
+            if (null !== $purgeMode) {
+                $purger->setPurgeMode($purgeMode->getValue());
+            }
+
+            return $purger;
         }
 
         if ($manager instanceof DoctrinePhpCrDocumentManager) {

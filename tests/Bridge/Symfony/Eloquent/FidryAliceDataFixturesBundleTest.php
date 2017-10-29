@@ -19,8 +19,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @coversNothing
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundleTest
 {
@@ -29,12 +27,18 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
      */
     protected $kernel;
 
+    /**
+     * @inheritdoc
+     */
     public function setUp()
     {
         $this->kernel = EloquentKernel::create();
         $this->kernel->boot();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function tearDown()
     {
         $this->kernel->shutdown();

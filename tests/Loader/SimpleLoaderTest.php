@@ -25,8 +25,6 @@ use stdClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\SimpleLoader
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class SimpleLoaderTest extends TestCase
 {

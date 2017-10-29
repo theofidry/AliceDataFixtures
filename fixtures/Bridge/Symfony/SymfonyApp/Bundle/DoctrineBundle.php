@@ -16,9 +16,6 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 class DoctrineBundle extends Bundle
 {
     public function build(ContainerBuilder $container)

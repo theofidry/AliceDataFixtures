@@ -18,8 +18,6 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\EloquentKernelWithInvalidD
 
 /**
  * @coversNothing
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class LazyIntegrationTest extends NakedFidryAliceDataFixturesBundleTest
 {

@@ -17,9 +17,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Fidry\AliceDataFixtures\NotCallableTrait;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 class FakeEntityManager implements EntityManagerInterface
 {
     use NotCallableTrait;

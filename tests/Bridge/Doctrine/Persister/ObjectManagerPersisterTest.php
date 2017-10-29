@@ -27,8 +27,6 @@ use ReflectionClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class ObjectManagerPersisterTest extends TestCase
 {
@@ -47,6 +45,9 @@ class ObjectManagerPersisterTest extends TestCase
      */
     private $purger;
 
+    /**
+     * @inheritdoc
+     */
     public function setUp()
     {
         $this->entityManager = $GLOBALS['entity_manager'];
@@ -54,6 +55,9 @@ class ObjectManagerPersisterTest extends TestCase
         $this->purger = new ORMPurger($this->entityManager);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function tearDown()
     {
         $this->purger->purge();

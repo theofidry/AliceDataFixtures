@@ -19,8 +19,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations\Id;
 
 /**
  * @Document()
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class DummyWithEmbeddable
 {

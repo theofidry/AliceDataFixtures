@@ -24,8 +24,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class ORMLoaderIntegrationTest extends TestCase
 {
@@ -49,6 +47,9 @@ class ORMLoaderIntegrationTest extends TestCase
      */
     private static $seed;
 
+    /**
+     * @inheritdoc
+     */
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
@@ -56,6 +57,9 @@ class ORMLoaderIntegrationTest extends TestCase
         static::$seed = uniqid();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function setUp()
     {
         $this->kernel = new DoctrineKernel(static::$seed, true);

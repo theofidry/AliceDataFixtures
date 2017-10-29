@@ -18,8 +18,6 @@ use Doctrine\ODM\PHPCR\Mapping\Annotations\Id;
 
 /**
  * @Document()
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class Dummy
 {

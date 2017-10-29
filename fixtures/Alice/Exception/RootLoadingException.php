@@ -13,11 +13,9 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Alice\Exception;
 
+use Exception;
 use Nelmio\Alice\Throwable\LoadingThrowable;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
-class RootLoadingException extends \Exception implements LoadingThrowable
+class RootLoadingException extends Exception implements LoadingThrowable
 {
 }

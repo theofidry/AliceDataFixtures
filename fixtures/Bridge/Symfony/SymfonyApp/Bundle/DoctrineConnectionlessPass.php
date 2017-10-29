@@ -17,9 +17,6 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 class DoctrineConnectionlessPass implements CompilerPassInterface
 {
     /**

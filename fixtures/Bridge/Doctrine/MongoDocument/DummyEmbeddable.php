@@ -17,8 +17,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations\EmbeddedDocument;
 
 /**
  * @EmbeddedDocument()
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class DummyEmbeddable
 {

@@ -17,8 +17,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Loader\FileTracker
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class FileTrackerTest extends TestCase
 {

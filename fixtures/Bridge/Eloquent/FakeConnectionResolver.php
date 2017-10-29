@@ -16,9 +16,6 @@ namespace Fidry\AliceDataFixtures\Bridge\Eloquent;
 use Fidry\AliceDataFixtures\NotCallableTrait;
 use Illuminate\Database\ConnectionResolverInterface;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
 class FakeConnectionResolver implements ConnectionResolverInterface
 {
     use NotCallableTrait;

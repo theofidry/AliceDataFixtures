@@ -17,6 +17,7 @@ use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle;
 use Doctrine\Bundle\PHPCRBundle\DoctrinePHPCRBundle;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
+use LogicException;
 use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -28,13 +29,10 @@ use WouterJ\EloquentBundle\WouterJEloquentBundle;
 
 /**
  * @private
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 final class FidryAliceDataFixturesExtension extends Extension
 {
-    /** @private */
-    const SERVICES_DIR = __DIR__.'/../Resources/config';
+    private const SERVICES_DIR = __DIR__.'/../Resources/config';
 
     /**
      * @inheritdoc
@@ -46,7 +44,7 @@ final class FidryAliceDataFixturesExtension extends Extension
         $bundles = array_flip($container->getParameter('kernel.bundles'));
 
         if (false === array_key_exists(NelmioAliceBundle::class, $bundles)) {
-            throw new \LogicException(
+            throw new LogicException(
                 sprintf(
                     'Cannot register "%s" without "%s".',
                     FidryAliceDataFixturesBundle::class,
@@ -88,7 +86,7 @@ final class FidryAliceDataFixturesExtension extends Extension
 
         $bundleIsRegistered = array_key_exists($bundle, $bundles);
         if ($isEnabled && false === $bundleIsRegistered) {
-            throw new \LogicException(
+            throw new LogicException(
                 sprintf(
                     'Cannot enable "%s" driver as the bundle "%s" is missing',
                     $driver,

@@ -24,8 +24,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * @covers \Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\FidryAliceDataFixturesExtension
  * @covers \Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler\RegisterTagServicesPass
  * @covers \Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler\TaggedDefinitionsLocator
- *
- * @author Théo FIDRY <theo.fidry@gmail.com>
  */
 class FidryAliceDataFixturesBundleTest extends TestCase
 {
@@ -34,12 +32,18 @@ class FidryAliceDataFixturesBundleTest extends TestCase
      */
     protected $kernel;
 
+    /**
+     * @inheritdoc
+     */
     public function setUp()
     {
         $this->kernel = NakedKernel::create();
         $this->kernel->boot();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function tearDown()
     {
         $this->kernel->shutdown();

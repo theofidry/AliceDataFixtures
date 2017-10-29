@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures;
 
+use DomainException;
+
 trait NotCallableTrait
 {
     public function __call($method, $arguments)
     {
-        throw new \DomainException(
+        throw new DomainException(
             sprintf(
                 'Did not expect "%s" to be called.',
                 $method
