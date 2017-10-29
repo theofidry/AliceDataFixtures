@@ -1,15 +1,18 @@
 /vendor/
 /composer.lock
 /coverage.xml
-/fixtures/Bridge/Symfony/SymfonyApp/cache/*
 /fixtures/Bridge/MongoDB/data/*
 !/fixtures/Bridge/MongoDB/data/.gitkeep
+/fixtures/Bridge/Propel2/generated
+/fixtures/Bridge/Propel2/Model/
+!/fixtures/Bridge/Propel2/Model/.gitkeep
+/fixtures/Bridge/Symfony/SymfonyApp/cache/*
 /phpunit.xml
 /.php_cs.cache
 /.phar/
 /vendor-bin/*/bin/
-/vendor-bin/*/vendor/
 /vendor-bin/*/composer.lock
+/vendor-bin/*/vendor/
 /dist/
 /bin/
 !/bin/clear_cache.sh
@@ -17,5 +20,4 @@
 !/bin/doctrine_purge
 !/bin/eloquent_migrate
 !/bin/eloquent_rollback
-!/bin/test.sh
-!/bin/cs.sh
+!/bin/propel_init

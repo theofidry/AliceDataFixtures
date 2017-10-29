@@ -1,0 +1,15 @@
+propel:
+    database:
+        connections:
+            default:
+                adapter: mysql
+                dsn: mysql:dbname=fidry_alice_data_fixtures;user=rppt
+                user: root
+                password: 
+                settings:
+                    charset: utf8
+    paths:
+        schemaDir:  fixtures/Bridge/Propel2/schema
+        phpDir:     fixtures/Bridge/Propel2/Model
+        phpConfDir: fixtures/Bridge/Propel2/generated/conf
+        sqlDir:     fixtures/Bridge/Propel2/generated/sql

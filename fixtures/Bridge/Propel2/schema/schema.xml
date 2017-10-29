@@ -1,0 +1,19 @@
+<database name="default" defaultIdMethod="native"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+          namespace="Fidry\AliceDataFixtures\Bridge\Propel2\Model"
+        >
+    <table name="book" phpName="Book">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="title" type="varchar" size="255" required="true"/>
+        <column name="author_id" type="integer" required="true"/>
+        <foreign-key foreignTable="author">
+            <reference local="author_id" foreign="id"/>
+        </foreign-key>
+    </table>
+
+    <table name="author" phpName="Author">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="name" type="varchar" size="128" required="true"/>
+    </table>
+</database>

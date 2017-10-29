@@ -62,7 +62,7 @@ class ModelPersisterTest extends TestCase
         $this->assertTrue(is_a(ModelPersister::class, PersisterInterface::class, true));
     }
 
-    public function testIsClonable()
+    public function testIsNotClonable()
     {
         $this->assertFalse((new ReflectionClass(ModelPersister::class))->isCloneable());
     }

@@ -12,12 +12,14 @@
 declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
+
 use InvalidArgumentException;
 
 /**
  * Utility class to keep track of the files being loaded.
  *
  * @private
+ *
  * @deprecated
  */
 final class FileTracker

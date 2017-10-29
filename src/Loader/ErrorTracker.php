@@ -12,12 +12,14 @@
 declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
+
 use Throwable;
 
 /**
  * Utility class to keep track of the errors stacked while trying to load a given file.
  *
  * @private
+ *
  * @deprecated
  */
 final class ErrorTracker
