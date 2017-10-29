@@ -12,36 +12,68 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="fidry_alice_data_fixtures.doctrine_mongodb.loader"
-                 alias="fidry_alice_data_fixtures.doctrine_mongodb.persister_loader"
+
+        <!-- Loaders -->
+
+        <service id="fidry_alice_data_fixtures.loader.doctrine_mongodb"
+                 alias="fidry_alice_data_fixtures.doctrine_mongodb.purger_loader"
                  public="true" />
 
-
-        <service id="fidry_alice_data_fixtures.persistence.purger.doctrine_mongodb.odm_purger"
-                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger"
-                 lazy="true">
-            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
-        </service>
-
-        <service id="fidry_alice_data_fixtures.persistence.persister.doctrine_mongodb.object_manager_persister"
-                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister"
-                 lazy="true">
-            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
-        </service>
-
-        <service id="fidry_alice_data_fixtures.doctrine_mongodb.persister_loader"
-                 class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
-                 lazy="true" >
-            <argument type="service" id="fidry_alice_data_fixtures.loader.simple" />
-            <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.doctrine_mongodb.object_manager_persister" />
-            <!-- Processors are injected via a Compiler pass -->
+        <service id="fidry_alice_data_fixtures.doctrine_mongodb.loader"
+                 alias="fidry_alice_data_fixtures.loader.doctrine_mongodb">
+            <deprecated>
+                The service "%service_id%" is deprecated and will be removed in future versions. Use
+                "fidry_alice_data_fixtures.loader.doctrine_mongodb" instead.
+            </deprecated>
         </service>
 
         <service id="fidry_alice_data_fixtures.doctrine_mongodb.purger_loader"
                  class="Fidry\AliceDataFixtures\Loader\PurgerLoader"
                  lazy="true" >
             <argument type="service" id="fidry_alice_data_fixtures.doctrine_mongodb.persister_loader" />
-            <argument type="service" id="fidry_alice_data_fixtures.persistence.purger.doctrine_mongodb.odm_purger" />
+            <argument type="service" id="fidry_alice_data_fixtures.persistence.purger_factory.doctrine_mongodb" />
+        </service>
+
+        <service id="fidry_alice_data_fixtures.doctrine_mongodb.persister_loader"
+                 class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
+                 lazy="true" >
+            <argument type="service" id="fidry_alice_data_fixtures.loader.simple" />
+            <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.doctrine_mongodb" />
+            <!-- Processors are injected via a Compiler pass -->
+        </service>
+
+
+        <!-- Purger Factory -->
+
+        <service id="fidry_alice_data_fixtures.persistence.purger_factory.doctrine_mongodb"
+                 alias="fidry_alice_data_fixtures.persistence.doctrine_mongodb.purger.purger_factory"
+                 public="true" />
+
+        <service id="fidry_alice_data_fixtures.persistence.doctrine_mongodb.purger.purger_factory"
+                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger"
+                 lazy="true">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+        </service>
+
+        <service id="fidry_alice_data_fixtures.persistence.purger.doctrine_mongodb.odm_purger"
+                 alias="fidry_alice_data_fixtures.persistence.doctrine_mongodb.purger.purger_factory">
+            <deprecated>
+                The service "%service_id% is deprecated and will be removed in future versions. Use
+                "fidry_alice_data_fixtures.persistence.doctrine_mongodb.purger.purger_factory" instead.
+            </deprecated>
+        </service>
+
+
+        <!-- Persisters -->
+
+        <service id="fidry_alice_data_fixtures.persistence.persister.doctrine_mongodb"
+                 alias="fidry_alice_data_fixtures.persistence.persister.doctrine_mongodb.object_manager_persister"
+                 public="true" />
+
+        <service id="fidry_alice_data_fixtures.persistence.persister.doctrine_mongodb.object_manager_persister"
+                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister"
+                 lazy="true">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
         </service>
 
     </services>

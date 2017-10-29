@@ -13,9 +13,8 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Persistence;
 
-/**
- * @author Théo FIDRY <theo.fidry@gmail.com>
- */
+use InvalidArgumentException;
+
 final class PurgeMode
 {
     private static $values = [
@@ -31,7 +30,7 @@ final class PurgeMode
     public function __construct(int $mode)
     {
         if (false === array_key_exists($mode, array_flip(self::$values))) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf('Unknown purge mode "%d".', $mode)
             );
         }

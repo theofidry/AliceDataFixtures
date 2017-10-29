@@ -17,18 +17,42 @@
 
     <services>
 
-        <service id="fidry_alice_data_fixtures.eloquent.loader"
-                 alias="fidry_alice_data_fixtures.eloquent.persister_loader"
+        <!-- Loaders -->
+        <service id="fidry_alice_data_fixtures.loader.eloquent"
+                 alias="fidry_alice_data_fixtures.eloquent.purger_loader"
                  public="true" />
 
-
-        <service id="fidry_alice_data_fixtures.persistence.purger_mode"
-                 class="Fidry\AliceDataFixtures\Persistence\PurgeMode"
-                 public="false">
-            <factory class="Fidry\AliceDataFixtures\Persistence\PurgeMode" method="createDeleteMode" />
+        <service id="fidry_alice_data_fixtures.eloquent.loader"
+                 alias="fidry_alice_data_fixtures.loader.eloquent">
+            <deprecated>
+                The service "%service_id%" is deprecated and will be removed in future versions. Use
+                "fidry_alice_data_fixtures.loader.eloquent" instead.
+            </deprecated>
         </service>
 
-        <service id="fidry_alice_data_fixtures.persistence.purger.eloquent.model_purger"
+        <service id="fidry_alice_data_fixtures.eloquent.purger_loader"
+                 class="Fidry\AliceDataFixtures\Loader\PurgerLoader"
+                 lazy="true" >
+            <argument type="service" id="fidry_alice_data_fixtures.eloquent.persister_loader" />
+            <argument type="service" id="fidry_alice_data_fixtures.persistence.purger_factory.eloquent" />
+        </service>
+
+        <service id="fidry_alice_data_fixtures.eloquent.persister_loader"
+                 class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
+                 lazy="true" >
+            <argument type="service" id="fidry_alice_data_fixtures.loader.simple" />
+            <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.eloquent" />
+            <!-- Processors are injected via a Compiler pass -->
+        </service>
+
+
+        <!-- Purger Factory -->
+
+        <service id="fidry_alice_data_fixtures.persistence.purger_factory.eloquent"
+                 alias="fidry_alice_data_fixtures.persistence.eloquent.purger.purger_factory"
+                 public="true" />
+
+        <service id="fidry_alice_data_fixtures.persistence.eloquent.purger.purger_factory"
                  class="Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger"
                  lazy="true">
             <argument type="service" id="wouterj_eloquent.migrations.repository" />
@@ -36,25 +60,36 @@
             <argument type="service" id="wouterj_eloquent.migrator" />
         </service>
 
+        <service id="fidry_alice_data_fixtures.persistence.purger.eloquent.model_purger"
+                 alias="fidry_alice_data_fixtures.persistence.eloquent.purger.purger_factory">
+            <deprecated>
+                The service "%service_id%s" is deprecated and will be removed in future versions. Use
+                "fidry_alice_data_fixtures.persistence.eloquent.purger.purger_factory" instead.
+            </deprecated>
+        </service>
+
+        <service id="fidry_alice_data_fixtures.persistence.purger_mode"
+                 class="Fidry\AliceDataFixtures\Persistence\PurgeMode"
+                 public="false">
+            <factory class="Fidry\AliceDataFixtures\Persistence\PurgeMode" method="createDeleteMode" />
+
+            <deprecated>
+                The service "%service_id%" is deprecated and will be removed in future versions. Inject the purger or
+                purger factory directly instead.
+            </deprecated>
+        </service>
+
+
+        <!-- Persisters -->
+
+        <service id="fidry_alice_data_fixtures.persistence.persister.eloquent"
+                 alias="fidry_alice_data_fixtures.persistence.persister.eloquent.model_persister"
+                 public="true" />
+
         <service id="fidry_alice_data_fixtures.persistence.persister.eloquent.model_persister"
                  class="Fidry\AliceDataFixtures\Bridge\Eloquent\Persister\ModelPersister"
                  lazy="true">
             <argument type="service" id="wouterj_eloquent.database_manager" />
-        </service>
-
-        <service id="fidry_alice_data_fixtures.eloquent.persister_loader"
-                 class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
-                 lazy="true" >
-            <argument type="service" id="fidry_alice_data_fixtures.loader.simple" />
-            <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.eloquent.model_persister" />
-            <!-- Processors are injected via a Compiler pass -->
-        </service>
-
-        <service id="fidry_alice_data_fixtures.eloquent.purger_loader"
-                 class="Fidry\AliceDataFixtures\Loader\PurgerLoader"
-                 lazy="true" >
-            <argument type="service" id="fidry_alice_data_fixtures.eloquent.persister_loader" />
-            <argument type="service" id="fidry_alice_data_fixtures.persistence.purger.eloquent.model_purger" />
         </service>
 
     </services>
