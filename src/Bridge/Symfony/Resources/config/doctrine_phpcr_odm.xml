@@ -20,7 +20,8 @@
 
         <service id="fidry_alice_data_fixtures.doctrine_phpcr.loader"
                   alias="fidry_alice_data_fixtures.loader.doctrine_phpcr">
-            <deprecated>The service "%service_id%" is deprecated and will be removed in future versions. Use "fidry_alice_data_fixtures.loader.doctrine_phpcr" instead.</deprecated>
+            <!--TODO: https://github.com/symfony/symfony/issues/24507-->
+            <!--<deprecated>The service "%service_id%" is deprecated and will be removed in future versions. Use "fidry_alice_data_fixtures.loader.doctrine_phpcr" instead.</deprecated>-->
         </service>
 
         <service id="fidry_alice_data_fixtures.doctrine_phpcr.purger_loader"
