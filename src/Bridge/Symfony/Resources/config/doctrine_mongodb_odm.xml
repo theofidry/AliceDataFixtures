@@ -21,10 +21,7 @@
 
         <service id="fidry_alice_data_fixtures.doctrine_mongodb.loader"
                  alias="fidry_alice_data_fixtures.loader.doctrine_mongodb">
-            <deprecated>
-                The service "%service_id%" is deprecated and will be removed in future versions. Use
-                "fidry_alice_data_fixtures.loader.doctrine_mongodb" instead.
-            </deprecated>
+            <deprecated>The service "%service_id%" is deprecated and will be removed in future versions. Use "fidry_alice_data_fixtures.loader.doctrine_mongodb" instead.</deprecated>
         </service>
 
         <service id="fidry_alice_data_fixtures.doctrine_mongodb.purger_loader"
@@ -57,10 +54,7 @@
 
         <service id="fidry_alice_data_fixtures.persistence.purger.doctrine_mongodb.odm_purger"
                  alias="fidry_alice_data_fixtures.persistence.doctrine_mongodb.purger.purger_factory">
-            <deprecated>
-                The service "%service_id% is deprecated and will be removed in future versions. Use
-                "fidry_alice_data_fixtures.persistence.doctrine_mongodb.purger.purger_factory" instead.
-            </deprecated>
+            <deprecated>The service "%service_id% is deprecated and will be removed in future versions. Use "fidry_alice_data_fixtures.persistence.doctrine_mongodb.purger.purger_factory" instead.</deprecated>
         </service>
 
 
