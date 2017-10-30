@@ -18,8 +18,7 @@ AliceDataFixtures
         1. [Configuration](#configuration)
 1. [Basic usage](#basic-usage)
 1. [Processors](#processors)
-1. [FAQ](#faq)
-    1. [(Doctrine) My IDs are overridden, can I set them?](#doctrine-my-ids-are-overridden-can-i-set-them)
+1. [Set IDs manually](#set-ids-manually
 1. [Contributing](#contributing)
 
 
@@ -234,9 +233,7 @@ services:
 ```
 
 
-## FAQ
-
-### (Doctrine) My IDs are overridden, can I set them?
+## Set IDs manually
 
 If you are using Doctrine, you may have an auto primary key generator, i.e. your entities have a primary key assigned
 to them by the database. This means for an entity to have an ID, you need to save it first.
