@@ -17,8 +17,10 @@ AliceDataFixtures
         1. [Eloquent ORM](#eloquent-orm)
         1. [Configuration](#configuration)
 1. [Basic usage](#basic-usage)
-1. [Processors](#processors)
-1. [Set IDs manually](#set-ids-manually
+1. [Advanced usage](#advanced-usage)
+    1. [Processors](#processors)
+    1. [Setting IDs manually](#set-ids-manually)
+    1. [Exclude tables from purge](#exclude-tables-from-purge)
 1. [Contributing](#contributing)
 
 
@@ -173,7 +175,9 @@ $objects = $loader->load($files);
 ```
 
 
-## Processors
+## Advanced usage
+
+### Processors
 
 Processors allow you to process objects before and/or after they are persisted. Processors
 must implement the [`Fidry\AliceDataFixtures\ProcessorInterface`](src/ProcessorInterface.php).
@@ -233,7 +237,7 @@ services:
 ```
 
 
-## Set IDs manually
+### Setting IDs manually
 
 If you are using Doctrine, you may have an auto primary key generator, i.e. your entities have a primary key assigned
 to them by the database. This means for an entity to have an ID, you need to save it first.
@@ -290,7 +294,7 @@ use Nelmio\Alice\IsAServiceTrait;
 
         // Load the objects as usual
         $objects = $this->loader->load($fixturesFiles, $parameters, $objects, $purgeMode);
-        
+
         // If necessary, you can revert the old configuration of the metadata
 
         return $objects;
@@ -309,7 +313,7 @@ services:
             - '@fidry_alice_data_fixtures.doctrine.purger_loader' # Decorates the relevant loader
             - '@doctrine.orm.entity_manager'                      # Inject the relevant entity manager, ORM, ODM or other
 
-    # Overrides the existing loader with your own 
+    # Overrides the existing loader with your own
     fidry_alice_data_fixtures.loader.doctrine: '@Acme\Alice\Loader\DoctrineIdGeneratorLoader'
 
 ```
@@ -317,7 +321,85 @@ services:
 Et voilà!
 
 
+### Exclude tables from purge
+
+You may have some view/read-only tables which should not be truncated when loading the
+fixtures. To fix that, you can leverage the [Purger](https://github.com/doctrine/data-fixtures/pull/225)
+to exclude them.
+
+The purger for Doctrine is defined [here](https://github.com/theofidry/AliceDataFixtures/blob/master/src/Bridge/Doctrine/Purger/Purger.php). You
+see that you can easily create your own purger based on it to retrieve the relevant metadata from the
+object manager to exclude them:
+
+```php
+<?php declare(strict_types=1);
+
+namespace Acme\Alice\Purger;
+
+use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
+use Doctrine\Common\DataFixtures\Purger\PurgerInterface as DoctrinePurgerInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+use Fidry\AliceDataFixtures\Persistence\PurgeMode;
+use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
+use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
+use Nelmio\Alice\IsAServiceTrait;
+
+/**
+ * @final
+ */
+/* final */ class Purger implements PurgerInterface, PurgerFactoryInterface
+{
+    use IsAServiceTrait;
+
+    private $manager;
+    private $purger;
+
+    public function __construct(ObjectManager $manager, PurgeMode $purgeMode = null)
+    {
+        $this->manager = $manager;
+        $this->purger = static::createPurger($manager, $purgeMode);
+    }
+    // ...
+
+    private static function createPurger(ObjectManager $manager, ?PurgeMode $purgeMode): DoctrinePurgerInterface
+    {
+        $metaData = $manager->getMetadataFactory()->getAllMetadata();
+
+        $excluded = [];
+
+        foreach ($metaData as $classMetadata) {
+            /** @var ClassMetadata $classMetadata */
+            if ($classMetadata->isReadOnly) {
+                $excluded[] = $classMetadata->getTableName();
+            }
+        }
+
+        $purger = new DoctrineOrmPurger($manager, $excluded);
+
+        if (null !== $purgeMode) {
+            $purger->setPurgeMode($purgeMode->getValue());
+        }
+
+        return $purger;
+    }
+}
+```
+
+In the case of Symfony with Doctrine ORM, you can the override the default purger factory used:
+
+```yaml
+// app/config/services.yaml
+
+services:
+    # Override the default service with your own
+    fidry_alice_data_fixtures.persistence.purger_factory.doctrine:
+        class: Acme\Alice\Purger\Purger
+        arguments:
+            - '@doctrine.orm.entity_manager'
+```
+
+
 ## Contributing
 
-Clone the project, install the dependencies and use `bin/test.sh` to run all the tests!
+Clone the project and run `make`.
 
