@@ -15,6 +15,8 @@ namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\FileResolverInterface;
 use Fidry\AliceDataFixtures\LoaderInterface;
+use Fidry\AliceDataFixtures\Persistence\PersisterAwareInterface;
+use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Nelmio\Alice\IsAServiceTrait;
 
@@ -23,7 +25,7 @@ use Nelmio\Alice\IsAServiceTrait;
  *
  * @final
  */
-/*final*/ class FileResolverLoader implements LoaderInterface
+/*final*/ class FileResolverLoader implements LoaderInterface, PersisterAwareInterface
 {
     use IsAServiceTrait;
 
@@ -34,6 +36,20 @@ use Nelmio\Alice\IsAServiceTrait;
     {
         $this->loader = $decoratedLoader;
         $this->fileResolver = $fileResolver;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function withPersister(PersisterInterface $persister): self
+    {
+        $loader = $this->loader;
+
+        if ($loader instanceof PersisterAwareInterface) {
+            $loader = $loader->withPersister($persister);
+        }
+
+        return new self($loader, $this->fileResolver);
     }
 
     /**

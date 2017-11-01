@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\LoaderInterface;
+use Fidry\AliceDataFixtures\Persistence\PersisterAwareInterface;
+use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Nelmio\Alice\IsAServiceTrait;
@@ -23,7 +25,7 @@ use Nelmio\Alice\IsAServiceTrait;
  *
  * @final
  */
-/*final*/ class PurgerLoader implements LoaderInterface
+/*final*/ class PurgerLoader implements LoaderInterface, PersisterAwareInterface
 {
     use IsAServiceTrait;
 
@@ -39,6 +41,20 @@ use Nelmio\Alice\IsAServiceTrait;
     ) {
         $this->loader = $decoratedLoader;
         $this->purgerFactory = $purgerFactory;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function withPersister(PersisterInterface $persister): self
+    {
+        $loader = $this->loader;
+
+        if ($loader instanceof PersisterAwareInterface) {
+            $loader = $loader->withPersister($persister);
+        }
+
+        return new self($loader, $this->purgerFactory);
     }
 
     /**
