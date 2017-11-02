@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\Id\AssignedGenerator;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Nelmio\Alice\IsAServiceTrait;
 
@@ -31,6 +33,11 @@ use Nelmio\Alice\IsAServiceTrait;
      */
     private $persistableClasses;
 
+    /**
+     * @var ClassMetadataInfo[] Entity metadata, FQCN being the key
+     */
+    private $metadata = [];
+
     public function __construct(ObjectManager $manager)
     {
         $this->objectManager = $manager;
@@ -45,8 +52,26 @@ use Nelmio\Alice\IsAServiceTrait;
             $this->persistableClasses = array_flip($this->getPersistableClasses($this->objectManager));
         }
 
-        if (isset($this->persistableClasses[get_class($object)])) {
+        $class = get_class($object);
+        if (isset($this->persistableClasses[$class])) {
+            $metadata = $this->getMetadata($class);
+            $generator = null;
+
+            if ($metadata->usesIdGenerator() && false === empty($metadata->getIdentifierValues($object))) {
+                // user is trying to set an explicit identifier, but a ID generator is attached
+                // override the generator
+                $generator = $metadata->idGenerator;
+                $metadata->setIdGeneratorType(ClassMetadataInfo::GENERATOR_TYPE_NONE);
+                $metadata->setIdGenerator(new AssignedGenerator());
+            }
+
             $this->objectManager->persist($object);
+
+            if (null !== $generator) {
+                // reset the generator
+                $metadata->setIdGeneratorType(ClassMetadataInfo::GENERATOR_TYPE_CUSTOM);
+                $metadata->setIdGenerator($generator);
+            }
         }
     }
 
@@ -73,5 +98,15 @@ use Nelmio\Alice\IsAServiceTrait;
         }
 
         return $persistableClasses;
+    }
+
+    private function getMetadata(string $class): ClassMetadataInfo
+    {
+        if (false === \array_key_exists($class, $this->metadata)) {
+            /** @var ClassMetadataInfo $classMetadata */
+            $classMetadata = $this->objectManager->getClassMetadata($class);
+            $this->metadata[$class] = $classMetadata;
+        }
+        return $this->metadata[$class];
     }
 }
