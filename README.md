@@ -9,6 +9,14 @@ AliceDataFixtures
 [![license](https://img.shields.io/badge/license-MIT-red.svg?style=flat-square)](LICENSE)
 
 
+Supports:
+
+* Symfony 3.3+
+* Doctrine ORM 2.5+
+* Eloquent 5.3+
+* Propel 2
+
+
 ## Documentation
 
 1. [Installation](#installation)
@@ -19,7 +27,6 @@ AliceDataFixtures
 1. [Basic usage](#basic-usage)
 1. [Advanced usage](#advanced-usage)
     1. [Processors](#processors)
-    1. [Setting IDs manually](#set-ids-manually)
     1. [Exclude tables from purge](#exclude-tables-from-purge)
 1. [Contributing](#contributing)
 
@@ -235,90 +242,6 @@ services:
           - '@password_hasher'
         tags: [ { name: fidry_alice_data_fixtures.processor } ]
 ```
-
-
-### Setting IDs manually
-
-If you are using Doctrine, you may have an auto primary key generator, i.e. your entities have a primary key assigned
-to them by the database. This means for an entity to have an ID, you need to save it first.
-
-Sometimes this may be an issue with alice and you would like to set your own IDs. To do so, you need to manipulate
-Doctrine metadata during the loading of the fixtures to specify that you want the ID to not be auto-generated.
-
-To achieve the above, you can create your own loader:
-
-```php
-<?php declare(strict_types=1);
-
-namespace Acme\Alice\Loader;
-
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\Id\AssignedGenerator;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Dummy;
-use Fidry\AliceDataFixtures\LoaderInterface;
-use Fidry\AliceDataFixtures\Persistence\PurgeMode;
-use Nelmio\Alice\IsAServiceTrait;
-
-/**
- * Loader decorating another loader to disable the auto-generation of IDs with Doctrine. This allows one to set
- * IDs of an entity at the fixture level.
- *
- * @final
- */
-/*final*/ class DoctrineIdGeneratorLoader implements LoaderInterface
-{
-    use IsAServiceTrait;
-
-    private $loader;
-    private $manager;
-
-    public function __construct(LoaderInterface $decoratedLoader, ObjectManager $manager)
-    {
-        $this->loader = $decoratedLoader;
-        $this->manager = $manager;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
-    {
-        // Retrieves the metadata of the entity for which we want to disable the auto generation of the foreign key
-        /** @var ClassMetadata $dummyMetadata */
-        $dummyMetadata = $this->manager->getMetadataFactory()->getMetadataFor(Dummy::class);
-
-        // Disable the auto generation of the foreign key
-        $dummyMetadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
-        $dummyMetadata->setIdGenerator(new AssignedGenerator());
-
-        // Load the objects as usual
-        $objects = $this->loader->load($fixturesFiles, $parameters, $objects, $purgeMode);
-
-        // If necessary, you can revert the old configuration of the metadata
-
-        return $objects;
-    }
-}
-```
-
-And then you can recreate your own loader with it. In the case of Symfony, you can override the existing loader like so:
-
-```yaml
-// app/config/services.yaml
-
-services:
-    Acme\Alice\Loader\DoctrineIdGeneratorLoader:
-        arguments:
-            - '@fidry_alice_data_fixtures.doctrine.purger_loader' # Decorates the relevant loader
-            - '@doctrine.orm.entity_manager'                      # Inject the relevant entity manager, ORM, ODM or other
-
-    # Overrides the existing loader with your own
-    fidry_alice_data_fixtures.loader.doctrine: '@Acme\Alice\Loader\DoctrineIdGeneratorLoader'
-
-```
-
-Et voilà!
 
 
 ### Exclude tables from purge
