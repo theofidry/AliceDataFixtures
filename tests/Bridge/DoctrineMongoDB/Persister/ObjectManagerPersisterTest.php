@@ -23,6 +23,7 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\DummyWithEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
@@ -79,14 +80,25 @@ class ObjectManagerPersisterTest extends TestCase
     /**
      * @dataProvider provideDocuments
      */
-    public function testCanPersistADocument($document)
+    public function testCanPersistADocument($document, bool $exact = false)
     {
-        $this->persister->persist($document);
-        $this->persister->flush();
+        try {
+            $this->persister->persist($document);
+            $this->persister->flush();
 
-        $result = $this->documentManager->getRepository(get_class($document))->findAll();
+            $this->documentManager->clear();
 
-        $this->assertEquals(1, count($result));
+            $result = $this->documentManager->getRepository(get_class($document))->findAll();
+
+            $this->assertEquals(1, count($result));
+        } catch (InvalidArgumentException $exception) {
+            if ($exact) {
+                // Do nothing: expected result as unsupported at the moment
+                return;
+            }
+
+            throw $exception;
+        }
     }
 
     /**
@@ -129,6 +141,16 @@ class ObjectManagerPersisterTest extends TestCase
 
                 return $dummy;
             })()
+        ];
+
+        yield 'with explicit ID' => [
+            (function () {
+                $dummy = new Dummy();
+                $dummy->id = 200;
+
+                return $dummy;
+            })(),
+            true
         ];
     }
 

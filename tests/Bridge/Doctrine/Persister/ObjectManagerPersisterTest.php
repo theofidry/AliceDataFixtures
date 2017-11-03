@@ -76,14 +76,20 @@ class ObjectManagerPersisterTest extends TestCase
     /**
      * @dataProvider provideEntities
      */
-    public function testCanPersistAnEntity($entity)
+    public function testCanPersistAnEntity($entity, bool $exact = false)
     {
         $this->persister->persist($entity);
         $this->persister->flush();
 
+        $this->entityManager->clear();
+
         $result = $this->entityManager->getRepository(get_class($entity))->findAll();
 
         $this->assertEquals(1, count($result));
+
+        if ($exact) {
+            $this->assertEquals($entity, $result[0]);
+        }
     }
 
     /**
@@ -129,6 +135,16 @@ class ObjectManagerPersisterTest extends TestCase
 
                 return $dummy;
             })()
+        ];
+
+        yield 'entity with explicit ID' => [
+            (function () {
+                $dummy = new Dummy();
+                $dummy->id = 200;
+
+                return $dummy;
+            })(),
+            true
         ];
     }
 
