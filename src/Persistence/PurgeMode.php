@@ -18,6 +18,7 @@ use InvalidArgumentException;
 final class PurgeMode
 {
     private static $values = [
+        'NO_PURGE_MODE' => 0,
         'DELETE_MODE' => 1,
         'TRUNCATE_MODE' => 2,
     ];
@@ -45,6 +46,11 @@ final class PurgeMode
     public static function createTruncateMode(): self
     {
         return new self(self::$values['TRUNCATE_MODE']);
+    }
+
+    public static function createNoPurgeMode(): self
+    {
+        return new self(self::$values['NO_PURGE_MODE']);
     }
 
     public function getValue(): int
