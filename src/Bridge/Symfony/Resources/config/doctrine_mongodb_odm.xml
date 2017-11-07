@@ -27,14 +27,16 @@
 
         <service id="fidry_alice_data_fixtures.doctrine_mongodb.purger_loader"
                  class="Fidry\AliceDataFixtures\Loader\PurgerLoader"
-                 lazy="true" >
+                 lazy="true"
+                 public="true">
             <argument type="service" id="fidry_alice_data_fixtures.doctrine_mongodb.persister_loader" />
             <argument type="service" id="fidry_alice_data_fixtures.persistence.purger_factory.doctrine_mongodb" />
         </service>
 
         <service id="fidry_alice_data_fixtures.doctrine_mongodb.persister_loader"
                  class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
-                 lazy="true" >
+                 lazy="true"
+                 public="true">
             <argument type="service" id="fidry_alice_data_fixtures.loader.simple" />
             <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.doctrine_mongodb" />
             <!-- Processors are injected via a Compiler pass -->
