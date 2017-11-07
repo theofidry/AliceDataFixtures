@@ -22,11 +22,11 @@ class PurgeModeTest extends TestCase
 {
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Unknown purge mode "0".
+     * @expectedExceptionMessage Unknown purge mode "3".
      */
     public function testThrowsAnExceptionIfUnknownPurgeModeIsGiven()
     {
-        new PurgeMode(0);
+        new PurgeMode(3);
     }
 
     public function testCanCreateDeleteMode()
