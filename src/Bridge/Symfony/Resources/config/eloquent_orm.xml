@@ -30,14 +30,16 @@
 
         <service id="fidry_alice_data_fixtures.eloquent.purger_loader"
                  class="Fidry\AliceDataFixtures\Loader\PurgerLoader"
-                 lazy="true" >
+                 lazy="true"
+                 public="true">
             <argument type="service" id="fidry_alice_data_fixtures.eloquent.persister_loader" />
             <argument type="service" id="fidry_alice_data_fixtures.persistence.purger_factory.eloquent" />
         </service>
 
         <service id="fidry_alice_data_fixtures.eloquent.persister_loader"
                  class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
-                 lazy="true" >
+                 lazy="true"
+                 public="true">
             <argument type="service" id="fidry_alice_data_fixtures.loader.simple" />
             <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.eloquent" />
             <!-- Processors are injected via a Compiler pass -->
