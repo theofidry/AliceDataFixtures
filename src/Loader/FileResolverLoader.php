@@ -19,6 +19,8 @@ use Fidry\AliceDataFixtures\Persistence\PersisterAwareInterface;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Nelmio\Alice\IsAServiceTrait;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * Decorates another loader to resolve files before loading them.
@@ -31,11 +33,16 @@ use Nelmio\Alice\IsAServiceTrait;
 
     private $loader;
     private $fileResolver;
+    private $logger;
 
-    public function __construct(LoaderInterface $decoratedLoader, FileResolverInterface $fileResolver)
-    {
+    public function __construct(
+        LoaderInterface $decoratedLoader,
+        FileResolverInterface $fileResolver,
+        LoggerInterface $logger = null
+    ) {
         $this->loader = $decoratedLoader;
         $this->fileResolver = $fileResolver;
+        $this->logger = $logger ?? new NullLogger();
     }
 
     /**
@@ -49,7 +56,7 @@ use Nelmio\Alice\IsAServiceTrait;
             $loader = $loader->withPersister($persister);
         }
 
-        return new self($loader, $this->fileResolver);
+        return new self($loader, $this->fileResolver, $this->logger);
     }
 
     /**
@@ -59,6 +66,8 @@ use Nelmio\Alice\IsAServiceTrait;
      */
     public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
     {
+        $this->logger->info('Resolving fixture files.');
+
         $fixturesFiles = $this->fileResolver->resolve($fixturesFiles);
 
         return $this->loader->load($fixturesFiles, $parameters, $objects, $purgeMode);

@@ -30,6 +30,7 @@
             <argument type="service" id="fidry_alice_data_fixtures.doctrine_phpcr.persister_loader" />
             <argument type="service" id="fidry_alice_data_fixtures.persistence.purger_factory.doctrine_phpcr" />
             <argument type="string">%fidry_alice_data_fixtures.default_purge_mode%</argument>
+            <argument type="service" id="logger" on-invalid="ignore" />
         </service>
 
         <service id="fidry_alice_data_fixtures.doctrine_phpcr.persister_loader"
@@ -37,6 +38,7 @@
                  lazy="true" >
             <argument type="service" id="fidry_alice_data_fixtures.loader.simple" />
             <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.doctrine_phpcr" />
+            <argument type="service" id="logger" on-invalid="ignore"/>
             <!-- Processors are injected via a Compiler pass -->
         </service>
 

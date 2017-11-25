@@ -74,7 +74,7 @@ class PurgerLoaderTest extends TestCase
         /** @var PurgerFactoryInterface $purgerFactory */
         $purgerFactory = $purgerFactoryProphecy->reveal();
 
-        $loader = new PurgerLoader($decoratedLoader, $purgerFactory, 'delete');
+        $loader = new PurgerLoader($decoratedLoader, $purgerFactory, 'delete', null);
         $actual = $loader->load($files, $parameters, $objects, $purgeMode);
 
         $this->assertEquals($expected, $actual);

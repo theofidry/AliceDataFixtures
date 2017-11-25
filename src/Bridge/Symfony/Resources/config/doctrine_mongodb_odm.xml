@@ -38,6 +38,7 @@
                  lazy="true" >
             <argument type="service" id="fidry_alice_data_fixtures.loader.simple" />
             <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.doctrine_mongodb" />
+            <argument type="service" id="logger" on-invalid="ignore"/>
             <!-- Processors are injected via a Compiler pass -->
         </service>
 

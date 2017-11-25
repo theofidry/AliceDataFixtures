@@ -19,6 +19,8 @@ use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\ProcessorInterface;
 use Nelmio\Alice\IsAServiceTrait;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * Loader decorating another loader to add a persistence layer.
@@ -34,6 +36,7 @@ use Nelmio\Alice\IsAServiceTrait;
 
     private $loader;
     private $persister;
+    private $logger;
     private $processors;
 
     /**
@@ -41,10 +44,15 @@ use Nelmio\Alice\IsAServiceTrait;
      * @param PersisterInterface   $persister
      * @param ProcessorInterface[] $processors
      */
-    public function __construct(LoaderInterface $decoratedLoader, PersisterInterface $persister, array $processors)
-    {
+    public function __construct(
+        LoaderInterface $decoratedLoader,
+        PersisterInterface $persister,
+        LoggerInterface $logger = null,
+        array $processors
+    ) {
         $this->loader = $decoratedLoader;
         $this->persister = $persister;
+        $this->logger = $logger ?? new NullLogger();
         $this->processors = (function (ProcessorInterface ...$processors) {
             return $processors;
         })(...$processors);
@@ -55,7 +63,7 @@ use Nelmio\Alice\IsAServiceTrait;
      */
     public function withPersister(PersisterInterface $persister): self
     {
-        return new self($this->loader, $persister, $this->processors);
+        return new self($this->loader, $persister, $this->logger, $this->processors);
     }
 
     /**
@@ -67,6 +75,8 @@ use Nelmio\Alice\IsAServiceTrait;
     {
         $objects = $this->loader->load($fixturesFiles, $parameters, $objects, $purgeMode);
 
+        $this->logger->info('Pre-processing objects.');
+
         foreach ($objects as $id => $object) {
             foreach ($this->processors as $processor) {
                 $processor->preProcess($id, $object);
@@ -74,13 +84,20 @@ use Nelmio\Alice\IsAServiceTrait;
 
             $this->persister->persist($object);
         }
+
+        $this->logger->info('Flushing objects.');
+
         $this->persister->flush();
+
+        $this->logger->info('Post-processing objects.');
 
         foreach ($objects as $id => $object) {
             foreach ($this->processors as $processor) {
                 $processor->postProcess($id, $object);
             }
         }
+
+        $this->logger->info('Done.');
 
         return $objects;
     }

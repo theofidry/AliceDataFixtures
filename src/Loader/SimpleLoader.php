@@ -17,6 +17,8 @@ use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Nelmio\Alice\FilesLoaderInterface;
 use Nelmio\Alice\IsAServiceTrait;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * Minimalistic loader implementation.
@@ -31,10 +33,12 @@ use Nelmio\Alice\IsAServiceTrait;
     use IsAServiceTrait;
 
     private $filesLoader;
+    private $logger;
 
-    public function __construct(FilesLoaderInterface $fileLoader)
+    public function __construct(FilesLoaderInterface $fileLoader, LoggerInterface $logger = null)
     {
         $this->filesLoader = $fileLoader;
+        $this->logger = $logger ?? new NullLogger();
     }
 
     /**
@@ -44,6 +48,8 @@ use Nelmio\Alice\IsAServiceTrait;
      */
     public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
     {
+        $this->logger->info('Loading fixtures.');
+
         return $this->filesLoader->loadFiles($fixturesFiles, $parameters, $objects)->getObjects();
     }
 }

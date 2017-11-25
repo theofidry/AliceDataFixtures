@@ -48,15 +48,15 @@ class PersisterLoaderTest extends TestCase
         /** @var \Fidry\AliceDataFixtures\Persistence\PersisterInterface $persister */
         $persister = $this->prophesize(PersisterInterface::class)->reveal();
 
-        $loader = new PersisterLoader(new FakeLoader(), new FakePersister(), []);
+        $loader = new PersisterLoader(new FakeLoader(), new FakePersister(), null, []);
         $newLoader = $loader->withPersister($persister);
 
         $this->assertEquals(
-            new PersisterLoader(new FakeLoader(), new FakePersister(), []),
+            new PersisterLoader(new FakeLoader(), new FakePersister(), null, []),
             $loader
         );
         $this->assertEquals(
-            new PersisterLoader(new FakeLoader(), $persister, []),
+            new PersisterLoader(new FakeLoader(), $persister, null, []),
             $newLoader
         );
     }
@@ -97,7 +97,7 @@ class PersisterLoaderTest extends TestCase
         /** @var ProcessorInterface $secondProcessor */
         $secondProcessor = $secondProcessorProphecy->reveal();
 
-        $loader = new PersisterLoader($loader, $persister, [$firstProcessor, $secondProcessor]);
+        $loader = new PersisterLoader($loader, $persister, null, [$firstProcessor, $secondProcessor]);
         $result = $loader->load($files);
 
         $this->assertEquals(
@@ -144,7 +144,7 @@ class PersisterLoaderTest extends TestCase
         /** @var PersisterInterface $persister */
         $persister = $persisterProphecy->reveal();
 
-        $loader = new PersisterLoader($loader, $persister, []);
+        $loader = new PersisterLoader($loader, $persister, null, []);
         $result = $loader->load($files, $parameters, $objects);
 
         $this->assertEquals(
