@@ -46,7 +46,7 @@ use Psr\Log\NullLogger;
         LoaderInterface $decoratedLoader,
         PurgerFactoryInterface $purgerFactory,
         string $defaultPurgeMode,
-        LoggerInterface $logger
+        LoggerInterface $logger = null
     ) {
         if (null === self::$PURGE_MAPPING) {
             self::$PURGE_MAPPING = [

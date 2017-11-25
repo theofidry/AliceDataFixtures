@@ -31,6 +31,7 @@ class ProcessorIndexTest extends TestCase
                 new NativeLoader()
             ),
             new NullPersister(),
+            null,
             [$processor]
         );
 
