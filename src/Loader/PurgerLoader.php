@@ -20,6 +20,8 @@ use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use InvalidArgumentException;
 use Nelmio\Alice\IsAServiceTrait;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * Loader decorating another loader to purge the database before loading.
@@ -33,15 +35,26 @@ use Nelmio\Alice\IsAServiceTrait;
     public const PURGE_MODE_DELETE = 1;
     public const PURGE_MODE_TRUNCATE = 2;
 
+    private static $PURGE_MAPPING;
+
     private $loader;
     private $purgerFactory;
     private $defaultPurgeMode;
+    private $logger;
 
     public function __construct(
         LoaderInterface $decoratedLoader,
         PurgerFactoryInterface $purgerFactory,
-        string $defaultPurgeMode
+        string $defaultPurgeMode,
+        LoggerInterface $logger
     ) {
+        if (null === self::$PURGE_MAPPING) {
+            self::$PURGE_MAPPING = [
+                'delete' => PurgeMode::createDeleteMode(),
+                'truncate' => PurgeMode::createTruncateMode(),
+            ];
+        }
+
         $this->loader = $decoratedLoader;
         $this->purgerFactory = $purgerFactory;
 
@@ -54,7 +67,8 @@ use Nelmio\Alice\IsAServiceTrait;
             );
         }
 
-        $this->defaultPurgeMode = 'delete' === $defaultPurgeMode ? PurgeMode::createDeleteMode() : PurgeMode::createTruncateMode();
+        $this->defaultPurgeMode = self::$PURGE_MAPPING[$defaultPurgeMode];
+        $this->logger = $logger ?? new NullLogger();
     }
 
     /**
@@ -68,7 +82,14 @@ use Nelmio\Alice\IsAServiceTrait;
             $loader = $loader->withPersister($persister);
         }
 
-        return new self($loader, $this->purgerFactory);
+        foreach (self::$PURGE_MAPPING as $string => $mode) {
+            if ($mode == $this->defaultPurgeMode) {
+                $defaultPurgeMode = $string;
+                break;
+            }
+        }
+
+        return new self($loader, $this->purgerFactory, $defaultPurgeMode, $this->logger);
     }
 
     /**
@@ -83,6 +104,13 @@ use Nelmio\Alice\IsAServiceTrait;
         }
 
         if ($purgeMode != PurgeMode::createNoPurgeMode()) {
+            $this->logger->info(
+                sprintf(
+                    'Purging database with purge mode "%s".',
+                    (string) $purgeMode
+                )
+            );
+
             $purger = $this->purgerFactory->create($purgeMode);
             $purger->purge();
         }

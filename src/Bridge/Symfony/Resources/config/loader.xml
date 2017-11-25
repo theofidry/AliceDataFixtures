@@ -26,6 +26,7 @@
                  class="Fidry\AliceDataFixtures\Loader\SimpleLoader"
                  lazy="true" >
             <argument type="service" id="nelmio_alice.files_loader" />
+            <argument type="service" id="logger" on-invalid="ignore" />
         </service>
 
     </services>

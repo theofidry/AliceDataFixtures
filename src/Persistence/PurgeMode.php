@@ -57,4 +57,9 @@ final class PurgeMode
     {
         return $this->mode;
     }
+
+    public function __toString(): string
+    {
+        return array_flip(self::$values)[$this->mode];
+    }
 }
