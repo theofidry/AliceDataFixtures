@@ -18,6 +18,7 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger as DoctrinePhpCrPurger;
 use Doctrine\Common\DataFixtures\Purger\PurgerInterface as DoctrinePurgerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\DBAL\Driver\AbstractMySQLDriver;
 use Doctrine\ODM\MongoDB\DocumentManager as DoctrineMongoDocumentManager;
 use Doctrine\ODM\PHPCR\DocumentManager as DoctrinePhpCrDocumentManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,11 +39,13 @@ use Nelmio\Alice\IsAServiceTrait;
     use IsAServiceTrait;
 
     private $manager;
+    private $purgeMode;
     private $purger;
 
     public function __construct(ObjectManager $manager, PurgeMode $purgeMode = null)
     {
         $this->manager = $manager;
+        $this->purgeMode = $purgeMode;
 
         $this->purger = static::createPurger($manager, $purgeMode);
     }
@@ -88,7 +91,27 @@ use Nelmio\Alice\IsAServiceTrait;
      */
     public function purge()
     {
+        // Because MySQL rocks, you got to disable foreign key checks when doing a TRUNCATE unlike in for example
+        // PostgreSQL. This ideally should be done in the Purger of doctrine/data-fixtures but meanwhile we are doing
+        // it here.
+        // See the progress in https://github.com/doctrine/data-fixtures/pull/272
+        $truncateOrm = (
+            $this->purger instanceof DoctrineOrmPurger
+            && PurgeMode::createTruncateMode()->getValue() === $this->purgeMode->getValue()
+            && $this->purger->getObjectManager()->getConnection()->getDriver() instanceof AbstractMySQLDriver
+        );
+
+        if ($truncateOrm) {
+            $connection = $this->purger->getObjectManager()->getConnection();
+
+            $connection->exec('SET FOREIGN_KEY_CHECKS = 0;');
+        }
+
         $this->purger->purge();
+
+        if ($truncateOrm && isset($connection)) {
+            $connection->exec('SET FOREIGN_KEY_CHECKS = 1;');
+        }
     }
 
     private static function createPurger(ObjectManager $manager, ?PurgeMode $purgeMode): DoctrinePurgerInterface
