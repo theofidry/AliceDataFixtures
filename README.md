@@ -336,7 +336,7 @@ transaction which can be rollbacked at the end of the test. The second approach 
 database that support transactions and removes the ability to peak at the database in a middle of a test while debugging.
 
 
-### PHPUnit
+#### PHPUnit
 
 There is several approach, the following is a simple approach for one test case with Symfony. Depending of your needs,
 you might use the Symfony base TestCase or a PHPUnit listener (take a look at 
@@ -467,7 +467,7 @@ class FooTest extends TestCase
 }
 ```
 
-### Behat
+#### Behat
 
 The idea is pretty much the same as for PHPUnit. You can register a context hooking on the events to start a transaction
 at the beginning of a scenario and rollback at the end of it:
