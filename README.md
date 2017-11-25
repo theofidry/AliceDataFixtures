@@ -168,6 +168,8 @@ AppBundle\Entity\RelatedDummy:
 Then you can load those files using a `LoaderInterface`:
 
 ```php
+<?php
+
 $files = [
     'path/to/src/AppBundle/Resources/fixtures/dummy.yml',
     'path/to/src/AppBundle/Resources/fixtures/related_dummy.yml',
