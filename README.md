@@ -39,16 +39,16 @@ Supports:
 You can use [Composer](https://getcomposer.org/) to install the library to your project:
 
 ```bash
-composer require --dev theofidry/alice-data-fixtures:^1.0@beta
+composer require --dev theofidry/alice-data-fixtures:^1.0@rc
 
 # with Doctrine
-composer require --dev theofidry/alice-data-fixtures:^1.0@beta doctrine/orm:^2.5 doctrine/data-fixtures
+composer require --dev theofidry/alice-data-fixtures:^1.0@rc doctrine/orm:^2.5 doctrine/data-fixtures
 
 # with Eloquent
-composer require --dev theofidry/alice-data-fixtures:^1.0@beta illuminate/database:~5.3.0
+composer require --dev theofidry/alice-data-fixtures:^1.0@rc illuminate/database:~5.3.0
 
 # with Propel2
-composer require --dev theofidry/alice-data-fixtures:^1.0@beta propel/propel:^2.0@alpha
+composer require --dev theofidry/alice-data-fixtures:^1.0@rc propel/propel:^2.0@alpha
 ```
 
 
