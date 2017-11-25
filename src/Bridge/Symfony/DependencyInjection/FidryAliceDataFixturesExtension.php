@@ -42,6 +42,9 @@ final class FidryAliceDataFixturesExtension extends Extension
     {
         $configuration = new Configuration();
         $processedConfiguration = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter('fidry_alice_data_fixtures.default_purge_mode', $processedConfiguration['default_purge_mode']);
+
         $bundles = array_flip($container->getParameter('kernel.bundles'));
 
         if (false === array_key_exists(NelmioAliceBundle::class, $bundles)) {

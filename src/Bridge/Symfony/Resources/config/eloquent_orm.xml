@@ -33,6 +33,7 @@
                  lazy="true" >
             <argument type="service" id="fidry_alice_data_fixtures.eloquent.persister_loader" />
             <argument type="service" id="fidry_alice_data_fixtures.persistence.purger_factory.eloquent" />
+            <argument type="string">%fidry_alice_data_fixtures.default_purge_mode%</argument>
         </service>
 
         <service id="fidry_alice_data_fixtures.eloquent.persister_loader"

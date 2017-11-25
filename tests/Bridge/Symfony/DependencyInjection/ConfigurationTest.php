@@ -27,6 +27,7 @@ class ConfigurationTest extends TestCase
         $processor = new Processor();
 
         $expected = [
+            'default_purge_mode' => 'delete',
             'db_drivers' => [
                 'doctrine_orm' => null,
                 'doctrine_mongodb_odm' => null,
@@ -46,6 +47,7 @@ class ConfigurationTest extends TestCase
         $processor = new Processor();
 
         $expected = [
+            'default_purge_mode' => 'truncate',
             'db_drivers' => [
                 'doctrine_orm' => true,
                 'doctrine_mongodb_odm' => false,
@@ -58,6 +60,7 @@ class ConfigurationTest extends TestCase
             $configuration,
             [
                 'fidry_alice_data_fixtures' => [
+                    'default_purge_mode' => 'truncate',
                     'db_drivers' => [
                         'doctrine_orm' => true,
                         'doctrine_mongodb_odm' => false,
