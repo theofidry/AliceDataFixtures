@@ -28,6 +28,9 @@ Supports:
 1. [Advanced usage](#advanced-usage)
     1. [Processors](#processors)
     1. [Exclude tables from purge](#exclude-tables-from-purge)
+    1. [Usage in tests](#usage-in-tests)
+        1. [PHPUnit](#phpunit)
+        1. [Behat](#behat)
 1. [Contributing](#contributing)
 
 
@@ -322,6 +325,212 @@ services:
             - '@doctrine.orm.entity_manager'
 ```
 
+
+### Usage in tests
+
+It is common to load the fixtures for tests, but then you might need to reset your database between each tests. There is
+two ways of doing it: purge between each test which works but comes with an overhead and warping the test in a
+transaction which can be rollbacked at the end of the test. The second approach is usually faster but requires a
+database that support transactions and removes the ability to peak at the database in a middle of a test while debugging.
+
+
+### PHPUnit
+
+There is several approach, the following is a simple approach for one test case with Symfony. Depending of your needs,
+you might use the Symfony base TestCase or a PHPUnit listener (take a look at 
+[dmaicher/doctrine-test-bundle](https://github.com/dmaicher/doctrine-test-bundle)). If you are not using Symfony, this
+should still give you a pretty good idea on how to do it.
+
+With purge:
+
+```php
+<?php declare(strict_types=1);
+
+namespace Acme;
+
+use Acme\Entity\Dummy;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
+use PHPUnit\Framework\TestCase;
+
+class FooTest extends TestCase
+{
+    /** @var AppKernel */
+    private $kernel;
+    /** @var LoaderInterface */
+    private $loader;
+    /** @var Registry */
+    private $doctrine;
+
+    /**
+     * @inheritdoc
+     */
+    public function setUp()
+    {
+        $this->kernel = new AppKernel('test', true);
+        $this->kernel->boot();
+
+        $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.doctrine');
+        $this->doctrine = $this->kernel->getContainer()->get('doctrine');
+    }
+
+    public function tearDown()
+    {
+        $purger = new DoctrineOrmPurger($this->doctrine->getManager());
+        $purger->purge();
+
+        $this->kernel->shutdown();
+        $this->kernel = null;
+    }
+
+    public function testLoadAFile()
+    {
+        $this->loader->load([
+            '/path/to/my/fixtures/file.yml',
+        ]);
+
+        $result = $this->doctrine->getRepository(Dummy::class)->findAll();
+
+        $this->assertEquals(1, count($result));
+    }
+}
+```
+
+With transaction:
+
+```php
+<?php declare(strict_types=1);
+
+namespace Acme;
+
+use Acme\Entity\Dummy;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use PHPUnit\Framework\TestCase;
+
+class FooTest extends TestCase
+{
+    /** @var AppKernel */
+    private $kernel;
+    /** @var LoaderInterface */
+    private $loader;
+    /** @var Registry */
+    private $doctrine;
+
+    /**
+     * @inheritdoc
+     */
+    public function setUp()
+    {
+        $this->kernel = new AppKernel('test', true);
+        $this->kernel->boot();
+
+        $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.doctrine');
+        $this->doctrine = $this->kernel->getContainer()->get('doctrine');
+        
+        $connection = $this->doctrine->getConnection();
+        
+        // If you are using auto-increment IDs, you might want to reset them. It is usually better to purge/reset
+        // things at the beginning of a test so that in case of a failure, you are not ending up in a broken state.
+        // With PostgreSQL:
+        $connection->executeQuery('ALTER SEQUENCE dummy_sequence RESTART');
+        // With MySQL:
+        $connection->executeQuery('ALTER TABLE dummy AUTO_INCREMENT = 1');
+        
+        // Related to the possible failures - see the comment above, you might want to empty some tables here as well.
+        // Maybe by using the purger like in the example above? Up to you.
+        // It is also a good practice to clear all the repositories. How you collect all of the repositories: leveraging
+        // the framework or manually is up to you.
+        
+        $connection->beginTransaction();
+    }
+
+    public function tearDown()
+    {
+        $this->doctrine->getConnection('default')->rollBack();
+
+        $this->kernel->shutdown();
+        $this->kernel = null;
+    }
+
+    public function testLoadAFile()
+    {
+        $this->loader->load([
+            '/path/to/my/fixtures/file.yml',
+        ]);
+
+        $result = $this->doctrine->getRepository(Dummy::class)->findAll();
+
+        $this->assertEquals(1, count($result));
+    }
+}
+```
+
+### Behat
+
+The idea is pretty much the same as for PHPUnit. You can register a context hooking on the events to start a transaction
+at the beginning of a scenario and rollback at the end of it:
+
+```php
+<?php declare(strict_types=1);
+
+namespace Acme;
+
+use Behat\Behat\Context\Context;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+
+class DatabaseContext implements Context
+{
+    private $doctrine;
+
+    public function __construct(Registry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+    
+    /**
+     * @BeforeScenario
+     */
+    public function clearRepositories()
+    {
+        // Related to the possible failures - see the comment above, you might want to empty some tables here as well.
+        // Maybe by using the purger like in the example above? Up to you.
+        // It is also a good practice to clear all the repositories. How you collect all of the repositories: leveraging
+        // the framework or manually is up to you.
+    }
+
+    /**
+     * @BeforeScenario
+     */
+    public function resetSequences()
+    {
+        $connection = $this->doctrine->getConnection();
+                
+        // If you are using auto-increment IDs, you might want to reset them. It is usually better to purge/reset
+        // things at the beginning of a test so that in case of a failure, you are not ending up in a broken state.
+        // With PostgreSQL:
+        $connection->executeQuery('ALTER SEQUENCE dummy_sequence RESTART');
+        // With MySQL:
+        $connection->executeQuery('ALTER TABLE dummy AUTO_INCREMENT = 1');
+    }
+
+    /**
+     * @BeforeScenario
+     */
+    public function beginPostgreSqlTransaction()
+    {
+        $this->doctrine->getConnection()->beginTransaction();
+    }
+
+    /**
+     * @AfterScenario
+     */
+    public function rollbackPostgreSqlTransaction()
+    {
+        $this->doctrine->getConnection()->rollBack();
+    }
+
+}
+```
 
 ## Contributing
 
