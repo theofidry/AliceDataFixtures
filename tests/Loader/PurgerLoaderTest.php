@@ -74,7 +74,7 @@ class PurgerLoaderTest extends TestCase
         /** @var PurgerFactoryInterface $purgerFactory */
         $purgerFactory = $purgerFactoryProphecy->reveal();
 
-        $loader = new PurgerLoader($decoratedLoader, $purgerFactory);
+        $loader = new PurgerLoader($decoratedLoader, $purgerFactory, 'delete');
         $actual = $loader->load($files, $parameters, $objects, $purgeMode);
 
         $this->assertEquals($expected, $actual);
@@ -84,7 +84,7 @@ class PurgerLoaderTest extends TestCase
         $purgerProphecy->purge()->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testIfNoPurgeModeIsGivenThenUseDeleteByDefault()
+    public function testIfNoPurgeModeIsGivenThenUseDefaultPurgeModeWithDelete()
     {
         $files = [
             'fixtures1.yml',
@@ -118,7 +118,51 @@ class PurgerLoaderTest extends TestCase
         /** @var PurgerFactoryInterface $purgerFactory */
         $purgerFactory = $purgerFactoryProphecy->reveal();
 
-        $loader = new PurgerLoader($decoratedLoader, $purgerFactory);
+        $loader = new PurgerLoader($decoratedLoader, $purgerFactory, 'delete');
+        $actual = $loader->load($files, $parameters, $objects, $purgeMode);
+
+        $this->assertEquals($expected, $actual);
+
+        $decoratedLoaderProphecy->load(Argument::cetera())->shouldHaveBeenCalledTimes(1);
+        $purgerFactoryProphecy->create(Argument::cetera())->shouldHaveBeenCalledTimes(1);
+        $purgerProphecy->purge()->shouldHaveBeenCalledTimes(1);
+    }
+
+    public function testIfNoPurgeModeIsGivenThenUseDefaultPurgeModeWithTruncate()
+    {
+        $files = [
+            'fixtures1.yml',
+        ];
+        $parameters = ['foo' => 'bar'];
+        $objects = ['dummy' => new stdClass()];
+        $purgeMode = null;
+
+        $decoratedLoaderProphecy = $this->prophesize(LoaderInterface::class);
+        $decoratedLoaderProphecy
+            ->load($files, $parameters, $objects, PurgeMode::createTruncateMode())
+            ->willReturn(
+                $expected = [
+                    'dummy' => new stdClass(),
+                    'another_dummy' => new stdClass(),
+                ]
+            )
+        ;
+        /** @var LoaderInterface $decoratedLoader */
+        $decoratedLoader = $decoratedLoaderProphecy->reveal();
+
+        /** @var PurgerInterface|ObjectProphecy $purgerProphecy */
+        $purgerProphecy = $this->prophesize(PurgerInterface::class);
+        $purgerProphecy->purge()->shouldBeCalled();
+        /** @var PurgerInterface $purger */
+        $purger = $purgerProphecy->reveal();
+
+        /** @var PurgerFactoryInterface|ObjectProphecy $purgerFactoryProphecy */
+        $purgerFactoryProphecy = $this->prophesize(PurgerFactoryInterface::class);
+        $purgerFactoryProphecy->create(PurgeMode::createTruncateMode())->willReturn($purger);
+        /** @var PurgerFactoryInterface $purgerFactory */
+        $purgerFactory = $purgerFactoryProphecy->reveal();
+
+        $loader = new PurgerLoader($decoratedLoader, $purgerFactory, 'truncate');
         $actual = $loader->load($files, $parameters, $objects, $purgeMode);
 
         $this->assertEquals($expected, $actual);
@@ -156,7 +200,7 @@ class PurgerLoaderTest extends TestCase
         /** @var PurgerFactoryInterface $purgerFactory */
         $purgerFactory = $purgerFactoryProphecy->reveal();
 
-        $loader = new PurgerLoader($decoratedLoader, $purgerFactory);
+        $loader = new PurgerLoader($decoratedLoader, $purgerFactory, 'delete');
         $actual = $loader->load($files, $parameters, $objects, $purgeMode);
 
         $this->assertEquals($expected, $actual);

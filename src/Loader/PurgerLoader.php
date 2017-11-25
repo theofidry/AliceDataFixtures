@@ -18,6 +18,7 @@ use Fidry\AliceDataFixtures\Persistence\PersisterAwareInterface;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
+use InvalidArgumentException;
 use Nelmio\Alice\IsAServiceTrait;
 
 /**
@@ -34,13 +35,26 @@ use Nelmio\Alice\IsAServiceTrait;
 
     private $loader;
     private $purgerFactory;
+    private $defaultPurgeMode;
 
     public function __construct(
         LoaderInterface $decoratedLoader,
-        PurgerFactoryInterface $purgerFactory
+        PurgerFactoryInterface $purgerFactory,
+        string $defaultPurgeMode
     ) {
         $this->loader = $decoratedLoader;
         $this->purgerFactory = $purgerFactory;
+
+        if (false === in_array($defaultPurgeMode, ['delete', 'truncate'], true)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Unknown purge mode "%s". Use "delete" or "truncate".',
+                    $defaultPurgeMode
+                )
+            );
+        }
+
+        $this->defaultPurgeMode = 'delete' === $defaultPurgeMode ? PurgeMode::createDeleteMode() : PurgeMode::createTruncateMode();
     }
 
     /**
@@ -65,7 +79,7 @@ use Nelmio\Alice\IsAServiceTrait;
     public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
     {
         if (null === $purgeMode) {
-            $purgeMode = PurgeMode::createDeleteMode();
+            $purgeMode = $this->defaultPurgeMode;
         }
 
         if ($purgeMode != PurgeMode::createNoPurgeMode()) {

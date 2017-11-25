@@ -30,6 +30,7 @@
                  lazy="true" >
             <argument type="service" id="fidry_alice_data_fixtures.doctrine_mongodb.persister_loader" />
             <argument type="service" id="fidry_alice_data_fixtures.persistence.purger_factory.doctrine_mongodb" />
+            <argument type="string">%fidry_alice_data_fixtures.default_purge_mode%</argument>
         </service>
 
         <service id="fidry_alice_data_fixtures.doctrine_mongodb.persister_loader"

@@ -36,6 +36,14 @@ final class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('default_purge_mode')
+                    ->defaultValue('delete')
+                    ->validate()
+                    ->ifNotInArray(['delete', 'truncate'])
+                        ->thenInvalid('Invalid purge mode %s. Choose either "delete" or "truncate".')
+                    ->end()
+                ->end()
+
                 ->arrayNode('db_drivers')
                     ->info('The list of enabled drivers.')
                     ->addDefaultsIfNotSet()
