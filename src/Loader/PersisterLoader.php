@@ -42,13 +42,14 @@ use Psr\Log\NullLogger;
     /**
      * @param LoaderInterface      $decoratedLoader
      * @param PersisterInterface   $persister
+     * @param LoggerInterface|null $logger
      * @param ProcessorInterface[] $processors
      */
     public function __construct(
         LoaderInterface $decoratedLoader,
         PersisterInterface $persister,
         LoggerInterface $logger = null,
-        array $processors
+        array $processors = []
     ) {
         $this->loader = $decoratedLoader;
         $this->persister = $persister;
