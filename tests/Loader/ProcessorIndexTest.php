@@ -50,7 +50,7 @@ class DummyProcessor implements ProcessorInterface
     /**
      * @inheritdoc
      */
-    public function preProcess(string $id, $object)
+    public function preProcess(string $id, $object): void
     {
         $this->preIds[] = $id;
     }
@@ -58,7 +58,7 @@ class DummyProcessor implements ProcessorInterface
     /**
      * @inheritdoc
      */
-    public function postProcess(string $id, $object)
+    public function postProcess(string $id, $object): void
     {
         $this->postIds[] = $id;
     }

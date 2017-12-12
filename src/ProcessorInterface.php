@@ -28,18 +28,14 @@ interface ProcessorInterface
      *
      * @param string $id Fixture ID
      * @param object $object
-     *
-     * @return
      */
-    public function preProcess(string $id, $object);
+    public function preProcess(string $id, $object): void;
 
     /**
      * Processes an object after it is persisted to DB.
      *
      * @param string $id Fixture ID
      * @param object $object
-     *
-     * @return
      */
-    public function postProcess(string $id, $object);
+    public function postProcess(string $id, $object): void;
 }
