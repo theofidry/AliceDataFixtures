@@ -59,6 +59,8 @@ class ORMLoaderIntegrationTest extends TestCase
 
     /**
      * @inheritdoc
+     *
+     * @group legacy
      */
     public function setUp()
     {
