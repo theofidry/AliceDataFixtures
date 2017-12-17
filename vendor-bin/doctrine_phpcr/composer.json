@@ -2,7 +2,7 @@
     "require-dev": {
         "doctrine/phpcr-odm": "^1.4",
         "jackalope/jackalope-doctrine-dbal": "^1.2",
-        "symfony/console": "^2.5",
+        "symfony/console": "^2.7 || ^3.4 || ^4.0",
         "theofidry/composer-inheritance-plugin": "^1.0"
     },
     "config": {
