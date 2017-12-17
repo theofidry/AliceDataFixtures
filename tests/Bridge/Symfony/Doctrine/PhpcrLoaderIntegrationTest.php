@@ -56,7 +56,9 @@ class PhpcrLoaderIntegrationTest extends TestCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
+     *
+     * @group legacy
      */
     public function setUp()
     {

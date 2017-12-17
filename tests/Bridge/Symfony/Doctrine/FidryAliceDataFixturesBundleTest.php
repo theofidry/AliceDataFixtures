@@ -29,6 +29,8 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
 
     /**
      * @inheritdoc
+     *
+     * @group legacy
      */
     public function setUp()
     {

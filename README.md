@@ -15,7 +15,7 @@ Supports:
 * Doctrine ORM 2.5+
 * Doctrine ODM 1.2+
 * Doctrine PHPCR 1.4+
-* Eloquent 5.3+
+* Eloquent 5.5+
 * Propel 2
 
 
@@ -60,7 +60,7 @@ composer require --dev theofidry/alice-data-fixtures:^1.0@rc \
                        jackalope/jackalope-doctrine-dbal
 
 # with Eloquent
-composer require --dev theofidry/alice-data-fixtures:^1.0@rc illuminate/database:~5.3.0
+composer require --dev theofidry/alice-data-fixtures:^1.0@rc illuminate/database:~5.5.0
 
 # with Propel2
 composer require --dev theofidry/alice-data-fixtures:^1.0@rc propel/propel:^2.0@alpha
