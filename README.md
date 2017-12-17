@@ -43,27 +43,27 @@ Supports:
 You can use [Composer](https://getcomposer.org/) to install the library to your project:
 
 ```bash
-composer require --dev theofidry/alice-data-fixtures:^1.0@rc
+composer require --dev theofidry/alice-data-fixtures
 
 # with Doctrine ORM
-composer require --dev theofidry/alice-data-fixtures:^1.0@rc doctrine/orm:^2.5 doctrine/data-fixtures
+composer require --dev theofidry/alice-data-fixtures doctrine/orm:^2.5 doctrine/data-fixtures
 
 # with Doctrine ODM
-composer require --dev theofidry/alice-data-fixtures:^1.0@rc \
+composer require --dev theofidry/alice-data-fixtures \
                        alcaeus/mongo-php-adapter \
                        doctrine/data-fixtures \
                        doctrine/mongodb-odm
 
 # with Doctrine PHPCR
-composer require --dev theofidry/alice-data-fixtures:^1.0@rc \
+composer require --dev theofidry/alice-data-fixtures \
                        doctrine/phpcr-odm \
                        jackalope/jackalope-doctrine-dbal
 
 # with Eloquent
-composer require --dev theofidry/alice-data-fixtures:^1.0@rc illuminate/database:~5.5.0
+composer require --dev theofidry/alice-data-fixtures illuminate/database:~5.5.0
 
 # with Propel2
-composer require --dev theofidry/alice-data-fixtures:^1.0@rc propel/propel:^2.0@alpha
+composer require --dev theofidry/alice-data-fixtures propel/propel:^2.0@alpha
 ```
 
 
