@@ -11,7 +11,7 @@ AliceDataFixtures
 
 Supports:
 
-* Symfony 3.4, 4.0
+* Symfony 3.4, 4.0+
 * Doctrine ORM 2.5+
 * Doctrine ODM 1.2+
 * Doctrine PHPCR 1.4+
@@ -53,6 +53,11 @@ composer require --dev theofidry/alice-data-fixtures:^1.0@rc \
                        alcaeus/mongo-php-adapter \
                        doctrine/data-fixtures \
                        doctrine/mongodb-odm
+
+# with Doctrine PHPCR
+composer require --dev theofidry/alice-data-fixtures:^1.0@rc \
+                       doctrine/phpcr-odm \
+                       jackalope/jackalope-doctrine-dbal
 
 # with Eloquent
 composer require --dev theofidry/alice-data-fixtures:^1.0@rc illuminate/database:~5.3.0
