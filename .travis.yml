@@ -34,6 +34,7 @@ matrix:
 
   allow_failures:
     - php: nightly
+    - env: SYMFONY_VERSION='~4.0.0'
     - env: SYMFONY_VERSION='~4.1.0@dev'
 
 before_install:
@@ -48,6 +49,10 @@ install:
   - if [ -n "$SYMFONY_VERSION" ]; then
         composer bin symfony require --dev --no-update "symfony/symfony:${SYMFONY_VERSION}";
         composer bin proxy-manager require --dev --no-update "symfony/symfony:${SYMFONY_VERSION}";
+    fi
+  - if [ -n "$SYMFONY_VERSION" == '~4.0.0' ] || [ -n "$SYMFONY_VERSION" == '~4.1.0@dev' ]; then
+        composer bin symfony require --dev --no-update "doctrine/phpcr-bundle";
+        composer bin symfony require --dev --no-update "doctrine/phpcr-odm:^2.0@dev";
     fi
   - if [ -n "$ELOQUENT_VERSION" ]; then
         composer bin eloquent require --dev --no-update "illuminate/database:${ELOQUENT_VERSION}";
