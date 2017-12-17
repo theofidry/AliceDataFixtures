@@ -11,8 +11,10 @@ AliceDataFixtures
 
 Supports:
 
-* Symfony 3.3+
+* Symfony 3.4, 4.0
 * Doctrine ORM 2.5+
+* Doctrine ODM 1.2+
+* Doctrine PHPCR 1.4+
 * Eloquent 5.3+
 * Propel 2
 
@@ -22,6 +24,8 @@ Supports:
 1. [Installation](#installation)
     1. [Symfony Bundle](#symfony)
         1. [Doctrine ORM](#doctrine-orm)
+        1. [Doctrine ODM](#doctrine-odm)
+        1. [Doctrine PHPCR](#doctrine-phpcr)
         1. [Eloquent ORM](#eloquent-orm)
         1. [Configuration](#configuration)
 1. [Basic usage](#basic-usage)
@@ -41,8 +45,14 @@ You can use [Composer](https://getcomposer.org/) to install the library to your 
 ```bash
 composer require --dev theofidry/alice-data-fixtures:^1.0@rc
 
-# with Doctrine
+# with Doctrine ORM
 composer require --dev theofidry/alice-data-fixtures:^1.0@rc doctrine/orm:^2.5 doctrine/data-fixtures
+
+# with Doctrine ODM
+composer require --dev theofidry/alice-data-fixtures:^1.0@rc \
+                       alcaeus/mongo-php-adapter \
+                       doctrine/data-fixtures \
+                       doctrine/mongodb-odm
 
 # with Eloquent
 composer require --dev theofidry/alice-data-fixtures:^1.0@rc illuminate/database:~5.3.0
@@ -85,6 +95,69 @@ public function registerBundles()
     return $bundles;
 }
 ```
+
+
+#### Doctrine ODM
+
+To use it with Doctrine do not forget to install `doctrine/mongodb-odm`
+and enable the `DoctrineMongoDBBundle`.
+
+Then, enable the bundle by updating your `app/AppKernel.php` file to enable the bundle:
+
+```php
+<?php
+// app/AppKernel.php
+
+public function registerBundles()
+{
+    $bundles = [
+        new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+        // ...
+        new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
+    ];
+
+    if (in_array($this->getEnvironment(), ['dev', 'test'])) {
+        //...
+        $bundles[] = new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle();
+        $bundles[] = new Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle();
+    }
+
+    return $bundles;
+}
+```
+
+
+#### Doctrine PHPCR
+
+To use it with Doctrine do not forget to install `doctrine/doctrine-bundle`
+and enable the `DoctrineBundle` (done by default in Symfony Standard Edition)
+and `DoctrinePHPCRBundle` (from `doctrine/phpcr-odm`)
+
+Then, enable the bundle by updating your `app/AppKernel.php` file to enable the bundle:
+
+```php
+<?php
+// app/AppKernel.php
+
+public function registerBundles()
+{
+    $bundles = [
+        new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+        // ...
+        new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+        new Doctrine\Bundle\PHPCRBundle\DoctrinePHPCRBundle(),
+    ];
+
+    if (in_array($this->getEnvironment(), ['dev', 'test'])) {
+        //...
+        $bundles[] = new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle();
+        $bundles[] = new Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle();
+    }
+
+    return $bundles;
+}
+```
+
 
 #### Eloquent ORM
 
