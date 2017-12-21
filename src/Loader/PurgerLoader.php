@@ -52,16 +52,17 @@ use Psr\Log\NullLogger;
             self::$PURGE_MAPPING = [
                 'delete' => PurgeMode::createDeleteMode(),
                 'truncate' => PurgeMode::createTruncateMode(),
+                'no_purge' => PurgeMode::createNoPurgeMode(),
             ];
         }
 
         $this->loader = $decoratedLoader;
         $this->purgerFactory = $purgerFactory;
 
-        if (false === in_array($defaultPurgeMode, ['delete', 'truncate'], true)) {
+        if (false === in_array($defaultPurgeMode, ['delete', 'truncate', 'no_purge'], true)) {
             throw new InvalidArgumentException(
                 sprintf(
-                    'Unknown purge mode "%s". Use "delete" or "truncate".',
+                    'Unknown purge mode "%s". Use "delete", "truncate" or "no_purge".',
                     $defaultPurgeMode
                 )
             );

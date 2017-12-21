@@ -39,8 +39,8 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('default_purge_mode')
                     ->defaultValue('delete')
                     ->validate()
-                    ->ifNotInArray(['delete', 'truncate'])
-                        ->thenInvalid('Invalid purge mode %s. Choose either "delete" or "truncate".')
+                    ->ifNotInArray(['delete', 'truncate', 'no_purge'])
+                        ->thenInvalid('Invalid purge mode %s. Choose either "delete", "truncate" or "no_purge".')
                     ->end()
                 ->end()
 

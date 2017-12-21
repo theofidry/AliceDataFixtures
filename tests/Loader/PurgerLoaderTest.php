@@ -172,6 +172,50 @@ class PurgerLoaderTest extends TestCase
         $purgerProphecy->purge()->shouldHaveBeenCalledTimes(1);
     }
 
+    public function testIfNoPurgeModeIsGivenThenUseDefaultPurgeModeWithNoPurge()
+    {
+        $files = [
+            'fixtures1.yml',
+        ];
+        $parameters = ['foo' => 'bar'];
+        $objects = ['dummy' => new stdClass()];
+        $purgeMode = null;
+
+        $decoratedLoaderProphecy = $this->prophesize(LoaderInterface::class);
+        $decoratedLoaderProphecy
+            ->load($files, $parameters, $objects, PurgeMode::createNoPurgeMode())
+            ->willReturn(
+                $expected = [
+                    'dummy' => new stdClass(),
+                    'another_dummy' => new stdClass(),
+                ]
+            )
+        ;
+        /** @var LoaderInterface $decoratedLoader */
+        $decoratedLoader = $decoratedLoaderProphecy->reveal();
+
+        /** @var PurgerInterface|ObjectProphecy $purgerProphecy */
+        $purgerProphecy = $this->prophesize(PurgerInterface::class);
+        $purgerProphecy->purge()->shouldNotBeenCalled();
+        /** @var PurgerInterface $purger */
+        $purger = $purgerProphecy->reveal();
+
+        /** @var PurgerFactoryInterface|ObjectProphecy $purgerFactoryProphecy */
+        $purgerFactoryProphecy = $this->prophesize(PurgerFactoryInterface::class);
+        $purgerFactoryProphecy->create(PurgeMode::createNoPurgeMode())->willReturn($purger);
+        /** @var PurgerFactoryInterface $purgerFactory */
+        $purgerFactory = $purgerFactoryProphecy->reveal();
+
+        $loader = new PurgerLoader($decoratedLoader, $purgerFactory, 'no_purge');
+        $actual = $loader->load($files, $parameters, $objects, $purgeMode);
+
+        $this->assertEquals($expected, $actual);
+
+        $decoratedLoaderProphecy->load(Argument::cetera())->shouldHaveBeenCalledTimes(1);
+        $purgerFactoryProphecy->create(Argument::cetera())->shouldNotBeenCalled();
+        $purgerProphecy->purge()->shouldNotBeenCalled();
+    }
+
     public function testDoesNotPurgeOnNoPurgeModeGiven()
     {
         $files = [

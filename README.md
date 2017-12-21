@@ -209,7 +209,7 @@ The full configuration reference is:
 
 # Default config
 fidry_alice_data_fixtures:
-    default_purge_mode: ~ # default is "delete" but you can change it to "truncate"
+    default_purge_mode: ~ # default is "delete" but you can change it to "truncate" or "no_purge"
     db_drivers:
         doctrine_orm: ~
         doctrine_mongodb_odm: ~
