@@ -411,15 +411,18 @@ services:
 It is common to load the fixtures for tests, but then you might need to reset your database between each tests. There is
 two ways of doing it: purge between each test which works but comes with an overhead and warping the test in a
 transaction which can be rollbacked at the end of the test. The second approach is usually faster but requires a
-database that support transactions and removes the ability to peak at the database in a middle of a test while debugging.
+database that supports transactions and removes the ability to peak at the database in the middle of a test while debugging.
 
 
 #### PHPUnit
 
-There is several approach, the following is a simple approach for one test case with Symfony. Depending of your needs,
-you might use the Symfony base TestCase or a PHPUnit listener (take a look at 
-[dmaicher/doctrine-test-bundle](https://github.com/dmaicher/doctrine-test-bundle)). If you are not using Symfony, this
-should still give you a pretty good idea on how to do it.
+There are several approaches, the following one is a simple one for test case with Symfony. Depending on your needs,
+you might use the Symfony base TestCase or a PHPUnit listener.
+In case of Symfony, take a look at [dmaicher/doctrine-test-bundle](https://github.com/dmaicher/doctrine-test-bundle)
+which transparently provides a transactional run for your tests. In that case you can also disable default purge mode
+by setting `default_purge_mode` [configuration option](#configuration) to `no_purge`.
+
+If you are not using Symfony, this should still give you a pretty good idea on how to do it.
 
 With purge:
 
