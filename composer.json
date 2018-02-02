@@ -30,7 +30,9 @@
         "phpunit/phpunit": "^6.0",
         "symfony/phpunit-bridge": "^3.3.2 || ^4.0"
     },
-
+    "conflict": {
+        "ocramius/proxy-manager": "<2.1"
+    },
     "suggest": {
         "doctrine/data-fixtures": "To use Doctrine",
 
