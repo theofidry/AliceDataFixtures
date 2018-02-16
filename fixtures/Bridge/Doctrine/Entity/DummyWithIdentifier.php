@@ -25,8 +25,4 @@ class DummyWithIdentifier
      */
     public $id;
 
-    /**
-     * @Column(type="integer")
-     */
-    public $identifier;
 }

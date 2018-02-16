@@ -15,12 +15,15 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithEmbeddable;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithIdentifier;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
+use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterException;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
@@ -94,6 +97,37 @@ class ObjectManagerPersisterTest extends TestCase
         }
     }
 
+    public function testCanPersistMultipleEntitiesWithExplicitIdentifierSet()
+    {
+        $dummy = new DummyWithIdentifier();
+        $dummy->id = 100;
+        $this->persister->persist($dummy);
+
+        $dummy = new DummyWithIdentifier();
+        $dummy->id = 200;
+        $this->persister->persist($dummy);
+
+        $this->persister->flush();
+    }
+
+    /**
+     * @expectedException \Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterException
+     */
+    public function testPersistingMultipleEntitiesWithAndWithoutExplicitIdentifierSetWillThrowORMException()
+    {
+        $dummy = new DummyWithIdentifier();
+        $this->persister->persist($dummy);
+
+        $dummy = new DummyWithIdentifier();
+        $dummy->id = 100;
+        $this->persister->persist($dummy);
+
+        $dummy = new DummyWithIdentifier();
+        $this->persister->persist($dummy);
+
+        $this->persister->flush();
+    }
+
     /**
      * @dataProvider provideNonPersistableEntities
      */
@@ -141,13 +175,13 @@ class ObjectManagerPersisterTest extends TestCase
 
         yield 'entity with explicit ID' => [
             (function () {
-                $dummy = new Dummy();
-                $dummy->id = 200;
+                $dummy = new DummyWithIdentifier();
+                $dummy->id = 300;
 
                 return $dummy;
-            })(),
-            true
+            })()
         ];
+
     }
 
     public function provideNonPersistableEntities()
