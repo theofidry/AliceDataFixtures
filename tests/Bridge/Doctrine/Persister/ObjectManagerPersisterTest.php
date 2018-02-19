@@ -81,7 +81,7 @@ class ObjectManagerPersisterTest extends TestCase
      */
     public function testCanPersistAnEntity($entity, bool $exact = false)
     {
-        $originalEntity = clone($entity);
+        $originalEntity = clone $entity;
 
         $this->persister->persist($entity);
         $this->persister->flush();
