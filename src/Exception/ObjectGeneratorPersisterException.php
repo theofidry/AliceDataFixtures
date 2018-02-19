@@ -21,9 +21,9 @@ use LogicException;
 final class ObjectGeneratorPersisterException extends LogicException
 {
     /**
-     * No ID found for the entity "EntityName". If this entity has an auto ID generator,
-     * this may be due to having it disabled because one instance of the entity had an ID assigned.
-     * Either remove this assigned ID to allow the auto ID generator to operate or generate and ID for
+     * No ID found for the entity "EntityName". If this entity has an auto ID generator, 
+     * this may be due to having it disabled because one instance of the entity had an ID assigned. 
+     * Either remove this assigned ID to allow the auto ID generator to operate or generate and ID for 
      * all the "EntityName" entities.
      * 
      * @param $entity

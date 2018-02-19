@@ -108,6 +108,9 @@ class ObjectManagerPersisterTest extends TestCase
         $this->persister->persist($dummy);
 
         $this->persister->flush();
+
+        $entity = $this->entityManager->getRepository(DummyWithIdentifier::class)->find(200);
+        $this->assertInstanceOf(DummyWithIdentifier::class, $entity);
     }
 
     /**
