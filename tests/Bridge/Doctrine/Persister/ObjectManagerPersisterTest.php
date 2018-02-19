@@ -115,6 +115,7 @@ class ObjectManagerPersisterTest extends TestCase
 
     /**
      * @expectedException \Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterException
+     * @expectedExceptionMessageRegExp /.*Please make sure that all defined objects in your fixture file for the entity of type.*have set a custom ID for the identifier. Mixing both is not possible with a post insert generator strategy.$/
      */
     public function testPersistingMultipleEntitiesWithAndWithoutExplicitIdentifierSetWillThrowORMException()
     {
