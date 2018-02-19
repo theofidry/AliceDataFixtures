@@ -18,6 +18,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo as ODMClassMetadataInfo;
 use Doctrine\ORM\Id\AssignedGenerator as ORMAssignedGenerator;
 use Doctrine\ORM\Mapping\ClassMetadataInfo as ORMClassMetadataInfo;
+use Doctrine\ORM\ORMException;
+use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterExceptionFactory;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Nelmio\Alice\IsAServiceTrait;
 
@@ -79,9 +81,17 @@ use Nelmio\Alice\IsAServiceTrait;
                 // Do nothing: not supported.
             }
 
-            $this->objectManager->persist($object);
+            try {
+                $this->objectManager->persist($object);
+            } catch (ORMException $exception) {
+                if ($metadata->idGenerator instanceof ORMAssignedGenerator) {
+                    throw ObjectGeneratorPersisterExceptionFactory::createForEntityMissingAssignedIdForField($object);
+                }
 
-            if (null !== $generator) {
+                throw $exception;
+            }
+
+            if (null !== $generator && false === $generator->isPostInsertGenerator()) {
                 // Restore the generator if has been temporary unset
                 $metadata->setIdGeneratorType($generatorType);
                 $metadata->setIdGenerator($generator);

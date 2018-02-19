@@ -15,12 +15,15 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithEmbeddable;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithIdentifier;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
+use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterException;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
@@ -78,6 +81,8 @@ class ObjectManagerPersisterTest extends TestCase
      */
     public function testCanPersistAnEntity($entity, bool $exact = false)
     {
+        $originalEntity = clone $entity;
+
         $this->persister->persist($entity);
         $this->persister->flush();
 
@@ -88,8 +93,43 @@ class ObjectManagerPersisterTest extends TestCase
         $this->assertEquals(1, count($result));
 
         if ($exact) {
-            $this->assertEquals($entity, $result[0]);
+            $this->assertEquals($originalEntity, $result[0]);
         }
+    }
+
+    public function testCanPersistMultipleEntitiesWithExplicitIdentifierSet()
+    {
+        $dummy = new DummyWithIdentifier();
+        $dummy->id = 100;
+        $this->persister->persist($dummy);
+
+        $dummy = new DummyWithIdentifier();
+        $dummy->id = 200;
+        $this->persister->persist($dummy);
+
+        $this->persister->flush();
+
+        $entity = $this->entityManager->getRepository(DummyWithIdentifier::class)->find(200);
+        $this->assertInstanceOf(DummyWithIdentifier::class, $entity);
+    }
+
+    /**
+     * @expectedException \LogicException
+     * @expectedExceptionMessageRegExp /^No ID found for the entity ".*". If this entity has an auto ID generator, this may be due to having it disabled because one instance of the entity had an ID assigned. Either remove this assigned ID to allow the auto ID generator to operate or generate and ID for all the ".*" entities.$/
+     */
+    public function testPersistingMultipleEntitiesWithAndWithoutExplicitIdentifierSetWillThrowORMException()
+    {
+        $dummy = new DummyWithIdentifier();
+        $this->persister->persist($dummy);
+
+        $dummy = new DummyWithIdentifier();
+        $dummy->id = 100;
+        $this->persister->persist($dummy);
+
+        $dummy = new DummyWithIdentifier();
+        $this->persister->persist($dummy);
+
+        $this->persister->flush();
     }
 
     /**
@@ -139,13 +179,13 @@ class ObjectManagerPersisterTest extends TestCase
 
         yield 'entity with explicit ID' => [
             (function () {
-                $dummy = new Dummy();
-                $dummy->id = 200;
+                $dummy = new DummyWithIdentifier();
+                $dummy->id = 300;
 
                 return $dummy;
-            })(),
-            true
+            })()
         ];
+
     }
 
     public function provideNonPersistableEntities()
