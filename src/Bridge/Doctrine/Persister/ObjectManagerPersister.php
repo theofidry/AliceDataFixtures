@@ -19,7 +19,7 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo as ODMClassMetadataInfo;
 use Doctrine\ORM\Id\AssignedGenerator as ORMAssignedGenerator;
 use Doctrine\ORM\Mapping\ClassMetadataInfo as ORMClassMetadataInfo;
 use Doctrine\ORM\ORMException;
-use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterException;
+use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterExceptionFactory;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Nelmio\Alice\IsAServiceTrait;
 
@@ -85,7 +85,7 @@ use Nelmio\Alice\IsAServiceTrait;
                 $this->objectManager->persist($object);
             } catch (ORMException $exception) {
                 if ($metadata->idGenerator instanceof ORMAssignedGenerator) {
-                    throw ObjectGeneratorPersisterException::entityMissingAssignedIdForField($object);
+                    throw ObjectGeneratorPersisterExceptionFactory::entityMissingAssignedIdForField($object);
                 }
 
                 throw $exception;
