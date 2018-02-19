@@ -85,7 +85,7 @@ use Nelmio\Alice\IsAServiceTrait;
                 $this->objectManager->persist($object);
             } catch (ORMException $exception) {
                 if ($metadata->idGenerator instanceof ORMAssignedGenerator) {
-                    throw ObjectGeneratorPersisterExceptionFactory::entityMissingAssignedIdForField($object);
+                    throw ObjectGeneratorPersisterExceptionFactory::createForEntityMissingAssignedIdForField($object);
                 }
 
                 throw $exception;
