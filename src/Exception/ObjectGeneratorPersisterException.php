@@ -13,7 +13,12 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Exception;
 
-class ObjectGeneratorPersisterException extends \Exception
+use LogicException;
+
+/**
+ * @private
+ */
+final class ObjectGeneratorPersisterException extends LogicException
 {
     public static function entityMissingAssignedIdForField($entity)
     {
