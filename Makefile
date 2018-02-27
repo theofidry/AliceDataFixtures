@@ -16,7 +16,7 @@ clean:
 	mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
 	mongo fidry_alice_data_fixtures --eval "db.dropDatabase();"
 
-	git clean --exclude=.idea/ -fdx
+	git clean --exclude=.idea/ -ffdx
 
 refresh_mysql_db:	## Refresh the MySQL database used
 refresh_mysql_db:
