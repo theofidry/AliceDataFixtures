@@ -23,10 +23,7 @@ use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterExceptionFactory;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Nelmio\Alice\IsAServiceTrait;
 
-/**
- * @final
- */
-/*final*/ class ObjectManagerPersister implements PersisterInterface
+class ObjectManagerPersister implements PersisterInterface
 {
     use IsAServiceTrait;
 
