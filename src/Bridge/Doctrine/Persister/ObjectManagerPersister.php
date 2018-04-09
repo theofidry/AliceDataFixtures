@@ -71,7 +71,7 @@ use Nelmio\Alice\IsAServiceTrait;
                     $generator = $metadata->idGenerator;
                     $generatorType = $metadata->generatorType;
 
-                    $this->setIdGenerator($metadata);
+                    $this->configureIdGenerator($metadata);
                 }
             } elseif ($metadata instanceof ODMClassMetadataInfo) {
                 // Do nothing: currently not supported as Doctrine ODM does not have an equivalent of the ORM
@@ -126,7 +126,7 @@ use Nelmio\Alice\IsAServiceTrait;
         return $persistableClasses;
     }
 
-    protected function setIdGenerator(ORMClassMetadataInfo $metadata): void
+    protected function configureIdGenerator(ORMClassMetadataInfo $metadata): void
     {
         $metadata->setIdGeneratorType(ORMClassMetadataInfo::GENERATOR_TYPE_NONE);
         $metadata->setIdGenerator(new ORMAssignedGenerator());
