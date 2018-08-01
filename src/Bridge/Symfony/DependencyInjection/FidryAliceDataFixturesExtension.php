@@ -232,6 +232,7 @@ final class FidryAliceDataFixturesExtension extends Extension
                 new Reference('logger', ContainerInterface::IGNORE_ON_INVALID_REFERENCE)
             ]
         );
+        $definition->setPublic(true);
         $definition->setLazy(true);
 
         $serviceId = sprintf(
