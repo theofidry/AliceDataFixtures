@@ -16,14 +16,21 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle;
 use Doctrine\Bundle\PHPCRBundle\DoctrinePHPCRBundle;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
+use Fidry\AliceDataFixtures\Loader\PersisterLoader;
+use Fidry\AliceDataFixtures\Loader\PurgerLoader;
 use Fidry\AliceDataFixtures\ProcessorInterface;
 use LogicException;
 use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use WouterJ\EloquentBundle\WouterJEloquentBundle;
@@ -67,6 +74,9 @@ final class FidryAliceDataFixturesExtension extends Extension
         }
 
         $this->registerConfig(Configuration::DOCTRINE_ORM_DRIVER, DoctrineBundle::class, $bundles, $processedConfiguration, $loader);
+        if ($processedConfiguration['db_drivers'][Configuration::DOCTRINE_ORM_DRIVER]) {
+            $this->registerMultipleDoctrineObjectManagers($container);
+        }
         $this->registerConfig(Configuration::DOCTRINE_MONGODB_ODM_DRIVER, DoctrineMongoDBBundle::class, $bundles, $processedConfiguration, $loader);
         $this->registerConfig(Configuration::DOCTRINE_PHPCR_ODM_DRIVER, DoctrinePHPCRBundle::class, $bundles, $processedConfiguration, $loader);
         $this->registerConfig(Configuration::ELOQUENT_ORM_DRIVER, WouterJEloquentBundle::class, $bundles, $processedConfiguration, $loader);
@@ -108,5 +118,129 @@ final class FidryAliceDataFixturesExtension extends Extension
         if ($bundleIsRegistered) {
             $loader->load($driver.'.xml');
         }
+    }
+
+    private function registerMultipleDoctrineObjectManagers(ContainerBuilder $container)
+    {
+        // var_dump($container->getParameterBag());
+        $defaultEntityManagerName = $container->getParameterBag()->get('doctrine.default_entity_manager');
+        $entityManagers = array_keys($container->getParameterBag()->get('doctrine.entity_managers'));
+
+        foreach ($entityManagers as $entityManagerName) {
+            $entityManagerRef = new Reference(sprintf('doctrine.orm.%s_entity_manager', $entityManagerName));
+            $isDefaultEntityManager = $defaultEntityManagerName === $entityManagerName;
+
+            $purgerFactoryServiceId = $this->registerPurgerFactory($container, $entityManagerName, $entityManagerRef);
+            $objectManagerServiceId = $this->registerObjectManagerPersister($container, $entityManagerName, $entityManagerRef);
+            $persisterLoaderServiceId = $this->registerPersisterLoader($container, $entityManagerName, $objectManagerServiceId);
+            $purgerLoaderServiceId = $this->registerPurgerLoader($container, $entityManagerName, $purgerFactoryServiceId, $persisterLoaderServiceId);
+
+            if ($isDefaultEntityManager) {
+                // register default aliases
+                $container->setAlias(
+                    'fidry_alice_data_fixtures.persistence.doctrine.purger.purger_factory',
+                    $purgerFactoryServiceId
+                );
+                $container->setAlias(
+                    'fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister',
+                    $objectManagerServiceId
+                );
+                $container->setAlias(
+                    'fidry_alice_data_fixtures.doctrine.persister_loader',
+                    $persisterLoaderServiceId
+                );
+                $container->setAlias(
+                    'fidry_alice_data_fixtures.doctrine.purger_loader',
+                    $purgerLoaderServiceId
+                );
+            }
+        }
+    }
+
+    private function registerPurgerFactory(
+        ContainerBuilder $container,
+        string $entityManagerName,
+        Reference $entityManagerRef
+    ): string {
+        $definition = new Definition(Purger::class, [ $entityManagerRef ]);
+        $definition->setLazy(true);
+
+        $purgerFactoryServiceId = sprintf(
+            'fidry_alice_data_fixtures.persistence.doctrine.purger.%s_purger_factory',
+            $entityManagerName
+        );
+        $container->setDefinition($purgerFactoryServiceId, $definition);
+
+        return $purgerFactoryServiceId;
+    }
+
+    private function registerObjectManagerPersister(
+        ContainerBuilder $container,
+        string $entityManagerName,
+        Reference $entityManagerRef
+    ): string {
+        $definition = new Definition(ObjectManagerPersister::class, [ $entityManagerRef ]);
+        $definition->setLazy(true);
+
+        $serviceId = sprintf(
+            'fidry_alice_data_fixtures.persistence.persister.doctrine.%s_object_manager_persister',
+            $entityManagerName
+        );
+        $container->setDefinition($serviceId, $definition);
+
+        return $serviceId;
+    }
+
+    private function registerPersisterLoader(
+        ContainerBuilder $container,
+        string $entityManagerName,
+        string $objectManagerServiceId
+    ): string {
+        $definition = new Definition(
+            PersisterLoader::class,
+            [
+                new Reference('fidry_alice_data_fixtures.loader.simple'),
+                new Reference($objectManagerServiceId),
+                new Reference('logger', ContainerInterface::IGNORE_ON_INVALID_REFERENCE)
+                // Processors are injected via a Compiler pass
+            ]
+        );
+        $definition->setLazy(true);
+
+        $serviceId = sprintf(
+            'fidry_alice_data_fixtures.doctrine.%s_persister_loader',
+            $entityManagerName
+        );
+
+        $container->setDefinition($serviceId, $definition);
+
+        return $serviceId;
+    }
+
+    private function registerPurgerLoader(
+        ContainerBuilder $container,
+        string $entityManagerName,
+        string $purgerFactoryServiceId,
+        string $persisterLoaderServiceId
+    ): string {
+        $definition = new Definition(
+            PurgerLoader::class,
+            [
+                new Reference($persisterLoaderServiceId),
+                new Reference($purgerFactoryServiceId),
+                '%fidry_alice_data_fixtures.default_purge_mode%',
+                new Reference('logger', ContainerInterface::IGNORE_ON_INVALID_REFERENCE)
+            ]
+        );
+        $definition->setLazy(true);
+
+        $serviceId = sprintf(
+            'fidry_alice_data_fixtures.doctrine.%s_purger_loader',
+            $entityManagerName
+        );
+
+        $container->setDefinition($serviceId, $definition);
+
+        return $serviceId;
     }
 }
