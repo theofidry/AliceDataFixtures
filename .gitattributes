@@ -1,0 +1,6 @@
+/tests export-ignore
+/fixtures export-ignore
+/vendor-bin export-ignore
+/bin export-ignore
+/phpunit*.xml.dist export-ignore
+/Makefile export-ignore
