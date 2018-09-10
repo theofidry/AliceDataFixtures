@@ -24,36 +24,11 @@
             <!--<deprecated>The service "%service_id%" is deprecated and will be removed in future versions. Use "fidry_alice_data_fixtures.loader.doctrine" instead.</deprecated>-->
         </service>
 
-        <service id="fidry_alice_data_fixtures.doctrine.purger_loader"
-                 class="Fidry\AliceDataFixtures\Loader\PurgerLoader"
-                 lazy="true" >
-            <argument type="service" id="fidry_alice_data_fixtures.doctrine.persister_loader" />
-            <argument type="service" id="fidry_alice_data_fixtures.persistence.purger_factory.doctrine" />
-            <argument type="string">%fidry_alice_data_fixtures.default_purge_mode%</argument>
-            <argument type="service" id="logger" on-invalid="ignore" />
-        </service>
-
-        <service id="fidry_alice_data_fixtures.doctrine.persister_loader"
-                 class="Fidry\AliceDataFixtures\Loader\PersisterLoader"
-                 lazy="true" >
-            <argument type="service" id="fidry_alice_data_fixtures.loader.simple" />
-            <argument type="service" id="fidry_alice_data_fixtures.persistence.persister.doctrine" />
-            <argument type="service" id="logger" on-invalid="ignore"/>
-            <!-- Processors are injected via a Compiler pass -->
-        </service>
-
-
         <!-- Purger Factory -->
 
         <service id="fidry_alice_data_fixtures.persistence.purger_factory.doctrine"
                  alias="fidry_alice_data_fixtures.persistence.doctrine.purger.purger_factory"
                  public="true" />
-
-        <service id="fidry_alice_data_fixtures.persistence.doctrine.purger.purger_factory"
-                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger"
-                 lazy="true">
-            <argument type="service" id="doctrine.orm.entity_manager" />
-        </service>
 
         <service id="fidry_alice_data_fixtures.persistence.purger.doctrine.orm_purger"
                  alias="fidry_alice_data_fixtures.persistence.doctrine.purger.purger_factory">
@@ -75,12 +50,6 @@
         <service id="fidry_alice_data_fixtures.persistence.persister.doctrine"
                  alias="fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister"
                  public="true" />
-
-        <service id="fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister"
-                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister"
-                 lazy="true">
-            <argument type="service" id="doctrine.orm.entity_manager" />
-        </service>
     </services>
 
 </container>
