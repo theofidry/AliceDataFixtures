@@ -79,7 +79,7 @@
         <service id="fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister"
                  class="Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister"
                  lazy="true">
-            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="doctrine" />
         </service>
     </services>
 

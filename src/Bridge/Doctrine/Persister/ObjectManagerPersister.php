@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo as ODMClassMetadataInfo;
@@ -27,7 +28,8 @@ class ObjectManagerPersister implements PersisterInterface
 {
     use IsAServiceTrait;
 
-    private $objectManager;
+    /** @var array|ObjectManager[]  */
+    private $managers;
 
     /**
      * @var array|null Values are FQCN of persistable objects
@@ -39,9 +41,9 @@ class ObjectManagerPersister implements PersisterInterface
      */
     private $metadata = [];
 
-    public function __construct(ObjectManager $manager)
+    public function __construct(ManagerRegistry $managerRegistry)
     {
-        $this->objectManager = $manager;
+        $this->managers = $managerRegistry->getManagers();
     }
 
     /**
@@ -50,7 +52,7 @@ class ObjectManagerPersister implements PersisterInterface
     public function persist($object)
     {
         if (null === $this->persistableClasses) {
-            $this->persistableClasses = array_flip($this->getPersistableClasses($this->objectManager));
+            $this->persistableClasses = array_flip($this->getPersistableClasses($this->managers));
         }
 
         $class = get_class($object);
@@ -77,14 +79,18 @@ class ObjectManagerPersister implements PersisterInterface
                 // Do nothing: not supported.
             }
 
-            try {
-                $this->objectManager->persist($object);
-            } catch (ORMException $exception) {
-                if ($metadata->idGenerator instanceof ORMAssignedGenerator) {
-                    throw ObjectGeneratorPersisterExceptionFactory::createForEntityMissingAssignedIdForField($object);
-                }
+            foreach ($this->managers as $manager) {
+                if ($manager->contains($object)) {
+                    try {
+                        $manager->persist($object);
+                    } catch (ORMException $exception) {
+                        if ($metadata->idGenerator instanceof ORMAssignedGenerator) {
+                            throw ObjectGeneratorPersisterExceptionFactory::createForEntityMissingAssignedIdForField($object);
+                        }
 
-                throw $exception;
+                        throw $exception;
+                    }
+                }
             }
 
             if (null !== $generator && false === $generator->isPostInsertGenerator()) {
@@ -100,23 +106,30 @@ class ObjectManagerPersister implements PersisterInterface
      */
     public function flush()
     {
-        $this->objectManager->flush();
+        foreach ($this->managers as $manager) {
+            $manager->flush();
+        }
     }
 
     /**
+     * @param array|ObjectManager[] $managers
+     *
      * @return string[]
      */
-    private function getPersistableClasses(ObjectManager $manager): array
+    private function getPersistableClasses(array $managers): array
     {
         $persistableClasses = [];
-        $allMetadata = $manager->getMetadataFactory()->getAllMetadata();
 
-        foreach ($allMetadata as $metadata) {
-            /** @var ORMClassMetadataInfo|ODMClassMetadataInfo $metadata */
-            if (false === $metadata->isMappedSuperclass
-                && false === (isset($metadata->isEmbeddedClass) && $metadata->isEmbeddedClass)
-            ) {
-                $persistableClasses[] = $metadata->getName();
+        foreach ($managers as $manager) {
+            $allMetadata = $manager->getMetadataFactory()->getAllMetadata();
+
+            foreach ($allMetadata as $metadata) {
+                /** @var ORMClassMetadataInfo|ODMClassMetadataInfo $metadata */
+                if (false === $metadata->isMappedSuperclass
+                    && false === (isset($metadata->isEmbeddedClass) && $metadata->isEmbeddedClass)
+                ) {
+                    $persistableClasses[] = $metadata->getName();
+                }
             }
         }
 
@@ -132,8 +145,11 @@ class ObjectManagerPersister implements PersisterInterface
     private function getMetadata(string $class): ClassMetadata
     {
         if (false === array_key_exists($class, $this->metadata)) {
-            $classMetadata = $this->objectManager->getClassMetadata($class);
-            $this->metadata[$class] = $classMetadata;
+            foreach ($this->managers as $manager) {
+                if ($manager->getMetadataFactory()->hasMetadataFor($class)) {
+                    $this->metadata[$class] = $manager->getClassMetadata($class);
+                }
+            }
         }
 
         return $this->metadata[$class];
