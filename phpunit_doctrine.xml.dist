@@ -20,6 +20,8 @@
          verbose="true">
 
     <php>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak_vendors" />
+
         <env name="DB_DRIVER" value="pdo_mysql" />
         <env name="DB_USER" value="root" />
         <env name="DB_PASSWORD" value="" />
