@@ -15,9 +15,7 @@
 /vendor-bin/*/vendor/
 /dist/
 /bin/
-!/bin/clear_cache.sh
 !/bin/console
 !/bin/doctrine_purge
 !/bin/eloquent_migrate
 !/bin/eloquent_rollback
-!/bin/propel_init
