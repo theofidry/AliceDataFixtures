@@ -23,10 +23,7 @@ use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterExceptionFactory;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Nelmio\Alice\IsAServiceTrait;
 
-/**
- * @final
- */
-/*final*/ class ObjectManagerPersister implements PersisterInterface
+class ObjectManagerPersister implements PersisterInterface
 {
     use IsAServiceTrait;
 
@@ -71,8 +68,7 @@ use Nelmio\Alice\IsAServiceTrait;
                     $generator = $metadata->idGenerator;
                     $generatorType = $metadata->generatorType;
 
-                    $metadata->setIdGeneratorType(ORMClassMetadataInfo::GENERATOR_TYPE_NONE);
-                    $metadata->setIdGenerator(new ORMAssignedGenerator());
+                    $this->configureIdGenerator($metadata);
                 }
             } elseif ($metadata instanceof ODMClassMetadataInfo) {
                 // Do nothing: currently not supported as Doctrine ODM does not have an equivalent of the ORM
@@ -125,6 +121,12 @@ use Nelmio\Alice\IsAServiceTrait;
         }
 
         return $persistableClasses;
+    }
+
+    protected function configureIdGenerator(ORMClassMetadataInfo $metadata): void
+    {
+        $metadata->setIdGeneratorType(ORMClassMetadataInfo::GENERATOR_TYPE_NONE);
+        $metadata->setIdGenerator(new ORMAssignedGenerator());
     }
 
     private function getMetadata(string $class): ClassMetadata
