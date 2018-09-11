@@ -10,7 +10,7 @@
   -->
 
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="vendor-bin/eloquent/vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="tests/Bridge/Eloquent/autoload.php"
          colors="true"
          forceCoversAnnotation="true"
@@ -20,6 +20,8 @@
          verbose="true">
 
     <php>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak_vendors" />
+
         <env name="DB_DRIVER" value="mysql" />
         <env name="DB_USER" value="root" />
         <env name="DB_PASSWORD" value="" />
