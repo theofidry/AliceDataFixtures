@@ -28,13 +28,8 @@ class ObjectManagerPersister implements PersisterInterface
 {
     use IsAServiceTrait;
 
-    /** @var array|ObjectManager[]  */
-    private $managers;
-
-    /**
-     * @var array|null Values are FQCN of persistable objects
-     */
-    private $persistableClasses;
+    /** @var ManagerRegistry $managerRegistry */
+    private $managerRegistry;
 
     /**
      * @var ClassMetadata[] Entity metadata, FQCN being the key
@@ -43,7 +38,7 @@ class ObjectManagerPersister implements PersisterInterface
 
     public function __construct(ManagerRegistry $managerRegistry)
     {
-        $this->managers = $managerRegistry->getManagers();
+        $this->managerRegistry = $managerRegistry;
     }
 
     /**
@@ -51,14 +46,12 @@ class ObjectManagerPersister implements PersisterInterface
      */
     public function persist($object)
     {
-        if (null === $this->persistableClasses) {
-            $this->persistableClasses = array_flip($this->getPersistableClasses($this->managers));
-        }
-
         $class = get_class($object);
 
-        if (isset($this->persistableClasses[$class])) {
-            $metadata = $this->getMetadata($class);
+        $manager = $this->managerRegistry->getManagerForClass($class);
+
+        if ($manager) {
+            $metadata = $this->getClassMetadata($manager, $class);
 
             $generator = null;
             $generatorType = null;
@@ -79,18 +72,14 @@ class ObjectManagerPersister implements PersisterInterface
                 // Do nothing: not supported.
             }
 
-            foreach ($this->managers as $manager) {
-                if ($manager->contains($object)) {
-                    try {
-                        $manager->persist($object);
-                    } catch (ORMException $exception) {
-                        if ($metadata->idGenerator instanceof ORMAssignedGenerator) {
-                            throw ObjectGeneratorPersisterExceptionFactory::createForEntityMissingAssignedIdForField($object);
-                        }
-
-                        throw $exception;
-                    }
+            try {
+                $manager->persist($object);
+            } catch (ORMException $exception) {
+                if ($metadata->idGenerator instanceof ORMAssignedGenerator) {
+                    throw ObjectGeneratorPersisterExceptionFactory::createForEntityMissingAssignedIdForField($object);
                 }
+
+                throw $exception;
             }
 
             if (null !== $generator && false === $generator->isPostInsertGenerator()) {
@@ -106,34 +95,9 @@ class ObjectManagerPersister implements PersisterInterface
      */
     public function flush()
     {
-        foreach ($this->managers as $manager) {
+        foreach ($this->managerRegistry->getManagers() as $manager) {
             $manager->flush();
         }
-    }
-
-    /**
-     * @param array|ObjectManager[] $managers
-     *
-     * @return string[]
-     */
-    private function getPersistableClasses(array $managers): array
-    {
-        $persistableClasses = [];
-
-        foreach ($managers as $manager) {
-            $allMetadata = $manager->getMetadataFactory()->getAllMetadata();
-
-            foreach ($allMetadata as $metadata) {
-                /** @var ORMClassMetadataInfo|ODMClassMetadataInfo $metadata */
-                if (false === $metadata->isMappedSuperclass
-                    && false === (isset($metadata->isEmbeddedClass) && $metadata->isEmbeddedClass)
-                ) {
-                    $persistableClasses[] = $metadata->getName();
-                }
-            }
-        }
-
-        return $persistableClasses;
     }
 
     protected function configureIdGenerator(ORMClassMetadataInfo $metadata): void
@@ -142,14 +106,10 @@ class ObjectManagerPersister implements PersisterInterface
         $metadata->setIdGenerator(new ORMAssignedGenerator());
     }
 
-    private function getMetadata(string $class): ClassMetadata
+    private function getClassMetadata(ObjectManager $manager, string $class): ClassMetadata
     {
         if (false === array_key_exists($class, $this->metadata)) {
-            foreach ($this->managers as $manager) {
-                if ($manager->getMetadataFactory()->hasMetadataFor($class)) {
-                    $this->metadata[$class] = $manager->getClassMetadata($class);
-                }
-            }
+            $this->metadata[$class] = $manager->getClassMetadata($class);
         }
 
         return $this->metadata[$class];
