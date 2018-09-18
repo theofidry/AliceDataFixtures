@@ -33,7 +33,8 @@
     "conflict": {
         "doctrine/orm": "<2.5",
         "illuminate/database": "<5.5",
-        "ocramius/proxy-manager": "<2.1"
+        "ocramius/proxy-manager": "<2.1",
+        "symfony/framework-bundle": "<3.4"
     },
     "suggest": {
         "doctrine/data-fixtures": "To use Doctrine",
