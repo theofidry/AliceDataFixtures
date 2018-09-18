@@ -338,7 +338,21 @@ final class UserProcessor implements ProcessorInterface
 ```
 
 In Symfony, if you wish to register the processor above you need to tag it with the
-`fidry_alice_data_fixtures.processor` tag:
+`fidry_alice_data_fixtures.processor` tag unless you have `autoconfigure` enabled:
+
+```yaml
+# app/config/services.yml
+
+services:
+    _defaults:
+        autoconfigure: true
+
+    AppBundle\DataFixtures\Processor\UserProcessor:
+        arguments:
+          - '@password_hasher'
+```
+
+Without `autoconfigure`:
 
 ```yaml
 # app/config/services.yml

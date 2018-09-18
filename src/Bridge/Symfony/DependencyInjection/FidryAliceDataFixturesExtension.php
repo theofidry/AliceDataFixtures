@@ -60,11 +60,9 @@ final class FidryAliceDataFixturesExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(self::SERVICES_DIR));
         $loader->load('loader.xml');
 
-        // Register autoconfiguration rules for Symfony DI 3.3+
-        if (method_exists($container, 'registerForAutoconfiguration')) {
-            $container->registerForAutoconfiguration(ProcessorInterface::class)
-                ->addTag('fidry_alice_data_fixtures.processor');
-        }
+        $container->registerForAutoconfiguration(ProcessorInterface::class)
+            ->addTag('fidry_alice_data_fixtures.processor')
+        ;
 
         $this->registerConfig(Configuration::DOCTRINE_ORM_DRIVER, DoctrineBundle::class, $bundles, $processedConfiguration, $loader);
         $this->registerConfig(Configuration::DOCTRINE_MONGODB_ODM_DRIVER, DoctrineMongoDBBundle::class, $bundles, $processedConfiguration, $loader);
