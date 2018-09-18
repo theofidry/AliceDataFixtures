@@ -64,7 +64,13 @@ use Psr\Log\NullLogger;
      */
     public function withPersister(PersisterInterface $persister): self
     {
-        return new self($this->loader, $persister, $this->logger, $this->processors);
+        $loader = $this->loader;
+
+        if ($loader instanceof PersisterAwareInterface) {
+            $loader = $loader->withPersister($persister);
+        }
+
+        return new self($loader, $persister, $this->logger, $this->processors);
     }
 
     /**
