@@ -22,7 +22,7 @@ Supports:
 ## Documentation
 
 1. [Installation](#installation)
-    1. [Symfony Bundle](#symfony)
+    1. [Symfony Bundle without flex](#symfony-without-flex)
         1. [Doctrine ORM](#doctrine-orm)
         1. [Doctrine ODM](#doctrine-odm)
         1. [Doctrine PHPCR](#doctrine-phpcr)
@@ -45,29 +45,52 @@ You can use [Composer](https://getcomposer.org/) to install the library to your 
 ```bash
 composer require --dev theofidry/alice-data-fixtures
 
-# with Doctrine ORM
-composer require --dev theofidry/alice-data-fixtures doctrine/orm:^2.5 doctrine/data-fixtures
+#
+# With Doctrine ORM
+#
 
-# with Doctrine ODM
+# with Symfony & Flex
+composer require --dev theofidry/alice-data-fixtures \
+                       doctrine-orm \
+                       doctrine/data-fixtures
+
+# without Symfony
+composer require --dev theofidry/alice-data-fixtures \
+                       doctrine/orm \
+                       doctrine/data-fixtures
+
+
+#
+# With Doctrine ODM
+#
+
 composer require --dev theofidry/alice-data-fixtures \
                        alcaeus/mongo-php-adapter \
                        doctrine/data-fixtures \
                        doctrine/mongodb-odm
 
-# with Doctrine PHPCR
+#
+# With Doctrine PHPCR
+#
 composer require --dev theofidry/alice-data-fixtures \
                        doctrine/phpcr-odm \
                        jackalope/jackalope-doctrine-dbal
 
-# with Eloquent
-composer require --dev theofidry/alice-data-fixtures illuminate/database:~5.5.0
+#
+# With Eloquent
+#
+composer require --dev theofidry/alice-data-fixtures \
+                       illuminate/database
 
-# with Propel2
-composer require --dev theofidry/alice-data-fixtures propel/propel:^2.0@alpha
+#
+# With Propel 2
+#
+composer require --dev theofidry/alice-data-fixtures \
+                       propel/propel:^2.0@alpha
 ```
 
 
-### Symfony
+### Symfony without Flex
 
 This library ships with a Symfony bundle `FidryAliceDataFixturesBundle`.
 
