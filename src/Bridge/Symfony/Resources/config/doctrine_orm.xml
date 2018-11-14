@@ -42,6 +42,13 @@
             <!-- Processors are injected via a Compiler pass -->
         </service>
 
+        <!-- Processors -->
+        <service id="fidry_alice_data_fixtures.doctrine.auto_disable_doctrine_id_generator_processor"
+                 class="Fidry\AliceDataFixtures\Processor\AutoDisableDoctrineIdGeneratorProcessor"
+                 lazy="true" >
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="fidry_alice_data_fixtures.processor" />
+        </service>
 
         <!-- Purger Factory -->
 

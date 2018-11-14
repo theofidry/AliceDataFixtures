@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
 
+use Fidry\AliceDataFixtures\ExtendedProcessorInterface;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\PersisterAwareInterface;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
@@ -82,7 +83,15 @@ use Psr\Log\NullLogger;
     {
         $objects = $this->loader->load($fixturesFiles, $parameters, $objects, $purgeMode);
 
-        $this->logger->info('Pre-processing objects.');
+        $this->logger->info('Pre-processing all objects.');
+
+        foreach ($this->processors as $processor) {
+            if ($processor instanceof ExtendedProcessorInterface) {
+                $processor->preProcessAllObjects($objects);
+            }
+        }
+
+        $this->logger->info('Pre-processing object by object.');
 
         foreach ($objects as $id => $object) {
             foreach ($this->processors as $processor) {
@@ -96,11 +105,19 @@ use Psr\Log\NullLogger;
 
         $this->persister->flush();
 
-        $this->logger->info('Post-processing objects.');
+        $this->logger->info('Post-processing object by object.');
 
         foreach ($objects as $id => $object) {
             foreach ($this->processors as $processor) {
                 $processor->postProcess($id, $object);
+            }
+        }
+
+        $this->logger->info('Post-processing all objects.');
+
+        foreach ($this->processors as $processor) {
+            if ($processor instanceof ExtendedProcessorInterface) {
+                $processor->postProcessAllObjects($objects);
             }
         }
 

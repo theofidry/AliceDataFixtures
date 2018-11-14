@@ -58,25 +58,6 @@ class ObjectManagerPersister implements PersisterInterface
         if (isset($this->persistableClasses[$class])) {
             $metadata = $this->getMetadata($class);
 
-            $generator = null;
-            $generatorType = null;
-
-            // Check if the ID is explicitly set by the user. To avoid the ID to be overridden by the ID generator
-            // registered, we disable it for that specific object.
-            if ($metadata instanceof ORMClassMetadataInfo) {
-                if ($metadata->usesIdGenerator() && false === empty($metadata->getIdentifierValues($object))) {
-                    $generator = $metadata->idGenerator;
-                    $generatorType = $metadata->generatorType;
-
-                    $this->configureIdGenerator($metadata);
-                }
-            } elseif ($metadata instanceof ODMClassMetadataInfo) {
-                // Do nothing: currently not supported as Doctrine ODM does not have an equivalent of the ORM
-                // AssignedGenerator.
-            } else {
-                // Do nothing: not supported.
-            }
-
             try {
                 $this->objectManager->persist($object);
             } catch (ORMException $exception) {
@@ -85,12 +66,6 @@ class ObjectManagerPersister implements PersisterInterface
                 }
 
                 throw $exception;
-            }
-
-            if (null !== $generator && false === $generator->isPostInsertGenerator()) {
-                // Restore the generator if has been temporary unset
-                $metadata->setIdGeneratorType($generatorType);
-                $metadata->setIdGenerator($generator);
             }
         }
     }
@@ -121,12 +96,6 @@ class ObjectManagerPersister implements PersisterInterface
         }
 
         return $persistableClasses;
-    }
-
-    protected function configureIdGenerator(ORMClassMetadataInfo $metadata): void
-    {
-        $metadata->setIdGeneratorType(ORMClassMetadataInfo::GENERATOR_TYPE_NONE);
-        $metadata->setIdGenerator(new ORMAssignedGenerator());
     }
 
     private function getMetadata(string $class): ClassMetadata
