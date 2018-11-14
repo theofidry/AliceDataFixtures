@@ -22,6 +22,7 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithIdentifier;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithRelatedCascadePersist;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterException;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
@@ -74,6 +75,26 @@ class ObjectManagerPersisterTest extends TestCase
     public function testIsNotClonable()
     {
         $this->assertFalse((new ReflectionClass(ObjectManagerPersister::class))->isCloneable());
+    }
+
+    public function testIdGeneratorIsDisabledForCascadePersist()
+    {
+        $related = new Dummy();
+        $related->id = 100;
+
+        $entity = new DummyWithRelatedCascadePersist();
+        $entity->id = 200;
+        $entity->related = $related;
+
+        $this->persister->persist($entity);
+        $this->persister->flush();
+
+        $this->entityManager->clear();
+
+        $result = $this->entityManager->getRepository(get_class($entity))->find(200);
+
+        $this->assertSame($entity->id, $result->id);
+        $this->assertSame(200, $result->related->id);
     }
 
     /**
@@ -183,7 +204,8 @@ class ObjectManagerPersisterTest extends TestCase
                 $dummy->id = 300;
 
                 return $dummy;
-            })()
+            })(),
+            true
         ];
 
     }
