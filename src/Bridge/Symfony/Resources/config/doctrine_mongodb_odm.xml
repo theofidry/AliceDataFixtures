@@ -52,6 +52,7 @@
         <service id="fidry_alice_data_fixtures.persistence.doctrine_mongodb.purger.purger_factory"
                  class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger"
                  lazy="true">
+            <!-- TODO: Change to <argument type="service" id="doctrine_mongodb" />-->
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
         </service>
 
@@ -71,7 +72,7 @@
         <service id="fidry_alice_data_fixtures.persistence.persister.doctrine_mongodb.object_manager_persister"
                  class="Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister"
                  lazy="true">
-            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <argument type="service" id="doctrine_mongodb" />
         </service>
 
     </services>

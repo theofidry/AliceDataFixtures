@@ -34,6 +34,8 @@ interface PurgerInterface
     /**
      * Purges the database before loading. Depending of the implementation, the purge may truncate the database or
      * remove only a part of the database data.
+     *
+     * @return void The typehint is gonna be enforced from 2.0.0 onwards
      */
     public function purge();
 }
