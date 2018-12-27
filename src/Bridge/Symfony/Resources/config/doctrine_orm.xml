@@ -78,7 +78,7 @@
                  public="true" />
 
         <service id="fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister"
-                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister"
+                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ManagerRegistryPersister"
                  lazy="true">
             <argument type="service" id="doctrine" />
         </service>

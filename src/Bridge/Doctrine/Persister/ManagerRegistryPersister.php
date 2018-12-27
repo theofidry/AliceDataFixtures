@@ -42,12 +42,12 @@ class ManagerRegistryPersister implements PersisterInterface
         $managers = $registry->getManagers();
 
         foreach ($managers as $manager) {
-            $this->persisters[get_class($manager)] = new ObjectManagerPersister($manager);
+            $this->persisters[spl_object_hash($manager)] = new ObjectManagerPersister($manager);
         }
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function persist($object)
     {
@@ -57,7 +57,7 @@ class ManagerRegistryPersister implements PersisterInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function flush()
     {
@@ -80,6 +80,6 @@ class ManagerRegistryPersister implements PersisterInterface
             );
         }
 
-        return $this->persisters[get_class($manager)];
+        return $this->persisters[spl_object_hash($manager)];
     }
 }

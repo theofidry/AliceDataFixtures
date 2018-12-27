@@ -45,7 +45,7 @@ use Nelmio\Alice\IsAServiceTrait;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function persist($object)
     {
@@ -87,7 +87,7 @@ use Nelmio\Alice\IsAServiceTrait;
                 throw $exception;
             }
 
-            if (null !== $generator && false === $generator->isPostInsertGenerator()) {
+            if (null !== $generator/* && false === $generator->isPostInsertGenerator()*/) {
                 // Restore the generator if has been temporary unset
                 $metadata->setIdGeneratorType($generatorType);
                 $metadata->setIdGenerator($generator);
@@ -96,11 +96,17 @@ use Nelmio\Alice\IsAServiceTrait;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function flush()
     {
         $this->objectManager->flush();
+    }
+
+    protected function configureIdGenerator(ORMClassMetadataInfo $metadata): void
+    {
+        $metadata->setIdGeneratorType(ORMClassMetadataInfo::GENERATOR_TYPE_NONE);
+        $metadata->setIdGenerator(new ORMAssignedGenerator());
     }
 
     /**
@@ -121,12 +127,6 @@ use Nelmio\Alice\IsAServiceTrait;
         }
 
         return $persistableClasses;
-    }
-
-    protected function configureIdGenerator(ORMClassMetadataInfo $metadata): void
-    {
-        $metadata->setIdGeneratorType(ORMClassMetadataInfo::GENERATOR_TYPE_NONE);
-        $metadata->setIdGenerator(new ORMAssignedGenerator());
     }
 
     private function getMetadata(string $class): ClassMetadata
