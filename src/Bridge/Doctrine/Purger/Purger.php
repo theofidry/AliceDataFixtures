@@ -91,17 +91,17 @@ use Nelmio\Alice\IsAServiceTrait;
      */
     public function purge()
     {
-        // Because MySQL rocks, you got to disable foreign key checks when doing a TRUNCATE unlike in for example
+        // Because MySQL rocks, you got to disable foreign key checks when doing a TRUNCATE/DELETE unlike in for example
         // PostgreSQL. This ideally should be done in the Purger of doctrine/data-fixtures but meanwhile we are doing
         // it here.
         // See the progress in https://github.com/doctrine/data-fixtures/pull/272
-        $truncateOrm = (
+        $disableFkChecks = (
             $this->purger instanceof DoctrineOrmPurger
-            && PurgeMode::createTruncateMode()->getValue() === $this->purgeMode->getValue()
+            && in_array($this->purgeMode->getValue(), [PurgeMode::createDeleteMode()->getValue(), PurgeMode::createTruncateMode()->getValue()])
             && $this->purger->getObjectManager()->getConnection()->getDriver() instanceof AbstractMySQLDriver
         );
 
-        if ($truncateOrm) {
+        if ($disableFkChecks) {
             $connection = $this->purger->getObjectManager()->getConnection();
 
             $connection->exec('SET FOREIGN_KEY_CHECKS = 0;');
@@ -109,7 +109,7 @@ use Nelmio\Alice\IsAServiceTrait;
 
         $this->purger->purge();
 
-        if ($truncateOrm && isset($connection)) {
+        if ($disableFkChecks && isset($connection)) {
             $connection->exec('SET FOREIGN_KEY_CHECKS = 1;');
         }
     }
