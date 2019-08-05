@@ -21,7 +21,7 @@
          verbose="true">
 
     <php>
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="0" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="4" />
 
         <env name="DB_DRIVER" value="pdo_mysql" />
         <env name="DB_USER" value="root" />
