@@ -12,7 +12,7 @@
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
     <document name="Fidry\AliceDataFixtures\Bridge\Symfony\MongoDocument\Dummy">
-        <field name="id" type="id" id="true" />
+        <id/>
     </document>
 
 </doctrine-mongo-mapping>

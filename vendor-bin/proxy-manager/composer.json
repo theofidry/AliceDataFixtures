@@ -11,7 +11,7 @@
         "doctrine/mongodb": "^1.6",
         "doctrine/mongodb-odm-bundle": "^3.0",
         "doctrine/orm": "^2.5",
-        "doctrine/phpcr-bundle": "^1.0",
+        "doctrine/phpcr-bundle": "^1.0|^2.1",
         "doctrine/phpcr-odm": "^1.4",
         "jackalope/jackalope-doctrine-dbal": "^1.2",
         "ocramius/proxy-manager": "^2.0.2, < 2.2.0",
