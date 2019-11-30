@@ -8,5 +8,5 @@
 #
 
 Fidry\AliceDataFixtures\Bridge\Symfony\Entity\User:
-    user{1..10}:
+    user{1..5}:
         groups: '<numberBetween(2, 5)>x @group*'

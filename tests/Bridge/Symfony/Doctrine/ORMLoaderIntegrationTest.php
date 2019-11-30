@@ -125,8 +125,8 @@ class ORMLoaderIntegrationTest extends TestCase
         $users = $this->doctrine->getRepository(User::class)->findAll();
         $groups = $this->doctrine->getRepository(Group::class)->findAll();
 
-        $this->assertEquals(10, count($users));
-        $this->assertEquals(10, count($groups));
+        $this->assertEquals(5, count($users));
+        $this->assertEquals(5, count($groups));
     }
 
     public function testBidirectionalRelationshipsDeclaredInDifferentFiles()
@@ -139,8 +139,8 @@ class ORMLoaderIntegrationTest extends TestCase
         $users = $this->doctrine->getRepository(User::class)->findAll();
         $groups = $this->doctrine->getRepository(Group::class)->findAll();
 
-        $this->assertEquals(10, count($users));
-        $this->assertEquals(10, count($groups));
+        $this->assertEquals(5, count($users));
+        $this->assertEquals(5, count($groups));
     }
 
     public function testBidirectionalRelationshipsDeclaredInDifferentFilesWithCyclingDependence()
@@ -153,7 +153,7 @@ class ORMLoaderIntegrationTest extends TestCase
         $users = $this->doctrine->getRepository(User::class)->findAll();
         $groups = $this->doctrine->getRepository(Group::class)->findAll();
 
-        $this->assertEquals(10, count($users));
-        $this->assertEquals(10, count($groups));
+        $this->assertEquals(5, count($users));
+        $this->assertEquals(5, count($groups));
     }
 }
