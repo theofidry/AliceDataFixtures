@@ -52,6 +52,8 @@ if (class_exists(ConsoleRunner::class)) {
             'user' => false !== getenv('DB_USER')? getenv('DB_USER') : 'root',
             'password' => false !== getenv('DB_PASSWORD')? getenv('DB_PASSWORD') : null,
             'dbname' => false !== getenv('DB_NAME')? getenv('DB_NAME') : 'fidry_alice_data_fixtures',
+            'host' => false !== getenv('DB_HOST')? getenv('DB_HOST') : '127.0.0.1',
+            'port' => false !== getenv('DB_PORT')? getenv('DB_PORT') : 3307,
         );
 
         $workspace = 'default';

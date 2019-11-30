@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: fidry_alice_data_fixtures
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    # Store data in memory to improve speed
+    tmpfs:
+      - /var/lib/mysql
+
+  mongo:
+    image: mongo:4.2-bionic
+    ports:
+      - 27018:27017
+    environment:
+      MONGO_INITDB_DATABASE: fidry_alice_data_fixtures
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    # Store data in memory to improve speed
+    tmpfs:
+      - /data/db

@@ -1,5 +1,8 @@
 COVERS_VALIDATOR=php -d zend.enable_gc=0 vendor-bin/covers-validator/bin/covers-validator
 PHP_CS_FIXER=php -d zend.enable_gc=0 vendor-bin/php-cs-fixer/bin/php-cs-fixer
+DOCKER_COMPOSE=docker-compose
+DOCKER_COMPOSE_EXEC=$(DOCKER_COMPOSE) exec
+MONGO_BIN=$(DOCKER_COMPOSE_EXEC) mongo mongo
 
 .DEFAULT_GOAL := help
 
@@ -16,25 +19,25 @@ help:
 .PHONY: clean
 clean:			## Removes all created artefacts
 clean:
-	mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
-	mongo fidry_alice_data_fixtures --eval "db.dropDatabase();"
+	mysql -u root -h 127.0.0.1 --port=3307 -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
+	$(MONGO_BIN) --username root --password password --eval "db.getMongo().getDBNames().forEach(function(i){db.getSiblingDB(i).dropDatabase()})"
 
 	git clean --exclude=.idea/ -ffdx
 
 .PHONY: refresh_mysql_db
 refresh_mysql_db:	## Refresh the MySQL database used
 refresh_mysql_db:
-	mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures; CREATE DATABASE fidry_alice_data_fixtures;"
+	mysql -u root -h 127.0.0.1 --port=3307 -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures; CREATE DATABASE fidry_alice_data_fixtures;"
 
 .PHONY: refresh_mongodb_db
 refresh_mongodb_db:	## Refresh the MongoDB database used
 refresh_mongodb_db:
-	mongo fidry_alice_data_fixtures --eval "db.dropDatabase();"
+	$(MONGO_BIN) --username root --password password --eval "db.getMongo().getDBNames().forEach(function(i){db.getSiblingDB(i).dropDatabase()})"
 
 .PHONY: refresh_phpcr
 refresh_phpcr:		## Refresh the MongoDB PHPCR database used
 refresh_phpcr: vendor-bin/doctrine_phpcr/bin/phpcrodm
-	mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures; CREATE DATABASE fidry_alice_data_fixtures;"
+	mysql -u root -h 127.0.0.1 --port=3307 -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures; CREATE DATABASE fidry_alice_data_fixtures;"
 
 	php vendor-bin/doctrine_phpcr/bin/phpcrodm jackalope:init:dbal --force
 	php vendor-bin/doctrine_phpcr/bin/phpcrodm doctrine:phpcr:register-system-node-types
@@ -57,6 +60,15 @@ cs: remove_sf_cache \
 	vendor-bin/php-cs-fixer/vendor
 	$(PHP_CS_FIXER) fix
 
+.PHONY: start_databases
+start_databases:             	## Start Docker containers
+start_databases:
+	$(DOCKER_COMPOSE) up --detach --build --force-recreate --renew-anon-volumes
+
+.PHONY: stop_databases
+stop_databases:             	## Stop Docker containers
+stop_databases:
+	$(DOCKER_COMPOSE) stop
 
 #
 # Tests

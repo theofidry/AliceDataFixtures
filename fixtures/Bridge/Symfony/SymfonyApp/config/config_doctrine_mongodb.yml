@@ -10,7 +10,7 @@
 doctrine_mongodb:
     connections:
         default:
-            server: "mongodb://localhost:27017"
+            server: "mongodb://root:password@localhost:27018"
     default_database: fidry_alice_data_fixtures
     document_managers:
         default:
