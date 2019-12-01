@@ -16,6 +16,8 @@ doctrine:
                 dbname: fidry_alice_data_fixtures
                 user: root
                 password: ~
+                host: 127.0.0.1
+                port: 3307
 
 doctrine_phpcr:
     session:

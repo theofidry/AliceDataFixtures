@@ -8,4 +8,4 @@
 #
 
 Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Group:
-    group{1..10}: {}
+    group{1..5}: {}
