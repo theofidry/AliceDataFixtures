@@ -11,8 +11,8 @@ php:
   - '7.4'
 
 branches:
-    only:
-        - master
+  only:
+    - master
 
 matrix:
   fast_finish: true
