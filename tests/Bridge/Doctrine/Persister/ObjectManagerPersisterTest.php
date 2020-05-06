@@ -107,7 +107,17 @@ class ObjectManagerPersisterTest extends TestCase
         $dummy->id = 200;
         $this->persister->persist($dummy);
 
+        $this->assertFalse(
+            $this->entityManager->getClassMetadata(DummyWithIdentifier::class)->usesIdGenerator(),
+            'ID generator should be changed.'
+        );
+
         $this->persister->flush();
+
+        $this->assertTrue(
+            $this->entityManager->getClassMetadata(DummyWithIdentifier::class)->usesIdGenerator(),
+            'ID generator should be restored after flush.'
+        );
 
         $entity = $this->entityManager->getRepository(DummyWithIdentifier::class)->find(200);
         $this->assertInstanceOf(DummyWithIdentifier::class, $entity);
