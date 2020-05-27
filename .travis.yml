@@ -5,7 +5,6 @@ cache:
     - $HOME/.composer/cache/files
 
 php:
-  - '7.1'
   - '7.2'
   - '7.3'
   - '7.4'
@@ -17,7 +16,7 @@ branches:
 matrix:
   fast_finish: true
   include:
-    - php: '7.1'
+    - php: '7.2'
       env:
         - COVERAGE='true'
         - COMPOSER_FLAGS='--prefer-lowest'
@@ -47,7 +46,7 @@ install:
         composer bin symfony require --dev --no-update "symfony/symfony:${SYMFONY_VERSION}";
         composer bin proxy-manager require --dev --no-update "symfony/symfony:${SYMFONY_VERSION}";
     fi
-  - if [ -n "$SYMFONY_VERSION" == '~4.4.0' ] || [ -n "$SYMFONY_VERSION" == '5.0.0' ]; then
+  - if [ -n "$SYMFONY_VERSION" == '~4.0.0' ] || [ -n "$SYMFONY_VERSION" == '~4.1.0@dev' ]; then
         composer bin symfony require --dev --no-update "doctrine/phpcr-bundle";
         composer bin symfony require --dev --no-update "doctrine/phpcr-odm:^2.0@dev";
     fi

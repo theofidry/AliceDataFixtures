@@ -20,15 +20,15 @@
     ],
 
     "require": {
-        "php": "^7.1",
-        "nelmio/alice": "^3.1",
+        "php": "^7.2",
+        "nelmio/alice": "^3.5",
         "psr/log": "^1.0"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.1",
         "phpspec/prophecy": "^1.7",
         "phpunit/phpunit": "^6.0",
-        "symfony/phpunit-bridge": "^3.3.2 || ^4.0 || ^5.0"
+        "symfony/phpunit-bridge": "^3.4 || ^4.0 || ^5.0"
     },
     "conflict": {
         "doctrine/orm": "<2.5",

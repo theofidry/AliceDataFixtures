@@ -20,7 +20,7 @@
          verbose="true">
 
     <php>
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="0" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="2" />
     </php>
 
     <testsuites>

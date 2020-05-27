@@ -208,7 +208,7 @@ test_symfony_eloquent_bridge_proxy_manager: vendor/bamarni \
 #---------------------------------------------------------------------------
 
 composer.lock: composer.json
-	@echo compose.lock is not up to date.
+	@echo composer.lock is not up to date.
 
 vendor/phpunit: composer.lock
 	composer update $(COMPOSER_FLAGS)
