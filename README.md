@@ -661,4 +661,3 @@ To launch Docker containers for databases, run `make start_databases`
 Run tests with `make test`.
 
 To stop containers for databases, run `make stop_databases`
-
