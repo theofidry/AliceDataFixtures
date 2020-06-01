@@ -60,7 +60,7 @@
                  lazy="true">
             <argument type="service" id="doctrine_phpcr.odm.document_manager" />
 
-            <deprecated>The service "%service_id%s" is deprecated and will be removed in future versions. Use "fidry_alice_data_fixtures.persistence.doctrine_phpcr.purger.purger_factory" instead.</deprecated>
+            <deprecated package="theofidry/alice-data-fixtures" version="1.0">The service "%service_id%s" is deprecated and will be removed in future versions. Use "fidry_alice_data_fixtures.persistence.doctrine_phpcr.purger.purger_factory" instead.</deprecated>
         </service>
 
 
