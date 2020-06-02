@@ -35,12 +35,11 @@ class FileTrackerTest extends TestCase
         $this->assertSame([], $tracker->getUnloadedFiles());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The file "foo" is not being tracked. As such, it cannot be marked as "loaded".
-     */
     public function testCannotMarkUntrackedFileAsLoaded()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The file "foo" is not being tracked. As such, it cannot be marked as "loaded".');
+
         $tracker = new FileTracker('');
         $tracker->markAsLoaded('foo');
     }

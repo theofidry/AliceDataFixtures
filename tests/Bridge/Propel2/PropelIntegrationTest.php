@@ -35,7 +35,7 @@ class PropelIntegrationTest extends PropelTestCase
     /**
      * @inheritdoc
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->initDatabase();
 

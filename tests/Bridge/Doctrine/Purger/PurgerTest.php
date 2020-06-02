@@ -23,6 +23,7 @@ use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 
 /**
@@ -30,6 +31,8 @@ use ReflectionClass;
  */
 class PurgerTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testIsAPurger()
     {
         $this->assertTrue(is_a(Purger::class, PurgerInterface::class, true));

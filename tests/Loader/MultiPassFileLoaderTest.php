@@ -25,6 +25,7 @@ use Nelmio\Alice\ParameterBag;
 use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringGenerationException;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use stdClass;
 
@@ -37,6 +38,8 @@ use stdClass;
  */
 class MultiPassFileLoaderTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testIsALoader()
     {
         $this->assertTrue(is_a(MultiPassLoader::class, LoaderInterface::class, true));
@@ -226,11 +229,10 @@ class MultiPassFileLoaderTest extends TestCase
         $fileLoaderProphecy->loadFile(Argument::cetera())->shouldHaveBeenCalledTimes(5);
     }
 
-    /**
-     * @expectedException \Fidry\AliceDataFixtures\Alice\Exception\RootLoadingException
-     */
     public function testIfDecoratedLoaderThrowsAGenericLoadingExceptionThenTheExceptionRethrown()
     {
+        $this->expectException(RootLoadingException::class);
+
         $files = ['foo'];
 
         $fileLoaderProphecy = $this->prophesize(FileLoaderInterface::class);
@@ -261,7 +263,7 @@ class MultiPassFileLoaderTest extends TestCase
             $loader->load($files);
             $this->fail('Expected exception to be thrown.');
         } catch (MaxPassReachedException $exception) {
-            $this->assertContains(
+            $this->assertStringContainsString(
                 <<<EOF
 Loading files limit of 15 reached. Could not load the following files:
 foo:

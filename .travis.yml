@@ -34,11 +34,11 @@ matrix:
 
 before_install:
   - set -eo pipefail
+  - pecl install -f mongodb-stable
   - make start_databases
   - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - phpenv config-rm xdebug.ini || true
   - PHPUNIT_FLAGS='--stop-on-failure --verbose'
-  - pecl install -f mongodb-stable
 
 install:
   - composer update --prefer-dist $COMPOSER_FLAGS
