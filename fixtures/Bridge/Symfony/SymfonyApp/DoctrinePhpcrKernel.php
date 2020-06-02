@@ -20,6 +20,7 @@ use Fidry\PsyshBundle\PsyshBundle;
 use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 class DoctrinePhpcrKernel extends IsolatedKernel
 {
@@ -42,7 +43,9 @@ class DoctrinePhpcrKernel extends IsolatedKernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config/config.yml');
+        $baseConfig = version_compare(Kernel::VERSION, '4.4.0', '>=') ? 'config_symfony_5.yml' : 'config.yml';
+
+        $loader->load(__DIR__."/config/$baseConfig");
         $loader->load(__DIR__.'/config/config_doctrine_phpcr.yml');
     }
 }

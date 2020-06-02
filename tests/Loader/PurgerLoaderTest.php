@@ -19,7 +19,6 @@ use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use ReflectionClass;
 use stdClass;
@@ -31,8 +30,6 @@ use stdClass;
  */
 class PurgerLoaderTest extends TestCase
 {
-    use ProphecyTrait;
-
     public function testIsALoader()
     {
         $this->assertTrue(is_a(PurgerLoader::class, LoaderInterface::class, true));

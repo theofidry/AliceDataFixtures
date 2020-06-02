@@ -16,6 +16,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 class InvalidKernel extends IsolatedKernel
 {
@@ -31,6 +32,8 @@ class InvalidKernel extends IsolatedKernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config/config.yml');
+        $baseConfig = version_compare(Kernel::VERSION, '4.4.0', '>=') ? 'config_symfony_5.yml' : 'config.yml';
+
+        $loader->load(__DIR__."/config/$baseConfig");
     }
 }

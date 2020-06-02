@@ -22,7 +22,6 @@ use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use ReflectionClass;
 
@@ -33,8 +32,6 @@ use ReflectionClass;
  */
 class ModelPurgerTest extends TestCase
 {
-    use ProphecyTrait;
-
     public function testIsAPurger()
     {
         $this->assertTrue(is_a(ModelPurger::class, PurgerInterface::class, true));

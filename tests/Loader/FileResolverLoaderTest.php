@@ -18,7 +18,6 @@ use Fidry\AliceDataFixtures\FileResolverInterface;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use stdClass;
 
@@ -27,8 +26,6 @@ use stdClass;
  */
 class FileResolverLoaderTest extends TestCase
 {
-    use ProphecyTrait;
-
     public function testIsALoader()
     {
         $this->assertTrue(is_a(FileResolverLoader::class, LoaderInterface::class, true));

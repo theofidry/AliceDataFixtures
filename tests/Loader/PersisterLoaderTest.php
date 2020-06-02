@@ -20,7 +20,6 @@ use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\ProcessorInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use stdClass;
 
@@ -29,8 +28,6 @@ use stdClass;
  */
 class PersisterLoaderTest extends TestCase
 {
-    use ProphecyTrait;
-
     public function testIsALoader()
     {
         $this->assertTrue(is_a(PersisterLoader::class, LoaderInterface::class, true));
