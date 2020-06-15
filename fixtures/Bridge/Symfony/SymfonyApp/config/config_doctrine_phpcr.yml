@@ -18,6 +18,9 @@ doctrine:
                 password: ~
                 host: 127.0.0.1
                 port: 3307
+                charset: UTF8
+                options:
+                    1002: "SET NAMES 'UTF8' COLLATE 'utf8_unicode_ci'"
 
 doctrine_phpcr:
     session:
