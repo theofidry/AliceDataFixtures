@@ -19,7 +19,7 @@
         "symfony/symfony": "^3.4 || ^4.0",
         "theofidry/composer-inheritance-plugin": "^1.0",
         "theofidry/psysh-bundle": "^3.5 || dev-master",
-        "wouterj/eloquent-bundle": "^1.1@RC"
+        "wouterj/eloquent-bundle": "^1.1@dev"
     },
     "config": {
         "bin-dir": "bin",
