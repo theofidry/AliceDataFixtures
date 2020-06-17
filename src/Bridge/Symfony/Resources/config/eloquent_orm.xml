@@ -24,8 +24,7 @@
 
         <service id="fidry_alice_data_fixtures.eloquent.loader"
                  alias="fidry_alice_data_fixtures.loader.eloquent">
-            <!--TODO: https://github.com/symfony/symfony/issues/24507-->
-            <!--<deprecated>The service "%service_id%" is deprecated and will be removed in future versions. Use "fidry_alice_data_fixtures.loader.eloquent" instead.</deprecated>-->
+            <!-- Deprecated (see DeprecateServicesPass) -->
         </service>
 
         <service id="fidry_alice_data_fixtures.eloquent.purger_loader"
@@ -63,8 +62,7 @@
 
         <service id="fidry_alice_data_fixtures.persistence.purger.eloquent.model_purger"
                  alias="fidry_alice_data_fixtures.persistence.eloquent.purger.purger_factory">
-            <!--TODO: https://github.com/symfony/symfony/issues/24507-->
-            <!--<deprecated>The service "%service_id%s" is deprecated and will be removed in future versions. Use "fidry_alice_data_fixtures.persistence.eloquent.purger.purger_factory" instead.</deprecated>-->
+            <!-- Deprecated (see DeprecateServicesPass) -->
         </service>
 
         <service id="fidry_alice_data_fixtures.persistence.purger_mode"
@@ -72,7 +70,7 @@
                  public="false">
             <factory class="Fidry\AliceDataFixtures\Persistence\PurgeMode" method="createDeleteMode" />
 
-            <deprecated>The service "%service_id%" is deprecated and will be removed in future versions. Inject the purger or purger factory directly instead.</deprecated>
+            <!-- Deprecated (see DeprecateServicesPass) -->
         </service>
 
 

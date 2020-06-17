@@ -31,11 +31,4 @@ class NakedKernel extends IsolatedKernel
 
         return $bundles;
     }
-
-    public function registerContainerConfiguration(LoaderInterface $loader)
-    {
-        $baseConfig = version_compare(Kernel::VERSION, '4.4.0', '>=') ? 'config_symfony_5.yml' : 'config.yml';
-
-        $loader->load(__DIR__."/config/$baseConfig");
-    }
 }

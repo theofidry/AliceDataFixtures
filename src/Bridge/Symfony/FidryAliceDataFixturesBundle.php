@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony;
 
+use Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler\DeprecateServicesPass;
 use Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler\RegisterTagServicesPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -50,5 +51,7 @@ final class FidryAliceDataFixturesBundle extends Bundle
                 'fidry_alice_data_fixtures.processor'
             )
         );
+
+        $container->addCompilerPass(new DeprecateServicesPass());
     }
 }

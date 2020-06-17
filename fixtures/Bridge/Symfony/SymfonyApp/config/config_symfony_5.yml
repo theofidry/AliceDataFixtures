@@ -11,6 +11,7 @@ framework:
     secret: test
     router:
         resource: ~
+        utf8: true
     form:
         enabled: false
     validation:
