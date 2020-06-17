@@ -18,9 +18,7 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
 use Fidry\PsyshBundle\PsyshBundle;
 use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
-use Symfony\Component\Cache\Adapter\SimpleCacheAdapter;
 use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\HttpKernel\Kernel;
 
 class DoctrineMongodbKernel extends IsolatedKernel
 {

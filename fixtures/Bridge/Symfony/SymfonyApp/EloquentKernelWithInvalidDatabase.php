@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
 use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\HttpKernel\Kernel;
 
 class EloquentKernelWithInvalidDatabase extends EloquentKernel
 {

@@ -15,7 +15,6 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\Bundle\DoctrineBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\HttpKernel\Kernel;
 
 class DoctrineKernelWithInvalidDatabase extends DoctrineKernel
 {

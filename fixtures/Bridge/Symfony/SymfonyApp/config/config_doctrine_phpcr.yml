@@ -19,6 +19,7 @@ doctrine:
                 host: 127.0.0.1
                 port: 3307
                 charset: UTF8
+                # Workarounds https://github.com/doctrine/DoctrinePHPCRBundle/issues/310
                 options:
                     1002: "SET NAMES 'UTF8' COLLATE 'utf8_unicode_ci'"
 
