@@ -84,9 +84,12 @@ test: test_core	\
 	  test_eloquent_bridge \
 	  test_symfony_bridge \
 	  test_symfony_doctrine_bridge \
-	  test_symfony_eloquent_bridge \
 	  test_symfony_doctrine_bridge_proxy_manager \
-	  test_symfony_eloquent_bridge_proxy_manager
+	  ## Symfony-eloquent related tests are skipped until wouterj/eloquent-bundle's 1.2 release.
+	  ## Re-add `"wouterj/eloquent-bundle": ^1.1" in both symfony and proxy-manager vendor-bin's composer.json
+	  ## and uncomment the following lines once it is released
+	  ## test_symfony_eloquent_bridge \
+	  ## test_symfony_eloquent_bridge_proxy_manager
 
 .PHONY: test_core
 test_core:             				## Run the tests for the core library

@@ -14,9 +14,8 @@
         "doctrine/phpcr-bundle": "^1.0|^2.1",
         "doctrine/phpcr-odm": "^1.4",
         "jackalope/jackalope-doctrine-dbal": "^1.2",
-        "symfony/symfony": "^3.4 || ^4.0",
-        "theofidry/composer-inheritance-plugin": "^1.0",
-        "wouterj/eloquent-bundle": "^1.1@dev"
+        "symfony/symfony": "^3.4 || ^4.0 || ^5.0",
+        "theofidry/composer-inheritance-plugin": "^1.0"
     },
     "config": {
         "bin-dir": "bin",
