@@ -47,7 +47,7 @@ class ObjectManagerPersisterTest extends TestCase
     /**
      * @inheritdoc
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->documentManager = $GLOBALS['document_manager'];
         $this->persister = new ObjectManagerPersister($this->documentManager);
@@ -57,7 +57,7 @@ class ObjectManagerPersisterTest extends TestCase
     /**
      * @inheritdoc
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->purger->purge();
     }

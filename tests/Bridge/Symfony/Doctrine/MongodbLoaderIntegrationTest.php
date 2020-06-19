@@ -50,7 +50,7 @@ class MongodbLoaderIntegrationTest extends TestCase
     /**
      * @inheritdoc
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 
@@ -62,7 +62,7 @@ class MongodbLoaderIntegrationTest extends TestCase
      *
      * @group legacy
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->kernel = new DoctrineMongodbKernel(static::$seed, true);
         $this->kernel->boot();
@@ -74,7 +74,7 @@ class MongodbLoaderIntegrationTest extends TestCase
     /**
      * @inheritdoc
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $purger = new MongoDBPurger($this->doctrine->getManager());
         $purger->purge();

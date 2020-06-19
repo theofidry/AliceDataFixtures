@@ -42,7 +42,7 @@ class ModelPersisterTest extends TestCase
     /**
      * @inheritdoc
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->migrator = $GLOBALS['migrator'];
         $this->persister = new ModelPersister($GLOBALS['manager']->getDatabaseManager());
@@ -51,7 +51,7 @@ class ModelPersisterTest extends TestCase
     /**
      * @inheritdoc
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->migrator->reset(['migrations']);
         $this->migrator->run(['migrations']);
@@ -105,12 +105,11 @@ class ModelPersisterTest extends TestCase
         $this->assertEquals(1, AnotherDummy::all()->count());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected object to be an instance of "Illuminate\Database\Eloquent\Model", got "stdClass" instead.
-     */
     public function testCannotPersistANonModelObject()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected object to be an instance of "Illuminate\Database\Eloquent\Model", got "stdClass" instead.');
+
         $object = new \stdClass();
         $this->persister->persist($object);
     }

@@ -48,7 +48,7 @@ class PhpcrLoaderIntegrationTest extends TestCase
     /**
      * @inheritdoc
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 
@@ -60,7 +60,7 @@ class PhpcrLoaderIntegrationTest extends TestCase
      *
      * @group legacy
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->kernel = new DoctrinePhpcrKernel(static::$seed, true);
         $this->kernel->boot();
@@ -72,7 +72,7 @@ class PhpcrLoaderIntegrationTest extends TestCase
     /**
      * @inheritdoc
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $purger = new PHPCRPurger($this->doctrine->getManager());
         $purger->purge();

@@ -84,9 +84,12 @@ test: test_core	\
 	  test_eloquent_bridge \
 	  test_symfony_bridge \
 	  test_symfony_doctrine_bridge \
-	  test_symfony_eloquent_bridge \
 	  test_symfony_doctrine_bridge_proxy_manager \
-	  test_symfony_eloquent_bridge_proxy_manager
+	  ## Symfony-eloquent related tests are skipped until wouterj/eloquent-bundle's 1.2 release.
+	  ## Re-add `"wouterj/eloquent-bundle": ^1.1" in both symfony and proxy-manager vendor-bin's composer.json
+	  ## and uncomment the following lines once it is released
+	  ## test_symfony_eloquent_bridge \
+	  ## test_symfony_eloquent_bridge_proxy_manager
 
 .PHONY: test_core
 test_core:             				## Run the tests for the core library
@@ -208,7 +211,7 @@ test_symfony_eloquent_bridge_proxy_manager: vendor/bamarni \
 #---------------------------------------------------------------------------
 
 composer.lock: composer.json
-	@echo compose.lock is not up to date.
+	@echo composer.lock is not up to date.
 
 vendor/phpunit: composer.lock
 	composer update $(COMPOSER_FLAGS)
@@ -247,8 +250,8 @@ vendor-bin/doctrine_mongodb/composer.lock: vendor-bin/doctrine_mongodb/composer.
 	@echo vendor-bin/doctrine_mongodb/composer.lock is not up to date.
 
 vendor-bin/doctrine_mongodb/vendor/phpunit: vendor-bin/doctrine_mongodb/composer.lock
-	composer bin doctrine_mongodb update --ignore-platform-reqs $(COMPOSER_FLAGS) || true
-	composer bin doctrine_mongodb update --ignore-platform-reqs $(COMPOSER_FLAGS)
+	composer bin doctrine_mongodb update $(COMPOSER_FLAGS) || true
+	composer bin doctrine_mongodb update $(COMPOSER_FLAGS)
 	touch $@
 
 
@@ -277,13 +280,13 @@ vendor-bin/symfony/composer.lock: vendor-bin/symfony/composer.json
 	@echo vendor-bin/symfony/composer.lock is not up to date.
 
 vendor-bin/symfony/vendor/phpunit: vendor-bin/symfony/composer.lock
-	composer bin symfony update --ignore-platform-reqs $(COMPOSER_FLAGS) || true
-	composer bin symfony update --ignore-platform-reqs $(COMPOSER_FLAGS)
+	composer bin symfony update $(COMPOSER_FLAGS) || true
+	composer bin symfony update $(COMPOSER_FLAGS)
 	touch $@
 
 bin/console: vendor-bin/symfony/composer.lock
-	composer bin symfony update --ignore-platform-reqs $(COMPOSER_FLAGS) || true
-	composer bin symfony update --ignore-platform-reqs $(COMPOSER_FLAGS)
+	composer bin symfony update $(COMPOSER_FLAGS) || true
+	composer bin symfony update $(COMPOSER_FLAGS)
 	touch $@
 
 
@@ -291,8 +294,8 @@ vendor-bin/proxy-manager/composer.lock: vendor-bin/proxy-manager/composer.json
 	@echo vendor-bin/proxy-manager/composer.lock is not up to date.
 
 vendor-bin/proxy-manager/vendor/phpunit: vendor-bin/proxy-manager/composer.lock
-	composer bin proxy-manager update --ignore-platform-reqs $(COMPOSER_FLAGS) || true
-	composer bin proxy-manager update --ignore-platform-reqs $(COMPOSER_FLAGS)
+	composer bin proxy-manager update $(COMPOSER_FLAGS) || true
+	composer bin proxy-manager update $(COMPOSER_FLAGS)
 	touch $@
 
 

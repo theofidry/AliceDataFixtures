@@ -1,6 +1,7 @@
 {
     "require-dev": {
-        "ockcyp/covers-validator": "^0.6.1"
+        "ockcyp/covers-validator": "^0.6.1",
+        "phpspec/prophecy-phpunit": "^1.0|^2.0"
     },
     "config": {
         "bin-dir": "bin",

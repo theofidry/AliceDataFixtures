@@ -1,0 +1,23 @@
+#
+# This file is part of the Fidry\AliceDataFixtures package.
+#
+# (c) Théo FIDRY <theo.fidry@gmail.com>
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+#
+
+framework:
+    secret: test
+    router:
+        resource: ~
+        utf8: true
+    form:
+        enabled: false
+    validation:
+        enabled: true
+        enable_annotations: true
+    session: ~
+    test: ~
+    cache:
+        default_pdo_provider: null # Defaults to a doctrine service id based on class existence, which breaks when doctrine bundle is not configured.

@@ -32,7 +32,7 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
      *
      * @group legacy
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->kernel = DoctrineKernel::create();
         $this->kernel->boot();
@@ -41,7 +41,7 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
     /**
      * @inheritdoc
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->kernel->shutdown();
     }
