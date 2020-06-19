@@ -50,7 +50,7 @@ class ORMLoaderIntegrationTest extends TestCase
     /**
      * @inheritdoc
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 
@@ -62,7 +62,7 @@ class ORMLoaderIntegrationTest extends TestCase
      *
      * @group legacy
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->kernel = new DoctrineKernel(static::$seed, true);
         $this->kernel->boot();
@@ -71,7 +71,7 @@ class ORMLoaderIntegrationTest extends TestCase
         $this->doctrine = $this->kernel->getContainer()->get('doctrine');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $purger = new DoctrineOrmPurger($this->doctrine->getManager());
         $purger->purge();

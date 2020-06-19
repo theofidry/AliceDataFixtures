@@ -35,7 +35,7 @@ class ModelPersisterTest extends PropelTestCase
      */
     private $persister;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->persister = new ModelPersister(Propel::getConnection());
         $this->initDatabase();
@@ -88,12 +88,11 @@ class ModelPersisterTest extends PropelTestCase
         $this->assertCount(1, BookQuery::create()->find());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected object to be an instance of "Propel\Runtime\ActiveRecord\ActiveRecordInterface", got "stdClass" instead.
-     */
     public function testCannotPersistANonModelObject()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected object to be an instance of "Propel\Runtime\ActiveRecord\ActiveRecordInterface", got "stdClass" instead.');
+
         $object = new stdClass();
 
         $this->persister->persist($object);

@@ -19,7 +19,8 @@ class EloquentKernelWithInvalidDatabase extends EloquentKernel
 {
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config/config.yml');
+        parent::registerContainerConfiguration($loader);
+
         $loader->load(__DIR__.'/config/config_eloquent_with_invalid_database.yml');
     }
 }

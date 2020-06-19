@@ -35,7 +35,7 @@ class FidryAliceDataFixturesBundleTest extends TestCase
     /**
      * @inheritdoc
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->kernel = NakedKernel::create();
         $this->kernel->boot();
@@ -44,7 +44,7 @@ class FidryAliceDataFixturesBundleTest extends TestCase
     /**
      * @inheritdoc
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->kernel->shutdown();
     }
@@ -66,12 +66,11 @@ class FidryAliceDataFixturesBundleTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Cannot register "Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle" without "Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle".
-     */
     public function testCannotBootIfNelmioAliceBundleIsNotRegistered()
     {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Cannot register "Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle" without "Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle".');
+
         $kernel = InvalidKernel::create();
         $kernel->boot();
         $kernel->shutdown();

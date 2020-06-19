@@ -18,6 +18,10 @@ doctrine:
                 password: ~
                 host: 127.0.0.1
                 port: 3307
+                charset: UTF8
+                # Workarounds https://github.com/doctrine/DoctrinePHPCRBundle/issues/310
+                options:
+                    1002: "SET NAMES 'UTF8' COLLATE 'utf8_unicode_ci'"
 
 doctrine_phpcr:
     session:
@@ -31,7 +35,7 @@ doctrine_phpcr:
         mappings:
             fixture_documents:
                 type: xml
-                dir: '%kernel.root_dir%/config/doctrine'
+                dir: '%project_dir%/config/doctrine'
                 is_bundle: false
                 prefix: Fidry\AliceDataFixtures\Bridge\Symfony\PhpCrDocument
 

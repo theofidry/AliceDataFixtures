@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
+use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -44,5 +45,14 @@ abstract class IsolatedKernel extends Kernel
                 }
             }
         }, PassConfig::TYPE_OPTIMIZE);
+
+        $container->setParameter('project_dir', __DIR__);
+    }
+
+    public function registerContainerConfiguration(LoaderInterface $loader)
+    {
+        $baseConfig = version_compare(Kernel::VERSION, '4.4.0', '>=') ? 'config_symfony_5.yml' : 'config.yml';
+
+        $loader->load(__DIR__."/config/$baseConfig");
     }
 }

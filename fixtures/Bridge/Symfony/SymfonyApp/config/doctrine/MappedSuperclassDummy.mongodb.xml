@@ -12,7 +12,7 @@
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
     <mapped-superclass name="Fidry\AliceDataFixtures\Bridge\Symfony\MongoDocument\MappedSuperclassDummy">
-        <field name="id" type="id" id="true" />
+        <id/>
         <field name="status" type="string" />
     </mapped-superclass>
 

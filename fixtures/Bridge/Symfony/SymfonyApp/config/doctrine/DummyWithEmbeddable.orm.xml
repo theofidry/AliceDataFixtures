@@ -16,7 +16,7 @@
         <id name="id" type="integer">
             <generator strategy="AUTO" />
         </id>
-        <embedded name="embeddable" class="DummyEmbeddable" />
+        <embedded name="embeddable" class="Fidry\AliceDataFixtures\Bridge\Symfony\Entity\DummyEmbeddable" />
     </entity>
 
 </doctrine-mapping>

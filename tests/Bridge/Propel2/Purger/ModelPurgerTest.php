@@ -35,7 +35,7 @@ class ModelPurgerTest extends PropelTestCase
      */
     private $purger;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->purger = new ModelPurger(
             Propel::getConnection(),
@@ -54,12 +54,11 @@ class ModelPurgerTest extends PropelTestCase
         $this->assertTrue(is_a(ModelPurger::class, PurgerFactoryInterface::class, true));
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage No propel generated SQL file exists
-     */
     public function testSqlDoesNotExist()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('No propel generated SQL file exists');
+
         (new ModelPurger(Propel::getConnection(), 'asdasd'))->purge();
     }
 

@@ -16,7 +16,6 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
 use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
-use Symfony\Component\Config\Loader\LoaderInterface;
 
 class NakedKernel extends IsolatedKernel
 {
@@ -29,10 +28,5 @@ class NakedKernel extends IsolatedKernel
         ];
 
         return $bundles;
-    }
-
-    public function registerContainerConfiguration(LoaderInterface $loader)
-    {
-        $loader->load(__DIR__.'/config/config.yml');
     }
 }

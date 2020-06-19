@@ -12,9 +12,9 @@
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
     <document name="Fidry\AliceDataFixtures\Bridge\Symfony\MongoDocument\DummyWithEmbeddable">
-        <field name="id" type="id" id="true" />
+        <id/>
         <embed-one field="embeddable"
-                   target-document="DummyEmbeddable" />
+                   target-document="Fidry\AliceDataFixtures\Bridge\Symfony\MongoDocument\DummyEmbeddable" />
     </document>
 
 </doctrine-mongo-mapping>

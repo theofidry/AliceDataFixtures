@@ -51,7 +51,7 @@ class ORMLoaderIntegrationTest extends TestCase
     /**
      * @inheritdoc
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 
@@ -61,7 +61,7 @@ class ORMLoaderIntegrationTest extends TestCase
     /**
      * @inheritdoc
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->kernel = new EloquentKernel(static::$seed, true);
         $this->kernel->boot();
@@ -79,7 +79,7 @@ class ORMLoaderIntegrationTest extends TestCase
     /**
      * @inheritdoc
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->execute([
             'command' => 'eloquent:migrate:reset',
