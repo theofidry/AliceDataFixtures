@@ -51,12 +51,14 @@
         <service id="fidry_alice_data_fixtures.persistence.doctrine_phpcr.purger.purger_factory"
                  class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger"
                  lazy="true">
+            <!-- TODO: Change to <argument type="service" id="doctrine_phpcr" />-->
             <argument type="service" id="doctrine_phpcr.odm.document_manager" />
         </service>
 
         <service id="fidry_alice_data_fixtures.persistence.purger.doctrine_phpcr.odm_purger"
                  class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger"
                  lazy="true">
+            <!-- TODO: Change to <argument type="service" id="doctrine_phpcr" />-->
             <argument type="service" id="doctrine_phpcr.odm.document_manager" />
 
             <!-- Deprecated (see DeprecateServicesPass) -->
@@ -72,7 +74,7 @@
         <service id="fidry_alice_data_fixtures.persistence.persister.doctrine_phpcr.object_manager_persister"
                  class="Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister"
                  lazy="true">
-            <argument type="service" id="doctrine_phpcr.odm.document_manager" />
+            <argument type="service" id="doctrine_phpcr" />
         </service>
 
     </services>

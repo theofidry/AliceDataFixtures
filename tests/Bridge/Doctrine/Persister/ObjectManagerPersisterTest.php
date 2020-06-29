@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\ORMInvalidArgumentException;
@@ -25,6 +26,7 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithIdentifier;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterException;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
@@ -49,12 +51,22 @@ class ObjectManagerPersisterTest extends TestCase
     private $purger;
 
     /**
+     * @var ManagerRegistry|MockObject
+     */
+    private $managerRegistry;
+
+    /**
      * @inheritdoc
      */
     public function setUp(): void
     {
         $this->entityManager = $GLOBALS['entity_manager'];
-        $this->persister = new ObjectManagerPersister($this->entityManager);
+
+        $this->managerRegistry = $this->createMock(ManagerRegistry::class);
+        $this->managerRegistry->method('getManagerForClass')->willReturn($this->entityManager);
+        $this->managerRegistry->method('getManagers')->willReturn([$this->entityManager]);
+
+        $this->persister = new ObjectManagerPersister($this->managerRegistry);
         $this->purger = new ORMPurger($this->entityManager);
     }
 
