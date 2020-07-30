@@ -35,9 +35,9 @@ class ObjectManagerPersister implements PersisterInterface
     private $persistableClasses;
 
     /**
-     * @var ClassMetadata[] Entity metadata, FQCN being the key
+     * @var ClassMetadata[] Entity metadata to restore after flush, FQCN being the key.
      */
-    private $metadata = [];
+    private $metadataToRestore = [];
 
     public function __construct(ObjectManager $manager)
     {
@@ -56,19 +56,13 @@ class ObjectManagerPersister implements PersisterInterface
         $class = get_class($object);
 
         if (isset($this->persistableClasses[$class])) {
-            $metadata = $this->getMetadata($class);
-
-            $generator = null;
-            $generatorType = null;
+            $metadata = $this->objectManager->getClassMetadata($class);
 
             // Check if the ID is explicitly set by the user. To avoid the ID to be overridden by the ID generator
             // registered, we disable it for that specific object.
             if ($metadata instanceof ORMClassMetadataInfo) {
                 if ($metadata->usesIdGenerator() && false === empty($metadata->getIdentifierValues($object))) {
-                    $generator = $metadata->idGenerator;
-                    $generatorType = $metadata->generatorType;
-
-                    $this->configureIdGenerator($metadata);
+                    $metadata = $this->configureIdGenerator($metadata);
                 }
             } elseif ($metadata instanceof ODMClassMetadataInfo) {
                 // Do nothing: currently not supported as Doctrine ODM does not have an equivalent of the ORM
@@ -86,12 +80,6 @@ class ObjectManagerPersister implements PersisterInterface
 
                 throw $exception;
             }
-
-            if (null !== $generator && false === $generator->isPostInsertGenerator()) {
-                // Restore the generator if has been temporary unset
-                $metadata->setIdGeneratorType($generatorType);
-                $metadata->setIdGenerator($generator);
-            }
         }
     }
 
@@ -101,6 +89,11 @@ class ObjectManagerPersister implements PersisterInterface
     public function flush()
     {
         $this->objectManager->flush();
+
+        foreach ($this->metadataToRestore as $metadata) {
+            $this->objectManager->getMetadataFactory()->setMetadataFor($metadata->getName(), $metadata);
+        }
+        $this->metadataToRestore = [];
     }
 
     /**
@@ -123,19 +116,23 @@ class ObjectManagerPersister implements PersisterInterface
         return $persistableClasses;
     }
 
-    protected function configureIdGenerator(ORMClassMetadataInfo $metadata): void
+    private function saveMetadataToRestore(ClassMetadata $metadata): void
     {
-        $metadata->setIdGeneratorType(ORMClassMetadataInfo::GENERATOR_TYPE_NONE);
-        $metadata->setIdGenerator(new ORMAssignedGenerator());
+        if (!isset($this->metadataToRestore[$metadata->getName()])) {
+            $this->metadataToRestore[$metadata->getName()] = $metadata;
+        }
     }
 
-    private function getMetadata(string $class): ClassMetadata
+    private function configureIdGenerator(ORMClassMetadataInfo $metadata): ORMClassMetadataInfo
     {
-        if (false === array_key_exists($class, $this->metadata)) {
-            $classMetadata = $this->objectManager->getClassMetadata($class);
-            $this->metadata[$class] = $classMetadata;
-        }
+        $this->saveMetadataToRestore($metadata);
 
-        return $this->metadata[$class];
+        $newMetadata = clone $metadata;
+        $newMetadata->setIdGeneratorType(ORMClassMetadataInfo::GENERATOR_TYPE_NONE);
+        $newMetadata->setIdGenerator(new ORMAssignedGenerator());
+
+        $this->objectManager->getMetadataFactory()->setMetadataFor($metadata->getName(), $newMetadata);
+
+        return $newMetadata;
     }
 }
