@@ -31,7 +31,7 @@ use function trigger_error;
     {
         @trigger_error(
             sprintf(
-                '"%s" has been deprecated since v1.2.0. Use "%s" instead.',
+                '"%s" has been deprecated since v1.3.0. Use "%s" instead.',
                 self::class,
                 ObjectManagerPurger::class
             ),
