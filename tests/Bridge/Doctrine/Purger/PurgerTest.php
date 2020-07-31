@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
+use Doctrine\DBAL\Driver\AbstractMySQLDriver;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\ORM\FakeEntityManager;
@@ -57,6 +59,30 @@ class PurgerTest extends TestCase
         $this->assertInstanceOf(DoctrineOrmPurger::class, $decoratedPurger);
         $this->assertEquals($manager, $decoratedPurger->getObjectManager());
         $this->assertEquals(DoctrineOrmPurger::PURGE_MODE_TRUNCATE, $decoratedPurger->getPurgeMode());
+    }
+
+    public function testDisableFKChecksOnDeleteIsPerformed()
+    {
+        $connection = $this->prophesize(Connection::class);
+        $connection->getDriver()->willReturn($this->prophesize(AbstractMySQLDriver::class)->reveal());
+        $connection->exec('SET FOREIGN_KEY_CHECKS = 0;')->shouldBeCalled();
+        $connection->exec('SET FOREIGN_KEY_CHECKS = 1;')->shouldBeCalled();
+
+        $manager = $this->prophesize(EntityManager::class);
+        $manager->getConnection()->willReturn($connection->reveal());
+
+        $purgerORM = $this->prophesize(DoctrineOrmPurger::class);
+        $purgerORM->getObjectManager()->willReturn($manager->reveal());
+        $purgerORM->purge()->shouldBeCalled();
+
+        $purgeMode = PurgeMode::createDeleteMode();
+        $purger = new Purger($manager->reveal(), $purgeMode);
+
+        $decoratedPurgerReflection = (new \ReflectionObject($purger))->getProperty('purger');
+        $decoratedPurgerReflection->setAccessible(true);
+        $decoratedPurgerReflection->setValue($purger, $purgerORM->reveal());
+
+        $purger->purge();
     }
 
     public function testEmptyDatabase()

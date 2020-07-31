@@ -1,5 +1,9 @@
 COVERS_VALIDATOR=php -d zend.enable_gc=0 vendor-bin/covers-validator/bin/covers-validator
 PHP_CS_FIXER=php -d zend.enable_gc=0 vendor-bin/php-cs-fixer/bin/php-cs-fixer
+DOCKER_COMPOSE=docker-compose
+DOCKER_COMPOSE_EXEC=$(DOCKER_COMPOSE) exec
+MYSQL_BIN=$(DOCKER_COMPOSE_EXEC) mysql mysql -u root -h 127.0.0.1
+MONGO_BIN=$(DOCKER_COMPOSE_EXEC) mongo mongo --username root --password password
 
 .DEFAULT_GOAL := help
 
@@ -16,25 +20,25 @@ help:
 .PHONY: clean
 clean:			## Removes all created artefacts
 clean:
-	mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
-	mongo fidry_alice_data_fixtures --eval "db.dropDatabase();"
+	$(MYSQL_BIN) -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
+	$(MONGO_BIN) --eval "db.getMongo().getDBNames().forEach(function(i){db.getSiblingDB(i).dropDatabase()})"
 
 	git clean --exclude=.idea/ -ffdx
 
 .PHONY: refresh_mysql_db
 refresh_mysql_db:	## Refresh the MySQL database used
 refresh_mysql_db:
-	mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures; CREATE DATABASE fidry_alice_data_fixtures;"
+	$(MYSQL_BIN) -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures; CREATE DATABASE fidry_alice_data_fixtures;"
 
 .PHONY: refresh_mongodb_db
 refresh_mongodb_db:	## Refresh the MongoDB database used
 refresh_mongodb_db:
-	mongo fidry_alice_data_fixtures --eval "db.dropDatabase();"
+	$(MONGO_BIN) --eval "db.getMongo().getDBNames().forEach(function(i){db.getSiblingDB(i).dropDatabase()})"
 
 .PHONY: refresh_phpcr
 refresh_phpcr:		## Refresh the MongoDB PHPCR database used
 refresh_phpcr: vendor-bin/doctrine_phpcr/bin/phpcrodm
-	mysql -u root -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures; CREATE DATABASE fidry_alice_data_fixtures;"
+	$(MYSQL_BIN) -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures; CREATE DATABASE fidry_alice_data_fixtures;"
 
 	php vendor-bin/doctrine_phpcr/bin/phpcrodm jackalope:init:dbal --force
 	php vendor-bin/doctrine_phpcr/bin/phpcrodm doctrine:phpcr:register-system-node-types
@@ -57,6 +61,15 @@ cs: remove_sf_cache \
 	vendor-bin/php-cs-fixer/vendor
 	$(PHP_CS_FIXER) fix
 
+.PHONY: start_databases
+start_databases:             	## Start Docker containers
+start_databases:
+	$(DOCKER_COMPOSE) up --detach --build --force-recreate --renew-anon-volumes
+
+.PHONY: stop_databases
+stop_databases:             	## Stop Docker containers
+stop_databases:
+	$(DOCKER_COMPOSE) stop
 
 #
 # Tests
@@ -71,9 +84,12 @@ test: test_core	\
 	  test_eloquent_bridge \
 	  test_symfony_bridge \
 	  test_symfony_doctrine_bridge \
-	  test_symfony_eloquent_bridge \
 	  test_symfony_doctrine_bridge_proxy_manager \
-	  test_symfony_eloquent_bridge_proxy_manager
+	  ## Symfony-eloquent related tests are skipped until wouterj/eloquent-bundle's 1.2 release.
+	  ## Re-add `"wouterj/eloquent-bundle": ^1.1" in both symfony and proxy-manager vendor-bin's composer.json
+	  ## and uncomment the following lines once it is released
+	  ## test_symfony_eloquent_bridge \
+	  ## test_symfony_eloquent_bridge_proxy_manager
 
 .PHONY: test_core
 test_core:             				## Run the tests for the core library
@@ -195,7 +211,7 @@ test_symfony_eloquent_bridge_proxy_manager: vendor/bamarni \
 #---------------------------------------------------------------------------
 
 composer.lock: composer.json
-	@echo compose.lock is not up to date.
+	@echo composer.lock is not up to date.
 
 vendor/phpunit: composer.lock
 	composer update $(COMPOSER_FLAGS)
@@ -234,8 +250,8 @@ vendor-bin/doctrine_mongodb/composer.lock: vendor-bin/doctrine_mongodb/composer.
 	@echo vendor-bin/doctrine_mongodb/composer.lock is not up to date.
 
 vendor-bin/doctrine_mongodb/vendor/phpunit: vendor-bin/doctrine_mongodb/composer.lock
-	composer bin doctrine_mongodb update --ignore-platform-reqs $(COMPOSER_FLAGS) || true
-	composer bin doctrine_mongodb update --ignore-platform-reqs $(COMPOSER_FLAGS)
+	composer bin doctrine_mongodb update $(COMPOSER_FLAGS) || true
+	composer bin doctrine_mongodb update $(COMPOSER_FLAGS)
 	touch $@
 
 
@@ -264,13 +280,13 @@ vendor-bin/symfony/composer.lock: vendor-bin/symfony/composer.json
 	@echo vendor-bin/symfony/composer.lock is not up to date.
 
 vendor-bin/symfony/vendor/phpunit: vendor-bin/symfony/composer.lock
-	composer bin symfony update --ignore-platform-reqs $(COMPOSER_FLAGS) || true
-	composer bin symfony update --ignore-platform-reqs $(COMPOSER_FLAGS)
+	composer bin symfony update $(COMPOSER_FLAGS) || true
+	composer bin symfony update $(COMPOSER_FLAGS)
 	touch $@
 
 bin/console: vendor-bin/symfony/composer.lock
-	composer bin symfony update --ignore-platform-reqs $(COMPOSER_FLAGS) || true
-	composer bin symfony update --ignore-platform-reqs $(COMPOSER_FLAGS)
+	composer bin symfony update $(COMPOSER_FLAGS) || true
+	composer bin symfony update $(COMPOSER_FLAGS)
 	touch $@
 
 
@@ -278,8 +294,8 @@ vendor-bin/proxy-manager/composer.lock: vendor-bin/proxy-manager/composer.json
 	@echo vendor-bin/proxy-manager/composer.lock is not up to date.
 
 vendor-bin/proxy-manager/vendor/phpunit: vendor-bin/proxy-manager/composer.lock
-	composer bin proxy-manager update --ignore-platform-reqs $(COMPOSER_FLAGS) || true
-	composer bin proxy-manager update --ignore-platform-reqs $(COMPOSER_FLAGS)
+	composer bin proxy-manager update $(COMPOSER_FLAGS) || true
+	composer bin proxy-manager update $(COMPOSER_FLAGS)
 	touch $@
 
 

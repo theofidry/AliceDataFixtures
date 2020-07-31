@@ -40,7 +40,8 @@ class EloquentKernel extends IsolatedKernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config/config.yml');
+        parent::registerContainerConfiguration($loader);
+
         $loader->load(__DIR__.'/config/config_eloquent.yml');
     }
 }

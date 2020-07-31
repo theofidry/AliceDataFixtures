@@ -16,11 +16,17 @@ doctrine:
                 dbname: fidry_alice_data_fixtures
                 user: root
                 password: ~
+                host: 127.0.0.1
+                port: 3307
+                charset: UTF8
+                # Workarounds https://github.com/doctrine/DoctrinePHPCRBundle/issues/310
+                options:
+                    1002: "SET NAMES 'UTF8' COLLATE 'utf8_unicode_ci'"
     orm:
         auto_mapping: true
         mappings:
             fixture_entities:
                 type: xml
-                dir: '%kernel.root_dir%/config/doctrine'
+                dir: '%project_dir%/config/doctrine'
                 is_bundle: false
                 prefix: Fidry\AliceDataFixtures\Bridge\Symfony\Entity

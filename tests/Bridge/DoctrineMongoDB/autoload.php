@@ -26,6 +26,6 @@ $config->setHydratorNamespace('Hydrators');
 $config->setMetadataDriverImpl(AnnotationDriver::create(__DIR__.'/../../../fixtures/Bridge/Doctrine/MongoDocument'));
 $config->setDefaultDB('fidry_alice_data_fixtures');
 
-$dm = DocumentManager::create(new Connection(), $config);
+$dm = DocumentManager::create(new Connection('mongodb://root:password@localhost:27018'), $config);
 
 $GLOBALS['document_manager'] = $dm;

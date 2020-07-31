@@ -20,8 +20,7 @@
 
         <service id="fidry_alice_data_fixtures.doctrine_phpcr.loader"
                   alias="fidry_alice_data_fixtures.loader.doctrine_phpcr">
-            <!--TODO: https://github.com/symfony/symfony/issues/24507-->
-            <!--<deprecated>The service "%service_id%" is deprecated and will be removed in future versions. Use "fidry_alice_data_fixtures.loader.doctrine_phpcr" instead.</deprecated>-->
+            <!-- Deprecated (see DeprecateServicesPass) -->
         </service>
 
         <service id="fidry_alice_data_fixtures.doctrine_phpcr.purger_loader"
@@ -62,7 +61,7 @@
             <!-- TODO: Change to <argument type="service" id="doctrine_phpcr" />-->
             <argument type="service" id="doctrine_phpcr.odm.document_manager" />
 
-            <deprecated>The service "%service_id%s" is deprecated and will be removed in future versions. Use "fidry_alice_data_fixtures.persistence.doctrine_phpcr.purger.purger_factory" instead.</deprecated>
+            <!-- Deprecated (see DeprecateServicesPass) -->
         </service>
 
 

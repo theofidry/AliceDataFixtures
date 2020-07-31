@@ -8,5 +8,8 @@
     "config": {
         "bin-dir": "bin",
         "sort-packages": true
+    },
+    "provide": {
+        "ext-mongo": "*"
     }
 }

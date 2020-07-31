@@ -31,8 +31,13 @@ final class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('fidry_alice_data_fixtures');
+        $treeBuilder = new TreeBuilder('fidry_alice_data_fixtures');
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('fidry_alice_data_fixtures');
+        }
 
         $rootNode
             ->children()

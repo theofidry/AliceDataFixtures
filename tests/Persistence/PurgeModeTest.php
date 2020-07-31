@@ -20,12 +20,11 @@ use PHPUnit\Framework\TestCase;
  */
 class PurgeModeTest extends TestCase
 {
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Unknown purge mode "3".
-     */
     public function testThrowsAnExceptionIfUnknownPurgeModeIsGiven()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown purge mode "3".');
+
         new PurgeMode(3);
     }
 

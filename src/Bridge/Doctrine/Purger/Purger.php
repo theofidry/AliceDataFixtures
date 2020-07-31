@@ -20,7 +20,6 @@ use function trigger_error;
 
 /**
  * @deprecated Use ObjectManagerPurger instead
- *
  * @see ObjectManagerPurger
  */
 /* final */ class Purger extends ObjectManagerPurger
@@ -41,5 +40,4 @@ use function trigger_error;
 
         parent::__construct($manager, $purgeMode);
     }
-
 }
