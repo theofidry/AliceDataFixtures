@@ -31,6 +31,7 @@ Supports:
         1. [Eloquent ORM](doc/installation.md/#eloquent-orm)
         1. [Configuration](doc/installation.md/#configuration)
 1. [Basic usage](#basic-usage)
+1. [Configuration](#configuration)
 1. [Advanced usage](doc/advanced-usage.md#advanced-usage)
     1. [Processors](doc/advanced-usage.md#processors)
     1. [Exclude tables from purge](doc/advanced-usage.md#exclude-tables-from-purge)
@@ -38,6 +39,28 @@ Supports:
         1. [PHPUnit](doc/advanced-usage.md#phpunit)
         1. [Behat](doc/advanced-usage.md#behat)
 1. [Contributing](#contributing)
+
+
+## Configuration
+
+The full configuration reference is:
+
+```yaml
+# app/config/config.yml
+
+# Default config
+fidry_alice_data_fixtures:
+    default_purge_mode: ~ # default is "delete" but you can change it to "truncate" or "no_purge"
+    db_drivers:
+        doctrine_orm: ~
+        doctrine_mongodb_odm: ~
+        doctrine_phpcr_odm: ~
+        eloquent_orm: ~
+```
+
+For each driver, is the appropriate bundle is detected, e.g. DoctrineORMBundle for Doctrine and WouterJEloquentBundle
+for Eloquent, the services related to those driver will be enabled. If you want to skip those checks you can turn
+a specific driver to `true` instead. If you want to disable a specific driver, simply force the value `false` instead.
 
 
 ## Basic usage
