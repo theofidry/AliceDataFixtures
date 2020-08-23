@@ -7,7 +7,6 @@
     1. [Doctrine ODM](#doctrine-odm)
     1. [Doctrine PHPCR](#doctrine-phpcr)
     1. [Eloquent ORM](#eloquent-orm)
-    1. [Configuration](#configuration)
 
 You can use [Composer](https://getcomposer.org/) to install the library to your project:
 

@@ -10,7 +10,7 @@
 ## Processors
 
 Processors allow you to process objects before and/or after they are persisted. Processors
-must implement the [`Fidry\AliceDataFixtures\ProcessorInterface`](src/ProcessorInterface.php).
+must implement the [`Fidry\AliceDataFixtures\ProcessorInterface`](../src/ProcessorInterface.php).
 
 Here is an example where we may use this feature to make sure passwords are properly
 hashed on a `User`:
@@ -87,7 +87,7 @@ You may have some view/read-only tables which should not be truncated when loadi
 fixtures. To fix that, you can leverage the [Purger](https://github.com/doctrine/data-fixtures/pull/225)
 to exclude them.
 
-The purger for Doctrine is defined [here](https://github.com/theofidry/AliceDataFixtures/blob/master/src/Bridge/Doctrine/Purger/Purger.php). You
+The purger for Doctrine is defined [here](../src/Bridge/Doctrine/Purger/Purger.php). You
 see that you can easily create your own purger based on it to retrieve the relevant metadata from the
 object manager to exclude them:
 
@@ -173,7 +173,7 @@ There are several approaches, the following one is a simple one for test case wi
 you might use the Symfony base TestCase or a PHPUnit listener.
 In case of Symfony, take a look at [dmaicher/doctrine-test-bundle](https://github.com/dmaicher/doctrine-test-bundle)
 which transparently provides a transactional run for your tests. In that case you can also disable default purge mode
-by setting `default_purge_mode` [configuration option](#configuration) to `no_purge`.
+by setting `default_purge_mode` [configuration option](../README.md#configuration) to `no_purge`.
 
 If you are not using Symfony, this should still give you a pretty good idea on how to do it.
 
@@ -368,4 +368,4 @@ class DatabaseContext implements Context
 }
 ```
 
-« [Usage](../README.md#basic-usage) • [Back to README](../README.md#documentation) »
+« [Configuration](../README.md#configuration) • [Back to README](../README.md#documentation) »
