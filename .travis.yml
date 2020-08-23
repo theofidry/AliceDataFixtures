@@ -5,7 +5,7 @@ cache:
     - $HOME/.composer/cache/files
 
 php:
-  - '7.2'
+  - '7.3'
   - '7.3'
   - '7.4'
 
@@ -16,7 +16,7 @@ branches:
 matrix:
   fast_finish: true
   include:
-    - php: '7.2'
+    - php: '7.3'
       env:
         - COVERAGE='true'
         - COMPOSER_FLAGS='--prefer-lowest'
