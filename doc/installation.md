@@ -231,3 +231,5 @@ public function registerBundles()
     return $bundles;
 }
 ```
+
+« [Back to README](../README.md#documentation) • [Usage](../README.md#basic-usage) »
