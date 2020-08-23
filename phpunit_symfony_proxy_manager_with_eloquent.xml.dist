@@ -29,10 +29,10 @@
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist>
+    <coverage>
+        <includec>
             <directory>tests/Bridge/Symfony/Eloquent</directory>
-        </whitelist>
-    </filter>
+        </includec>
+    </coverage>
 
 </phpunit>
