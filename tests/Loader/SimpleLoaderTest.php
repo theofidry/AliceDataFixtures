@@ -20,6 +20,7 @@ use Nelmio\Alice\ObjectSet;
 use Nelmio\Alice\ParameterBag;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use stdClass;
 
@@ -28,6 +29,8 @@ use stdClass;
  */
 class SimpleLoaderTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testIsALoader()
     {
         $this->assertTrue(is_a(SimpleLoader::class, LoaderInterface::class, true));
