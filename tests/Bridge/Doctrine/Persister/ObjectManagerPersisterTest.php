@@ -66,7 +66,7 @@ class ObjectManagerPersisterTest extends TestCase
         $this->managerRegistry->method('getManagerForClass')->willReturn($this->entityManager);
         $this->managerRegistry->method('getManagers')->willReturn([$this->entityManager]);
 
-        $this->persister = new ObjectManagerPersister($this->managerRegistry);
+        $this->persister = new ManagerRegistryPersister($this->managerRegistry);
         $this->purger = new ORMPurger($this->entityManager);
     }
 
@@ -81,11 +81,13 @@ class ObjectManagerPersisterTest extends TestCase
     public function testIsAPersister()
     {
         $this->assertTrue(is_a(ObjectManagerPersister::class, PersisterInterface::class, true));
+        $this->assertTrue(is_a(ManagerRegistryPersister::class, PersisterInterface::class, true));
     }
 
     public function testIsNotClonable()
     {
         $this->assertFalse((new ReflectionClass(ObjectManagerPersister::class))->isCloneable());
+        $this->assertFalse((new ReflectionClass(ManagerRegistryPersister::class))->isCloneable());
     }
 
     /**

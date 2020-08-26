@@ -60,7 +60,7 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
         );
 
         $this->assertServiceIsInstanceOf(
-            \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister::class,
+            \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ManagerRegistryPersister::class,
             'fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister'
         );
 
