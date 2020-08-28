@@ -16,7 +16,7 @@ namespace Fidry\AliceDataFixtures\Bridge\DoctrineMongoDB\Purger;
 use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\Dummy;
-use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\ObjectManagerPurger;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -29,7 +29,7 @@ class PurgerTest extends TestCase
     public function testCreatesADoctrineOdmPurgerWithTheAppropriateManager()
     {
         $manager = $this->prophesize(DocumentManager::class)->reveal();
-        $purger = new Purger($manager);
+        $purger = new ObjectManagerPurger($manager);
 
         $decoratedPurgerReflection = (new \ReflectionObject($purger))->getProperty('purger');
         $decoratedPurgerReflection->setAccessible(true);
@@ -50,7 +50,7 @@ class PurgerTest extends TestCase
 
         $this->assertEquals(1, count($manager->getRepository(Dummy::class)->findAll()));
 
-        $purger = new Purger($manager);
+        $purger = new ObjectManagerPurger($manager);
         $purger->purge();
 
         $this->assertEquals(0, count($manager->getRepository(Dummy::class)->findAll()));

@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
-use Doctrine\DBAL\Driver\AbstractMySQLDriver;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver\AbstractMySQLDriver;
 use Doctrine\ORM\EntityManager;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\ORM\FakeEntityManager;
@@ -49,7 +49,7 @@ class PurgerTest extends TestCase
     {
         $manager = new FakeEntityManager();
         $purgeMode = PurgeMode::createTruncateMode();
-        $purger = new Purger($manager, $purgeMode);
+        $purger = new ObjectManagerPurger($manager, $purgeMode);
 
         $decoratedPurgerReflection = (new \ReflectionObject($purger))->getProperty('purger');
         $decoratedPurgerReflection->setAccessible(true);
@@ -76,7 +76,7 @@ class PurgerTest extends TestCase
         $purgerORM->purge()->shouldBeCalled();
 
         $purgeMode = PurgeMode::createDeleteMode();
-        $purger = new Purger($manager->reveal(), $purgeMode);
+        $purger = new ObjectManagerPurger($manager->reveal(), $purgeMode);
 
         $decoratedPurgerReflection = (new \ReflectionObject($purger))->getProperty('purger');
         $decoratedPurgerReflection->setAccessible(true);
@@ -96,7 +96,7 @@ class PurgerTest extends TestCase
 
         $this->assertEquals(1, count($manager->getRepository(Dummy::class)->findAll()));
 
-        $purger = new Purger($manager, PurgeMode::createDeleteMode());
+        $purger = new ObjectManagerPurger($manager, PurgeMode::createDeleteMode());
         $purger->purge();
 
         $this->assertEquals(0, count($manager->getRepository(Dummy::class)->findAll()));
