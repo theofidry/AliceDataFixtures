@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Fidry\AlicePersistence\Bridge\Symfony\Doctrine;
 
 use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Fidry\AliceDataFixtures\Bridge\Symfony\MongoDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineMongodbKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
