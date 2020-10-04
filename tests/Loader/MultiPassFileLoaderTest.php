@@ -25,6 +25,7 @@ use Nelmio\Alice\ParameterBag;
 use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringGenerationException;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use stdClass;
 
@@ -37,6 +38,8 @@ use stdClass;
  */
 class MultiPassFileLoaderTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testIsALoader()
     {
         $this->assertTrue(is_a(MultiPassLoader::class, LoaderInterface::class, true));

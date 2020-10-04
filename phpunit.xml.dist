@@ -30,13 +30,13 @@
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist>
+    <coverage>
+        <include>
             <directory>src</directory>
-            <exclude>
-                <directory>src/Bridge</directory>
-            </exclude>
-        </whitelist>
-    </filter>
+        </include>
+        <exclude>
+            <directory>src/Bridge</directory>
+        </exclude>
+    </coverage>
 
 </phpunit>

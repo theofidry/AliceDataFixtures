@@ -32,13 +32,16 @@
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist>
+    <coverage>
+        <include>
             <directory>src/Bridge/Symfony</directory>
-            <exclude>tests/Bridge/Symfony/Doctrine</exclude>
-            <exclude>tests/Bridge/Symfony/Eloquent</exclude>
-            <exclude>tests/Bridge/Symfony/ProxyManager</exclude>
-        </whitelist>
-    </filter>
+        </include>
+
+        <exclude>
+            <directory>tests/Bridge/Symfony/Doctrine</directory>
+            <directory>tests/Bridge/Symfony/Eloquent</directory>
+            <directory>tests/Bridge/Symfony/ProxyManager</directory>
+        </exclude>
+    </coverage>
 
 </phpunit>
