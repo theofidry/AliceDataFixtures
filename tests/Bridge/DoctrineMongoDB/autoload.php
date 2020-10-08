@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 require __DIR__.'/../../../vendor-bin/doctrine_mongodb/vendor/autoload.php';
 
-use Doctrine\MongoDB\Connection;
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
+use MongoDB\Client;
 
 $config = new Configuration();
 $config->setProxyDir(sys_get_temp_dir().'/mongo_proxies_'.crc32((string) mt_rand()));
@@ -26,6 +26,6 @@ $config->setHydratorNamespace('Hydrators');
 $config->setMetadataDriverImpl(AnnotationDriver::create(__DIR__.'/../../../fixtures/Bridge/Doctrine/MongoDocument'));
 $config->setDefaultDB('fidry_alice_data_fixtures');
 
-$dm = DocumentManager::create(new Connection('mongodb://root:password@localhost:27018'), $config);
+$dm = DocumentManager::create(new Client('mongodb://root:password@localhost:27018', [], ['typeMap' => DocumentManager::CLIENT_TYPEMAP]), $config);
 
 $GLOBALS['document_manager'] = $dm;
