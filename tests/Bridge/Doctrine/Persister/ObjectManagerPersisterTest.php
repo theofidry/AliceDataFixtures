@@ -123,6 +123,38 @@ class ObjectManagerPersisterTest extends TestCase
         $this->assertInstanceOf(DummyWithIdentifier::class, $entity);
     }
 
+    public function testCanPersistEntitiesWhitoutExplicitIdentifierSetEvenWhenExistingEntitiesHaveOne()
+    {
+        $dummy1 = new Dummy();
+        $this->entityManager->persist($dummy1);
+        $this->entityManager->flush();
+
+        // When loading fixtures in real world and existing entity can be persisted again by the persister.
+        // e.g. when this entity has been persisted by a relation with the cascade persist option.
+        $this->persister->persist($dummy1);
+
+        $dummy2 = new Dummy();
+        $this->persister->persist($dummy2);
+
+        $this->assertTrue(
+            $this->entityManager->getClassMetadata(Dummy::class)->usesIdGenerator(),
+            'ID generator should not be changed.'
+        );
+
+        $this->persister->flush();
+
+        $this->assertTrue(
+            $this->entityManager->getClassMetadata(Dummy::class)->usesIdGenerator(),
+            'ID generator should be restored after flush.'
+        );
+
+        $entity = $this->entityManager->getRepository(Dummy::class)->find($dummy1->id);
+        $this->assertInstanceOf(Dummy::class, $entity);
+
+        $entity = $this->entityManager->getRepository(Dummy::class)->find($dummy2->id);
+        $this->assertInstanceOf(Dummy::class, $entity);
+    }
+
     public function testPersistingMultipleEntitiesWithAndWithoutExplicitIdentifierSetWillThrowORMException()
     {
         $this->expectException(\LogicException::class);
