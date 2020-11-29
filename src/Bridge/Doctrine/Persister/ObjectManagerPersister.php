@@ -58,17 +58,19 @@ class ObjectManagerPersister implements PersisterInterface
         if (isset($this->persistableClasses[$class])) {
             $metadata = $this->objectManager->getClassMetadata($class);
 
-            // Check if the ID is explicitly set by the user. To avoid the ID to be overridden by the ID generator
-            // registered, we disable it for that specific object.
-            if ($metadata instanceof ORMClassMetadataInfo) {
-                if ($metadata->usesIdGenerator() && false === empty($metadata->getIdentifierValues($object))) {
-                    $metadata = $this->configureIdGenerator($metadata);
+            if (!$this->objectManager->contains($object)) {
+                // Unless the object is new, check if the ID is explicitly set by the user. To avoid the ID to be
+                // overridden by the ID generator registered, we disable it for that specific object.
+                if ($metadata instanceof ORMClassMetadataInfo) {
+                    if ($metadata->usesIdGenerator() && false === empty($metadata->getIdentifierValues($object))) {
+                        $metadata = $this->configureIdGenerator($metadata);
+                    }
+                } else if ($metadata instanceof ODMClassMetadataInfo) {
+                    // Do nothing: currently not supported as Doctrine ODM does not have an equivalent of the ORM
+                    // AssignedGenerator.
+                } else {
+                    // Do nothing: not supported.
                 }
-            } elseif ($metadata instanceof ODMClassMetadataInfo) {
-                // Do nothing: currently not supported as Doctrine ODM does not have an equivalent of the ORM
-                // AssignedGenerator.
-            } else {
-                // Do nothing: not supported.
             }
 
             try {

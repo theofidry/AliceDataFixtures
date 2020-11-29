@@ -35,6 +35,9 @@ before_install:
   - phpenv config-rm xdebug.ini || true
   - PHPUNIT_FLAGS='--stop-on-failure --verbose'
 
+  # TODO: Allow using Composer version 2 when will wikimedia/composer-merge-plugin support it too.
+  - composer self-update --1
+
 install:
   - perl -pi -e 's/^}$/,"provide":{"ext-mongo":"*"}}/' composer.json
   - composer update --prefer-dist $COMPOSER_FLAGS
