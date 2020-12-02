@@ -22,6 +22,7 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithIdentifier;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithRelation;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterException;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
@@ -95,6 +96,32 @@ class ObjectManagerPersisterTest extends TestCase
         if ($exact) {
             $this->assertEquals($originalEntity, $result[0]);
         }
+    }
+
+    public function testCanPersistAnEntityWithRelationsAndExplicitIds()
+    {
+        $dummy = new Dummy();
+        $dummy->id = 100;
+
+        $dummyWithRelation = new DummyWithRelation();
+        $dummyWithRelation->id = 100;
+        $dummyWithRelation->dummy = $dummy;
+
+        $this->persister->persist($dummyWithRelation);
+        $this->persister->flush();
+
+        $this->persister->persist($dummy);
+        $this->persister->flush();
+
+        $this->entityManager->clear();
+
+        $result = $this->entityManager->getRepository(get_class($dummy))->findOneBy(['id' => 100]);
+        $this->assertNotNull($result);
+        $this->assertEquals($result->id, $dummy->id);
+
+        $result = $this->entityManager->getRepository(get_class($dummyWithRelation))->findOneBy(['id' => 100]);
+        $this->assertNotNull($result);
+        $this->assertEquals($result->id, $dummyWithRelation->id);
     }
 
     public function testCanPersistMultipleEntitiesWithExplicitIdentifierSet()
