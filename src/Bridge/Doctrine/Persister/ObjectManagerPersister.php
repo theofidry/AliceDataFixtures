@@ -58,7 +58,7 @@ class ObjectManagerPersister implements PersisterInterface
         if (isset($this->persistableClasses[$class])) {
             $metadata = $this->objectManager->getClassMetadata($class);
 
-//            if (!$this->objectManager->contains($object)) {
+            if (!$this->objectManager->contains($object)) {
                 // Unless the object is new, check if the ID is explicitly set by the user. To avoid the ID to be
                 // overridden by the ID generator registered, we disable it for that specific object.
                 if ($metadata instanceof ORMClassMetadataInfo) {
@@ -71,7 +71,7 @@ class ObjectManagerPersister implements PersisterInterface
                 } else {
                     // Do nothing: not supported.
                 }
-//            }
+            }
 
             try {
                 $this->objectManager->persist($object);
