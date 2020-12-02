@@ -108,8 +108,6 @@ class ObjectManagerPersisterTest extends TestCase
         $dummyWithRelation->dummy = $dummy;
 
         $this->persister->persist($dummyWithRelation);
-        $this->persister->flush();
-
         $this->persister->persist($dummy);
         $this->persister->flush();
 
