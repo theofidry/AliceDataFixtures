@@ -4,6 +4,7 @@ DOCKER_COMPOSE=docker-compose
 DOCKER_COMPOSE_EXEC=$(DOCKER_COMPOSE) exec
 MYSQL_BIN=$(DOCKER_COMPOSE_EXEC) mysql mysql -u root -h 127.0.0.1
 MONGO_BIN=$(DOCKER_COMPOSE_EXEC) mongo mongo --username root --password password
+COMPOSER_BIN?=composer
 
 .DEFAULT_GOAL := help
 
@@ -52,7 +53,7 @@ remove_sf_cache:
 propel_init:		## Initialize Propel
 propel_init: vendor-bin/propel2/bin/propel
 	bin/propel_init
-	composer bin propel2 dump-autoload
+	$(COMPOSER_BIN) bin propel2 dump-autoload
 
 .PHONY: cs
 cs:             	## Run the CS Fixer
@@ -108,7 +109,7 @@ test_doctrine_bridge: vendor/bamarni \
 
 	vendor-bin/doctrine/bin/doctrine orm:schema-tool:create
 
-	vendor-bin/doctrine/bin/phpunit -c phpunit_doctrine.xml.dist
+	vendor-bin/doctrine/bin/phpunit -c phpunit_doctrine.xml.dist  --verbose --testdox --color
 
 .PHONY: test_doctrine_odm_bridge
 test_doctrine_odm_bridge:			## Run the tests for the Doctrine ODM bridge
@@ -214,11 +215,11 @@ composer.lock: composer.json
 	@echo composer.lock is not up to date.
 
 vendor/phpunit: composer.lock
-	composer update $(COMPOSER_FLAGS)
+	$(COMPOSER_BIN) update $(COMPOSER_FLAGS)
 	touch $@
 
 vendor/bamarni: composer.lock
-	composer update $(COMPOSER_FLAGS)
+	$(COMPOSER_BIN) update $(COMPOSER_FLAGS)
 	touch $@
 
 
@@ -226,7 +227,7 @@ vendor-bin/covers-validator/composer.lock: vendor-bin/covers-validator/composer.
 	@echo covers-validator composer.lock is not up to date
 
 vendor-bin/covers-validator/vendor: vendor-bin/covers-validator/composer.lock
-	composer bin covers-validator update $(COMPOSER_FLAGS)
+	$(COMPOSER_BIN) bin covers-validator update $(COMPOSER_FLAGS)
 	touch $@
 
 
@@ -234,7 +235,7 @@ vendor-bin/php-cs-fixer/composer.lock: vendor-bin/php-cs-fixer/composer.json
 	@echo php-cs-fixer composer.lock is not up to date.
 
 vendor-bin/php-cs-fixer/vendor: vendor-bin/php-cs-fixer/composer.lock
-	composer bin php-cs-fixer update $(COMPOSER_FLAGS)
+	$(COMPOSER_BIN) bin php-cs-fixer update $(COMPOSER_FLAGS)
 	touch $@
 
 
@@ -242,7 +243,7 @@ vendor-bin/doctrine/composer.lock: vendor-bin/doctrine/composer.json
 	@echo vendor-bin/doctrine/composer.lock is not up to date.
 
 vendor-bin/doctrine/vendor/phpunit: vendor-bin/doctrine/composer.lock
-	composer bin doctrine update $(COMPOSER_FLAGS)
+	$(COMPOSER_BIN) bin doctrine update $(COMPOSER_FLAGS)
 	touch $@
 
 
@@ -250,8 +251,8 @@ vendor-bin/doctrine_mongodb/composer.lock: vendor-bin/doctrine_mongodb/composer.
 	@echo vendor-bin/doctrine_mongodb/composer.lock is not up to date.
 
 vendor-bin/doctrine_mongodb/vendor/phpunit: vendor-bin/doctrine_mongodb/composer.lock
-	composer bin doctrine_mongodb update $(COMPOSER_FLAGS) || true
-	composer bin doctrine_mongodb update $(COMPOSER_FLAGS)
+	$(COMPOSER_BIN) bin doctrine_mongodb update $(COMPOSER_FLAGS) || true
+	$(COMPOSER_BIN) bin doctrine_mongodb update $(COMPOSER_FLAGS)
 	touch $@
 
 
@@ -259,11 +260,11 @@ vendor-bin/doctrine_phpcr/composer.lock: vendor-bin/doctrine_phpcr/composer.json
 	@echo vendor-bin/doctrine_phpcr/composer.lock is not up to date.
 
 vendor-bin/doctrine_phpcr/vendor/phpunit: vendor-bin/doctrine_phpcr/composer.lock
-	composer bin doctrine_phpcr update $(COMPOSER_FLAGS)
+	$(COMPOSER_BIN) bin doctrine_phpcr update $(COMPOSER_FLAGS)
 	touch $@
 
 vendor-bin/doctrine_phpcr/bin/phpcrodm: vendor-bin/doctrine_phpcr/composer.lock
-	composer bin doctrine_phpcr update $(COMPOSER_FLAGS)
+	$(COMPOSER_BIN) bin doctrine_phpcr update $(COMPOSER_FLAGS)
 	touch $@
 
 
@@ -271,8 +272,8 @@ vendor-bin/eloquent/composer.lock: vendor-bin/eloquent/composer.json
 	@echo vendor-bin/eloquent/composer.lock is not up to date.
 
 vendor-bin/eloquent/vendor/phpunit: vendor-bin/eloquent/composer.lock
-	composer bin eloquent update $(COMPOSER_FLAGS) || true
-	composer bin eloquent update $(COMPOSER_FLAGS)
+	$(COMPOSER_BIN) bin eloquent update $(COMPOSER_FLAGS) || true
+	$(COMPOSER_BIN) bin eloquent update $(COMPOSER_FLAGS)
 	touch $@
 
 
@@ -280,13 +281,13 @@ vendor-bin/symfony/composer.lock: vendor-bin/symfony/composer.json
 	@echo vendor-bin/symfony/composer.lock is not up to date.
 
 vendor-bin/symfony/vendor/phpunit: vendor-bin/symfony/composer.lock
-	composer bin symfony update $(COMPOSER_FLAGS) || true
-	composer bin symfony update $(COMPOSER_FLAGS)
+	$(COMPOSER_BIN) bin symfony update $(COMPOSER_FLAGS) || true
+	$(COMPOSER_BIN) bin symfony update $(COMPOSER_FLAGS)
 	touch $@
 
 bin/console: vendor-bin/symfony/composer.lock
-	composer bin symfony update $(COMPOSER_FLAGS) || true
-	composer bin symfony update $(COMPOSER_FLAGS)
+	$(COMPOSER_BIN) bin symfony update $(COMPOSER_FLAGS) || true
+	$(COMPOSER_BIN) bin symfony update $(COMPOSER_FLAGS)
 	touch $@
 
 
@@ -294,8 +295,8 @@ vendor-bin/proxy-manager/composer.lock: vendor-bin/proxy-manager/composer.json
 	@echo vendor-bin/proxy-manager/composer.lock is not up to date.
 
 vendor-bin/proxy-manager/vendor/phpunit: vendor-bin/proxy-manager/composer.lock
-	composer bin proxy-manager update $(COMPOSER_FLAGS) || true
-	composer bin proxy-manager update $(COMPOSER_FLAGS)
+	$(COMPOSER_BIN) bin proxy-manager update $(COMPOSER_FLAGS) || true
+	$(COMPOSER_BIN) bin proxy-manager update $(COMPOSER_FLAGS)
 	touch $@
 
 
@@ -303,5 +304,5 @@ vendor-bin/propel2/composer.lock: vendor-bin/propel2/composer.json
 	@echo vendor-bin/propel2/composer.lock is not up to date.
 
 vendor-bin/propel2/bin/propel: vendor-bin/propel2/composer.lock
-	composer bin propel2 update $(COMPOSER_FLAGS)
+	$(COMPOSER_BIN) bin propel2 update $(COMPOSER_FLAGS)
 	touch $@
