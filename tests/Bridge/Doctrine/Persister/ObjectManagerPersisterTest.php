@@ -22,7 +22,9 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithIdentifier;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithRelation;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\IdGenerator;
 use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterException;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use PHPUnit\Framework\TestCase;
@@ -97,6 +99,30 @@ class ObjectManagerPersisterTest extends TestCase
         }
     }
 
+    public function testCanPersistAnEntityWithRelationsAndExplicitIds()
+    {
+        $dummy = new DummyWithIdentifier();
+        $dummy->id = 100;
+
+        $dummyWithRelation = new DummyWithRelation();
+        $dummyWithRelation->id = 200;
+        $dummyWithRelation->dummy = $dummy;
+
+        $this->persister->persist($dummyWithRelation);
+        $this->persister->persist($dummy);
+        $this->persister->flush();
+
+        $this->entityManager->clear();
+
+        $result = $this->entityManager->getRepository(DummyWithIdentifier::class)->findOneBy(['id' => 100]);
+        $this->assertInstanceOf(DummyWithIdentifier::class, $result);
+        $this->assertEquals($result->id, $dummy->id);
+
+        $result = $this->entityManager->getRepository(DummyWithRelation::class)->findOneBy(['id' => 200]);
+        $this->assertInstanceOf(DummyWithRelation::class, $result);
+        $this->assertEquals($result->id, $dummyWithRelation->id);
+    }
+
     public function testCanPersistMultipleEntitiesWithExplicitIdentifierSet()
     {
         $dummy = new DummyWithIdentifier();
@@ -107,15 +133,21 @@ class ObjectManagerPersisterTest extends TestCase
         $dummy->id = 200;
         $this->persister->persist($dummy);
 
-        $this->assertFalse(
-            $this->entityManager->getClassMetadata(DummyWithIdentifier::class)->usesIdGenerator(),
+        $classMetadata = $this->entityManager->getClassMetadata(DummyWithIdentifier::class);
+
+        $this->assertEquals(
+            IdGenerator::class,
+            get_class($classMetadata->idGenerator),
             'ID generator should be changed.'
         );
 
         $this->persister->flush();
 
-        $this->assertTrue(
-            $this->entityManager->getClassMetadata(DummyWithIdentifier::class)->usesIdGenerator(),
+        $classMetadata = $this->entityManager->getClassMetadata(DummyWithIdentifier::class);
+
+        $this->assertNotEquals(
+            IdGenerator::class,
+            get_class($classMetadata->idGenerator),
             'ID generator should be restored after flush.'
         );
 
@@ -123,7 +155,7 @@ class ObjectManagerPersisterTest extends TestCase
         $this->assertInstanceOf(DummyWithIdentifier::class, $entity);
     }
 
-    public function testCanPersistEntitiesWhitoutExplicitIdentifierSetEvenWhenExistingEntitiesHaveOne()
+    public function testCanPersistEntitiesWithoutExplicitIdentifierSetEvenWhenExistingEntitiesHaveOne()
     {
         $dummy1 = new Dummy();
         $this->entityManager->persist($dummy1);
@@ -136,17 +168,7 @@ class ObjectManagerPersisterTest extends TestCase
         $dummy2 = new Dummy();
         $this->persister->persist($dummy2);
 
-        $this->assertTrue(
-            $this->entityManager->getClassMetadata(Dummy::class)->usesIdGenerator(),
-            'ID generator should not be changed.'
-        );
-
         $this->persister->flush();
-
-        $this->assertTrue(
-            $this->entityManager->getClassMetadata(Dummy::class)->usesIdGenerator(),
-            'ID generator should be restored after flush.'
-        );
 
         $entity = $this->entityManager->getRepository(Dummy::class)->find($dummy1->id);
         $this->assertInstanceOf(Dummy::class, $entity);
@@ -155,10 +177,8 @@ class ObjectManagerPersisterTest extends TestCase
         $this->assertInstanceOf(Dummy::class, $entity);
     }
 
-    public function testPersistingMultipleEntitiesWithAndWithoutExplicitIdentifierSetWillThrowORMException()
+    public function testPersistingMultipleEntitiesWithAndWithoutExplicitIdentifierSetWillNotThrowORMException()
     {
-        $this->expectException(\LogicException::class);
-
         $dummy = new DummyWithIdentifier();
         $this->persister->persist($dummy);
 
@@ -225,7 +245,6 @@ class ObjectManagerPersisterTest extends TestCase
                 return $dummy;
             })()
         ];
-
     }
 
     public function provideNonPersistableEntities()

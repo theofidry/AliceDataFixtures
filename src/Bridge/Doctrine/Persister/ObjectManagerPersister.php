@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo as ORMClassMetadataInfo;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\ObjectManager;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\IdGenerator;
 use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterExceptionFactory;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Nelmio\Alice\IsAServiceTrait;
@@ -58,19 +59,17 @@ class ObjectManagerPersister implements PersisterInterface
         if (isset($this->persistableClasses[$class])) {
             $metadata = $this->objectManager->getClassMetadata($class);
 
-            if (!$this->objectManager->contains($object)) {
-                // Unless the object is new, check if the ID is explicitly set by the user. To avoid the ID to be
-                // overridden by the ID generator registered, we disable it for that specific object.
-                if ($metadata instanceof ORMClassMetadataInfo) {
-                    if ($metadata->usesIdGenerator() && false === empty($metadata->getIdentifierValues($object))) {
-                        $metadata = $this->configureIdGenerator($metadata);
-                    }
-                } else if ($metadata instanceof ODMClassMetadataInfo) {
-                    // Do nothing: currently not supported as Doctrine ODM does not have an equivalent of the ORM
-                    // AssignedGenerator.
-                } else {
-                    // Do nothing: not supported.
+            // Check if the ID is explicitly set by the user. To avoid the ID to be overridden by the ID generator
+            // registered, we disable it for that specific object.
+            if ($metadata instanceof ORMClassMetadataInfo) {
+                if ($metadata->usesIdGenerator() && false === empty($metadata->getIdentifierValues($object))) {
+                    $metadata = $this->configureIdGenerator($metadata);
                 }
+            } else if ($metadata instanceof ODMClassMetadataInfo) {
+                // Do nothing: currently not supported as Doctrine ODM does not have an equivalent of the ORM
+                // AssignedGenerator.
+            } else {
+                // Do nothing: not supported.
             }
 
             try {
@@ -130,8 +129,8 @@ class ObjectManagerPersister implements PersisterInterface
         $this->saveMetadataToRestore($metadata);
 
         $newMetadata = clone $metadata;
-        $newMetadata->setIdGeneratorType(ORMClassMetadataInfo::GENERATOR_TYPE_NONE);
-        $newMetadata->setIdGenerator(new ORMAssignedGenerator());
+        $newMetadata->setIdGeneratorType(IdGenerator::GENERATOR_TYPE_ALICE);
+        $newMetadata->setIdGenerator(new IdGenerator($metadata->idGenerator));
 
         $this->objectManager->getMetadataFactory()->setMetadataFor($metadata->getName(), $newMetadata);
 
