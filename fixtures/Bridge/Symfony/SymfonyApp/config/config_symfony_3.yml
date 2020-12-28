@@ -11,7 +11,6 @@ framework:
     secret: test
     router:
         resource: ~
-        utf8: true
     form:
         enabled: false
     validation:
@@ -19,5 +18,3 @@ framework:
         enable_annotations: true
     session: ~
     test: ~
-    cache:
-        default_pdo_provider: null # Defaults to a doctrine service id based on class existence, which breaks when doctrine bundle is not configured.

@@ -38,9 +38,17 @@ abstract class IsolatedKernel extends Kernel
             public function process(ContainerBuilder $container)
             {
                 foreach ($container->getDefinitions() as $id => $definition) {
+                    if (strpos($id, 'fidry_alice_data_fixtures') !== 0) {
+                        continue;
+                    }
+
                     $definition->setPublic(true);
                 }
                 foreach ($container->getAliases() as $id => $definition) {
+                    if (strpos($id, 'fidry_alice_data_fixtures') !== 0) {
+                        continue;
+                    }
+
                     $definition->setPublic(true);
                 }
             }
@@ -51,7 +59,7 @@ abstract class IsolatedKernel extends Kernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $baseConfig = version_compare(Kernel::VERSION, '4.4.0', '>=') ? 'config_symfony_5.yml' : 'config.yml';
+        $baseConfig = version_compare(Kernel::VERSION, '4.0.0', '<') ? 'config_symfony_3.yml' : 'config.yml';
 
         $loader->load(__DIR__."/config/$baseConfig");
     }
