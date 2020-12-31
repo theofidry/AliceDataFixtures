@@ -4,7 +4,7 @@ AliceDataFixtures
 [Alice](https://github.com/nelmio/alice) 3.x no longer ships with a persistence layer, so this library provides one!
 
 [![Package version](https://img.shields.io/packagist/v/theofidry/alice-data-fixtures.svg?style=flat-square)](https://packagist.org/packages/theofidry/alice-data-fixtures)
-[![Build Status](https://img.shields.io/travis/theofidry/AliceDataFixtures/master.svg?style=flat-square)](https://travis-ci.com/theofidry/AliceDataFixtures?branch=master)
+[![Build Status](https://github.com/theofidry/AliceDataFixtures/workflows/Test/badge.svg?branch=master)](https://github.com/theofidry/AliceDataFixtures/workflows/Test/badge.svg?branch=master)
 [![Slack](https://img.shields.io/badge/slack-%23alice--fixtures-red.svg?style=flat-square)](https://symfony-devs.slack.com/shared_invite/MTYxMjcxMjc0MTc5LTE0OTA3ODE4OTQtYzc4NWVmMzRmZQ)
 [![license](https://img.shields.io/badge/license-MIT-red.svg?style=flat-square)](LICENSE)
 

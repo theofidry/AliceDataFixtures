@@ -39,6 +39,14 @@ class FakeMigrationRepository implements MigrationRepositoryInterface
     /**
      * @inheritdoc
      */
+    public function getMigrationBatches()
+    {
+        $this->__call(__METHOD__, func_get_args());
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getLast()
     {
         $this->__call(__METHOD__, func_get_args());
