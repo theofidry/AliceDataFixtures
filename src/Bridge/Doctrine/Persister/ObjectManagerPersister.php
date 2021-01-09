@@ -62,7 +62,7 @@ class ObjectManagerPersister implements PersisterInterface
             // Check if the ID is explicitly set by the user. To avoid the ID to be overridden by the ID generator
             // registered, we disable it for that specific object.
             if ($metadata instanceof ORMClassMetadataInfo) {
-                if ($metadata->usesIdGenerator() && false === empty($metadata->getIdentifierValues($object))) {
+                if ($metadata->usesIdGenerator() && 0 !== count($metadata->getIdentifierValues($object)) && !$metadata->idGenerator instanceof IdGenerator) {
                     $metadata = $this->configureIdGenerator($metadata);
                 }
             } else if ($metadata instanceof ODMClassMetadataInfo) {
