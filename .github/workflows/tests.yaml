@@ -17,6 +17,7 @@ jobs:
                 php-version:
                     - '7.3'
                     - '7.4'
+                    - '8.0'
                 dependencies: [ highest ]
                 variant: [ normal ]
                 include:
@@ -30,6 +31,15 @@ jobs:
                         dependencies: highest
                         variant: 'symfony/symfony:"~4.4.0"'
                     -   php-version: '7.4'
+                        dependencies: highest
+                        variant: 'symfony/symfony:"~5.2.0"'
+                    -   php-version: '8.0'
+                        dependencies: highest
+                        variant: 'symfony/symfony:"~3.4.0"'
+                    -   php-version: '8.0'
+                        dependencies: highest
+                        variant: 'symfony/symfony:"~4.4.0"'
+                    -   php-version: '8.0'
                         dependencies: highest
                         variant: 'symfony/symfony:"~5.2.0"'
 
