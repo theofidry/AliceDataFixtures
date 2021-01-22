@@ -62,5 +62,11 @@ jobs:
                     dependency-versions: ${{ matrix.dependencies }}
                     composer-options: "--prefer-dist --prefer-stable"
 
+            -   name: Remove dependencies not compatible with PHP 8
+                if: matrix.php-version == '8.0'
+                run: |
+                    cd vendor-bin/proxy-manager && composer remove --dev --no-update doctrine/mongodb-odm-bundle && cd -
+                    cd vendor-bin/symfony && composer remove --dev --no-update doctrine/mongodb-odm-bundle && cd -
+
             -   name: Run Tests
                 run: make start_databases && make test
