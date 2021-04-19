@@ -49,17 +49,15 @@
                  public="true" />
 
         <service id="fidry_alice_data_fixtures.persistence.doctrine_phpcr.purger.purger_factory"
-                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger"
+                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\ManagerRegistryPurger"
                  lazy="true">
-            <!-- TODO: Change to <argument type="service" id="doctrine_phpcr" />-->
-            <argument type="service" id="doctrine_phpcr.odm.document_manager" />
+            <argument type="service" id="doctrine_phpcr" />
         </service>
 
         <service id="fidry_alice_data_fixtures.persistence.purger.doctrine_phpcr.odm_purger"
-                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger"
+                 class="Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\ManagerRegistryPurger"
                  lazy="true">
-            <!-- TODO: Change to <argument type="service" id="doctrine_phpcr" />-->
-            <argument type="service" id="doctrine_phpcr.odm.document_manager" />
+            <argument type="service" id="doctrine_phpcr" />
 
             <!-- Deprecated (see DeprecateServicesPass) -->
         </service>
