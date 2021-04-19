@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use const E_USER_DEPRECATED;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use function trigger_error;

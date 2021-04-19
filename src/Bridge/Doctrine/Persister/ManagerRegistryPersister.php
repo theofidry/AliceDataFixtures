@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use function get_class;
 use function implode;
