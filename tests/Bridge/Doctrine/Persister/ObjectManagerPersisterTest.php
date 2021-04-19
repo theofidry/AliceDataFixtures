@@ -77,6 +77,7 @@ class ObjectManagerPersisterTest extends TestCase
      */
     public function tearDown(): void
     {
+        $this->entityManager->getUnitOfWork()->clear();
         $this->purger->purge();
     }
 
