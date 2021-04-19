@@ -11,12 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
+namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
 
 use function array_map;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
-use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\ObjectManagerPurger;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
