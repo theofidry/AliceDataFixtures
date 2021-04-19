@@ -18,6 +18,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\ObjectManagerPurger;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger
@@ -26,6 +27,8 @@ use PHPUnit\Framework\TestCase;
  */
 class PurgerTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testCreatesADoctrineOdmPurgerWithTheAppropriateManager()
     {
         $manager = $this->prophesize(DocumentManager::class)->reveal();

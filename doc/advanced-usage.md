@@ -98,7 +98,7 @@ namespace Acme\Alice\Purger;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Doctrine\Common\DataFixtures\Purger\PurgerInterface as DoctrinePurgerInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
@@ -262,21 +262,21 @@ class FooTest extends TestCase
 
         $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.loader.doctrine');
         $this->doctrine = $this->kernel->getContainer()->get('doctrine');
-        
+
         $connection = $this->doctrine->getConnection();
-        
+
         // If you are using auto-increment IDs, you might want to reset them. It is usually better to purge/reset
         // things at the beginning of a test so that in case of a failure, you are not ending up in a broken state.
         // With PostgreSQL:
         $connection->executeQuery('ALTER SEQUENCE dummy_sequence RESTART');
         // With MySQL:
         $connection->executeQuery('ALTER TABLE dummy AUTO_INCREMENT = 1');
-        
+
         // Related to the possible failures - see the comment above, you might want to empty some tables here as well.
         // Maybe by using the purger like in the example above? Up to you.
         // It is also a good practice to clear all the repositories. How you collect all of the repositories: leveraging
         // the framework or manually is up to you.
-        
+
         $connection->beginTransaction();
     }
 
@@ -322,7 +322,7 @@ class DatabaseContext implements Context
     {
         $this->doctrine = $doctrine;
     }
-    
+
     /**
      * @BeforeScenario
      */
@@ -340,7 +340,7 @@ class DatabaseContext implements Context
     public function resetSequences()
     {
         $connection = $this->doctrine->getConnection();
-                
+
         // If you are using auto-increment IDs, you might want to reset them. It is usually better to purge/reset
         // things at the beginning of a test so that in case of a failure, you are not ending up in a broken state.
         // With PostgreSQL:

@@ -13,8 +13,9 @@ declare(strict_types=1);
 
 namespace Fidry\AlicePersistence\Bridge\Symfony\Doctrine;
 
+use Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle;
 use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Fidry\AliceDataFixtures\Bridge\Symfony\MongoDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineMongodbKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
@@ -64,6 +65,10 @@ class MongodbLoaderIntegrationTest extends TestCase
      */
     public function setUp(): void
     {
+        if (!class_exists(DoctrineMongoDBBundle::class)) {
+            $this->markTestSkipped('Need doctrine/mongodb-odm-bundle package.');
+        }
+
         $this->kernel = new DoctrineMongodbKernel(static::$seed, true);
         $this->kernel->boot();
 

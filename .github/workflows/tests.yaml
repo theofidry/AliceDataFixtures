@@ -1,0 +1,72 @@
+name: Test
+
+on: [push, pull_request]
+
+# this fixes the input device is not a TTY .. see https://github.com/docker/compose/issues/5696
+env:
+    COMPOSE_INTERACTIVE_NO_CLI: 1
+
+jobs:
+    test:
+        name: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} + ${{ matrix.variant }}
+
+        runs-on: ubuntu-18.04
+
+        strategy:
+            matrix:
+                php-version:
+                    - '7.3'
+                    - '7.4'
+                    - '8.0'
+                dependencies: [ highest ]
+                variant: [ normal ]
+                include:
+                    -   php-version: '7.3'
+                        dependencies: lowest
+                        variant: normal
+                    -   php-version: '7.4'
+                        dependencies: highest
+                        variant: 'symfony/symfony:"~3.4.0"'
+                    -   php-version: '7.4'
+                        dependencies: highest
+                        variant: 'symfony/symfony:"~4.4.0"'
+                    -   php-version: '7.4'
+                        dependencies: highest
+                        variant: 'symfony/symfony:"~5.2.0"'
+
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+
+            -   name: Install PHP with extensions
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-version }}
+                    coverage: xdebug
+                    tools: phpenv, pecl, composer:v1 # TODO: Allow using Composer version 2 when will wikimedia/composer-merge-plugin support it too.
+                    extensions: mongodb-1.9.0
+
+            -   name: Configure
+                run: |
+                    set -eo pipefail
+                    PHPUNIT_FLAGS='--stop-on-failure --verbose'
+                    perl -pi -e 's/^}$/,"provide":{"ext-mongo":"*"}}/' composer.json
+
+            -   name: Install variant
+                if: matrix.variant != 'normal'
+                run: composer require --dev --no-update ${{ matrix.variant }}
+
+            -   name: Install Composer dependencies (${{ matrix.dependencies }})
+                uses: ramsey/composer-install@v1
+                with:
+                    dependency-versions: ${{ matrix.dependencies }}
+                    composer-options: "--prefer-dist --prefer-stable"
+
+            -   name: Remove dependencies not compatible with PHP 8
+                if: matrix.php-version == '8.0'
+                run: |
+                    cd vendor-bin/proxy-manager && composer remove --dev --no-update doctrine/mongodb-odm-bundle && cd -
+                    cd vendor-bin/symfony && composer remove --dev --no-update doctrine/mongodb-odm-bundle && cd -
+
+            -   name: Run Tests
+                run: make start_databases && make test
