@@ -17,7 +17,7 @@ use Doctrine\Common\DataFixtures\Purger\MongoDBPurger as DoctrineMongoDBPurger;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger as DoctrinePhpCrPurger;
 use Doctrine\Common\DataFixtures\Purger\PurgerInterface as DoctrinePurgerInterface;
-use Doctrine\DBAL\Driver\AbstractMySQLDriver;
+use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\ODM\MongoDB\DocumentManager as DoctrineMongoDocumentManager;
 use Doctrine\ODM\PHPCR\DocumentManager as DoctrinePhpCrDocumentManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -98,7 +98,7 @@ use Nelmio\Alice\IsAServiceTrait;
         $disableFkChecks = (
             $this->purger instanceof DoctrineOrmPurger
             && in_array($this->purgeMode->getValue(), [PurgeMode::createDeleteMode()->getValue(), PurgeMode::createTruncateMode()->getValue()])
-            && $this->purger->getObjectManager()->getConnection()->getDriver() instanceof AbstractMySQLDriver
+            && $this->purger->getObjectManager()->getConnection()->getDatabasePlatform() instanceof MySqlPlatform
         );
 
         if ($disableFkChecks) {

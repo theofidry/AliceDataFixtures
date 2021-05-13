@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
-use Doctrine\DBAL\Driver\AbstractMySQLDriver;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\ORM\EntityManager;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\ORM\FakeEntityManager;
@@ -67,7 +67,7 @@ class PurgerTest extends TestCase
     public function testDisableFKChecksOnDeleteIsPerformed()
     {
         $connection = $this->prophesize(Connection::class);
-        $connection->getDriver()->willReturn($this->prophesize(AbstractMySQLDriver::class)->reveal());
+        $connection->getDatabasePlatform()->willReturn($this->prophesize(MySqlPlatform::class)->reveal());
         $connection->exec('SET FOREIGN_KEY_CHECKS = 0;')->shouldBeCalled();
         $connection->exec('SET FOREIGN_KEY_CHECKS = 1;')->shouldBeCalled();
 
