@@ -44,7 +44,7 @@ jobs:
                     php-version: ${{ matrix.php-version }}
                     coverage: xdebug
                     tools: phpenv, pecl, composer:v2
-                    extensions: mongodb-1.9.0
+                    extensions: mongodb
 
             -   name: Configure
                 run: |
