@@ -15,24 +15,21 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '7.3'
                     - '7.4'
                     - '8.0'
+                    - '8.1'
                 dependencies: [ highest ]
                 variant: [ normal ]
                 include:
-                    -   php-version: '7.3'
+                    -   php-version: '7.4'
                         dependencies: lowest
                         variant: normal
-                    -   php-version: '7.4'
-                        dependencies: highest
-                        variant: 'symfony/symfony:"~3.4.0"'
                     -   php-version: '7.4'
                         dependencies: highest
                         variant: 'symfony/symfony:"~4.4.0"'
                     -   php-version: '7.4'
                         dependencies: highest
-                        variant: 'symfony/symfony:"~5.2.0"'
+                        variant: 'symfony/symfony:"~5.3.0"'
 
         steps:
             -   name: Checkout
