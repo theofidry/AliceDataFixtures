@@ -57,7 +57,7 @@ jobs:
                 run: composer require --dev --no-update ${{ matrix.variant }}
 
             -   name: Install Composer dependencies (${{ matrix.dependencies }})
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install
                 with:
                     dependency-versions: ${{ matrix.dependencies }}
                     composer-options: "--prefer-dist --prefer-stable"
