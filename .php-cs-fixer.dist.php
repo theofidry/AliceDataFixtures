@@ -21,17 +21,19 @@ $finder = Finder::create()
         __DIR__.'/src',
         __DIR__.'/tests',
     ])
+    ->exclude(
+        'fixtures/Bridge/Symfony/SymfonyApp/cache',
+    )
     ->append([
         __DIR__.'/.php_cs.dist',
     ])
 ;
 
-return Config::create()
+return (new Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@PSR2' => true,
         'blank_line_after_opening_tag' => true,
-        'blank_line_before_return' => true,
         'cast_spaces' => true,
         'combine_consecutive_unsets' => true,
         'declare_equal_normalize' => true,
@@ -41,16 +43,15 @@ return Config::create()
         'header_comment' => [
             'location' => 'after_open',
             'header' => <<<'LICENSE'
-This file is part of the Fidry\AliceDataFixtures package.
-
-(c) Théo FIDRY <theo.fidry@gmail.com>
-
-For the full copyright and license information, please view the LICENSE
-file that was distributed with this source code.
-LICENSE
+            This file is part of the Fidry\AliceDataFixtures package.
+            
+            (c) Théo FIDRY <theo.fidry@gmail.com>
+            
+            For the full copyright and license information, please view the LICENSE
+            file that was distributed with this source code.
+            LICENSE
         ],
         'lowercase_cast' => true,
-        'method_separation' => true,
         'modernize_types_casting' => true,
         'native_function_casing' => true,
         'new_with_braces' => true,

@@ -15,7 +15,6 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\ORMException;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyEmbeddable;
@@ -25,7 +24,6 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithIdentifier;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithRelation;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\IdGenerator;
-use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterException;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
