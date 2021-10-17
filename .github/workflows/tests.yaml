@@ -43,7 +43,7 @@ jobs:
                 with:
                     php-version: ${{ matrix.php-version }}
                     coverage: xdebug
-                    tools: phpenv, pecl, composer:v1 # TODO: Allow using Composer version 2 when will wikimedia/composer-merge-plugin support it too.
+                    tools: phpenv, pecl, composer:v2
                     extensions: mongodb-1.9.0
 
             -   name: Configure
