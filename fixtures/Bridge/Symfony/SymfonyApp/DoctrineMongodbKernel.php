@@ -28,14 +28,11 @@ class DoctrineMongodbKernel extends IsolatedKernel
             new FrameworkBundle(),
             new NelmioAliceBundle(),
             new FidryAliceDataFixturesBundle(),
+            new DoctrineMongoDBBundle(),
         ];
 
         if (class_exists(PsyshBundle::class)) {
             $bundles[] = new PsyshBundle();
-        }
-
-        if (class_exists(DoctrineMongoDBBundle::class)) {
-            $bundles[] = new DoctrineMongoDBBundle();
         }
 
         return $bundles;
