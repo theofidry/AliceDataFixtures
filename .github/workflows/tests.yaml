@@ -64,25 +64,25 @@ jobs:
                     composer-options: "--prefer-dist --prefer-stable"
 
             # Split the bin updates to avoid GA to time-out the task
-            -   name: Install Composer bin dependencies
+            -   name: Install doctrine Composer bin dependencies
                 run: composer bin doctrine update
 
-            -   name: Install Composer bin dependencies
+            -   name: Install MongoDB Composer bin dependencies
                 run: composer bin doctrine_mongodb update
 
-            -   name: Install Composer bin dependencies
+            -   name: Install PHPCR Composer bin dependencies
                 run: composer bin doctrine_phpcr update
 
-            -   name: Install Composer bin dependencies
+            -   name: Install Eloquent Composer bin dependencies
                 run: composer bin eloquent update
 
-            -   name: Install Composer bin dependencies
+            -   name: Install ProxyManager Composer bin dependencies
                 run: composer bin proxy-manager update
 
-            -   name: Install Composer bin dependencies
+            -   name: Install Symfony Composer bin dependencies
                 run: composer bin symfony update
 
-            -   name: Install Composer bin dependencies
+            -   name: Install remaining Composer bin dependencies
                 run: composer bin all install
 
             -   name: Start the Docker containers
