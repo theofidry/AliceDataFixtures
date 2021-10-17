@@ -63,7 +63,7 @@ jobs:
                     composer-options: "--prefer-dist --prefer-stable"
 
             -   name: Install Composer bin dependencies
-                run: composer bin symfony install
+                run: composer bin all update
 
             -   name: Start the Docker containers
                 run: make start_databases
