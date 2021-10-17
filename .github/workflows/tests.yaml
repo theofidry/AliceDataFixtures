@@ -57,10 +57,16 @@ jobs:
                 run: composer require --dev --no-update ${{ matrix.variant }}
 
             -   name: Install Composer dependencies (${{ matrix.dependencies }})
-                uses: ramsey/composer-install@v1
+                uses: ramsey/composer-install@v2
                 with:
                     dependency-versions: ${{ matrix.dependencies }}
                     composer-options: "--prefer-dist --prefer-stable"
 
+            -   name: Install Composer bin dependencies
+                run: composer bin symfony install
+
+            -   name: Start the Docker containers
+                run: make start_databases
+
             -   name: Run Tests
-                run: make start_databases && make test
+                run: make test
