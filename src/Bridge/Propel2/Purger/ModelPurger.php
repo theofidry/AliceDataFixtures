@@ -18,7 +18,6 @@ use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use Nelmio\Alice\IsAServiceTrait;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Propel\Runtime\Propel;
 use RuntimeException;
 
 /**

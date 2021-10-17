@@ -65,7 +65,7 @@ class ObjectManagerPersister implements PersisterInterface
                 if ($metadata->usesIdGenerator() && 0 !== count($metadata->getIdentifierValues($object)) && !$metadata->idGenerator instanceof IdGenerator) {
                     $metadata = $this->configureIdGenerator($metadata);
                 }
-            } else if ($metadata instanceof ODMClassMetadataInfo) {
+            } elseif ($metadata instanceof ODMClassMetadataInfo) {
                 // Do nothing: currently not supported as Doctrine ODM does not have an equivalent of the ORM
                 // AssignedGenerator.
             } else {
