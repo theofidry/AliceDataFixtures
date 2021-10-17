@@ -8,6 +8,7 @@ on:
 # this fixes the input device is not a TTY .. see https://github.com/docker/compose/issues/5696
 env:
     COMPOSE_INTERACTIVE_NO_CLI: 1
+    DB_HOST: 'mysql'
 
 jobs:
     test:
