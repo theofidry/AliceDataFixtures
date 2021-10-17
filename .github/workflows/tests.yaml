@@ -63,8 +63,27 @@ jobs:
                     dependency-versions: ${{ matrix.dependencies }}
                     composer-options: "--prefer-dist --prefer-stable"
 
+            # Split the bin updates to avoid GA to time-out the task
             -   name: Install Composer bin dependencies
-                run: composer bin all update
+                run: composer bin doctrine update
+
+            -   name: Install Composer bin dependencies
+                run: composer bin doctrine_mongodb update
+
+            -   name: Install Composer bin dependencies
+                run: composer bin doctrine_phpcr update
+
+            -   name: Install Composer bin dependencies
+                run: composer bin eloquent update
+
+            -   name: Install Composer bin dependencies
+                run: composer bin proxy-manager update
+
+            -   name: Install Composer bin dependencies
+                run: composer bin symfony update
+
+            -   name: Install Composer bin dependencies
+                run: composer bin all install
 
             -   name: Start the Docker containers
                 run: make start_databases
