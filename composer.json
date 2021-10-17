@@ -32,8 +32,8 @@
     },
     "conflict": {
         "doctrine/orm": "<2.6.3",
-        "doctrine/persistence": "<1.4",
-        "illuminate/database": "<5.5",
+        "doctrine/persistence": "<2.0",
+        "illuminate/database": "<8.12",
         "ocramius/proxy-manager": "<2.1",
         "symfony/framework-bundle": "<4.4 || >5.0,<5.3",
         "zendframework/zend-code": "<3.3.1"
