@@ -66,21 +66,27 @@ jobs:
             # Split the bin updates to avoid GA to time-out the task
             -   name: Install doctrine Composer bin dependencies
                 run: composer bin doctrine update
+                timeout-minutes: 2
 
             -   name: Install MongoDB Composer bin dependencies
                 run: composer bin doctrine_mongodb update
+                timeout-minutes: 2
 
             -   name: Install PHPCR Composer bin dependencies
                 run: composer bin doctrine_phpcr update
+                timeout-minutes: 2
 
             -   name: Install Eloquent Composer bin dependencies
                 run: composer bin eloquent update
+                timeout-minutes: 2
 
             -   name: Install ProxyManager Composer bin dependencies
                 run: composer bin proxy-manager update
+                timeout-minutes: 2
 
             -   name: Install Symfony Composer bin dependencies
                 run: composer bin symfony update
+                timeout-minutes: 2
 
             -   name: Install remaining Composer bin dependencies
                 run: composer bin all install
