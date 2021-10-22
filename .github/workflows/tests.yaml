@@ -80,8 +80,14 @@ jobs:
                 run: composer bin eloquent update
                 timeout-minutes: 2
 
+            # There is a known issue here with Composer
+            # see https://github.com/composer/composer/issues/10200
+            # Meanwhile we break down the installation as a workaround
             -   name: Install ProxyManager Composer bin dependencies
-                run: composer bin proxy-manager update
+                run: |
+                    composer bin proxy-manager remove symfony/symfony --no-update \
+                    && composer bin proxy-manager update \
+                    && composer bin proxy-manager require "symfony/symfony:^4.4.32 || ^5.3.9"
                 timeout-minutes: 2
 
             -   name: Install Symfony Composer bin dependencies
