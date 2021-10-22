@@ -86,12 +86,12 @@ jobs:
             # Once this is fixed the whole bin dependencies can probably be installed
             # in one step with a timeout adjustment
             -   name: Remove Symfony from ProxyManager Composer bin dependencies
-                run: composer bin proxy-manager remove symfony/symfony --no-update
+                run: composer bin proxy-manager remove --dev symfony/symfony --no-update
             -   name: Install ProxyManager Composer bin dependencies
                 run: composer bin proxy-manager update
                 timeout-minutes: 2
             -   name: Install Symfony for ProxyManager Composer bin dependencies
-                run: composer bin proxy-manager require "symfony/symfony:^4.4.32 || ^5.3.9"
+                run: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.3.9"
                 timeout-minutes: 2
 
             -   name: Install Symfony Composer bin dependencies
