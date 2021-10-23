@@ -28,12 +28,15 @@ jobs:
                     -   php-version: '7.4'
                         dependencies: lowest
                         variant: normal
+                        composer-flags: '--prefer-lowest'
                     -   php-version: '7.4'
                         dependencies: highest
                         variant: 'symfony/symfony:"~4.4.0"'
+                        composer-flags: ''
                     -   php-version: '7.4'
                         dependencies: highest
                         variant: 'symfony/symfony:"~5.3.0"'
+                        composer-flags: ''
 
         steps:
             -   name: Checkout
@@ -53,42 +56,38 @@ jobs:
                     PHPUNIT_FLAGS='--stop-on-failure --verbose'
                     perl -pi -e 's/^}$/,"provide":{"ext-mongo":"*"}}/' composer.json
 
-            -   name: Install variant
-                if: matrix.variant != 'normal'
-                run: composer require --dev --no-update ${{ matrix.variant }}
-
             -   name: Install Composer dependencies (${{ matrix.dependencies }})
                 uses: ramsey/composer-install@v1
                 with:
                     dependency-versions: ${{ matrix.dependencies }}
                     composer-options: "--prefer-dist --prefer-stable"
 
-            # Split the bin updates to avoid GA to time-out the task
+            # Split the bin updates to avoid GA to timeout the task
             -   name: Install doctrine Composer bin dependencies
                 uses: nick-invision/retry@v2
                 with:
-                    command: composer bin doctrine update --prefer-dist --prefer-stable
+                    command: composer bin doctrine update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
                     max_attempts: 3
                     timeout_minutes: 2
 
             -   name: Install MongoDB Composer bin dependencies
                 uses: nick-invision/retry@v2
                 with:
-                    command: composer bin doctrine_mongodb update --prefer-dist --prefer-stable
+                    command: composer bin doctrine_mongodb update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
                     max_attempts: 3
                     timeout_minutes: 2
 
             -   name: Install PHPCR Composer bin dependencies
                 uses: nick-invision/retry@v2
                 with:
-                    command: composer bin doctrine_phpcr update --prefer-dist --prefer-stable
+                    command: composer bin doctrine_phpcr update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
                     max_attempts: 3
                     timeout_minutes: 2
 
             -   name: Install Eloquent Composer bin dependencies
                 uses: nick-invision/retry@v2
                 with:
-                    command: composer bin eloquent update --prefer-dist --prefer-stable
+                    command: composer bin eloquent update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
                     max_attempts: 3
                     timeout_minutes: 2
 
@@ -102,20 +101,32 @@ jobs:
             -   name: Install ProxyManager Composer bin dependencies
                 uses: nick-invision/retry@v2
                 with:
-                    command: composer bin proxy-manager update --prefer-dist --prefer-stable
+                    command: composer bin proxy-manager update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
                     max_attempts: 3
                     timeout_minutes: 2
             -   name: Install Symfony for ProxyManager Composer bin dependencies
+                if: matrix.variant == 'normal'
                 uses: nick-invision/retry@v2
                 with:
-                    command: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.3.9" --prefer-dist --prefer-stable
+                    command: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.3.9" --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
                     max_attempts: 3
                     timeout_minutes: 2
+            -   name: Install Symfony (variant) for ProxyManager Composer bin dependencies
+                if: matrix.variant != 'normal'
+                uses: nick-invision/retry@v2
+                with:
+                    command: composer bin proxy-manager require --dev ${{ matrix.variant }} --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
+                    max_attempts: 3
+                    timeout_minutes: 2
+
+            -   name: Configure Symfony (variant) Composer bin dependencies
+                if: matrix.variant != 'normal'
+                run: composer bin symfony require --dev --no-update ${{ matrix.variant }}
 
             -   name: Install Symfony Composer bin dependencies
                 uses: nick-invision/retry@v2
                 with:
-                    command: composer bin symfony update --prefer-dist --prefer-stable
+                    command: composer bin symfony update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
                     max_attempts: 3
                     timeout_minutes: 2
 
