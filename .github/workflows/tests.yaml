@@ -146,6 +146,8 @@ jobs:
 
             -   name: Start the Docker containers
                 run: make start_databases
+                timeout-minutes: 2
 
             -   name: Run Tests
                 run: make test
+                timeout-minutes: 5
