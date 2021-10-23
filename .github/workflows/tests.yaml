@@ -98,8 +98,12 @@ jobs:
                 run: composer bin symfony update
                 timeout-minutes: 2
 
-            -   name: Install remaining Composer bin dependencies
-                run: composer bin all install
+            -   name: Install CoversValidator Composer bin dependencies
+                run: composer bin covers-validator install
+                timeout-minutes: 2
+
+            -   name: Install PHP-CS-Fixer Composer bin dependencies
+                run: composer bin php-cs-fixer install
                 timeout-minutes: 2
 
             -   name: Start the Docker containers
