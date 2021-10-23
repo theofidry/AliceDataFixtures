@@ -108,14 +108,14 @@ jobs:
                 if: matrix.variant == 'normal'
                 uses: nick-invision/retry@v2
                 with:
-                    command: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.3.9" --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
+                    command: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.3.9" --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --with-dependencies
                     max_attempts: 3
                     timeout_minutes: 2
             -   name: Install Symfony (variant) for ProxyManager Composer bin dependencies
                 if: matrix.variant != 'normal'
                 uses: nick-invision/retry@v2
                 with:
-                    command: composer bin proxy-manager require --dev ${{ matrix.variant }} --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
+                    command: composer bin proxy-manager require --dev ${{ matrix.variant }} --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --with-dependencies
                     max_attempts: 3
                     timeout_minutes: 2
 
