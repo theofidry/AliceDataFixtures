@@ -100,6 +100,7 @@ jobs:
 
             -   name: Install remaining Composer bin dependencies
                 run: composer bin all install
+                timeout-minutes: 2
 
             -   name: Start the Docker containers
                 run: make start_databases
