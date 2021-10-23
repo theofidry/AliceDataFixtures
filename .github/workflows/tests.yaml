@@ -65,20 +65,32 @@ jobs:
 
             # Split the bin updates to avoid GA to time-out the task
             -   name: Install doctrine Composer bin dependencies
-                run: composer bin doctrine update
-                timeout-minutes: 2
+                uses: nick-invision/retry@v2
+                with:
+                    command: composer bin doctrine update --prefer-dist --prefer-stable
+                    max_attempts: 3
+                    timeout_minutes: 2
 
             -   name: Install MongoDB Composer bin dependencies
-                run: composer bin doctrine_mongodb update
-                timeout-minutes: 2
+                uses: nick-invision/retry@v2
+                with:
+                    command: composer bin doctrine_mongodb update --prefer-dist --prefer-stable
+                    max_attempts: 3
+                    timeout_minutes: 2
 
             -   name: Install PHPCR Composer bin dependencies
-                run: composer bin doctrine_phpcr update
-                timeout-minutes: 2
+                uses: nick-invision/retry@v2
+                with:
+                    command: composer bin doctrine_phpcr update --prefer-dist --prefer-stable
+                    max_attempts: 3
+                    timeout_minutes: 2
 
             -   name: Install Eloquent Composer bin dependencies
-                run: composer bin eloquent update
-                timeout-minutes: 2
+                uses: nick-invision/retry@v2
+                with:
+                    command: composer bin eloquent update --prefer-dist --prefer-stable
+                    max_attempts: 3
+                    timeout_minutes: 2
 
             # There is a known issue here with Composer
             # see https://github.com/composer/composer/issues/10200
@@ -88,23 +100,38 @@ jobs:
             -   name: Remove Symfony from ProxyManager Composer bin dependencies
                 run: composer bin proxy-manager remove --dev symfony/symfony --no-update
             -   name: Install ProxyManager Composer bin dependencies
-                run: composer bin proxy-manager update
-                timeout-minutes: 2
+                uses: nick-invision/retry@v2
+                with:
+                    command: composer bin proxy-manager update --prefer-dist --prefer-stable
+                    max_attempts: 3
+                    timeout_minutes: 2
             -   name: Install Symfony for ProxyManager Composer bin dependencies
-                run: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.3.9"
-                timeout-minutes: 2
+                uses: nick-invision/retry@v2
+                with:
+                    command: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.3.9" --prefer-dist --prefer-stable
+                    max_attempts: 3
+                    timeout_minutes: 2
 
             -   name: Install Symfony Composer bin dependencies
-                run: composer bin symfony update
-                timeout-minutes: 2
+                uses: nick-invision/retry@v2
+                with:
+                    command: composer bin symfony update --prefer-dist --prefer-stable
+                    max_attempts: 3
+                    timeout_minutes: 2
 
             -   name: Install CoversValidator Composer bin dependencies
-                run: composer bin covers-validator install
-                timeout-minutes: 2
+                uses: nick-invision/retry@v2
+                with:
+                    command: composer bin covers-validator install --prefer-dist --prefer-stable
+                    max_attempts: 3
+                    timeout_minutes: 2
 
             -   name: Install PHP-CS-Fixer Composer bin dependencies
-                run: composer bin php-cs-fixer install
-                timeout-minutes: 2
+                uses: nick-invision/retry@v2
+                with:
+                    command: composer bin php-cs-fixer install --prefer-dist --prefer-stable
+                    max_attempts: 3
+                    timeout_minutes: 2
 
             -   name: Start the Docker containers
                 run: make start_databases
