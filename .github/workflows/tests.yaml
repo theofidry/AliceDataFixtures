@@ -122,14 +122,14 @@ jobs:
             -   name: Install CoversValidator Composer bin dependencies
                 uses: nick-invision/retry@v2
                 with:
-                    command: composer bin covers-validator install --prefer-dist --prefer-stable
+                    command: composer bin covers-validator install --prefer-dist
                     max_attempts: 3
                     timeout_minutes: 2
 
             -   name: Install PHP-CS-Fixer Composer bin dependencies
                 uses: nick-invision/retry@v2
                 with:
-                    command: composer bin php-cs-fixer install --prefer-dist --prefer-stable
+                    command: composer bin php-cs-fixer install --prefer-dist
                     max_attempts: 3
                     timeout_minutes: 2
 
