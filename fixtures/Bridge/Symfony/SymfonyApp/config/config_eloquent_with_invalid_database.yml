@@ -14,6 +14,6 @@ wouterj_eloquent:
             host: localhost
             database: unknown
             username: root
-            password:
+            password: password
             prefix: ~
     eloquent: true
