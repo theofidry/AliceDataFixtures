@@ -145,8 +145,11 @@ jobs:
                     timeout_minutes: 2
 
             -   name: Start the Docker containers
-                run: make start_databases
-                timeout-minutes: 2
+                uses: nick-invision/retry@v2
+                with:
+                    command: make start_databases
+                    max_attempts: 3
+                    timeout_minutes: 2
 
             -   name: Run Tests
                 run: make test
