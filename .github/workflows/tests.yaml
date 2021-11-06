@@ -10,6 +10,26 @@ env:
     COMPOSE_INTERACTIVE_NO_CLI: 1
     DB_HOST: 'mysql'
 
+# To keep in sync with docker-compose.yml
+services:
+    mysql:
+        image: mysql:8.0
+        platform: linux/amd64
+        ports:
+            - 3307:3306
+        environment:
+            MYSQL_DATABASE: fidry_alice_data_fixtures
+            MYSQL_ROOT_USER: root
+            MYSQL_ROOT_PASSWORD: password
+    mongo:
+        image: mongo:4.4-bionic
+        ports:
+            - 27018:27017
+        environment:
+            MONGO_INITDB_DATABASE: fidry_alice_data_fixtures
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: password
+
 jobs:
     test:
         name: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} + ${{ matrix.variant }}
@@ -141,13 +161,6 @@ jobs:
                 uses: nick-invision/retry@v2
                 with:
                     command: composer bin php-cs-fixer install --prefer-dist
-                    max_attempts: 3
-                    timeout_minutes: 2
-
-            -   name: Start the Docker containers
-                uses: nick-invision/retry@v2
-                with:
-                    command: make start_databases
                     max_attempts: 3
                     timeout_minutes: 2
 
