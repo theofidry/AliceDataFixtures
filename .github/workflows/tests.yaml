@@ -81,7 +81,7 @@ jobs:
             -   name: Install doctrine Composer bin dependencies
                 uses: nick-invision/retry@v2
                 with:
-                    command: composer bin doctrine update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
+                    command: composer bin doctrine update --prefer-dist --prefer-stable ${{ matrix.composer-flags }} && touch vendor-bin/doctrine/vendor/phpunit
                     max_attempts: 3
                     timeout_minutes: 2
 
