@@ -2,8 +2,8 @@ COVERS_VALIDATOR=php -d zend.enable_gc=0 vendor-bin/covers-validator/bin/covers-
 PHP_CS_FIXER=php -d zend.enable_gc=0 vendor-bin/php-cs-fixer/bin/php-cs-fixer
 DOCKER_COMPOSE=docker-compose
 DOCKER_COMPOSE_EXEC=$(DOCKER_COMPOSE) exec -T
-MYSQL_BIN=$(DOCKER_COMPOSE_EXEC) mysql mysql --user=root --password=password --port=3307 --host=127.0.0.1
-MONGO_BIN=$(DOCKER_COMPOSE_EXEC) mongo mongo --username=root --password=password --port=27018 --host=127.0.0.1
+MYSQL_BIN= mysql --user=root --password=password --port=3307
+MONGO_BIN= mongo --username=root --password=password --port=27018
 
 .DEFAULT_GOAL := help
 
