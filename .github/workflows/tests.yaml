@@ -10,32 +10,10 @@ env:
     COMPOSE_INTERACTIVE_NO_CLI: 1
     DB_HOST: 'mysql'
 
-# To keep in sync with docker-compose.yml
-services:
-    mysql:
-        image: mysql:8.0
-        platform: linux/amd64
-        ports:
-            - 3307:3306
-        environment:
-            MYSQL_DATABASE: fidry_alice_data_fixtures
-            MYSQL_ROOT_USER: root
-            MYSQL_ROOT_PASSWORD: password
-    mongo:
-        image: mongo:4.4-bionic
-        ports:
-            - 27018:27017
-        environment:
-            MONGO_INITDB_DATABASE: fidry_alice_data_fixtures
-            MONGO_INITDB_ROOT_USERNAME: root
-            MONGO_INITDB_ROOT_PASSWORD: password
-
 jobs:
     test:
         name: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} + ${{ matrix.variant }}
-
         runs-on: ubuntu-18.04
-
         strategy:
             matrix:
                 php-version:
@@ -57,7 +35,24 @@ jobs:
                         dependencies: highest
                         variant: 'symfony/symfony:"~5.3.0"'
                         composer-flags: ''
-
+        # To keep in sync with docker-compose.yml
+        services:
+            mysql:
+                image: mysql:8.0
+                ports:
+                    - 3307:3306
+                env:
+                    MYSQL_DATABASE: fidry_alice_data_fixtures
+                    MYSQL_ROOT_USER: root
+                    MYSQL_ROOT_PASSWORD: password
+            mongo:
+                image: mongo:4.4-bionic
+                ports:
+                    - 27018:27017
+                env:
+                    MONGO_INITDB_DATABASE: fidry_alice_data_fixtures
+                    MONGO_INITDB_ROOT_USERNAME: root
+                    MONGO_INITDB_ROOT_PASSWORD: password
         steps:
             -   name: Checkout
                 uses: actions/checkout@v2
