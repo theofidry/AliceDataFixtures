@@ -77,11 +77,22 @@ jobs:
                     dependency-versions: ${{ matrix.dependencies }}
                     composer-options: "--prefer-dist --prefer-stable"
 
-            # Split the bin updates to avoid GA to timeout the task
+            # Split the bin updates to avoid GA to time out the task
+            # The updates apparently need to be repeated as well due to a bug
+            # in the wiki merge plugin
             -   name: Install doctrine Composer bin dependencies
                 uses: nick-invision/retry@v2
                 with:
-                    command: composer bin doctrine update --prefer-dist --prefer-stable ${{ matrix.composer-flags }} && touch vendor-bin/doctrine/vendor/phpunit
+                    command: composer bin doctrine update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
+                    max_attempts: 3
+                    timeout_minutes: 2
+            -   name: Install doctrine Composer bin dependencies
+                run: composer bin doctrine update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
+
+            -   name: Repeat "Install doctrine Composer bin dependencies"
+                uses: nick-invision/retry@v2
+                with:
+                    command: composer bin doctrine_mongodb update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
                     max_attempts: 3
                     timeout_minutes: 2
 
@@ -91,13 +102,8 @@ jobs:
                     command: composer bin doctrine_mongodb update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
                     max_attempts: 3
                     timeout_minutes: 2
-
-            -   name: Install PHPCR Composer bin dependencies
-                uses: nick-invision/retry@v2
-                with:
-                    command: composer bin doctrine_phpcr update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
-                    max_attempts: 3
-                    timeout_minutes: 2
+            -   name: Repeat "Install MongoDB Composer bin dependencies"
+                run: composer bin doctrine_phpcr update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
 
             -   name: Install Eloquent Composer bin dependencies
                 uses: nick-invision/retry@v2
@@ -105,6 +111,8 @@ jobs:
                     command: composer bin eloquent update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
                     max_attempts: 3
                     timeout_minutes: 2
+            -   name: Repeat "Install Eloquent Composer bin dependencies"
+                run: composer bin eloquent update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
 
             # There is a known issue here with Composer
             # see https://github.com/composer/composer/issues/10200
@@ -119,6 +127,8 @@ jobs:
                     command: composer bin proxy-manager update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
                     max_attempts: 3
                     timeout_minutes: 2
+            -   name: Repeat "Install ProxyManager Composer bin dependencies"
+                run: composer bin proxy-manager update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
             -   name: Install Symfony for ProxyManager Composer bin dependencies
                 if: matrix.variant == 'normal'
                 uses: nick-invision/retry@v2
@@ -144,6 +154,8 @@ jobs:
                     command: composer bin symfony update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
                     max_attempts: 3
                     timeout_minutes: 2
+            -   name: Repeat "Install Symfony Composer bin dependencies"
+                run: composer bin symfony update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
 
             -   name: Install CoversValidator Composer bin dependencies
                 uses: nick-invision/retry@v2

@@ -105,7 +105,7 @@ test_doctrine_bridge: vendor/bamarni \
 
 	vendor-bin/doctrine/bin/doctrine orm:schema-tool:create
 
-	vendor-bin/doctrine/vendor/phpunit/phpunit -c phpunit_doctrine.xml.dist
+	vendor-bin/doctrine/bin/phpunit -c phpunit_doctrine.xml.dist
 
 .PHONY: test_doctrine_odm_bridge
 test_doctrine_odm_bridge:			## Run the tests for the Doctrine ODM bridge
