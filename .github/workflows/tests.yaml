@@ -103,6 +103,15 @@ jobs:
                     max_attempts: 3
                     timeout_minutes: 2
             -   name: Repeat "Install MongoDB Composer bin dependencies"
+                run: composer bin doctrine_mongodb update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
+
+            -   name: Install Doctrine PHPCR Composer bin dependencies
+                uses: nick-invision/retry@v2
+                with:
+                    command: composer bin doctrine_phpcr update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
+                    max_attempts: 3
+                    timeout_minutes: 2
+            -   name: Repeat "Install Doctrine PHPCR Composer bin dependencies"
                 run: composer bin doctrine_phpcr update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
 
             -   name: Install Eloquent Composer bin dependencies
