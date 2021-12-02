@@ -9,6 +9,7 @@ on:
 env:
     COMPOSE_INTERACTIVE_NO_CLI: 1
     MYSQL_HOST: '127.0.0.1'
+    DB_HOST: '127.0.0.1'
 
 jobs:
     test:
