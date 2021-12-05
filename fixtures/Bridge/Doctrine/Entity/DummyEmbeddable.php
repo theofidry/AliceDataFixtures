@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Entity;
 
+use Doctrine\ORM\Mapping\Embeddable;
+
 /**
  * @Embeddable
  */

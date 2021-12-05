@@ -159,7 +159,7 @@ class ObjectManagerPersisterTest extends TestCase
         $this->entityManager->persist($dummy1);
         $this->entityManager->flush();
 
-        // When loading fixtures in real world and existing entity can be persisted again by the persister.
+        // When loading fixtures in real world an existing entity can be persisted again by the persister.
         // e.g. when this entity has been persisted by a relation with the cascade persist option.
         $this->persister->persist($dummy1);
 
