@@ -127,7 +127,6 @@ jobs:
                 run: composer bin symfony require --dev --no-update ${{ matrix.variant }}
 
             -   name: Install Symfony Composer bin dependencies
-                uses: nick-invision/retry@v2
                 run: composer bin symfony update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
             -   name: Repeat "Install Symfony Composer bin dependencies"
                 run: composer bin symfony update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
