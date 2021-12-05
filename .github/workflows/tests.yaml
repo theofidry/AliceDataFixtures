@@ -32,10 +32,10 @@ jobs:
 #                        dependencies: highest
 #                        variant: 'symfony/symfony:"~4.4.0"'
 #                        composer-flags: ''
-                    -   php-version: '7.4'
-                        dependencies: highest
-                        variant: 'symfony/symfony:"~5.3.0"'
-                        composer-flags: ''
+#                    -   php-version: '7.4'
+#                        dependencies: highest
+#                        variant: 'symfony/symfony:"~5.3.0"'
+#                        composer-flags: ''
         # To keep in sync with docker-compose.yml
         services:
             mysql:
