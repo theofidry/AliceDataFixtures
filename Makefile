@@ -2,8 +2,13 @@ COVERS_VALIDATOR=php -d zend.enable_gc=0 vendor-bin/covers-validator/bin/covers-
 PHP_CS_FIXER=php -d zend.enable_gc=0 vendor-bin/php-cs-fixer/bin/php-cs-fixer
 DOCKER_COMPOSE=docker-compose
 DOCKER_COMPOSE_EXEC=$(DOCKER_COMPOSE) exec -T
-MYSQL_BIN=$(DOCKER_COMPOSE_EXEC) mysql mysql -u root -h 127.0.0.1
-MONGO_BIN=$(DOCKER_COMPOSE_EXEC) mongo mongo --username root --password password
+ifeq ("$(CI)", "true")
+MYSQL_BIN=mysql --user=root --password=password --port=3307
+MONGO_BIN=mongo --username=root --password=password --port=27018
+else
+MYSQL_BIN=$(DOCKER_COMPOSE_EXEC) mysql mysql --user=root --password=password --port=3307
+MONGO_BIN=$(DOCKER_COMPOSE_EXEC) mongo mongo --username=root --password=password --port=27018
+endif
 
 .DEFAULT_GOAL := help
 
@@ -85,11 +90,8 @@ test: test_core	\
 	  test_symfony_bridge \
 	  test_symfony_doctrine_bridge \
 	  test_symfony_doctrine_bridge_proxy_manager \
-	  ## Symfony-eloquent related tests are skipped until wouterj/eloquent-bundle's 1.2 release.
-	  ## Re-add `"wouterj/eloquent-bundle": ^1.1" in both symfony and proxy-manager vendor-bin's composer.json
-	  ## and uncomment the following lines once it is released
-	  ## test_symfony_eloquent_bridge \
-	  ## test_symfony_eloquent_bridge_proxy_manager
+	  test_symfony_eloquent_bridge \
+	  test_symfony_eloquent_bridge_proxy_manager
 
 .PHONY: test_core
 test_core:             				## Run the tests for the core library

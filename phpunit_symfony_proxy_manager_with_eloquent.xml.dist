@@ -30,9 +30,9 @@
     </testsuites>
 
     <coverage>
-        <includec>
+        <include>
             <directory>tests/Bridge/Symfony/Eloquent</directory>
-        </includec>
+        </include>
     </coverage>
 
 </phpunit>

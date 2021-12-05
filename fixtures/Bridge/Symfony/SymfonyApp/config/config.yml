@@ -17,7 +17,8 @@ framework:
     validation:
         enabled: true
         enable_annotations: true
-    session: ~
+    session:
+        enabled: false
     test: ~
     cache:
         default_pdo_provider: null # Defaults to a doctrine service id based on class existence, which breaks when doctrine bundle is not configured.

@@ -15,6 +15,6 @@ wouterj_eloquent:
             port: 3307
             database: fidry_alice_data_fixtures
             username: root
-            password: ~
+            password: password
             prefix: ~
     eloquent: true

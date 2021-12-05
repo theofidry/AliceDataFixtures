@@ -14,6 +14,8 @@
 /vendor-bin/*/bin/
 /vendor-bin/*/composer.lock
 /vendor-bin/*/vendor/
+!/vendor-bin/covers-validator/composer.lock
+!/vendor-bin/php-cs-fixer/composer.lock
 /dist/
 /bin/
 !/bin/console
