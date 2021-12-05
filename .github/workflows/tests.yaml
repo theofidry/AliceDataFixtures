@@ -82,45 +82,25 @@ jobs:
             # The updates apparently need to be repeated as well due to a bug
             # in the wiki merge plugin
             -   name: Install doctrine Composer bin dependencies
-                uses: nick-invision/retry@v2
-                with:
-                    command: composer bin doctrine update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
-                    max_attempts: 3
-                    timeout_minutes: 2
+                run: composer bin doctrine update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
             -   name: Install doctrine Composer bin dependencies
                 run: composer bin doctrine update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
 
             -   name: Repeat "Install doctrine Composer bin dependencies"
-                uses: nick-invision/retry@v2
-                with:
-                    command: composer bin doctrine_mongodb update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
-                    max_attempts: 3
-                    timeout_minutes: 2
+                run: composer bin doctrine_mongodb update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
 
             -   name: Install MongoDB Composer bin dependencies
-                uses: nick-invision/retry@v2
-                with:
-                    command: composer bin doctrine_mongodb update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
-                    max_attempts: 3
-                    timeout_minutes: 2
+                run: composer bin doctrine_mongodb update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
             -   name: Repeat "Install MongoDB Composer bin dependencies"
                 run: composer bin doctrine_mongodb update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
 
             -   name: Install Doctrine PHPCR Composer bin dependencies
-                uses: nick-invision/retry@v2
-                with:
-                    command: composer bin doctrine_phpcr update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
-                    max_attempts: 3
-                    timeout_minutes: 2
+                run: composer bin doctrine_phpcr update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
             -   name: Repeat "Install Doctrine PHPCR Composer bin dependencies"
                 run: composer bin doctrine_phpcr update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
 
             -   name: Install Eloquent Composer bin dependencies
-                uses: nick-invision/retry@v2
-                with:
-                    command: composer bin eloquent update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
-                    max_attempts: 3
-                    timeout_minutes: 2
+                run: composer bin eloquent update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
             -   name: Repeat "Install Eloquent Composer bin dependencies"
                 run: composer bin eloquent update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
 
@@ -132,27 +112,15 @@ jobs:
             -   name: Remove Symfony from ProxyManager Composer bin dependencies
                 run: composer bin proxy-manager remove --dev symfony/symfony --no-update
             -   name: Install ProxyManager Composer bin dependencies
-                uses: nick-invision/retry@v2
-                with:
-                    command: composer bin proxy-manager update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
-                    max_attempts: 3
-                    timeout_minutes: 2
+                run: composer bin proxy-manager update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
             -   name: Repeat "Install ProxyManager Composer bin dependencies"
                 run: composer bin proxy-manager update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
             -   name: Install Symfony for ProxyManager Composer bin dependencies
                 if: matrix.variant == 'normal'
-                uses: nick-invision/retry@v2
-                with:
-                    command: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.3.9" --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --with-dependencies
-                    max_attempts: 3
-                    timeout_minutes: 2
+                run: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.3.9" --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --with-dependencies
             -   name: Install Symfony (variant) for ProxyManager Composer bin dependencies
                 if: matrix.variant != 'normal'
-                uses: nick-invision/retry@v2
-                with:
-                    command: composer bin proxy-manager require --dev ${{ matrix.variant }} --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --with-dependencies
-                    max_attempts: 3
-                    timeout_minutes: 2
+                run: composer bin proxy-manager require --dev ${{ matrix.variant }} --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --with-dependencies
 
             -   name: Configure Symfony (variant) Composer bin dependencies
                 if: matrix.variant != 'normal'
@@ -160,26 +128,15 @@ jobs:
 
             -   name: Install Symfony Composer bin dependencies
                 uses: nick-invision/retry@v2
-                with:
-                    command: composer bin symfony update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
-                    max_attempts: 3
-                    timeout_minutes: 2
+                run: composer bin symfony update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
             -   name: Repeat "Install Symfony Composer bin dependencies"
                 run: composer bin symfony update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
 
             -   name: Install CoversValidator Composer bin dependencies
-                uses: nick-invision/retry@v2
-                with:
-                    command: composer bin covers-validator install --prefer-dist
-                    max_attempts: 3
-                    timeout_minutes: 2
+                run: composer bin covers-validator install --prefer-dist
 
             -   name: Install PHP-CS-Fixer Composer bin dependencies
-                uses: nick-invision/retry@v2
-                with:
-                    command: composer bin php-cs-fixer install --prefer-dist
-                    max_attempts: 3
-                    timeout_minutes: 2
+                run: composer bin php-cs-fixer install --prefer-dist
 
             -   name: Run Tests
                 run: make test
