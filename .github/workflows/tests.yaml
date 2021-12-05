@@ -27,7 +27,7 @@ jobs:
                     -   php-version: '7.4'
                         dependencies: highest
                         variant: normal
-                        composer-flags: ''
+                        composer-flags: '-v'
 #                    -   php-version: '7.4'
 #                        dependencies: lowest
 #                        variant: normal
