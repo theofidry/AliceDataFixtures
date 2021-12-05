@@ -23,7 +23,7 @@ jobs:
 #                    - '8.1'
                 dependencies: [ highest ]
                 variant: [ normal ]
-                include:
+#                include:
 #                    -   php-version: '7.4'
 #                        dependencies: lowest
 #                        variant: normal
