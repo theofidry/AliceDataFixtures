@@ -8,6 +8,7 @@ services:
         ports:
             - 3307:3306
         environment:
+            # To keep in sync with doctrine-orm-db-settings.php
             MYSQL_DATABASE: fidry_alice_data_fixtures
             MYSQL_ROOT_USER: root
             MYSQL_ROOT_PASSWORD: password

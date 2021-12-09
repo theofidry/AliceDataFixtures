@@ -7,9 +7,8 @@ on:
 
 # this fixes the input device is not a TTY .. see https://github.com/docker/compose/issues/5696
 env:
-    COMPOSE_INTERACTIVE_NO_CLI: 1
     MYSQL_HOST: '127.0.0.1'
-    DB_HOST: '127.0.0.1'
+    DOCTRINE_ORM_DB_HOST: '127.0.0.1'
 
 jobs:
     test:

@@ -9,37 +9,38 @@
  * file that was distributed with this source code.
  */
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Jackalope\Tools\Console\Command\InitDoctrineDbalCommand;
 use Symfony\Component\Console\Helper\HelperSet;
 
 // See https://www.doctrine-project.org/projects/doctrine-orm/en/2.9/reference/configuration.html#setting-up-the-commandline-tool
 // Depending of which Doctrine project we are using (ORM, ODM or PHP-CR) we
 // set-up the project differently.
+//
+// This is purely for the Doctrine commands that require this file as an entry
+// point. The actual set-up (which is re-used for example running the tests)
+// happens within the autoload files.
 
 $isDoctrineORM = class_exists(ConsoleRunner::class);
-$isDoctrinePHPCR = class_exists(InitDoctrineDbalCommand::class);
-
-function initializeDoctrineORM(EntityManagerInterface $entityManager): HelperSet {
-    require_once __DIR__.'/tests/Bridge/Doctrine/autoload.php';
-
-    return ConsoleRunner::createHelperSet($entityManager);
-}
-
-//function initializeDoctrinePHPCR() use ($entityManager): HelperSet {
-//    require_once __DIR__.'/tests/Bridge/Doctrine/autoload.php';
-//
-//    return ConsoleRunner::createHelperSet($entityManager);
-//}
 
 if ($isDoctrineORM) {
-    return initializeDoctrineORM($entityManager);
-}
+    require_once __DIR__.'/tests/Bridge/Doctrine/autoload.php';
 
-if ($isDoctrinePHPCR) {
-    $extraCommands = [];
-    $extraCommands[] = new InitDoctrineDbalCommand();
+    return ConsoleRunner::createHelperSet($GLOBALS['entity_manager']);
+    if (class_exists(HelperSet::class)) {
+    }
+
+    return new \Symfony\Component\Console\Helper\HelperSet(
+        [
+            'db' => new ConnectionHelper($em->getConnection()),
+            'em' => new EntityManagerHelper($em)
+        ]
+    );
+} elseif (class_exists(InitDoctrineDbalCommand::class)) {
+    $extraCommands = array();
+    $extraCommands[] = new \Jackalope\Tools\Console\Command\InitDoctrineDbalCommand();
 
     if (isset($argv[1])
         && $argv[1] != 'jackalope:init:dbal'
@@ -72,7 +73,7 @@ if ($isDoctrinePHPCR) {
         $dbConn = \Doctrine\DBAL\DriverManager::getConnection($params);
 
         // special case: the init command needs the db connection, but a session is impossible if the db is not yet initialized
-        $helperSet = new HelperSet(array(
+        $helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
             'connection' => new \Jackalope\Tools\Console\Helper\DoctrineDbalHelper($dbConn)
         ));
     }
