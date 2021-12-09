@@ -23,11 +23,7 @@ jobs:
 #                    - '8.1'
                 dependencies: [ highest ]
                 variant: [ normal ]
-                include:
-                    -   php-version: '7.4.22'
-                        dependencies: highest
-                        variant: normal
-                        composer-flags: '-v'
+#                include:
 #                    -   php-version: '7.4'
 #                        dependencies: lowest
 #                        variant: normal
@@ -121,10 +117,10 @@ jobs:
                 run: composer bin proxy-manager update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
             -   name: Install Symfony for ProxyManager Composer bin dependencies
                 if: matrix.variant == 'normal'
-                run: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.3.9" --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --with-all-dependencies
+                run: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.3.9" --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --with-dependencies
             -   name: Install Symfony (variant) for ProxyManager Composer bin dependencies
                 if: matrix.variant != 'normal'
-                run: composer bin proxy-manager require --dev ${{ matrix.variant }} --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --with-all-dependencies
+                run: composer bin proxy-manager require --dev ${{ matrix.variant }} --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --with-dependencies
 
             -   name: Configure Symfony (variant) Composer bin dependencies
                 if: matrix.variant != 'normal'
@@ -141,6 +137,6 @@ jobs:
             -   name: Install PHP-CS-Fixer Composer bin dependencies
                 run: composer bin php-cs-fixer install --prefer-dist
 
-#            -   name: Run Tests
-#                run: make test
-#                timeout-minutes: 5
+            -   name: Run Tests
+                run: make test
+                timeout-minutes: 5
