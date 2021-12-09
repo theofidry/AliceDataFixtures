@@ -46,12 +46,6 @@ composer require --dev theofidry/alice-data-fixtures \
 #
 composer require --dev theofidry/alice-data-fixtures \
                        illuminate/database
-
-#
-# With Propel 2
-#
-composer require --dev theofidry/alice-data-fixtures \
-                       propel/propel:^2.0@alpha
 ```
 
 ## Symfony with Flex
@@ -90,12 +84,6 @@ composer require --dev theofidry/alice-data-fixtures \
 #
 composer require --dev theofidry/alice-data-fixtures \
                        illuminate/database
-
-#
-# With Propel 2
-#
-composer require --dev theofidry/alice-data-fixtures \
-                       propel/propel:^2.0@alpha
 ```
 
 
