@@ -9,11 +9,15 @@
  * file that was distributed with this source code.
  */
 
-use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
-use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
-use Jackalope\Tools\Console\Command\InitDoctrineDbalCommand;
+use Doctrine\DBAL\DriverManager;
+use Doctrine\ODM\PHPCR\Tools\Console\Helper\DocumentManagerHelper as PhpcrDocumentManagerHelperAlias;
+use Doctrine\ORM\Tools\Console\ConsoleRunner as DoctrineORMConsoleRunner;
+use Jackalope\Tools\Console\Command\InitDoctrineDbalCommand as JackalopeInitDbalCommand;
+use Jackalope\Tools\Console\Helper\DoctrineDbalHelper as DoctrinePHPCRHelper;
+use PHPCR\Util\Console\Helper\PhpcrConsoleDumperHelper;
+use PHPCR\Util\Console\Helper\PhpcrHelper;
 use Symfony\Component\Console\Helper\HelperSet;
+use Symfony\Component\Console\Helper\QuestionHelper;
 
 // See https://www.doctrine-project.org/projects/doctrine-orm/en/2.9/reference/configuration.html#setting-up-the-commandline-tool
 // Depending of which Doctrine project we are using (ORM, ODM or PHP-CR) we
@@ -23,60 +27,54 @@ use Symfony\Component\Console\Helper\HelperSet;
 // point. The actual set-up (which is re-used for example running the tests)
 // happens within the autoload files.
 
-$isDoctrineORM = class_exists(ConsoleRunner::class);
+$isDoctrineORM = class_exists(DoctrineORMConsoleRunner::class);
+$isDoctrinePHPCR = class_exists(JackalopeInitDbalCommand::class);
+$isDoctrinePHPCRInitCommand = !isset($argv[1])
+    || $argv[1] === 'jackalope:init:dbal'
+    || $argv[1] === 'list'
+    || $argv[1] === 'help';
 
 if ($isDoctrineORM) {
     require_once __DIR__.'/tests/Bridge/Doctrine/autoload.php';
 
-    return ConsoleRunner::createHelperSet($GLOBALS['entity_manager']);
-    if (class_exists(HelperSet::class)) {
-    }
+    return DoctrineORMConsoleRunner::createHelperSet($GLOBALS['entity_manager']);
+}
 
-    return new \Symfony\Component\Console\Helper\HelperSet(
-        [
-            'db' => new ConnectionHelper($em->getConnection()),
-            'em' => new EntityManagerHelper($em)
-        ]
-    );
-} elseif (class_exists(InitDoctrineDbalCommand::class)) {
-    $extraCommands = array();
-    $extraCommands[] = new \Jackalope\Tools\Console\Command\InitDoctrineDbalCommand();
-
-    if (isset($argv[1])
-        && $argv[1] != 'jackalope:init:dbal'
-        && $argv[1] != 'list'
-        && $argv[1] != 'help'
-    ) {
-        require_once __DIR__.'/tests/Bridge/DoctrinePhpCr/autoload.php';
-
-        $helperSet = new HelperSet(array(
-            'phpcr' => new \PHPCR\Util\Console\Helper\PhpcrHelper($session),
-            'phpcr_console_dumper' => new \PHPCR\Util\Console\Helper\PhpcrConsoleDumperHelper(),
-            'dm' => new \Doctrine\ODM\PHPCR\Tools\Console\Helper\DocumentManagerHelper(null, $documentManager),
-        ));
-
-        $helperSet->set(new \Symfony\Component\Console\Helper\QuestionHelper(), 'question');
-    } elseif (isset($argv[1]) && $argv[1] == 'jackalope:init:dbal') {
-        $params = array(
-            'driver' => false !== getenv('DB_DRIVER')? getenv('DB_DRIVER') : 'pdo_mysql',
-            'user' => false !== getenv('DB_USER')? getenv('DB_USER') : 'root',
-            'password' => false !== getenv('DB_PASSWORD')? getenv('DB_PASSWORD') : 'password',
-            'dbname' => false !== getenv('DB_NAME')? getenv('DB_NAME') : 'fidry_alice_data_fixtures',
-            'host' => false !== getenv('DB_HOST')? getenv('DB_HOST') : '127.0.0.1',
-            'port' => false !== getenv('DB_PORT')? getenv('DB_PORT') : 3307,
+if ($isDoctrinePHPCR) {
+    if ($isDoctrinePHPCRInitCommand) {
+        // We do not rely on the regular autoload file here. Indeed this file is
+        // used for the Doctrine PHPCR initialization/management commands (i.e. not
+        // for the tests) in which case we need a more minimalist approach as what
+        // we are looking for is a connection to initialize the DB instead of having
+        // a document manager which requires a session (which itself requires an
+        // initialized environment).
+        $connection = DriverManager::getConnection(
+            require __DIR__.'/doctrine-phpcr-db-settings.php',
         );
 
-        $workspace = 'default';
-        $user = 'admin';
-        $pass = 'admin';
+        // For some reasons phpcrodm uses `$extraCommands` if defined but does not
+        // provide the init command by default hence we need to manually add it.
+        $extraCommands = [new JackalopeInitDbalCommand()];
 
-        $dbConn = \Doctrine\DBAL\DriverManager::getConnection($params);
+        // phpcrodm checks any global variable as possible HelperSet candidate
+        $helperSet = new HelperSet([
+            'connection' => new DoctrinePHPCRHelper($connection)
+        ]);
 
-        // special case: the init command needs the db connection, but a session is impossible if the db is not yet initialized
-        $helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
-            'connection' => new \Jackalope\Tools\Console\Helper\DoctrineDbalHelper($dbConn)
-        ));
+        return;
     }
 
-    return $helperSet;
+    require_once __DIR__.'/tests/Bridge/DoctrinePhpCr/autoload.php';
+
+    $session = $GLOBALS['session'];
+    $documentManager = $GLOBALS['document_manager'];
+
+    $helperSet = new HelperSet([
+        'phpcr' => new PhpcrHelper($session),
+        'phpcr_console_dumper' => new PhpcrConsoleDumperHelper(),
+        'dm' => new PhpcrDocumentManagerHelperAlias(null, $documentManager),
+        'question' => new QuestionHelper(),
+    ]);
+
+    return;
 }
