@@ -33,8 +33,6 @@ class FidryAliceDataFixturesBundleTest extends TestCase
      */
     protected $kernel;
 
-    private Filesystem $fileSystem;
-
     /**
      * @inheritdoc
      */
@@ -42,7 +40,6 @@ class FidryAliceDataFixturesBundleTest extends TestCase
     {
         $this->kernel = NakedKernel::create();
         $this->kernel->boot();
-        $this->fileSystem = new Filesystem();
     }
 
     /**
@@ -51,7 +48,7 @@ class FidryAliceDataFixturesBundleTest extends TestCase
     public function tearDown(): void
     {
         $this->kernel->shutdown();
-        $this->fileSystem->remove(__DIR__.'/../../../var/cache/');
+        (new Filesystem())->remove(__DIR__.'/../../../var/cache/');
     }
 
     /**
