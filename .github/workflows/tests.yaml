@@ -7,9 +7,8 @@ on:
 
 # this fixes the input device is not a TTY .. see https://github.com/docker/compose/issues/5696
 env:
-    COMPOSE_INTERACTIVE_NO_CLI: 1
     MYSQL_HOST: '127.0.0.1'
-    DB_HOST: '127.0.0.1'
+    DOCTRINE_ORM_DB_HOST: '127.0.0.1'
 
 jobs:
     test:
@@ -19,23 +18,23 @@ jobs:
             matrix:
                 php-version:
                     - '7.4'
-                    - '8.0'
-                    - '8.1'
+#                    - '8.0'
+#                    - '8.1'
                 dependencies: [ highest ]
                 variant: [ normal ]
-                include:
-                    -   php-version: '7.4'
-                        dependencies: lowest
-                        variant: normal
-                        composer-flags: '--prefer-lowest'
-                    -   php-version: '7.4'
-                        dependencies: highest
-                        variant: 'symfony/symfony:"~4.4.0"'
-                        composer-flags: ''
-                    -   php-version: '7.4'
-                        dependencies: highest
-                        variant: 'symfony/symfony:"~5.3.0"'
-                        composer-flags: ''
+#                include:
+#                    -   php-version: '7.4'
+#                        dependencies: lowest
+#                        variant: normal
+#                        composer-flags: '--prefer-lowest'
+#                    -   php-version: '7.4'
+#                        dependencies: highest
+#                        variant: 'symfony/symfony:"~4.4.0"'
+#                        composer-flags: ''
+#                    -   php-version: '7.4'
+#                        dependencies: highest
+#                        variant: 'symfony/symfony:"~5.3.0"'
+#                        composer-flags: ''
         # To keep in sync with docker-compose.yml
         services:
             mysql:

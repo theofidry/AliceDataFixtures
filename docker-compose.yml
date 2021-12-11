@@ -8,6 +8,7 @@ services:
         ports:
             - 3307:3306
         environment:
+            # To keep in sync with doctrine-orm-db-settings.php
             MYSQL_DATABASE: fidry_alice_data_fixtures
             MYSQL_ROOT_USER: root
             MYSQL_ROOT_PASSWORD: password
@@ -20,6 +21,7 @@ services:
         ports:
             - 27018:27017
         environment:
+            # To keep in sync with doctrine-odm-db-settings.php
             MONGO_INITDB_DATABASE: fidry_alice_data_fixtures
             MONGO_INITDB_ROOT_USERNAME: root
             MONGO_INITDB_ROOT_PASSWORD: password

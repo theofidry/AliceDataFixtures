@@ -11,7 +11,9 @@
 
 declare(strict_types=1);
 
-require __DIR__.'/../../../vendor-bin/doctrine_mongodb/vendor/autoload.php';
+const ROOT = __DIR__.'/../../..';
+
+require ROOT.'/vendor-bin/doctrine_mongodb/vendor/autoload.php';
 
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -26,6 +28,28 @@ $config->setHydratorNamespace('Hydrators');
 $config->setMetadataDriverImpl(AnnotationDriver::create(__DIR__.'/../../../fixtures/Bridge/Doctrine/MongoDocument'));
 $config->setDefaultDB('fidry_alice_data_fixtures');
 
-$dm = DocumentManager::create(new Client('mongodb://root:password@localhost:27018', [], ['typeMap' => DocumentManager::CLIENT_TYPEMAP]), $config);
+[
+    'username' => $userName,
+    'password' => $password,
+    'host' => $host,
+    'port' => $port
+] = require ROOT.'/doctrine-odm-db-settings.php';
 
-$GLOBALS['document_manager'] = $dm;
+$uri = sprintf(
+    'mongodb://%s:%s@%s:%s',
+    $userName,
+    $password,
+    $host,
+    $port,
+);
+
+$documentManager = DocumentManager::create(
+    new Client(
+        $uri,
+        [],
+        ['typeMap' => DocumentManager::CLIENT_TYPEMAP],
+    ),
+    $config,
+);
+
+$GLOBALS['document_manager'] = $documentManager;

@@ -7,7 +7,7 @@ MYSQL_BIN=mysql --user=root --password=password --port=3307
 MONGO_BIN=mongo --username=root --password=password --port=27018
 else
 MYSQL_BIN=$(DOCKER_COMPOSE_EXEC) mysql mysql --user=root --password=password --port=3307
-MONGO_BIN=$(DOCKER_COMPOSE_EXEC) mongo mongo --username=root --password=password --port=27018
+MONGO_BIN=$(DOCKER_COMPOSE_EXEC) mongo mongo --username=root --password=password --port=27017
 endif
 
 .DEFAULT_GOAL := help
