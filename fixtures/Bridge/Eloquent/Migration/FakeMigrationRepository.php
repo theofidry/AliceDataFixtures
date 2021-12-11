@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Migration;
 
 use Fidry\AliceDataFixtures\NotCallableTrait;
-use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use function func_get_args;
+use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 
 class FakeMigrationRepository implements MigrationRepositoryInterface
 {

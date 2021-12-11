@@ -16,6 +16,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\InvalidKernel;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\NakedKernel;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -47,6 +48,7 @@ class FidryAliceDataFixturesBundleTest extends TestCase
     public function tearDown(): void
     {
         $this->kernel->shutdown();
+        (new Filesystem())->remove(__DIR__.'/../../../var/cache/');
     }
 
     /**
