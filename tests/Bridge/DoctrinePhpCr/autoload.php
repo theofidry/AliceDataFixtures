@@ -21,7 +21,6 @@ use Doctrine\ODM\PHPCR\Configuration;
 use Doctrine\ODM\PHPCR\DocumentManager;
 use Doctrine\ODM\PHPCR\Mapping\Driver\AnnotationDriver;
 use Jackalope\RepositoryFactoryDoctrineDBAL;
-use Jackalope\Session;
 use PHPCR\SessionInterface;
 use PHPCR\SimpleCredentials;
 

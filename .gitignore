@@ -7,7 +7,8 @@
 /fixtures/Bridge/Propel2/Model/
 !/fixtures/Bridge/Propel2/Model/.gitkeep
 /fixtures/Bridge/Symfony/SymfonyApp/cache/*
-/var
+/var/
+!/var/.gitkeep
 /phpunit.xml
 /.php_cs.cache
 /.phar/

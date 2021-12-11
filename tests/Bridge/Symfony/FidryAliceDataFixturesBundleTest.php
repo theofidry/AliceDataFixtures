@@ -16,6 +16,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\InvalidKernel;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\NakedKernel;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -32,6 +33,8 @@ class FidryAliceDataFixturesBundleTest extends TestCase
      */
     protected $kernel;
 
+    private Filesystem $fileSystem;
+
     /**
      * @inheritdoc
      */
@@ -39,6 +42,7 @@ class FidryAliceDataFixturesBundleTest extends TestCase
     {
         $this->kernel = NakedKernel::create();
         $this->kernel->boot();
+        $this->fileSystem = new Filesystem();
     }
 
     /**
@@ -47,6 +51,7 @@ class FidryAliceDataFixturesBundleTest extends TestCase
     public function tearDown(): void
     {
         $this->kernel->shutdown();
+        $this->fileSystem->remove(__DIR__.'/../../../var/cache/');
     }
 
     /**
