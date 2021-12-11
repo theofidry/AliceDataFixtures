@@ -15,6 +15,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Migration;
 
 use Fidry\AliceDataFixtures\NotCallableTrait;
 use Illuminate\Database\Migrations\MigrationRepositoryInterface;
+use function func_get_args;
 
 class FakeMigrationRepository implements MigrationRepositoryInterface
 {
@@ -96,6 +97,11 @@ class FakeMigrationRepository implements MigrationRepositoryInterface
      * @inheritdoc
      */
     public function setSource($name)
+    {
+        $this->__call(__METHOD__, func_get_args());
+    }
+
+    public function deleteRepository()
     {
         $this->__call(__METHOD__, func_get_args());
     }

@@ -11,41 +11,48 @@
 
 declare(strict_types=1);
 
-require_once __DIR__.'/../../../vendor-bin/eloquent/vendor/autoload.php';
+const ROOT = __DIR__.'/../../..';
 
-$manager = new Illuminate\Database\Capsule\Manager();
-$manager->addConnection($config = [
-    'driver' => false !== getenv('DB_DRIVER')? getenv('DB_DRIVER') : 'mysql',
-    'username' => false !== getenv('DB_USER')? getenv('DB_USER') : 'root',
-    'password' => false !== getenv('DB_PASSWORD')? getenv('DB_PASSWORD') : null,
-    'database' => false !== getenv('DB_NAME')? getenv('DB_NAME') : 'fidry_alice_data_fixtures',
-    'host' => false !== getenv('DB_HOST')? getenv('DB_HOST') : '127.0.0.1',
-    'port' => false !== getenv('DB_PORT')? getenv('DB_PORT') : 3307,
-    'charset' => 'utf8',
-    'collation' => 'utf8_unicode_ci',
-    'prefix' => '',
-    'strict' => true,
-]);
+require_once ROOT.'/vendor-bin/eloquent/vendor/autoload.php';
 
-$manager->bootEloquent();
-$manager->setAsGlobal();
+use Illuminate\Database\Capsule\Manager;
+use Illuminate\Database\ConnectionResolver;
+use Illuminate\Database\ConnectionResolverInterface;
+use Illuminate\Database\Migrations\DatabaseMigrationRepository;
+use Illuminate\Database\Migrations\MigrationRepositoryInterface;
+use Illuminate\Database\Migrations\Migrator;
+use Illuminate\Filesystem\Filesystem;
 
-$resolver = new \Illuminate\Database\ConnectionResolver([
-    'default' => $manager->getConnection(),
-]);
-$resolver->setDefaultConnection('default');
+$manager = (static function (): Manager {
+    $manager = new Manager();
+    $manager->addConnection(require ROOT.'/eloquent-db-settings.php');
+    $manager->bootEloquent();
+    $manager->setAsGlobal();
 
-$repository = new \Illuminate\Database\Migrations\DatabaseMigrationRepository($resolver, 'migrations');
-if (false === $repository->repositoryExists()) {
-    $repository->createRepository();
-}
+    return $manager;
+})();
 
-$fileSystem = new \Illuminate\Filesystem\Filesystem();
+$resolver = (static function (Manager $manager): ConnectionResolverInterface {
+    $resolver = new ConnectionResolver([
+        'default' => $manager->getConnection(),
+    ]);
+    $resolver->setDefaultConnection('default');
 
-$migrator = new \Illuminate\Database\Migrations\Migrator($repository, $resolver, $fileSystem);
+    return $resolver;
+})($manager);
+
+$repository = (static function (ConnectionResolverInterface $resolver): MigrationRepositoryInterface {
+    $repository = new DatabaseMigrationRepository($resolver, 'migrations');
+
+    if (false === $repository->repositoryExists()) {
+        $repository->createRepository();
+    }
+
+    return $repository;
+})($resolver);
 
 $GLOBALS['manager'] = $manager;
 $GLOBALS['resolver'] = $resolver;
 $GLOBALS['repository'] = $repository;
-$GLOBALS['file_system'] = $fileSystem;
-$GLOBALS['migrator'] = $migrator;
+$GLOBALS['file_system'] = new Filesystem();
+$GLOBALS['migrator'] = new Migrator($repository, $resolver, new Filesystem());
