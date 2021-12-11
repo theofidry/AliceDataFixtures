@@ -21,6 +21,7 @@ services:
         ports:
             - 27018:27017
         environment:
+            # To keep in sync with doctrine-odm-db-settings.php
             MONGO_INITDB_DATABASE: fidry_alice_data_fixtures
             MONGO_INITDB_ROOT_USERNAME: root
             MONGO_INITDB_ROOT_PASSWORD: password

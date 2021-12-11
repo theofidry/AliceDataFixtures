@@ -8,6 +8,7 @@ function get_param(string $envName, $default) {
     return false !== $env ? $env : $default;
 }
 
+// To keep in sync with docker-compose.yml
 return [
     'driver' => get_param('DOCTRINE_ORM_DB_DRIVER', 'pdo_mysql'),
     'user' => get_param('DOCTRINE_ORM_DB_USER', 'root'),
