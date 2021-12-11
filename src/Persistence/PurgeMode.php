@@ -17,16 +17,14 @@ use InvalidArgumentException;
 
 final class PurgeMode
 {
-    private static $values = [
+    private static array $values = [
         'NO_PURGE_MODE' => 0,
         'DELETE_MODE' => 1,
         'TRUNCATE_MODE' => 2,
     ];
 
-    /**
-     * @var int
-     */
-    private $mode;
+    
+    private int $mode;
 
     public function __construct(int $mode)
     {

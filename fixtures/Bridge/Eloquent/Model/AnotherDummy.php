@@ -36,7 +36,7 @@ class AnotherDummy extends Model
      */
     public $timestamps = false;
 
-    public function dummy()
+    public function dummy(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Dummy::class);
     }

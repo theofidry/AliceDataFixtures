@@ -24,7 +24,7 @@ use InvalidArgumentException;
  */
 final class FileTracker
 {
-    private $files = [];
+    private array $files = [];
 
     public function __construct(string ...$files)
     {
@@ -39,7 +39,7 @@ final class FileTracker
         return array_keys($this->files);
     }
 
-    public function markAsLoaded(string $file)
+    public function markAsLoaded(string $file): void
     {
         if (false === array_key_exists($file, $this->files)) {
             throw new InvalidArgumentException(

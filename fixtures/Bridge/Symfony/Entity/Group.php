@@ -18,7 +18,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Group
 {
     private $id;
-    private $users;
+    private ArrayCollection $users;
 
     public function __construct()
     {

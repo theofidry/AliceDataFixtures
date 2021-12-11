@@ -38,7 +38,7 @@ final class FidryAliceDataFixturesExtension extends Extension
     /**
      * @inheritdoc
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $processedConfiguration = $this->processConfiguration($configuration, $configs);
@@ -85,7 +85,7 @@ final class FidryAliceDataFixturesExtension extends Extension
         array $bundles,
         array $configs,
         LoaderInterface $loader
-    ) {
+    ): void {
         /** @var bool|null $isEnabled */
         $isEnabled = $configs['db_drivers'][$driver];
         if (false === $isEnabled) {

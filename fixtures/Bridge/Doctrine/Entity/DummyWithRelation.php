@@ -33,9 +33,8 @@ class DummyWithRelation
     public $id;
 
     /**
-     * @var DummyWithIdentifier
      * @OneToOne(targetEntity="DummyWithIdentifier", cascade={"persist"})
      * @JoinColumn(name="dummy_id", referencedColumnName="id")
      */
-    public $dummy;
+    public DummyWithIdentifier $dummy;
 }

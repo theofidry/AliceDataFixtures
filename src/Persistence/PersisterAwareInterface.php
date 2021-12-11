@@ -20,5 +20,5 @@ interface PersisterAwareInterface
      *
      * @return static
      */
-    public function withPersister(PersisterInterface $persister);
+    public function withPersister(PersisterInterface $persister): static;
 }

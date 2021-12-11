@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 
 class NakedKernel extends IsolatedKernel
 {
-    public function registerBundles()
+    public function registerBundles(): array
     {
         $bundles = [
             new FrameworkBundle(),

@@ -31,9 +31,9 @@ use Psr\Log\NullLogger;
 {
     use IsAServiceTrait;
 
-    private $loader;
-    private $fileResolver;
-    private $logger;
+    private LoaderInterface $loader;
+    private FileResolverInterface $fileResolver;
+    private LoggerInterface|NullLogger $logger;
 
     public function __construct(
         LoaderInterface $decoratedLoader,

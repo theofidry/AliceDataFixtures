@@ -63,6 +63,7 @@ return (new Config())
         'no_leading_import_slash' => true,
         'no_leading_namespace_whitespace' => true,
         'no_multiline_whitespace_around_double_arrow' => true,
+        'no_superfluous_phpdoc_tags' => true,
         'no_short_bool_cast' => true,
         'no_spaces_around_offset' => true,
         'no_unused_imports' => true,

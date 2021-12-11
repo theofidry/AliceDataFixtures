@@ -38,9 +38,9 @@ use Nelmio\Alice\IsAServiceTrait;
 {
     use IsAServiceTrait;
 
-    private $manager;
-    private $purgeMode;
-    private $purger;
+    private ObjectManager $manager;
+    private ?PurgeMode $purgeMode;
+    private DoctrinePurgerInterface $purger;
 
     public function __construct(ObjectManager $manager, PurgeMode $purgeMode = null)
     {
@@ -89,7 +89,7 @@ use Nelmio\Alice\IsAServiceTrait;
     /**
      * @inheritdoc
      */
-    public function purge()
+    public function purge(): void
     {
         // Because MySQL rocks, you got to disable foreign key checks when doing a TRUNCATE/DELETE unlike in for example
         // PostgreSQL. This ideally should be done in the Purger of doctrine/data-fixtures but meanwhile we are doing

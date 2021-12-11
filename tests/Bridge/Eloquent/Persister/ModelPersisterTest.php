@@ -29,15 +29,12 @@ use ReflectionClass;
  */
 class ModelPersisterTest extends TestCase
 {
-    /**
-     * @var ModelPersister
-     */
-    private $persister;
+    private ModelPersister $persister;
 
     /**
      * @var Migrator
      */
-    private $migrator;
+    private mixed $migrator;
 
     /**
      * @inheritdoc

@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 
 class InvalidKernel extends IsolatedKernel
 {
-    public function registerBundles()
+    public function registerBundles(): array
     {
         $bundles = [
             new FrameworkBundle(),

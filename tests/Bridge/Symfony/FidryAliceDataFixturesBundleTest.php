@@ -31,7 +31,7 @@ class FidryAliceDataFixturesBundleTest extends TestCase
     /**
      * @var KernelInterface
      */
-    protected $kernel;
+    protected NakedKernel|KernelInterface $kernel;
 
     /**
      * @inheritdoc

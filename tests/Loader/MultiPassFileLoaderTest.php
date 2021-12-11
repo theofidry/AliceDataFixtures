@@ -275,7 +275,7 @@ EOF
         }
     }
 
-    public function provideMaxPassValue()
+    public function provideMaxPassValue(): \Generator
     {
         yield 'negative value' => [
             -1,

@@ -35,12 +35,12 @@ use Psr\Log\NullLogger;
     public const PURGE_MODE_DELETE = 1;
     public const PURGE_MODE_TRUNCATE = 2;
 
-    private static $PURGE_MAPPING;
+    private static array $PURGE_MAPPING;
 
-    private $loader;
-    private $purgerFactory;
-    private $defaultPurgeMode;
-    private $logger;
+    private LoaderInterface $loader;
+    private PurgerFactoryInterface $purgerFactory;
+    private mixed $defaultPurgeMode;
+    private LoggerInterface|NullLogger $logger;
 
     public function __construct(
         LoaderInterface $decoratedLoader,

@@ -22,7 +22,7 @@ use WouterJ\EloquentBundle\WouterJEloquentBundle;
 
 class EloquentKernel extends IsolatedKernel
 {
-    public function registerBundles()
+    public function registerBundles(): array
     {
         $bundles = [
             new FrameworkBundle(),

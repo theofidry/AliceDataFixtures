@@ -28,22 +28,22 @@ class PhpcrLoaderIntegrationTest extends TestCase
     /**
      * @var DoctrinePhpcrKernel
      */
-    private $kernel;
+    private DoctrinePhpcrKernel $kernel;
 
     /**
      * @var LoaderInterface
      */
-    private $loader;
+    private null|LoaderInterface|object|\Fidry\AliceDataFixtures\Loader\PersisterLoader $loader;
 
     /**
      * @var ManagerRegistry
      */
-    private $doctrine;
+    private ManagerRegistry|null|object|\Doctrine\Bundle\PHPCRBundle\ManagerRegistry $doctrine;
 
     /**
      * @var int
      */
-    private static $seed;
+    private static int $seed;
 
     /**
      * @inheritdoc

@@ -28,9 +28,9 @@ use Nelmio\Alice\IsAServiceTrait;
 {
     use IsAServiceTrait;
 
-    private $migrator;
-    private $migrationPath;
-    private $repository;
+    private Migrator $migrator;
+    private string $migrationPath;
+    private MigrationRepositoryInterface $repository;
 
     public function __construct(MigrationRepositoryInterface $repository, string $migrationPath, Migrator $migrator)
     {
@@ -59,7 +59,7 @@ use Nelmio\Alice\IsAServiceTrait;
     /**
      * @inheritdoc
      */
-    public function purge()
+    public function purge(): void
     {
         $this->migrator->reset([$this->migrationPath]);
 

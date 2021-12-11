@@ -32,8 +32,8 @@ use Psr\Log\NullLogger;
 {
     use IsAServiceTrait;
 
-    private $filesLoader;
-    private $logger;
+    private FilesLoaderInterface $filesLoader;
+    private LoggerInterface|NullLogger $logger;
 
     public function __construct(FilesLoaderInterface $fileLoader, LoggerInterface $logger = null)
     {

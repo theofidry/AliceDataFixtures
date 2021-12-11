@@ -18,7 +18,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class DoctrineKernelWithInvalidDatabase extends DoctrineKernel
 {
-    public function getBundles()
+    public function getBundles(): array
     {
         $bundles = parent::getBundles();
 

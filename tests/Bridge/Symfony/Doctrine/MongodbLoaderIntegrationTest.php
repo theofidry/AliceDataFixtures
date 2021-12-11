@@ -30,22 +30,22 @@ class MongodbLoaderIntegrationTest extends TestCase
     /**
      * @var DoctrineMongodbKernel
      */
-    private $kernel;
+    private DoctrineMongodbKernel $kernel;
 
     /**
      * @var LoaderInterface
      */
-    private $loader;
+    private null|LoaderInterface|object|\Fidry\AliceDataFixtures\Loader\PersisterLoader $loader;
 
     /**
      * @var ManagerRegistry
      */
-    private $doctrine;
+    private ManagerRegistry|\Doctrine\Bundle\MongoDBBundle\ManagerRegistry|null|object $doctrine;
 
     /**
      * @var int
      */
-    private static $seed;
+    private static int $seed;
 
     /**
      * @inheritdoc

@@ -16,17 +16,18 @@ namespace Fidry\AliceDataFixtures\Exception;
 use Fidry\AliceDataFixtures\Loader\ErrorTracker;
 use Fidry\AliceDataFixtures\Loader\FileTracker;
 use Nelmio\Alice\Throwable\LoadingThrowable;
+use RuntimeException;
 use Throwable;
 
 /**
  * @deprecated
  */
-class MaxPassReachedException extends \RuntimeException implements LoadingThrowable
+class MaxPassReachedException extends RuntimeException implements LoadingThrowable
 {
     /**
      * @var array<string, Throwable>
      */
-    private $stack = [];
+    private array $stack = [];
 
     public function __construct($message, $code = 0, Throwable $previous = null, ErrorTracker $errorTracker = null)
     {
@@ -57,7 +58,7 @@ class MaxPassReachedException extends \RuntimeException implements LoadingThrowa
         ErrorTracker $errorTracker,
         int $code = 0,
         Throwable $previous = null
-    ) {
+    ): static {
         return new static(
             static::createMessage($limit, $fileTracker, $errorTracker),
             $code,

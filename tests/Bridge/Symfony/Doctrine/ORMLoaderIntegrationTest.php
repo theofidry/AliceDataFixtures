@@ -30,22 +30,22 @@ class ORMLoaderIntegrationTest extends TestCase
     /**
      * @var DoctrineKernel
      */
-    private $kernel;
+    private DoctrineKernel $kernel;
 
     /**
      * @var LoaderInterface
      */
-    private $loader;
+    private null|LoaderInterface|object|\Fidry\AliceDataFixtures\Loader\PersisterLoader $loader;
 
     /**
      * @var Registry
      */
-    private $doctrine;
+    private null|Registry|object $doctrine;
 
     /**
      * @var int
      */
-    private static $seed;
+    private static int $seed;
 
     /**
      * @inheritdoc

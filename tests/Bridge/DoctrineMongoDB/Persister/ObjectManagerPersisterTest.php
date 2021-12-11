@@ -34,20 +34,15 @@ use ReflectionClass;
  */
 class ObjectManagerPersisterTest extends TestCase
 {
-    /**
-     * @var ObjectManagerPersister
-     */
-    private $persister;
+    private ObjectManagerPersister $persister;
 
     /**
      * @var DocumentManager
      */
-    private $documentManager;
+    private mixed $documentManager;
 
-    /**
-     * @var MongoDBPurger
-     */
-    private $purger;
+    
+    private MongoDBPurger $purger;
 
     /**
      * @inheritdoc
@@ -119,7 +114,7 @@ class ObjectManagerPersisterTest extends TestCase
         $this->persister->flush();
     }
 
-    public function provideDocuments()
+    public function provideDocuments(): \Generator
     {
         yield 'simple entity' => [new Dummy()];
 
@@ -154,7 +149,7 @@ class ObjectManagerPersisterTest extends TestCase
         ];
     }
 
-    public function provideNonPersistableDocuments()
+    public function provideNonPersistableDocuments(): \Generator
     {
         yield 'mapped super class' => [new MappedSuperclassDummy()];
     }

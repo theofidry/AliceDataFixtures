@@ -34,10 +34,10 @@ use Psr\Log\NullLogger;
 {
     use IsAServiceTrait;
 
-    private $loader;
-    private $persister;
-    private $logger;
-    private $processors;
+    private LoaderInterface $loader;
+    private PersisterInterface $persister;
+    private LoggerInterface|NullLogger $logger;
+    private array $processors;
 
     /**
      * @param LoaderInterface      $decoratedLoader
@@ -54,7 +54,7 @@ use Psr\Log\NullLogger;
         $this->loader = $decoratedLoader;
         $this->persister = $persister;
         $this->logger = $logger ?? new NullLogger();
-        $this->processors = (function (ProcessorInterface ...$processors) {
+        $this->processors = (static function (ProcessorInterface ...$processors) {
             return $processors;
         })(...$processors);
     }

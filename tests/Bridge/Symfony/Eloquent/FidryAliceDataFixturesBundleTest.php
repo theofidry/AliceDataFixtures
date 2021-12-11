@@ -25,7 +25,7 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
     /**
      * @var KernelInterface
      */
-    protected $kernel;
+    protected \Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\NakedKernel|KernelInterface $kernel;
 
     /**
      * @inheritdoc

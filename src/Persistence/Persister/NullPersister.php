@@ -23,11 +23,11 @@ final class NullPersister implements PersisterInterface
     /**
      * @inheritdoc
      */
-    public function persist($object)
+    public function persist(object $object): void
     {
     }
 
-    public function flush()
+    public function flush(): void
     {
     }
 }

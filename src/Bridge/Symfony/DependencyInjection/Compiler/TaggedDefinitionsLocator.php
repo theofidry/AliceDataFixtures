@@ -26,8 +26,6 @@ final class TaggedDefinitionsLocator
     /**
      * Finds service definitions tagged by a given tag name.
      *
-     * @param ContainerBuilder $container
-     * @param string           $tagName
      *
      * @return Reference[]
      */

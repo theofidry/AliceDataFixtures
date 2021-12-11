@@ -22,7 +22,7 @@ class FakePersister implements PersisterInterface
     /**
      * @inheritdoc
      */
-    public function persist($object)
+    public function persist(object $object)
     {
         $this->__call(__METHOD__, func_get_args());
     }

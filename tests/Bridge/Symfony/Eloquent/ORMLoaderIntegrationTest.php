@@ -31,22 +31,22 @@ class ORMLoaderIntegrationTest extends TestCase
     /**
      * @var EloquentKernel
      */
-    private $kernel;
+    private EloquentKernel $kernel;
 
     /**
      * @var LoaderInterface
      */
-    private $loader;
+    private null|LoaderInterface|object|\Fidry\AliceDataFixtures\Loader\PersisterLoader $loader;
 
     /**
      * @var DatabaseManager
      */
-    private $databaseManager;
+    private DatabaseManager|null|object $databaseManager;
 
     /**
      * @var int
      */
-    private static $seed;
+    private static int $seed;
 
     /**
      * @inheritdoc

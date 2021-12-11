@@ -33,20 +33,15 @@ use ReflectionClass;
  */
 class ObjectManagerPersisterTest extends TestCase
 {
-    /**
-     * @var ObjectManagerPersister
-     */
-    private $persister;
+    private ObjectManagerPersister $persister;
 
     /**
      * @var EntityManagerInterface
      */
-    private $entityManager;
+    private mixed $entityManager;
 
-    /**
-     * @var ORMPurger
-     */
-    private $purger;
+    
+    private ORMPurger $purger;
 
     /**
      * @inheritdoc
@@ -228,7 +223,7 @@ class ObjectManagerPersisterTest extends TestCase
         $this->assertTrue(true, 'Everything is fine.');
     }
 
-    public function provideEntities()
+    public function provideEntities(): \Generator
     {
         yield 'simple entity' => [new Dummy()];
 
@@ -262,7 +257,7 @@ class ObjectManagerPersisterTest extends TestCase
         ];
     }
 
-    public function provideNonPersistableEntities()
+    public function provideNonPersistableEntities(): \Generator
     {
         yield 'embeddable' => [new DummyEmbeddable()];
 
