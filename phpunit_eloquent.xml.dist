@@ -21,11 +21,6 @@
 
     <php>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="0" />
-
-        <env name="DB_DRIVER" value="mysql" />
-        <env name="DB_USER" value="root" />
-        <env name="DB_PASSWORD" value="password" />
-        <env name="DB_NAME" value="fidry_alice_data_fixtures" />
     </php>
 
     <testsuites>
