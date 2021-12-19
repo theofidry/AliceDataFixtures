@@ -13,12 +13,14 @@ declare(strict_types=1);
 
 namespace Fidry\AlicePersistence\Bridge\Symfony\Doctrine;
 
+use function bin2hex;
 use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
 use Doctrine\Persistence\ManagerRegistry;
 use Fidry\AliceDataFixtures\Bridge\Symfony\MongoDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineMongodbKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use PHPUnit\Framework\TestCase;
+use function random_bytes;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -40,7 +42,7 @@ class MongodbLoaderIntegrationTest extends TestCase
     {
         parent::setUpBeforeClass();
 
-        static::$seed = uniqid();
+        static::$seed = bin2hex(random_bytes(6));
     }
 
     public function setUp(): void

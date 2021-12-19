@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
+use function bin2hex;
+use function random_bytes;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
@@ -27,7 +29,7 @@ abstract class IsolatedKernel extends Kernel
      */
     public static function create()
     {
-        return new static(uniqid(), true);
+        return new static(bin2hex(random_bytes(6)), true);
     }
 
     public function build(ContainerBuilder $container): void

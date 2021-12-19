@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\DoctrinePhpCr\Purger;
 
+use function bin2hex;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger;
 use Doctrine\ODM\PHPCR\DocumentManager;
@@ -23,6 +24,7 @@ use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use function random_bytes;
 use ReflectionClass;
 use ReflectionObject;
 
@@ -68,7 +70,7 @@ class PurgerTest extends TestCase
         $manager = $GLOBALS['document_manager'];
 
         $dummy = new Dummy();
-        $dummy->id = '/dummy_'.uniqid();
+        $dummy->id = '/dummy_'.bin2hex(random_bytes(6));
         $manager->persist($dummy);
         $manager->flush();
 
@@ -81,7 +83,7 @@ class PurgerTest extends TestCase
 
         // Ensures the schema has been restored
         $dummy = new Dummy();
-        $dummy->id = '/dummy_'.uniqid();
+        $dummy->id = '/dummy_'.bin2hex(random_bytes(6));
         $manager->persist($dummy);
         $manager->flush();
         self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());

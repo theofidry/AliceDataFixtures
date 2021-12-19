@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\DoctrinePhpCr\Persister;
 
+use function bin2hex;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger;
 use Doctrine\ODM\PHPCR\DocumentManager;
 use Doctrine\ODM\PHPCR\Exception\InvalidArgumentException;
@@ -22,6 +23,7 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use PHPUnit\Framework\TestCase;
+use function random_bytes;
 use ReflectionClass;
 
 /**
@@ -93,7 +95,7 @@ class ObjectManagerPersisterTest extends TestCase
         yield 'simple entity' => [
             (static function () {
                 $dummy = new Dummy();
-                $dummy->id = '/dummy_'.uniqid();
+                $dummy->id = '/dummy_'.bin2hex(random_bytes(6));
 
                 return $dummy;
             })()
@@ -102,7 +104,7 @@ class ObjectManagerPersisterTest extends TestCase
         yield 'sub class entity' => [
             (static function () {
                 $dummy = new DummySubClass();
-                $dummy->id = '/subdummy_'.uniqid();
+                $dummy->id = '/subdummy_'.bin2hex(random_bytes(6));
                 $dummy->status = '200';
 
                 return $dummy;

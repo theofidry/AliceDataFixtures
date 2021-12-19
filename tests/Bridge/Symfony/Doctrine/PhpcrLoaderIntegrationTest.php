@@ -13,12 +13,14 @@ declare(strict_types=1);
 
 namespace Fidry\AlicePersistence\Bridge\Symfony\Doctrine;
 
+use function bin2hex;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger;
 use Doctrine\Persistence\ManagerRegistry;
 use Fidry\AliceDataFixtures\Bridge\Symfony\PhpCrDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrinePhpcrKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use PHPUnit\Framework\TestCase;
+use function random_bytes;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -38,7 +40,7 @@ class PhpcrLoaderIntegrationTest extends TestCase
     {
         parent::setUpBeforeClass();
 
-        static::$seed = uniqid();
+        static::$seed = bin2hex(random_bytes(6));
     }
 
     public function setUp(): void
@@ -73,7 +75,7 @@ class PhpcrLoaderIntegrationTest extends TestCase
     public function testLoadAFileWithPurger(): void
     {
         $dummy = new Dummy();
-        $dummy->id = '/dummy_'.uniqid();
+        $dummy->id = '/dummy_'.bin2hex(random_bytes(6));
         $dummyManager = $this->doctrine->getManager();
         $dummyManager->persist($dummy);
         $dummyManager->flush();

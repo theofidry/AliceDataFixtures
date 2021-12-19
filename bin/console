@@ -49,7 +49,7 @@ $serverArgs = array_values($serverArgs);
 $kernelClass = 'Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\\'.$kernelInput;
 
 $input = new ArgvInput();
-$env = $input->getParameterOption(['--env', '-e'], getenv('SYMFONY_ENV') ?: uniqid());
+$env = $input->getParameterOption(['--env', '-e'], getenv('SYMFONY_ENV') ?: bin2hex(random_bytes(6)));
 $debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(['--no-debug', '']) && $env !== 'prod';
 
 if ($debug) {

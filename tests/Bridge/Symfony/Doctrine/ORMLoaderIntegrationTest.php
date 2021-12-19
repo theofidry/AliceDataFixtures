@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AlicePersistence\Bridge\Symfony\Doctrine;
 
+use function bin2hex;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Dummy;
@@ -21,6 +22,7 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\User;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use PHPUnit\Framework\TestCase;
+use function random_bytes;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -40,7 +42,7 @@ class ORMLoaderIntegrationTest extends TestCase
     {
         parent::setUpBeforeClass();
 
-        static::$seed = uniqid();
+        static::$seed = bin2hex(random_bytes(6));
     }
 
     public function setUp(): void
