@@ -49,12 +49,12 @@ class ModelPersisterTest extends TestCase
 
     public function testIsAPersister(): void
     {
-        $this->assertTrue(is_a(ModelPersister::class, PersisterInterface::class, true));
+        self::assertTrue(is_a(ModelPersister::class, PersisterInterface::class, true));
     }
 
     public function testIsNotClonable(): void
     {
-        $this->assertFalse((new ReflectionClass(ModelPersister::class))->isCloneable());
+        self::assertFalse((new ReflectionClass(ModelPersister::class))->isCloneable());
     }
 
     public function testCanPersistAModel(): void
@@ -62,15 +62,15 @@ class ModelPersisterTest extends TestCase
         $model = new AnotherDummy([
             'address' => 'Wonderlands',
         ]);
-        $this->assertNull($model->id);
+        self::assertNull($model->id);
 
         $this->persister->persist($model);
-        $this->assertNull($model->id);
+        self::assertNull($model->id);
 
         $this->persister->flush();
-        $this->assertNotNull($model->id);
+        self::assertNotNull($model->id);
 
-        $this->assertEquals(1, AnotherDummy::all()->count());
+        self::assertEquals(1, AnotherDummy::all()->count());
     }
 
     public function testCanPersistAModelWithARelationship(): void
@@ -86,13 +86,13 @@ class ModelPersisterTest extends TestCase
         $dummy->anotherDummy()->associate($anotherDummy);
 
         $this->persister->persist($dummy);
-        $this->assertNull($dummy->id);
+        self::assertNull($dummy->id);
 
         $this->persister->flush();
-        $this->assertNotNull($dummy->id);
+        self::assertNotNull($dummy->id);
 
-        $this->assertEquals(1, Dummy::all()->count());
-        $this->assertEquals(1, AnotherDummy::all()->count());
+        self::assertEquals(1, Dummy::all()->count());
+        self::assertEquals(1, AnotherDummy::all()->count());
     }
 
     public function testCannotPersistANonModelObject(): void

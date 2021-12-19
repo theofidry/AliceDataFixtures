@@ -25,7 +25,7 @@ class FileTrackerTest extends TestCase
     {
         $tracker = new FileTracker('foo');
 
-        $this->assertSame(['foo'], $tracker->getUnloadedFiles());
+        self::assertSame(['foo'], $tracker->getUnloadedFiles());
     }
 
     public function testCanMarkFilesAsLoaded(): void
@@ -33,7 +33,7 @@ class FileTrackerTest extends TestCase
         $tracker = new FileTracker('foo');
         $tracker->markAsLoaded('foo');
 
-        $this->assertSame([], $tracker->getUnloadedFiles());
+        self::assertSame([], $tracker->getUnloadedFiles());
     }
 
     public function testCannotMarkUntrackedFileAsLoaded(): void
@@ -48,13 +48,13 @@ class FileTrackerTest extends TestCase
     public function testCanTellWhenAllFilesHaveBeenLoaded(): void
     {
         $tracker = new FileTracker('foo', 'bar');
-        $this->assertFalse($tracker->allFilesHaveBeenLoaded());
+        self::assertFalse($tracker->allFilesHaveBeenLoaded());
 
         $tracker->markAsLoaded('foo');
-        $this->assertFalse($tracker->allFilesHaveBeenLoaded());
+        self::assertFalse($tracker->allFilesHaveBeenLoaded());
 
         $tracker->markAsLoaded('bar');
-        $this->assertTrue($tracker->allFilesHaveBeenLoaded());
+        self::assertTrue($tracker->allFilesHaveBeenLoaded());
     }
 
     public function testIsDeepClonable(): void
@@ -64,7 +64,7 @@ class FileTrackerTest extends TestCase
 
         $clone->markAsLoaded('foo');
 
-        $this->assertFalse($tracker->allFilesHaveBeenLoaded());
-        $this->assertTrue($clone->allFilesHaveBeenLoaded());
+        self::assertFalse($tracker->allFilesHaveBeenLoaded());
+        self::assertTrue($clone->allFilesHaveBeenLoaded());
     }
 }

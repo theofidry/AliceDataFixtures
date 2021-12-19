@@ -35,17 +35,17 @@ class PurgerTest extends TestCase
 
     public function testIsAPurger(): void
     {
-        $this->assertTrue(is_a(Purger::class, PurgerInterface::class, true));
+        self::assertTrue(is_a(Purger::class, PurgerInterface::class, true));
     }
 
     public function testIsAPurgerFactory(): void
     {
-        $this->assertTrue(is_a(Purger::class, PurgerFactoryInterface::class, true));
+        self::assertTrue(is_a(Purger::class, PurgerFactoryInterface::class, true));
     }
 
     public function testIsNotClonable(): void
     {
-        $this->assertFalse((new ReflectionClass(Purger::class))->isCloneable());
+        self::assertFalse((new ReflectionClass(Purger::class))->isCloneable());
     }
 
     public function testCreatesADoctrineOrmPurgerWithTheAppropriateManagerAndPurgeMode(): void
@@ -58,8 +58,8 @@ class PurgerTest extends TestCase
         /** @var DoctrineOrmPurger $decoratedPurger */
         $decoratedPurger = $decoratedPurgerReflection->getValue($purger);
 
-        $this->assertInstanceOf(PHPCRPurger::class, $decoratedPurger);
-        $this->assertEquals($manager, $decoratedPurger->getObjectManager());
+        self::assertInstanceOf(PHPCRPurger::class, $decoratedPurger);
+        self::assertEquals($manager, $decoratedPurger->getObjectManager());
     }
 
     public function testEmptyDatabase(): void
@@ -72,18 +72,18 @@ class PurgerTest extends TestCase
         $manager->persist($dummy);
         $manager->flush();
 
-        $this->assertCount(1, $manager->getRepository(Dummy::class)->findAll());
+        self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());
 
         $purger = new Purger($manager, PurgeMode::createDeleteMode());
         $purger->purge();
 
-        $this->assertCount(0, $manager->getRepository(Dummy::class)->findAll());
+        self::assertCount(0, $manager->getRepository(Dummy::class)->findAll());
 
         // Ensures the schema has been restored
         $dummy = new Dummy();
         $dummy->id = '/dummy_'.uniqid();
         $manager->persist($dummy);
         $manager->flush();
-        $this->assertCount(1, $manager->getRepository(Dummy::class)->findAll());
+        self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());
     }
 }

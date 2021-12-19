@@ -37,17 +37,17 @@ class ModelPurgerTest extends TestCase
 
     public function testIsAPurger(): void
     {
-        $this->assertTrue(is_a(ModelPurger::class, PurgerInterface::class, true));
+        self::assertTrue(is_a(ModelPurger::class, PurgerInterface::class, true));
     }
 
     public function testIsAPurgerFactory(): void
     {
-        $this->assertTrue(is_a(ModelPurger::class, PurgerFactoryInterface::class, true));
+        self::assertTrue(is_a(ModelPurger::class, PurgerFactoryInterface::class, true));
     }
 
     public function testIsNotClonable(): void
     {
-        $this->assertFalse((new ReflectionClass(ModelPurger::class))->isCloneable());
+        self::assertFalse((new ReflectionClass(ModelPurger::class))->isCloneable());
     }
 
     public function testRollbackAndRunMigrationsForPurgingTheDatabase(): void
@@ -115,8 +115,8 @@ class ModelPurgerTest extends TestCase
         ];
 
         foreach ($newPurgers as $newPurger) {
-            $this->assertEquals($newPurger, $purger);
-            $this->assertNotSame($newPurger, $purger);
+            self::assertEquals($newPurger, $purger);
+            self::assertNotSame($newPurger, $purger);
         }
     }
 
@@ -136,7 +136,7 @@ class ModelPurgerTest extends TestCase
             $purger->create(PurgeMode::createTruncateMode());
             $this->fail('Expected exception to be thrown.');
         } catch (InvalidArgumentException $exception) {
-            $this->assertEquals($expectedExceptionMessage, $exception->getMessage());
+            self::assertEquals($expectedExceptionMessage, $exception->getMessage());
         }
 
         try {
@@ -146,7 +146,7 @@ class ModelPurgerTest extends TestCase
             );
             $this->fail('Expected exception to be thrown.');
         } catch (InvalidArgumentException $exception) {
-            $this->assertEquals($expectedExceptionMessage, $exception->getMessage());
+            self::assertEquals($expectedExceptionMessage, $exception->getMessage());
         }
     }
 
@@ -163,17 +163,17 @@ class ModelPurgerTest extends TestCase
         AnotherDummy::create([
             'address' => 'Wonderlands',
         ]);
-        $this->assertEquals(1, AnotherDummy::all()->count());
+        self::assertEquals(1, AnotherDummy::all()->count());
 
         $purger = new ModelPurger($GLOBALS['repository'], 'migrations', $GLOBALS['migrator']);
         $purger->purge();
 
-        $this->assertEquals(0, AnotherDummy::all()->count());
+        self::assertEquals(0, AnotherDummy::all()->count());
 
         // Ensures the schema has been restored
         AnotherDummy::create([
             'address' => 'Wonderlands'
         ]);
-        $this->assertEquals(1, AnotherDummy::all()->count());
+        self::assertEquals(1, AnotherDummy::all()->count());
     }
 }

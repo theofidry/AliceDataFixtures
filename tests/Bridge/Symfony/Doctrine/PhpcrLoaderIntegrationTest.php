@@ -67,7 +67,7 @@ class PhpcrLoaderIntegrationTest extends TestCase
 
         $result = $this->doctrine->getRepository(Dummy::class)->findAll();
 
-        $this->assertCount(1, $result);
+        self::assertCount(1, $result);
     }
 
     public function testLoadAFileWithPurger(): void
@@ -86,6 +86,6 @@ class PhpcrLoaderIntegrationTest extends TestCase
 
         $result = $this->doctrine->getRepository(Dummy::class)->findAll();
 
-        $this->assertCount(1, $result);
+        self::assertCount(1, $result);
     }
 }

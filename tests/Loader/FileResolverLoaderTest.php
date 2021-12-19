@@ -31,12 +31,12 @@ class FileResolverLoaderTest extends TestCase
 
     public function testIsALoader(): void
     {
-        $this->assertTrue(is_a(FileResolverLoader::class, LoaderInterface::class, true));
+        self::assertTrue(is_a(FileResolverLoader::class, LoaderInterface::class, true));
     }
 
     public function testIsNotClonable(): void
     {
-        $this->assertFalse((new ReflectionClass(FileResolverLoader::class))->isCloneable());
+        self::assertFalse((new ReflectionClass(FileResolverLoader::class))->isCloneable());
     }
 
     public function testResolvesTheFilesBeforePassingThemToTheDecoratedLoader(): void
@@ -70,7 +70,7 @@ class FileResolverLoaderTest extends TestCase
         $loader = new FileResolverLoader($loader, $fileResolver);
         $result = $loader->load($files);
 
-        $this->assertEquals(
+        self::assertEquals(
             [
                 'dummy' => new stdClass(),
             ],
@@ -108,7 +108,7 @@ class FileResolverLoaderTest extends TestCase
         $loader = new FileResolverLoader($loader, new DummyResolver());
         $result = $loader->load($files, $parameters, $objects);
 
-        $this->assertEquals(
+        self::assertEquals(
             [
                 'dummy' => new stdClass(),
             ],

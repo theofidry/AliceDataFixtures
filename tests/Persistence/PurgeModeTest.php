@@ -32,18 +32,18 @@ class PurgeModeTest extends TestCase
     public function testCanCreateDeleteMode(): void
     {
         $mode = PurgeMode::createDeleteMode();
-        $this->assertEquals(1, $mode->getValue());
+        self::assertEquals(1, $mode->getValue());
 
         $mode = new PurgeMode(1);
-        $this->assertEquals(1, $mode->getValue());
+        self::assertEquals(1, $mode->getValue());
     }
 
     public function testCanCreateTruncateMode(): void
     {
         $mode = PurgeMode::createTruncateMode();
-        $this->assertEquals(2, $mode->getValue());
+        self::assertEquals(2, $mode->getValue());
 
         $mode = new PurgeMode(2);
-        $this->assertEquals(2, $mode->getValue());
+        self::assertEquals(2, $mode->getValue());
     }
 }

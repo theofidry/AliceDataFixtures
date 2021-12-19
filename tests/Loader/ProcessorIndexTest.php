@@ -37,8 +37,8 @@ class ProcessorIndexTest extends TestCase
 
         $loader->load([__DIR__.'/../../fixtures/fixture_files/dummy.yml']);
 
-        $this->assertSame(['dummy0'], $processor->preIds);
-        $this->assertSame(['dummy0'], $processor->postIds);
+        self::assertSame(['dummy0'], $processor->preIds);
+        self::assertSame(['dummy0'], $processor->postIds);
     }
 }
 

@@ -51,12 +51,12 @@ class FidryAliceDataFixturesBundleTest extends TestCase
      */
     public function testServiceRegistration(): void
     {
-        $this->assertServiceIsInstanceOf(
+        self::assertServiceIsInstanceOf(
             MultiPassLoader::class,
             'fidry_alice_data_fixtures.loader.multipass_file'
         );
 
-        $this->assertServiceIsInstanceOf(
+        self::assertServiceIsInstanceOf(
             SimpleLoader::class,
             'fidry_alice_data_fixtures.loader.simple'
         );
@@ -74,7 +74,7 @@ class FidryAliceDataFixturesBundleTest extends TestCase
 
     final protected function assertServiceIsInstanceOf(string $serviceClass, string $serviceId): void
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             $serviceClass,
             $this->kernel->getContainer()->get($serviceId)
         );

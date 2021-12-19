@@ -33,17 +33,17 @@ class PersisterLoaderTest extends TestCase
 
     public function testIsALoader(): void
     {
-        $this->assertTrue(is_a(PersisterLoader::class, LoaderInterface::class, true));
+        self::assertTrue(is_a(PersisterLoader::class, LoaderInterface::class, true));
     }
 
     public function testIsPersisterAware(): void
     {
-        $this->assertTrue(is_a(PersisterLoader::class, PersisterAwareInterface::class, true));
+        self::assertTrue(is_a(PersisterLoader::class, PersisterAwareInterface::class, true));
     }
 
     public function testIsNotClonable(): void
     {
-        $this->assertFalse((new ReflectionClass(PersisterLoader::class))->isCloneable());
+        self::assertFalse((new ReflectionClass(PersisterLoader::class))->isCloneable());
     }
 
     public function testNamedConstructorIsImmutable(): void
@@ -54,11 +54,11 @@ class PersisterLoaderTest extends TestCase
         $loader = new PersisterLoader(new FakeLoader(), new FakePersister(), null, []);
         $newLoader = $loader->withPersister($persister);
 
-        $this->assertEquals(
+        self::assertEquals(
             new PersisterLoader(new FakeLoader(), new FakePersister(), null, []),
             $loader
         );
-        $this->assertEquals(
+        self::assertEquals(
             new PersisterLoader(new FakeLoader(), $persister, null, []),
             $newLoader
         );
@@ -103,7 +103,7 @@ class PersisterLoaderTest extends TestCase
         $loader = new PersisterLoader($loader, $persister, null, [$firstProcessor, $secondProcessor]);
         $result = $loader->load($files);
 
-        $this->assertEquals(
+        self::assertEquals(
             [
                 'dummy' => new stdClass(),
             ],
@@ -150,7 +150,7 @@ class PersisterLoaderTest extends TestCase
         $loader = new PersisterLoader($loader, $persister, null, []);
         $result = $loader->load($files, $parameters, $objects);
 
-        $this->assertEquals(
+        self::assertEquals(
             [
                 'dummy' => new stdClass(),
             ],

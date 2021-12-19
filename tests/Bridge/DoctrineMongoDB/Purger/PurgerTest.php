@@ -39,8 +39,8 @@ class PurgerTest extends TestCase
         $decoratedPurgerReflection->setAccessible(true);
         $decoratedPurger = $decoratedPurgerReflection->getValue($purger);
 
-        $this->assertInstanceOf(MongoDBPurger::class, $decoratedPurger);
-        $this->assertEquals($manager, $decoratedPurger->getObjectManager());
+        self::assertInstanceOf(MongoDBPurger::class, $decoratedPurger);
+        self::assertEquals($manager, $decoratedPurger->getObjectManager());
     }
 
     public function testEmptyDatabase(): void
@@ -52,17 +52,17 @@ class PurgerTest extends TestCase
         $manager->persist($dummy);
         $manager->flush();
 
-        $this->assertCount(1, $manager->getRepository(Dummy::class)->findAll());
+        self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());
 
         $purger = new Purger($manager);
         $purger->purge();
 
-        $this->assertCount(0, $manager->getRepository(Dummy::class)->findAll());
+        self::assertCount(0, $manager->getRepository(Dummy::class)->findAll());
 
         // Ensures the schema has been restored
         $dummy = new Dummy();
         $manager->persist($dummy);
         $manager->flush();
-        $this->assertCount(1, $manager->getRepository(Dummy::class)->findAll());
+        self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());
     }
 }

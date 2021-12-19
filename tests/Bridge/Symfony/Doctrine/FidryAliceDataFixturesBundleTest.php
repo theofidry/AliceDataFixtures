@@ -39,22 +39,22 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
     {
         parent::testServiceRegistration();
 
-        $this->assertServiceIsInstanceOf(
+        self::assertServiceIsInstanceOf(
             Purger::class,
             'fidry_alice_data_fixtures.persistence.purger.doctrine.orm_purger'
         );
 
-        $this->assertServiceIsInstanceOf(
+        self::assertServiceIsInstanceOf(
             ObjectManagerPersister::class,
             'fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister'
         );
 
-        $this->assertServiceIsInstanceOf(
+        self::assertServiceIsInstanceOf(
             PersisterLoader::class,
             'fidry_alice_data_fixtures.doctrine.persister_loader'
         );
 
-        $this->assertServiceIsInstanceOf(
+        self::assertServiceIsInstanceOf(
             PurgerLoader::class,
             'fidry_alice_data_fixtures.doctrine.purger_loader'
         );

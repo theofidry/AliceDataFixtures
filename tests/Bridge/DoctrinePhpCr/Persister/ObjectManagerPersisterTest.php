@@ -49,12 +49,12 @@ class ObjectManagerPersisterTest extends TestCase
 
     public function testIsAPersister(): void
     {
-        $this->assertTrue(is_a(ObjectManagerPersister::class, PersisterInterface::class, true));
+        self::assertTrue(is_a(ObjectManagerPersister::class, PersisterInterface::class, true));
     }
 
     public function testIsNotClonable(): void
     {
-        $this->assertFalse((new ReflectionClass(ObjectManagerPersister::class))->isCloneable());
+        self::assertFalse((new ReflectionClass(ObjectManagerPersister::class))->isCloneable());
     }
 
     /**
@@ -67,7 +67,7 @@ class ObjectManagerPersisterTest extends TestCase
 
         $result = $this->documentManager->getRepository(get_class($document))->findAll();
 
-        $this->assertCount(1, $result);
+        self::assertCount(1, $result);
     }
 
     /**

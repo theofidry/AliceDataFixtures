@@ -42,12 +42,12 @@ class MultiPassFileLoaderTest extends TestCase
 
     public function testIsALoader(): void
     {
-        $this->assertTrue(is_a(MultiPassLoader::class, LoaderInterface::class, true));
+        self::assertTrue(is_a(MultiPassLoader::class, LoaderInterface::class, true));
     }
 
     public function testIsNotClonable(): void
     {
-        $this->assertFalse((new ReflectionClass(MultiPassLoader::class))->isCloneable());
+        self::assertFalse((new ReflectionClass(MultiPassLoader::class))->isCloneable());
     }
 
     /**
@@ -66,10 +66,10 @@ class MultiPassFileLoaderTest extends TestCase
                 $this->fail('Did not except exception to be thrown.');
             }
 
-            $this->assertEquals($expectedExceptionMessage, $exception->getMessage());
+            self::assertEquals($expectedExceptionMessage, $exception->getMessage());
         }
 
-        $this->assertTrue(true, 'Everything is fine.');
+        self::assertTrue(true, 'Everything is fine.');
     }
 
     public function testReturnsAnEmptySetIfNoFileGiven(): void
@@ -79,7 +79,7 @@ class MultiPassFileLoaderTest extends TestCase
         $loader = new MultiPassLoader(new FakeFileLoader());
         $actual = $loader->load([]);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function testReturnsInjectedObjectsAndObjectsIfNoFileGiven(): void
@@ -90,7 +90,7 @@ class MultiPassFileLoaderTest extends TestCase
         $loader = new MultiPassLoader(new FakeFileLoader());
         $actual = $loader->load([], $parameters, $objects);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function testDecoratesTheFileLoaderToReturnTheObjectsLoaded(): void
@@ -112,7 +112,7 @@ class MultiPassFileLoaderTest extends TestCase
         $loader = new MultiPassLoader($fileLoader);
         $actual = $loader->load($files);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
 
         $fileLoaderProphecy->loadFile(Argument::cetera())->shouldHaveBeenCalledTimes(1);
     }
@@ -224,7 +224,7 @@ class MultiPassFileLoaderTest extends TestCase
         $loader = new MultiPassLoader($fileLoader);
         $actual = $loader->load($files, $parameters, $objects);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
 
         $fileLoaderProphecy->loadFile(Argument::cetera())->shouldHaveBeenCalledTimes(5);
     }
@@ -263,7 +263,7 @@ class MultiPassFileLoaderTest extends TestCase
             $loader->load($files);
             $this->fail('Expected exception to be thrown.');
         } catch (MaxPassReachedException $exception) {
-            $this->assertStringContainsString(
+            self::assertStringContainsString(
                 <<<EOF
 Loading files limit of 15 reached. Could not load the following files:
 foo:

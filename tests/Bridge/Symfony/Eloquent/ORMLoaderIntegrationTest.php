@@ -76,7 +76,7 @@ class ORMLoaderIntegrationTest extends TestCase
             __DIR__.'/../../../../fixtures/fixture_files/eloquent_another_dummy.yml',
         ]);
 
-        $this->assertEquals(1, AnotherDummy::all()->count());
+        self::assertEquals(1, AnotherDummy::all()->count());
     }
 
     public function testLoadAFileWithPurger(): void
@@ -90,7 +90,7 @@ class ORMLoaderIntegrationTest extends TestCase
             __DIR__.'/../../../../fixtures/fixture_files/eloquent_another_dummy.yml',
         ]);
 
-        $this->assertEquals(1, AnotherDummy::all()->count());
+        self::assertEquals(1, AnotherDummy::all()->count());
     }
 
     public function testBidirectionalRelationships(): void
@@ -99,8 +99,8 @@ class ORMLoaderIntegrationTest extends TestCase
             __DIR__.'/../../../../fixtures/fixture_files/eloquent_relationship_dummies.yml',
         ]);
 
-        $this->assertEquals(10, Dummy::all()->count());
-        $this->assertEquals(10, AnotherDummy::all()->count());
+        self::assertEquals(10, Dummy::all()->count());
+        self::assertEquals(10, AnotherDummy::all()->count());
     }
 
     public function testBidirectionalRelationshipsDeclaredInDifferentFiles(): void
@@ -110,8 +110,8 @@ class ORMLoaderIntegrationTest extends TestCase
             __DIR__.'/../../../../fixtures/fixture_files/eloquent_dummies.yml',
         ]);
 
-        $this->assertEquals(10, Dummy::all()->count());
-        $this->assertEquals(1, AnotherDummy::all()->count());
+        self::assertEquals(10, Dummy::all()->count());
+        self::assertEquals(1, AnotherDummy::all()->count());
     }
 
     private function execute(array $input): void
