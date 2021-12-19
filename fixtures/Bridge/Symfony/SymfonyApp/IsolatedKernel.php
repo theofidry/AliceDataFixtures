@@ -37,14 +37,14 @@ abstract class IsolatedKernel extends Kernel
                 public function process(ContainerBuilder $container)
                 {
                     foreach ($container->getDefinitions() as $id => $definition) {
-                        if (strpos($id, 'fidry_alice_data_fixtures') !== 0) {
+                        if (!str_starts_with($id, 'fidry_alice_data_fixtures')) {
                             continue;
                         }
 
                         $definition->setPublic(true);
                     }
                     foreach ($container->getAliases() as $id => $definition) {
-                        if (strpos($id, 'fidry_alice_data_fixtures') !== 0) {
+                        if (!str_starts_with($id, 'fidry_alice_data_fixtures')) {
                             continue;
                         }
 
