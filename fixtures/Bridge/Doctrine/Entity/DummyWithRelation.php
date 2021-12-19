@@ -30,7 +30,7 @@ class DummyWithRelation
      * @Column(type="integer")
      * @GeneratedValue
      */
-    public $id;
+    public int $id;
 
     /**
      * @OneToOne(targetEntity="DummyWithIdentifier", cascade={"persist"})

@@ -17,7 +17,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class EloquentKernelWithInvalidDatabase extends EloquentKernel
 {
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         parent::registerContainerConfiguration($loader);
 

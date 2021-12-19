@@ -35,9 +35,6 @@ final class FidryAliceDataFixturesExtension extends Extension
 {
     private const SERVICES_DIR = __DIR__.'/../Resources/config';
 
-    /**
-     * @inheritdoc
-     */
     public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();

@@ -21,14 +21,14 @@ use PHPUnit\Framework\TestCase;
  */
 class ErrorTrackerTest extends TestCase
 {
-    public function testCanGetStackOfATrackerEvenIfNoErrorHasBeenRegistered()
+    public function testCanGetStackOfATrackerEvenIfNoErrorHasBeenRegistered(): void
     {
         $tracker = new ErrorTracker();
 
         $this->assertSame([], $tracker->getStack());
     }
 
-    public function testKeepsTrackOfErrors()
+    public function testKeepsTrackOfErrors(): void
     {
         $tracker = new ErrorTracker();
         $tracker->register('foo', $exception0 = new Exception('foo exception'));
@@ -49,7 +49,7 @@ class ErrorTrackerTest extends TestCase
         );
     }
 
-    public function testIsDeepClonable()
+    public function testIsDeepClonable(): void
     {
         $tracker = new ErrorTracker();
         $tracker->register('foo', new Exception($message0 = 'foo exception'));

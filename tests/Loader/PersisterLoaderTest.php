@@ -31,24 +31,24 @@ class PersisterLoaderTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testIsALoader()
+    public function testIsALoader(): void
     {
         $this->assertTrue(is_a(PersisterLoader::class, LoaderInterface::class, true));
     }
 
-    public function testIsPersisterAware()
+    public function testIsPersisterAware(): void
     {
         $this->assertTrue(is_a(PersisterLoader::class, PersisterAwareInterface::class, true));
     }
 
-    public function testIsNotClonable()
+    public function testIsNotClonable(): void
     {
         $this->assertFalse((new ReflectionClass(PersisterLoader::class))->isCloneable());
     }
 
-    public function testNamedConstructorIsImmutable()
+    public function testNamedConstructorIsImmutable(): void
     {
-        /** @var \Fidry\AliceDataFixtures\Persistence\PersisterInterface $persister */
+        /** @var PersisterInterface $persister */
         $persister = $this->prophesize(PersisterInterface::class)->reveal();
 
         $loader = new PersisterLoader(new FakeLoader(), new FakePersister(), null, []);
@@ -64,7 +64,7 @@ class PersisterLoaderTest extends TestCase
         );
     }
 
-    public function testDecoratesALoaderAndProcessAndPersistEachLoadedObjectBeforeReturningThem()
+    public function testDecoratesALoaderAndProcessAndPersistEachLoadedObjectBeforeReturningThem(): void
     {
         $files = [
             'fixtures1.yml',
@@ -85,7 +85,7 @@ class PersisterLoaderTest extends TestCase
         $persisterProphecy = $this->prophesize(PersisterInterface::class);
         $persisterProphecy->persist($dummy)->shouldBeCalled();
         $persisterProphecy->flush()->shouldBeCalled();
-        /** @var \Fidry\AliceDataFixtures\Persistence\PersisterInterface $persister */
+        /** @var PersisterInterface $persister */
         $persister = $persisterProphecy->reveal();
 
         $firstProcessorProphecy = $this->prophesize(ProcessorInterface::class);
@@ -119,7 +119,7 @@ class PersisterLoaderTest extends TestCase
         $secondProcessorProphecy->postProcess(Argument::cetera())->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testParametersAndObjectsInjectedArePassedToTheDecoratedLoader()
+    public function testParametersAndObjectsInjectedArePassedToTheDecoratedLoader(): void
     {
         $files = [
             'fixtures1.yml',

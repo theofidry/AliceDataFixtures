@@ -32,22 +32,22 @@ class PurgerTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testIsAPurger()
+    public function testIsAPurger(): void
     {
         $this->assertTrue(is_a(Purger::class, PurgerInterface::class, true));
     }
 
-    public function testIsAPurgerFactory()
+    public function testIsAPurgerFactory(): void
     {
         $this->assertTrue(is_a(Purger::class, PurgerFactoryInterface::class, true));
     }
 
-    public function testIsNotClonable()
+    public function testIsNotClonable(): void
     {
         $this->assertFalse((new ReflectionClass(Purger::class))->isCloneable());
     }
 
-    public function testCreatesADoctrineOrmPurgerWithTheAppropriateManagerAndPurgeMode()
+    public function testCreatesADoctrineOrmPurgerWithTheAppropriateManagerAndPurgeMode(): void
     {
         $manager = $this->prophesize(DocumentManager::class)->reveal();
         $purger = new Purger($manager);
@@ -61,7 +61,7 @@ class PurgerTest extends TestCase
         $this->assertEquals($manager, $decoratedPurger->getObjectManager());
     }
 
-    public function testEmptyDatabase()
+    public function testEmptyDatabase(): void
     {
         /** @var DocumentManager $manager */
         $manager = $GLOBALS['document_manager'];

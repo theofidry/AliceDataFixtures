@@ -21,7 +21,6 @@ class IdGenerator extends AbstractIdGenerator
 {
     public const GENERATOR_TYPE_ALICE = 10;
 
-    
     private AbstractIdGenerator $decorated;
 
     public function __construct(AbstractIdGenerator $decorated)
@@ -29,9 +28,6 @@ class IdGenerator extends AbstractIdGenerator
         $this->decorated = $decorated;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function generate(EntityManager $em, $entity)
     {
         Assert::notNull($entity);
@@ -48,9 +44,6 @@ class IdGenerator extends AbstractIdGenerator
         return $this->decorated->generate($em, $entity);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isPostInsertGenerator(): bool
     {
         return $this->decorated->isPostInsertGenerator();

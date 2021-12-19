@@ -50,9 +50,6 @@ use Nelmio\Alice\IsAServiceTrait;
         $this->purger = static::createPurger($manager, $purgeMode);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function create(PurgeMode $mode, PurgerInterface $purger = null): PurgerInterface
     {
         if (null === $purger) {
@@ -86,9 +83,6 @@ use Nelmio\Alice\IsAServiceTrait;
         return new self($manager, $mode);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function purge(): void
     {
         // Because MySQL rocks, you got to disable foreign key checks when doing a TRUNCATE/DELETE unlike in for example

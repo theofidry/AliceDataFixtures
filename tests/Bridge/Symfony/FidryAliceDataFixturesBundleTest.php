@@ -28,23 +28,14 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class FidryAliceDataFixturesBundleTest extends TestCase
 {
-    /**
-     * @var KernelInterface
-     */
-    protected NakedKernel|KernelInterface $kernel;
+    protected KernelInterface $kernel;
 
-    /**
-     * @inheritdoc
-     */
     public function setUp(): void
     {
         $this->kernel = NakedKernel::create();
         $this->kernel->boot();
     }
 
-    /**
-     * @inheritdoc
-     */
     public function tearDown(): void
     {
         $this->kernel->shutdown();
@@ -55,7 +46,7 @@ class FidryAliceDataFixturesBundleTest extends TestCase
      * @group legacy
      * @expectedDepreaction The service "fidry_alice_data_fixtures.loader.multipass_file" is deprecated and will be removed in future versions.
      */
-    public function testServiceRegistration()
+    public function testServiceRegistration(): void
     {
         $this->assertServiceIsInstanceOf(
             \Fidry\AliceDataFixtures\Loader\MultiPassLoader::class,
@@ -68,7 +59,7 @@ class FidryAliceDataFixturesBundleTest extends TestCase
         );
     }
 
-    public function testCannotBootIfNelmioAliceBundleIsNotRegistered()
+    public function testCannotBootIfNelmioAliceBundleIsNotRegistered(): void
     {
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('Cannot register "Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle" without "Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle".');
@@ -78,7 +69,7 @@ class FidryAliceDataFixturesBundleTest extends TestCase
         $kernel->shutdown();
     }
 
-    final protected function assertServiceIsInstanceOf(string $serviceClass, string $serviceId)
+    final protected function assertServiceIsInstanceOf(string $serviceClass, string $serviceId): void
     {
         $this->assertInstanceOf(
             $serviceClass,

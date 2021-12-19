@@ -13,6 +13,11 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\Entity;
 
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Embedded;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+
 class DummyWithEmbeddable
 {
     /**
@@ -20,10 +25,10 @@ class DummyWithEmbeddable
      * @Column(type="integer")
      * @GeneratedValue
      */
-    public $id;
+    public int $id;
 
     /**
      * @Embedded(class="DummyEmbeddable")
      */
-    public $embeddable;
+    public DummyEmbeddable $embeddable;
 }

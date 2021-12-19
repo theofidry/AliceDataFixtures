@@ -26,7 +26,6 @@ final class TaggedDefinitionsLocator
     /**
      * Finds service definitions tagged by a given tag name.
      *
-     *
      * @return Reference[]
      */
     public function findReferences(ContainerBuilder $container, string $tagName): array

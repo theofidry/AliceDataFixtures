@@ -40,12 +40,12 @@ class MultiPassFileLoaderTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testIsALoader()
+    public function testIsALoader(): void
     {
         $this->assertTrue(is_a(MultiPassLoader::class, LoaderInterface::class, true));
     }
 
-    public function testIsNotClonable()
+    public function testIsNotClonable(): void
     {
         $this->assertFalse((new ReflectionClass(MultiPassLoader::class))->isCloneable());
     }
@@ -53,7 +53,7 @@ class MultiPassFileLoaderTest extends TestCase
     /**
      * @dataProvider provideMaxPassValue
      */
-    public function testMaxPassGivenMustBeAStrictlyPositiveInteger(int $maxPass, string $expectedExceptionMessage = null)
+    public function testMaxPassGivenMustBeAStrictlyPositiveInteger(int $maxPass, string $expectedExceptionMessage = null): void
     {
         try {
             new MultiPassLoader(new FakeFileLoader(), $maxPass);
@@ -72,7 +72,7 @@ class MultiPassFileLoaderTest extends TestCase
         $this->assertTrue(true, 'Everything is fine.');
     }
 
-    public function testReturnsAnEmptySetIfNoFileGiven()
+    public function testReturnsAnEmptySetIfNoFileGiven(): void
     {
         $expected = [];
 
@@ -82,7 +82,7 @@ class MultiPassFileLoaderTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testReturnsInjectedObjectsAndObjectsIfNoFileGiven()
+    public function testReturnsInjectedObjectsAndObjectsIfNoFileGiven(): void
     {
         $parameters = [];
         $expected = $objects = ['dummy' => new stdClass()];
@@ -93,7 +93,7 @@ class MultiPassFileLoaderTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testDecoratesTheFileLoaderToReturnTheObjectsLoaded()
+    public function testDecoratesTheFileLoaderToReturnTheObjectsLoaded(): void
     {
         $files = ['foo'];
 
@@ -117,7 +117,7 @@ class MultiPassFileLoaderTest extends TestCase
         $fileLoaderProphecy->loadFile(Argument::cetera())->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testLoadedFilesInSeveralPassesUntilAllFilesAreLoaded()
+    public function testLoadedFilesInSeveralPassesUntilAllFilesAreLoaded(): void
     {
         $files = ['file1', 'file2', 'file3', 'file4'];
         $parameters = ['foo' => 'bar'];
@@ -229,7 +229,7 @@ class MultiPassFileLoaderTest extends TestCase
         $fileLoaderProphecy->loadFile(Argument::cetera())->shouldHaveBeenCalledTimes(5);
     }
 
-    public function testIfDecoratedLoaderThrowsAGenericLoadingExceptionThenTheExceptionRethrown()
+    public function testIfDecoratedLoaderThrowsAGenericLoadingExceptionThenTheExceptionRethrown(): void
     {
         $this->expectException(RootLoadingException::class);
 
@@ -244,7 +244,7 @@ class MultiPassFileLoaderTest extends TestCase
         $loader->load($files);
     }
 
-    public function testIfFilesCannotBeReloadedTheLoadingStopsWhenTheLimitIsReached()
+    public function testIfFilesCannotBeReloadedTheLoadingStopsWhenTheLimitIsReached(): void
     {
         $files = ['foo'];
 
@@ -275,7 +275,7 @@ EOF
         }
     }
 
-    public function provideMaxPassValue(): \Generator
+    public static function provideMaxPassValue(): iterable
     {
         yield 'negative value' => [
             -1,

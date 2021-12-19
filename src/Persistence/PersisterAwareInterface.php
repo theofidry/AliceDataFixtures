@@ -16,9 +16,7 @@ namespace Fidry\AliceDataFixtures\Persistence;
 interface PersisterAwareInterface
 {
     /**
-     * @param PersisterInterface $persister
-     *
      * @return static
      */
-    public function withPersister(PersisterInterface $persister): static;
+    public function withPersister(PersisterInterface $persister);
 }

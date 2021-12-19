@@ -32,9 +32,6 @@ final class RegisterTagServicesPass implements CompilerPassInterface
         $this->taggedDefinitionsLocator = new TaggedDefinitionsLocator();
     }
 
-    /**
-     * @inheritdoc
-     */
     public function process(ContainerBuilder $container): void
     {
         if (false === $container->hasDefinition($this->registry)) {

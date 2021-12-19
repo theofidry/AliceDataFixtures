@@ -29,10 +29,10 @@ class DummyWithEmbeddable
      * @Column(type="integer")
      * @GeneratedValue
      */
-    public $id;
+    public int $id;
 
     /**
      * @Embedded(class="DummyEmbeddable")
      */
-    public $embeddable;
+    public DummyEmbeddable $embeddable;
 }

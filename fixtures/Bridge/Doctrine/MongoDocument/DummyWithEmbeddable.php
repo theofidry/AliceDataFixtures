@@ -28,7 +28,7 @@ class DummyWithEmbeddable
     public $id;
 
     /**
-     * @EmbedOne(targetDocument="Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\DummyEmbeddable")
+     * @EmbedOne(targetDocument=DummyEmbeddable::class)
      */
-    public $embeddable;
+    public DummyEmbeddable $embeddable;
 }

@@ -36,17 +36,10 @@ class ObjectManagerPersisterTest extends TestCase
 {
     private ObjectManagerPersister $persister;
 
-    /**
-     * @var DocumentManager
-     */
-    private mixed $documentManager;
+    private DocumentManager $documentManager;
 
-    
     private MongoDBPurger $purger;
 
-    /**
-     * @inheritdoc
-     */
     public function setUp(): void
     {
         $this->documentManager = $GLOBALS['document_manager'];
@@ -54,20 +47,17 @@ class ObjectManagerPersisterTest extends TestCase
         $this->purger = new MongoDBPurger($this->documentManager);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function tearDown(): void
     {
         $this->purger->purge();
     }
 
-    public function testIsAPersister()
+    public function testIsAPersister(): void
     {
         $this->assertTrue(is_a(ObjectManagerPersister::class, PersisterInterface::class, true));
     }
 
-    public function testIsNotClonable()
+    public function testIsNotClonable(): void
     {
         $this->assertFalse((new ReflectionClass(ObjectManagerPersister::class))->isCloneable());
     }
@@ -75,7 +65,7 @@ class ObjectManagerPersisterTest extends TestCase
     /**
      * @dataProvider provideDocuments
      */
-    public function testCanPersistADocument($document, bool $exact = false)
+    public function testCanPersistADocument($document, bool $exact = false): void
     {
         try {
             $this->persister->persist($document);
@@ -99,7 +89,7 @@ class ObjectManagerPersisterTest extends TestCase
     /**
      * @dataProvider provideNonPersistableDocuments
      */
-    public function testDoesNotPersistEmbeddables($dummy)
+    public function testDoesNotPersistEmbeddables($dummy): void
     {
         try {
             $this->documentManager->persist($dummy);
@@ -114,12 +104,12 @@ class ObjectManagerPersisterTest extends TestCase
         $this->persister->flush();
     }
 
-    public function provideDocuments(): \Generator
+    public static function provideDocuments(): iterable
     {
         yield 'simple entity' => [new Dummy()];
 
         yield 'entity with embeddable' => [
-            (function () {
+            (static function () {
                 $embeddable = new DummyEmbeddable();
                 $dummy = new DummyWithEmbeddable();
 
@@ -130,16 +120,16 @@ class ObjectManagerPersisterTest extends TestCase
         ];
 
         yield 'sub class entity' => [
-            (function () {
+            (static function () {
                 $dummy = new DummySubClass();
-                $dummy->status = 200;
+                $dummy->status = '200';
 
                 return $dummy;
             })()
         ];
 
         yield 'with explicit ID' => [
-            (function () {
+            (static function () {
                 $dummy = new Dummy();
                 $dummy->id = 200;
 
@@ -149,7 +139,7 @@ class ObjectManagerPersisterTest extends TestCase
         ];
     }
 
-    public function provideNonPersistableDocuments(): \Generator
+    public static function provideNonPersistableDocuments(): iterable
     {
         yield 'mapped super class' => [new MappedSuperclassDummy()];
     }

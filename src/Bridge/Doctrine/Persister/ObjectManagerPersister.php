@@ -31,9 +31,9 @@ class ObjectManagerPersister implements PersisterInterface
     private ObjectManager $objectManager;
 
     /**
-     * @var array|null Values are FQCN of persistable objects
+     * @var array Values are FQCN of persistable objects
      */
-    private ?array $persistableClasses;
+    private array $persistableClasses;
 
     /**
      * @var ClassMetadata[] Entity metadata to restore after flush, FQCN being the key.
@@ -45,12 +45,9 @@ class ObjectManagerPersister implements PersisterInterface
         $this->objectManager = $manager;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function persist(object $object): void
     {
-        if (null === $this->persistableClasses) {
+        if (!isset($this->persistableClasses)) {
             $this->persistableClasses = array_flip($this->getPersistableClasses($this->objectManager));
         }
 

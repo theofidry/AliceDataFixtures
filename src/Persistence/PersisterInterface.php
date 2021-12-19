@@ -21,7 +21,7 @@ interface PersisterInterface
     /**
      * Persists objects into the database.
      */
-    public function persist(object $object);
+    public function persist(object $object): void;
 
-    public function flush();
+    public function flush(): void;
 }

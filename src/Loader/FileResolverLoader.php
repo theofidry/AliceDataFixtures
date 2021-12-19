@@ -33,7 +33,7 @@ use Psr\Log\NullLogger;
 
     private LoaderInterface $loader;
     private FileResolverInterface $fileResolver;
-    private LoggerInterface|NullLogger $logger;
+    private LoggerInterface $logger;
 
     public function __construct(
         LoaderInterface $decoratedLoader,
@@ -45,9 +45,6 @@ use Psr\Log\NullLogger;
         $this->logger = $logger ?? new NullLogger();
     }
 
-    /**
-     * @inheritdoc
-     */
     public function withPersister(PersisterInterface $persister): self
     {
         $loader = $this->loader;

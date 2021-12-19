@@ -38,9 +38,6 @@ use Nelmio\Alice\IsAServiceTrait;
         $this->databaseManager = $databaseManager;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function persist(object $object): void
     {
         if (false === $object instanceof Model) {

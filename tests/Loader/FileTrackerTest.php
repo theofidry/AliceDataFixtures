@@ -20,14 +20,14 @@ use PHPUnit\Framework\TestCase;
  */
 class FileTrackerTest extends TestCase
 {
-    public function testReturnsAllUnloadedFiles()
+    public function testReturnsAllUnloadedFiles(): void
     {
         $tracker = new FileTracker('foo');
 
         $this->assertSame(['foo'], $tracker->getUnloadedFiles());
     }
 
-    public function testCanMarkFilesAsLoaded()
+    public function testCanMarkFilesAsLoaded(): void
     {
         $tracker = new FileTracker('foo');
         $tracker->markAsLoaded('foo');
@@ -35,7 +35,7 @@ class FileTrackerTest extends TestCase
         $this->assertSame([], $tracker->getUnloadedFiles());
     }
 
-    public function testCannotMarkUntrackedFileAsLoaded()
+    public function testCannotMarkUntrackedFileAsLoaded(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('The file "foo" is not being tracked. As such, it cannot be marked as "loaded".');
@@ -44,7 +44,7 @@ class FileTrackerTest extends TestCase
         $tracker->markAsLoaded('foo');
     }
 
-    public function testCanTellWhenAllFilesHaveBeenLoaded()
+    public function testCanTellWhenAllFilesHaveBeenLoaded(): void
     {
         $tracker = new FileTracker('foo', 'bar');
         $this->assertFalse($tracker->allFilesHaveBeenLoaded());
@@ -56,7 +56,7 @@ class FileTrackerTest extends TestCase
         $this->assertTrue($tracker->allFilesHaveBeenLoaded());
     }
 
-    public function testIsDeepClonable()
+    public function testIsDeepClonable(): void
     {
         $tracker = new FileTracker('foo');
         $clone = clone $tracker;

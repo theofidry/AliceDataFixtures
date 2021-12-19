@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Persistence;
 
+use function array_flip;
+use function array_key_exists;
 use InvalidArgumentException;
+use function sprintf;
 
 final class PurgeMode
 {

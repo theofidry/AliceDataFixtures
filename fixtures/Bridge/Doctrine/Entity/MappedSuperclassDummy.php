@@ -28,10 +28,10 @@ class MappedSuperclassDummy
      * @Column(type="integer")
      * @GeneratedValue
      */
-    public $id;
+    public int $id;
 
     /**
      * @Column(type="string")
      */
-    public $status;
+    public string $status;
 }

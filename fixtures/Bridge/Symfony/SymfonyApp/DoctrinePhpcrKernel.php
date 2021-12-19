@@ -40,7 +40,7 @@ class DoctrinePhpcrKernel extends IsolatedKernel
         return $bundles;
     }
 
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         parent::registerContainerConfiguration($loader);
 

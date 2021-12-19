@@ -21,7 +21,7 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernelWithInvalidD
  */
 class LazyIntegrationTest extends NakedFidryAliceDataFixturesBundleTest
 {
-    public function testTheApplicationCanBeStartedWithoutRequiringADatabaseConnection()
+    public function testTheApplicationCanBeStartedWithoutRequiringADatabaseConnection(): void
     {
         $kernel = DoctrineKernelWithInvalidDatabase::create();
         $kernel->boot();

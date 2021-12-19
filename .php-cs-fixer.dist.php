@@ -38,8 +38,12 @@ return (new Config())
         'combine_consecutive_unsets' => true,
         'declare_equal_normalize' => true,
         'declare_strict_types' => true,
+        'general_phpdoc_annotation_remove' => [
+            'annotations' => [
+                'inheritDoc',
+            ],
+        ],
         'heredoc_to_nowdoc' => true,
-        'include' => true,
         'header_comment' => [
             'location' => 'after_open',
             'header' => <<<'LICENSE'
@@ -51,6 +55,7 @@ return (new Config())
             file that was distributed with this source code.
             LICENSE
         ],
+        'include' => true,
         'lowercase_cast' => true,
         'modernize_types_casting' => true,
         'native_function_casing' => true,

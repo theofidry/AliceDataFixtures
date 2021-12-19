@@ -31,17 +31,17 @@ class SimpleLoaderTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testIsALoader()
+    public function testIsALoader(): void
     {
         $this->assertTrue(is_a(SimpleLoader::class, LoaderInterface::class, true));
     }
 
-    public function testIsNotClonable()
+    public function testIsNotClonable(): void
     {
         $this->assertFalse((new ReflectionClass(SimpleLoader::class))->isCloneable());
     }
 
-    public function testDecoratesAliceLoaderToLoadEachFileGivenAndReturnsTheObjectsLoaded()
+    public function testDecoratesAliceLoaderToLoadEachFileGivenAndReturnsTheObjectsLoaded(): void
     {
         $files = [
             'fixtures1.yml',

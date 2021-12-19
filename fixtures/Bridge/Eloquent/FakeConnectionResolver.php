@@ -20,26 +20,17 @@ class FakeConnectionResolver implements ConnectionResolverInterface
 {
     use NotCallableTrait;
 
-    /**
-     * @inheritdoc
-     */
-    public function connection($name = null)
+    public function connection($name = null): void
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getDefaultConnection()
+    public function getDefaultConnection(): string
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setDefaultConnection($name)
+    public function setDefaultConnection($name): void
     {
         $this->__call(__METHOD__, func_get_args());
     }

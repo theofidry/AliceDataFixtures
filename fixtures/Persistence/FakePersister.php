@@ -19,18 +19,12 @@ class FakePersister implements PersisterInterface
 {
     use NotCallableTrait;
 
-    /**
-     * @inheritdoc
-     */
-    public function persist(object $object)
+    public function persist(object $object): void
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function flush()
+    public function flush(): void
     {
         $this->__call(__METHOD__, func_get_args());
     }

@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PurgeModeTest extends TestCase
 {
-    public function testThrowsAnExceptionIfUnknownPurgeModeIsGiven()
+    public function testThrowsAnExceptionIfUnknownPurgeModeIsGiven(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown purge mode "3".');
@@ -28,7 +28,7 @@ class PurgeModeTest extends TestCase
         new PurgeMode(3);
     }
 
-    public function testCanCreateDeleteMode()
+    public function testCanCreateDeleteMode(): void
     {
         $mode = PurgeMode::createDeleteMode();
         $this->assertEquals(1, $mode->getValue());
@@ -37,7 +37,7 @@ class PurgeModeTest extends TestCase
         $this->assertEquals(1, $mode->getValue());
     }
 
-    public function testCanCreateTruncateMode()
+    public function testCanCreateTruncateMode(): void
     {
         $mode = PurgeMode::createTruncateMode();
         $this->assertEquals(2, $mode->getValue());

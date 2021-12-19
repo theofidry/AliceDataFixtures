@@ -21,12 +21,10 @@ class NakedKernel extends IsolatedKernel
 {
     public function registerBundles(): array
     {
-        $bundles = [
+        return [
             new FrameworkBundle(),
             new NelmioAliceBundle(),
             new FidryAliceDataFixturesBundle(),
         ];
-
-        return $bundles;
     }
 }

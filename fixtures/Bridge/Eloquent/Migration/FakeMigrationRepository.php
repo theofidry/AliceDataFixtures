@@ -21,87 +21,57 @@ class FakeMigrationRepository implements MigrationRepositoryInterface
 {
     use NotCallableTrait;
 
-    /**
-     * @inheritdoc
-     */
-    public function getRan()
+    public function getRan(): array
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getMigrations($steps)
+    public function getMigrations($steps): array
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getMigrationBatches()
+    public function getMigrationBatches(): array
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getLast()
+    public function getLast(): array
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function log($file, $batch)
+    public function log($file, $batch): void
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function delete($migration)
+    public function delete($migration): void
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getNextBatchNumber()
+    public function getNextBatchNumber(): int
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function createRepository()
+    public function createRepository(): void
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function repositoryExists()
+    public function repositoryExists(): bool
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setSource($name)
+    public function setSource($name): void
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function deleteRepository()
+    public function deleteRepository(): void
     {
         $this->__call(__METHOD__, func_get_args());
     }

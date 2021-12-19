@@ -23,7 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ProcessorIndexTest extends TestCase
 {
-    public function testIndexesArePreserved()
+    public function testIndexesArePreserved(): void
     {
         $processor = new DummyProcessor();
         $loader = new PersisterLoader(

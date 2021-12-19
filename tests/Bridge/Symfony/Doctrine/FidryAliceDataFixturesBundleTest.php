@@ -15,23 +15,12 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony\Doctrine;
 
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundleTest as NakedFidryAliceDataFixturesBundleTest;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @coversNothing
  */
 class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundleTest
 {
-    /**
-     * @var KernelInterface
-     */
-    protected \Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\NakedKernel|KernelInterface $kernel;
-
-    /**
-     * @inheritdoc
-     *
-     * @group legacy
-     */
     public function setUp(): void
     {
         $this->kernel = DoctrineKernel::create();
@@ -42,7 +31,7 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
      * @group legacy
      * @expectedDepreaction The service "fidry_alice_data_fixtures.loader.multipass_file" is deprecated and will be removed in future versions.
      */
-    public function testServiceRegistration()
+    public function testServiceRegistration(): void
     {
         parent::testServiceRegistration();
 

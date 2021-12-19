@@ -21,31 +21,20 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\User;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @coversNothing
  */
 class ORMLoaderIntegrationTest extends TestCase
 {
-    /**
-     * @var DoctrineKernel
-     */
-    private DoctrineKernel $kernel;
+    private KernelInterface $kernel;
 
-    /**
-     * @var LoaderInterface
-     */
-    private null|LoaderInterface|object|\Fidry\AliceDataFixtures\Loader\PersisterLoader $loader;
+    private LoaderInterface $loader;
 
-    /**
-     * @var Registry
-     */
-    private null|Registry|object $doctrine;
+    private Registry $doctrine;
 
-    /**
-     * @var int
-     */
-    private static int $seed;
+    private static string $seed;
 
     /**
      * @inheritdoc
@@ -57,11 +46,6 @@ class ORMLoaderIntegrationTest extends TestCase
         static::$seed = uniqid();
     }
 
-    /**
-     * @inheritdoc
-     *
-     * @group legacy
-     */
     public function setUp(): void
     {
         $this->kernel = new DoctrineKernel(static::$seed, true);
@@ -77,10 +61,10 @@ class ORMLoaderIntegrationTest extends TestCase
         $purger->purge();
 
         $this->kernel->shutdown();
-        $this->kernel = null;
+        unset($this->kernel);
     }
 
-    public function testLoadAFile()
+    public function testLoadAFile(): void
     {
         $this->loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/dummy.yml',
@@ -91,7 +75,7 @@ class ORMLoaderIntegrationTest extends TestCase
         $this->assertEquals(1, count($result));
     }
 
-    public function testLoadAFileWithPurger()
+    public function testLoadAFileWithPurger(): void
     {
         $dummy = new Dummy();
         $dummyManager = $this->doctrine->getManager();
@@ -116,7 +100,7 @@ class ORMLoaderIntegrationTest extends TestCase
         $this->assertEquals(1, count($result));
     }
 
-    public function testBidirectionalRelationships()
+    public function testBidirectionalRelationships(): void
     {
         $this->loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/user_group.yml',
@@ -129,7 +113,7 @@ class ORMLoaderIntegrationTest extends TestCase
         $this->assertEquals(5, count($groups));
     }
 
-    public function testBidirectionalRelationshipsDeclaredInDifferentFiles()
+    public function testBidirectionalRelationshipsDeclaredInDifferentFiles(): void
     {
         $this->loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/user_with_group.yml',
@@ -143,7 +127,7 @@ class ORMLoaderIntegrationTest extends TestCase
         $this->assertEquals(5, count($groups));
     }
 
-    public function testBidirectionalRelationshipsDeclaredInDifferentFilesWithCyclingDependence()
+    public function testBidirectionalRelationshipsDeclaredInDifferentFilesWithCyclingDependence(): void
     {
         $this->loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/user_with_group.yml',

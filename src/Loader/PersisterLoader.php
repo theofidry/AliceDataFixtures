@@ -36,13 +36,10 @@ use Psr\Log\NullLogger;
 
     private LoaderInterface $loader;
     private PersisterInterface $persister;
-    private LoggerInterface|NullLogger $logger;
+    private LoggerInterface $logger;
     private array $processors;
 
     /**
-     * @param LoaderInterface      $decoratedLoader
-     * @param PersisterInterface   $persister
-     * @param LoggerInterface|null $logger
      * @param ProcessorInterface[] $processors
      */
     public function __construct(
@@ -59,9 +56,6 @@ use Psr\Log\NullLogger;
         })(...$processors);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function withPersister(PersisterInterface $persister): self
     {
         $loader = $this->loader;
@@ -74,7 +68,7 @@ use Psr\Log\NullLogger;
     }
 
     /**
-     * Pre process, persist and post process each object loaded.
+     * Pre-process, persist and post process each object loaded.
      *
      * {@inheritdoc}
      */

@@ -29,17 +29,17 @@ class FileResolverLoaderTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testIsALoader()
+    public function testIsALoader(): void
     {
         $this->assertTrue(is_a(FileResolverLoader::class, LoaderInterface::class, true));
     }
 
-    public function testIsNotClonable()
+    public function testIsNotClonable(): void
     {
         $this->assertFalse((new ReflectionClass(FileResolverLoader::class))->isCloneable());
     }
 
-    public function testResolvesTheFilesBeforePassingThemToTheDecoratedLoader()
+    public function testResolvesTheFilesBeforePassingThemToTheDecoratedLoader(): void
     {
         $files = [
             'fixtures1.yml',
@@ -81,7 +81,7 @@ class FileResolverLoaderTest extends TestCase
         $loaderProphecy->load(Argument::cetera())->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testParametersAndObjectsInjectedArePassedToTheDecoratedLoader()
+    public function testParametersAndObjectsInjectedArePassedToTheDecoratedLoader(): void
     {
         $files = [
             'fixtures1.yml',

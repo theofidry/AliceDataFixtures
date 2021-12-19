@@ -44,12 +44,6 @@ class MaxPassReachedException extends RuntimeException implements LoadingThrowab
     }
 
     /**
-     * @param int             $limit
-     * @param FileTracker     $fileTracker
-     * @param ErrorTracker    $errorTracker
-     * @param int             $code
-     * @param Throwable|null $previous
-     *
      * @return static
      */
     public static function createForLimit(
@@ -58,7 +52,7 @@ class MaxPassReachedException extends RuntimeException implements LoadingThrowab
         ErrorTracker $errorTracker,
         int $code = 0,
         Throwable $previous = null
-    ): static {
+    ) {
         return new static(
             static::createMessage($limit, $fileTracker, $errorTracker),
             $code,

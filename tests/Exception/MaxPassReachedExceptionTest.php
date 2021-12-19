@@ -22,17 +22,17 @@ use PHPUnit\Framework\TestCase;
  */
 class MaxPassReachedExceptionTest extends TestCase
 {
-    public function testIsARuntimeException()
+    public function testIsARuntimeException(): void
     {
         $this->assertTrue(is_a(MaxPassReachedException::class, \RuntimeException::class, true));
     }
 
-    public function testIsALoadingException()
+    public function testIsALoadingException(): void
     {
         $this->assertTrue(is_a(MaxPassReachedException::class, LoadingThrowable::class, true));
     }
 
-    public function testInstantiation()
+    public function testInstantiation(): void
     {
         $exception = new MaxPassReachedException('foo');
         $this->assertEquals('foo', $exception->getMessage());

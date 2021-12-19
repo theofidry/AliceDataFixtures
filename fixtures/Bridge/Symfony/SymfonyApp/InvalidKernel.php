@@ -20,11 +20,9 @@ class InvalidKernel extends IsolatedKernel
 {
     public function registerBundles(): array
     {
-        $bundles = [
+        return [
             new FrameworkBundle(),
             new FidryAliceDataFixturesBundle(),
         ];
-
-        return $bundles;
     }
 }

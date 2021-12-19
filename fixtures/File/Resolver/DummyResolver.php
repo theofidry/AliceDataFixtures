@@ -17,9 +17,6 @@ use Fidry\AliceDataFixtures\FileResolverInterface;
 
 class DummyResolver implements FileResolverInterface
 {
-    /**
-     * @inheritdoc
-     */
     public function resolve(array $filePaths): array
     {
         return $filePaths;
