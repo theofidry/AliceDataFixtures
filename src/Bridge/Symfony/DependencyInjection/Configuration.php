@@ -29,7 +29,7 @@ final class Configuration implements ConfigurationInterface
     /**
      * @inheritdoc
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('fidry_alice_data_fixtures');
         if (method_exists($treeBuilder, 'getRootNode')) {
