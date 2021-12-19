@@ -54,13 +54,13 @@ class ModelPurgerTest extends TestCase
     {
         $migrationPath = '/path/to/migrations';
 
-        /** @var MigrationRepositoryInterface|ObjectProphecy $migrationRepositoryProphecy */
+        /** @var ObjectProphecy<MigrationRepositoryInterface> $migrationRepositoryProphecy */
         $migrationRepositoryProphecy = $this->prophesize(MigrationRepositoryInterface::class);
         $migrationRepositoryProphecy->repositoryExists()->willReturn(true);
         /** @var MigrationRepositoryInterface $migrationRepository */
         $migrationRepository = $migrationRepositoryProphecy->reveal();
 
-        /** @var Migrator|ObjectProphecy $migratorProphecy */
+        /** @var ObjectProphecy<Migrator> $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
         $migratorProphecy->reset([$migrationPath])->shouldBeCalled();
         $migratorProphecy->run([$migrationPath])->shouldBeCalled();
@@ -79,14 +79,14 @@ class ModelPurgerTest extends TestCase
     {
         $migrationPath = '/path/to/migrations';
 
-        /** @var MigrationRepositoryInterface|ObjectProphecy $migrationRepositoryProphecy */
+        /** @var ObjectProphecy<MigrationRepositoryInterface> $migrationRepositoryProphecy */
         $migrationRepositoryProphecy = $this->prophesize(MigrationRepositoryInterface::class);
         $migrationRepositoryProphecy->repositoryExists()->willReturn(false);
         $migrationRepositoryProphecy->createRepository()->shouldBeCalled();
         /** @var MigrationRepositoryInterface $migrationRepository */
         $migrationRepository = $migrationRepositoryProphecy->reveal();
 
-        /** @var Migrator|ObjectProphecy $migratorProphecy */
+        /** @var ObjectProphecy<Migrator> $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
         $migratorProphecy->reset([$migrationPath])->shouldBeCalled();
         $migratorProphecy->run([$migrationPath])->shouldBeCalled();
@@ -104,7 +104,7 @@ class ModelPurgerTest extends TestCase
 
     public function testCanCreateANewPurger(): void
     {
-        /** @var Migrator|ObjectProphecy $migratorProphecy */
+        /** @var ObjectProphecy<Migrator> $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
         $migratorProphecy->reset(Argument::cetera())->shouldNotBeCalled();
         /** @var Migrator $migrator */
@@ -131,7 +131,7 @@ class ModelPurgerTest extends TestCase
             .'"Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger" (not supported).'
         ;
 
-        /** @var Migrator|ObjectProphecy $migratorProphecy */
+        /** @var ObjectProphecy<Migrator> $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
         $migratorProphecy->reset(Argument::cetera())->shouldNotBeCalled();
         /** @var Migrator $migrator */
