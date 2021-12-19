@@ -22,6 +22,7 @@ use Fidry\AliceDataFixtures\LoaderInterface;
 use PHPUnit\Framework\TestCase;
 use function random_bytes;
 use Symfony\Component\HttpKernel\KernelInterface;
+use const PHP_VERSION_ID;
 
 /**
  * @coversNothing
@@ -45,6 +46,10 @@ class PhpcrLoaderIntegrationTest extends TestCase
 
     public function setUp(): void
     {
+        if (PHP_VERSION_ID >= 81000) {
+            $this->markTestSkipped('Not compatible yet with PHP 8.1');
+        }
+
         $this->kernel = new DoctrinePhpcrKernel(static::$seed, true);
         $this->kernel->boot();
 
