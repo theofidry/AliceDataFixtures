@@ -18,24 +18,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AnotherDummy extends Model
 {
-    /**
-     * @inheritdoc
-     */
     protected $table = 'another_dummies';
 
-    /**
-     * @inheritdoc
-     */
-    protected $fillable = [
+    protected array $fillable = [
         'id',
         'address',
         'dummy',
     ];
 
-    /**
-     * @inheritdoc
-     */
-    public $timestamps = false;
+    public bool $timestamps = false;
 
     public function dummy(): BelongsTo
     {

@@ -238,7 +238,7 @@ class ObjectManagerPersisterTest extends TestCase
         ];
 
         yield 'entity with explicit ID' => [
-            (function () {
+            (static function () {
                 $dummy = new DummyWithIdentifier();
                 $dummy->id = 300;
 

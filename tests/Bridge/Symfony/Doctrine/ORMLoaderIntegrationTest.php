@@ -36,9 +36,6 @@ class ORMLoaderIntegrationTest extends TestCase
 
     private static string $seed;
 
-    /**
-     * @inheritdoc
-     */
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();

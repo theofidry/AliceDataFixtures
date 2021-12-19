@@ -19,10 +19,7 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 class DoctrineConnectionlessPass implements CompilerPassInterface
 {
-    /**
-     * @inheritdoc
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         try {
             $proxyCacheWarmerDefinition = $container->findDefinition('doctrine.orm.proxy_cache_warmer');

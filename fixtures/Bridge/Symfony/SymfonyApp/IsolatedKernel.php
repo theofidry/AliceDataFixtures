@@ -34,7 +34,7 @@ abstract class IsolatedKernel extends Kernel
     {
         $container->addCompilerPass(
             new class() implements CompilerPassInterface {
-                public function process(ContainerBuilder $container)
+                public function process(ContainerBuilder $container): void
                 {
                     foreach ($container->getDefinitions() as $id => $definition) {
                         if (!str_starts_with($id, 'fidry_alice_data_fixtures')) {

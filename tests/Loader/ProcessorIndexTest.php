@@ -47,17 +47,11 @@ class DummyProcessor implements ProcessorInterface
     public array $preIds = [];
     public array $postIds = [];
 
-    /**
-     * @inheritdoc
-     */
     public function preProcess(string $id, object $object): void
     {
         $this->preIds[] = $id;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function postProcess(string $id, object $object): void
     {
         $this->postIds[] = $id;
