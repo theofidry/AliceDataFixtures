@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\DoctrinePhpCr\Persister;
 
+use function bin2hex;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger;
 use Doctrine\ODM\PHPCR\DocumentManager;
 use Doctrine\ODM\PHPCR\Exception\InvalidArgumentException;
@@ -22,6 +23,7 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use PHPUnit\Framework\TestCase;
+use function random_bytes;
 use ReflectionClass;
 
 /**
@@ -29,24 +31,12 @@ use ReflectionClass;
  */
 class ObjectManagerPersisterTest extends TestCase
 {
-    /**
-     * @var ObjectManagerPersister
-     */
-    private $persister;
+    private ObjectManagerPersister $persister;
 
-    /**
-     * @var DocumentManager
-     */
-    private $documentManager;
+    private DocumentManager $documentManager;
 
-    /**
-     * @var PHPCRPurger
-     */
-    private $purger;
+    private PHPCRPurger $purger;
 
-    /**
-     * @inheritdoc
-     */
     public function setUp(): void
     {
         $this->documentManager = $GLOBALS['document_manager'];
@@ -54,41 +44,38 @@ class ObjectManagerPersisterTest extends TestCase
         $this->purger = new PHPCRPurger($this->documentManager);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function tearDown(): void
     {
         $this->purger->purge();
     }
 
-    public function testIsAPersister()
+    public function testIsAPersister(): void
     {
-        $this->assertTrue(is_a(ObjectManagerPersister::class, PersisterInterface::class, true));
+        self::assertTrue(is_a(ObjectManagerPersister::class, PersisterInterface::class, true));
     }
 
-    public function testIsNotClonable()
+    public function testIsNotClonable(): void
     {
-        $this->assertFalse((new ReflectionClass(ObjectManagerPersister::class))->isCloneable());
+        self::assertFalse((new ReflectionClass(ObjectManagerPersister::class))->isCloneable());
     }
 
     /**
      * @dataProvider provideDocuments
      */
-    public function testCanPersistADocument($document)
+    public function testCanPersistADocument($document): void
     {
         $this->persister->persist($document);
         $this->persister->flush();
 
         $result = $this->documentManager->getRepository(get_class($document))->findAll();
 
-        $this->assertEquals(1, count($result));
+        self::assertCount(1, $result);
     }
 
     /**
      * @dataProvider provideNonPersistableDocuments
      */
-    public function testDoesNotPersistEmbeddables($dummy)
+    public function testDoesNotPersistEmbeddables($dummy): void
     {
         try {
             $this->documentManager->persist($dummy);
@@ -103,29 +90,29 @@ class ObjectManagerPersisterTest extends TestCase
         $this->persister->flush();
     }
 
-    public function provideDocuments()
+    public static function provideDocuments(): iterable
     {
         yield 'simple entity' => [
-            (function () {
+            (static function () {
                 $dummy = new Dummy();
-                $dummy->id = '/dummy_'.uniqid();
+                $dummy->id = '/dummy_'.bin2hex(random_bytes(6));
 
                 return $dummy;
             })()
         ];
 
         yield 'sub class entity' => [
-            (function () {
+            (static function () {
                 $dummy = new DummySubClass();
-                $dummy->id = '/subdummy_'.uniqid();
-                $dummy->status = 200;
+                $dummy->id = '/subdummy_'.bin2hex(random_bytes(6));
+                $dummy->status = '200';
 
                 return $dummy;
             })()
         ];
     }
 
-    public function provideNonPersistableDocuments()
+    public static function provideNonPersistableDocuments(): iterable
     {
         yield 'mapped super class' => [new MappedSuperclassDummy()];
     }

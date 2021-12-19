@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler;
 
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -21,10 +22,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 final class RegisterTagServicesPass implements CompilerPassInterface
 {
-    private $registry;
-    private $tagName;
-    private $taggedDefinitionsLocator;
+    private string $registry;
+    private string $tagName;
+    private TaggedDefinitionsLocator $taggedDefinitionsLocator;
 
+    #[Pure]
     public function __construct(string $registry, string $tagName)
     {
         $this->registry = $registry;
@@ -32,10 +34,7 @@ final class RegisterTagServicesPass implements CompilerPassInterface
         $this->taggedDefinitionsLocator = new TaggedDefinitionsLocator();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (false === $container->hasDefinition($this->registry)) {
             return;

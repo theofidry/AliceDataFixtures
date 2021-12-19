@@ -22,26 +22,23 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class DoctrineMongodbKernel extends IsolatedKernel
 {
-    public function registerBundles()
+    public function registerBundles(): array
     {
         $bundles = [
             new FrameworkBundle(),
             new NelmioAliceBundle(),
             new FidryAliceDataFixturesBundle(),
+            new DoctrineMongoDBBundle(),
         ];
 
         if (class_exists(PsyshBundle::class)) {
             $bundles[] = new PsyshBundle();
         }
 
-        if (class_exists(DoctrineMongoDBBundle::class)) {
-            $bundles[] = new DoctrineMongoDBBundle();
-        }
-
         return $bundles;
     }
 
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         parent::registerContainerConfiguration($loader);
 

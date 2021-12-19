@@ -17,9 +17,6 @@ use Fidry\AliceDataFixtures\FileResolverInterface;
 
 class FakeFileResolver implements FileResolverInterface
 {
-    /**
-     * @inheritdoc
-     */
     public function resolve(array $filePaths): array
     {
         $this->__call(__METHOD__, func_get_args());

@@ -17,5 +17,6 @@ class DummyWithEmbeddable
 {
     public $id;
 
+    
     public $embeddable;
 }

@@ -19,10 +19,7 @@ class FakePurger implements PurgerInterface
 {
     use NotCallableTrait;
 
-    /**
-     * @inheritdoc
-     */
-    public function purge()
+    public function purge(): void
     {
         $this->__call(__METHOD__, func_get_args());
     }

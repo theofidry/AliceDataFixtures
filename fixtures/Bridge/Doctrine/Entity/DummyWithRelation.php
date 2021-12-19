@@ -13,6 +13,13 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Entity;
 
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToOne;
+
 /**
  * @Entity
  */
@@ -23,12 +30,11 @@ class DummyWithRelation
      * @Column(type="integer")
      * @GeneratedValue
      */
-    public $id;
+    public int $id;
 
     /**
-     * @var DummyWithIdentifier
      * @OneToOne(targetEntity="DummyWithIdentifier", cascade={"persist"})
      * @JoinColumn(name="dummy_id", referencedColumnName="id")
      */
-    public $dummy;
+    public DummyWithIdentifier $dummy;
 }

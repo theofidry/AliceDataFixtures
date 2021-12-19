@@ -20,12 +20,7 @@
          verbose="true">
 
     <php>
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="0" />
-
-        <env name="DB_DRIVER" value="pdo_mysql" />
-        <env name="DB_USER" value="root" />
-        <env name="DB_PASSWORD" value="" />
-        <env name="DB_NAME" value="fidry_alice_data_fixtures" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=0" />
     </php>
 
     <testsuites>

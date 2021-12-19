@@ -26,22 +26,19 @@ use Nelmio\Alice\IsAServiceTrait;
 {
     use IsAServiceTrait;
 
-    private $databaseManager;
+    private DatabaseManager $databaseManager;
 
     /**
      * @var Model[]
      */
-    private $persistedModels = [];
+    private array $persistedModels = [];
 
     public function __construct(DatabaseManager $databaseManager)
     {
         $this->databaseManager = $databaseManager;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function persist($object)
+    public function persist(object $object): void
     {
         if (false === $object instanceof Model) {
             throw new InvalidArgumentException(
@@ -56,14 +53,11 @@ use Nelmio\Alice\IsAServiceTrait;
         $this->persistedModels[] = $object;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function flush()
+    public function flush(): void
     {
         $persistModels = function () {
             array_map(
-                function (Model $model): void {
+                static function (Model $model): void {
                     $model->push();
                 },
                 $this->persistedModels

@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Hautelook\AliceBundle package.
+ * This file is part of the Fidry\AliceDataFixtures package.
  *
- * (c) Baldur Rensch <brensch@gmail.com>
+ * (c) Théo FIDRY <theo.fidry@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,8 +16,6 @@ namespace Fidry\AliceDataFixtures\Persistence;
 interface PersisterAwareInterface
 {
     /**
-     * @param PersisterInterface $persister
-     *
      * @return static
      */
     public function withPersister(PersisterInterface $persister);

@@ -21,36 +21,46 @@ $finder = Finder::create()
         __DIR__.'/src',
         __DIR__.'/tests',
     ])
+    ->exclude(
+        'fixtures/Bridge/Symfony/SymfonyApp/cache',
+    )
     ->append([
         __DIR__.'/.php_cs.dist',
+        __DIR__.'/bin/console',
+        __DIR__.'/bin/doctrine_purge',
+        __DIR__.'/bin/eloquent_migrate',
+        __DIR__.'/bin/eloquent_rollback',
     ])
 ;
 
-return Config::create()
+return (new Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@PSR2' => true,
         'blank_line_after_opening_tag' => true,
-        'blank_line_before_return' => true,
         'cast_spaces' => true,
         'combine_consecutive_unsets' => true,
         'declare_equal_normalize' => true,
         'declare_strict_types' => true,
+        'general_phpdoc_annotation_remove' => [
+            'annotations' => [
+                'inheritDoc',
+            ],
+        ],
         'heredoc_to_nowdoc' => true,
-        'include' => true,
         'header_comment' => [
             'location' => 'after_open',
             'header' => <<<'LICENSE'
-This file is part of the Fidry\AliceDataFixtures package.
-
-(c) Théo FIDRY <theo.fidry@gmail.com>
-
-For the full copyright and license information, please view the LICENSE
-file that was distributed with this source code.
-LICENSE
+            This file is part of the Fidry\AliceDataFixtures package.
+            
+            (c) Théo FIDRY <theo.fidry@gmail.com>
+            
+            For the full copyright and license information, please view the LICENSE
+            file that was distributed with this source code.
+            LICENSE
         ],
+        'include' => true,
         'lowercase_cast' => true,
-        'method_separation' => true,
         'modernize_types_casting' => true,
         'native_function_casing' => true,
         'new_with_braces' => true,
@@ -62,6 +72,7 @@ LICENSE
         'no_leading_import_slash' => true,
         'no_leading_namespace_whitespace' => true,
         'no_multiline_whitespace_around_double_arrow' => true,
+        'no_superfluous_phpdoc_tags' => true,
         'no_short_bool_cast' => true,
         'no_spaces_around_offset' => true,
         'no_unused_imports' => true,

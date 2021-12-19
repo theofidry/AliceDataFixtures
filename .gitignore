@@ -7,13 +7,16 @@
 /fixtures/Bridge/Propel2/Model/
 !/fixtures/Bridge/Propel2/Model/.gitkeep
 /fixtures/Bridge/Symfony/SymfonyApp/cache/*
-/var
+/var/
+!/var/.gitkeep
 /phpunit.xml
 /.php_cs.cache
 /.phar/
 /vendor-bin/*/bin/
 /vendor-bin/*/composer.lock
 /vendor-bin/*/vendor/
+!/vendor-bin/covers-validator/composer.lock
+!/vendor-bin/php-cs-fixer/composer.lock
 /dist/
 /bin/
 !/bin/console
@@ -21,3 +24,4 @@
 !/bin/eloquent_migrate
 !/bin/eloquent_rollback
 /.phpunit.result.cache
+/.php-cs-fixer.cache

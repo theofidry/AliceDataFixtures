@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AlicePersistence\Bridge\Symfony\Doctrine;
 
+use function bin2hex;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Dummy;
@@ -21,47 +22,29 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\User;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use PHPUnit\Framework\TestCase;
+use function random_bytes;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @coversNothing
  */
 class ORMLoaderIntegrationTest extends TestCase
 {
-    /**
-     * @var DoctrineKernel
-     */
-    private $kernel;
+    private KernelInterface $kernel;
 
-    /**
-     * @var LoaderInterface
-     */
-    private $loader;
+    private LoaderInterface $loader;
 
-    /**
-     * @var Registry
-     */
-    private $doctrine;
+    private Registry $doctrine;
 
-    /**
-     * @var int
-     */
-    private static $seed;
+    private static string $seed;
 
-    /**
-     * @inheritdoc
-     */
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 
-        static::$seed = uniqid();
+        static::$seed = bin2hex(random_bytes(6));
     }
 
-    /**
-     * @inheritdoc
-     *
-     * @group legacy
-     */
     public function setUp(): void
     {
         $this->kernel = new DoctrineKernel(static::$seed, true);
@@ -77,10 +60,10 @@ class ORMLoaderIntegrationTest extends TestCase
         $purger->purge();
 
         $this->kernel->shutdown();
-        $this->kernel = null;
+        unset($this->kernel);
     }
 
-    public function testLoadAFile()
+    public function testLoadAFile(): void
     {
         $this->loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/dummy.yml',
@@ -88,10 +71,10 @@ class ORMLoaderIntegrationTest extends TestCase
 
         $result = $this->doctrine->getRepository(Dummy::class)->findAll();
 
-        $this->assertEquals(1, count($result));
+        self::assertCount(1, $result);
     }
 
-    public function testLoadAFileWithPurger()
+    public function testLoadAFileWithPurger(): void
     {
         $dummy = new Dummy();
         $dummyManager = $this->doctrine->getManager();
@@ -113,10 +96,10 @@ class ORMLoaderIntegrationTest extends TestCase
 
         $result = $this->doctrine->getRepository(Dummy::class)->findAll();
 
-        $this->assertEquals(1, count($result));
+        self::assertCount(1, $result);
     }
 
-    public function testBidirectionalRelationships()
+    public function testBidirectionalRelationships(): void
     {
         $this->loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/user_group.yml',
@@ -125,11 +108,11 @@ class ORMLoaderIntegrationTest extends TestCase
         $users = $this->doctrine->getRepository(User::class)->findAll();
         $groups = $this->doctrine->getRepository(Group::class)->findAll();
 
-        $this->assertEquals(5, count($users));
-        $this->assertEquals(5, count($groups));
+        self::assertCount(5, $users);
+        self::assertCount(5, $groups);
     }
 
-    public function testBidirectionalRelationshipsDeclaredInDifferentFiles()
+    public function testBidirectionalRelationshipsDeclaredInDifferentFiles(): void
     {
         $this->loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/user_with_group.yml',
@@ -139,11 +122,11 @@ class ORMLoaderIntegrationTest extends TestCase
         $users = $this->doctrine->getRepository(User::class)->findAll();
         $groups = $this->doctrine->getRepository(Group::class)->findAll();
 
-        $this->assertEquals(5, count($users));
-        $this->assertEquals(5, count($groups));
+        self::assertCount(5, $users);
+        self::assertCount(5, $groups);
     }
 
-    public function testBidirectionalRelationshipsDeclaredInDifferentFilesWithCyclingDependence()
+    public function testBidirectionalRelationshipsDeclaredInDifferentFilesWithCyclingDependence(): void
     {
         $this->loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/user_with_group.yml',
@@ -153,7 +136,7 @@ class ORMLoaderIntegrationTest extends TestCase
         $users = $this->doctrine->getRepository(User::class)->findAll();
         $groups = $this->doctrine->getRepository(Group::class)->findAll();
 
-        $this->assertEquals(5, count($users));
-        $this->assertEquals(5, count($groups));
+        self::assertCount(5, $users);
+        self::assertCount(5, $groups);
     }
 }

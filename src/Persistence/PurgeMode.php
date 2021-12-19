@@ -13,20 +13,21 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Persistence;
 
+use function array_flip;
+use function array_key_exists;
 use InvalidArgumentException;
+use function sprintf;
 
 final class PurgeMode
 {
-    private static $values = [
+    private static array $values = [
         'NO_PURGE_MODE' => 0,
         'DELETE_MODE' => 1,
         'TRUNCATE_MODE' => 2,
     ];
 
-    /**
-     * @var int
-     */
-    private $mode;
+    
+    private int $mode;
 
     public function __construct(int $mode)
     {

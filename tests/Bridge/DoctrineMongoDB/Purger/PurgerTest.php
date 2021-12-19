@@ -19,6 +19,7 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use ReflectionObject;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger
@@ -29,20 +30,20 @@ class PurgerTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testCreatesADoctrineOdmPurgerWithTheAppropriateManager()
+    public function testCreatesADoctrineOdmPurgerWithTheAppropriateManager(): void
     {
         $manager = $this->prophesize(DocumentManager::class)->reveal();
         $purger = new Purger($manager);
 
-        $decoratedPurgerReflection = (new \ReflectionObject($purger))->getProperty('purger');
+        $decoratedPurgerReflection = (new ReflectionObject($purger))->getProperty('purger');
         $decoratedPurgerReflection->setAccessible(true);
         $decoratedPurger = $decoratedPurgerReflection->getValue($purger);
 
-        $this->assertInstanceOf(MongoDBPurger::class, $decoratedPurger);
-        $this->assertEquals($manager, $decoratedPurger->getObjectManager());
+        self::assertInstanceOf(MongoDBPurger::class, $decoratedPurger);
+        self::assertEquals($manager, $decoratedPurger->getObjectManager());
     }
 
-    public function testEmptyDatabase()
+    public function testEmptyDatabase(): void
     {
         /** @var DocumentManager $manager */
         $manager = $GLOBALS['document_manager'];
@@ -51,17 +52,17 @@ class PurgerTest extends TestCase
         $manager->persist($dummy);
         $manager->flush();
 
-        $this->assertEquals(1, count($manager->getRepository(Dummy::class)->findAll()));
+        self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());
 
         $purger = new Purger($manager);
         $purger->purge();
 
-        $this->assertEquals(0, count($manager->getRepository(Dummy::class)->findAll()));
+        self::assertCount(0, $manager->getRepository(Dummy::class)->findAll());
 
         // Ensures the schema has been restored
         $dummy = new Dummy();
         $manager->persist($dummy);
         $manager->flush();
-        $this->assertEquals(1, count($manager->getRepository(Dummy::class)->findAll()));
+        self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());
     }
 }

@@ -15,6 +15,7 @@ namespace Fidry\AliceDataFixtures\Loader;
 
 use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
+use JetBrains\PhpStorm\Pure;
 use Nelmio\Alice\FilesLoaderInterface;
 use Nelmio\Alice\IsAServiceTrait;
 use Psr\Log\LoggerInterface;
@@ -32,9 +33,10 @@ use Psr\Log\NullLogger;
 {
     use IsAServiceTrait;
 
-    private $filesLoader;
-    private $logger;
+    private FilesLoaderInterface $filesLoader;
+    private LoggerInterface $logger;
 
+    #[Pure]
     public function __construct(FilesLoaderInterface $fileLoader, LoggerInterface $logger = null)
     {
         $this->filesLoader = $fileLoader;

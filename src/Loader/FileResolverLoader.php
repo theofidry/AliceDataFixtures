@@ -18,6 +18,7 @@ use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\PersisterAwareInterface;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
+use JetBrains\PhpStorm\Pure;
 use Nelmio\Alice\IsAServiceTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -31,10 +32,11 @@ use Psr\Log\NullLogger;
 {
     use IsAServiceTrait;
 
-    private $loader;
-    private $fileResolver;
-    private $logger;
+    private LoaderInterface $loader;
+    private FileResolverInterface $fileResolver;
+    private LoggerInterface $logger;
 
+    #[Pure]
     public function __construct(
         LoaderInterface $decoratedLoader,
         FileResolverInterface $fileResolver,
@@ -45,9 +47,6 @@ use Psr\Log\NullLogger;
         $this->logger = $logger ?? new NullLogger();
     }
 
-    /**
-     * @inheritdoc
-     */
     public function withPersister(PersisterInterface $persister): self
     {
         $loader = $this->loader;

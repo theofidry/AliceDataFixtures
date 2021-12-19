@@ -15,19 +15,22 @@ namespace Fidry\AliceDataFixtures\Exception;
 
 use Fidry\AliceDataFixtures\Loader\ErrorTracker;
 use Fidry\AliceDataFixtures\Loader\FileTracker;
+use JetBrains\PhpStorm\Pure;
 use Nelmio\Alice\Throwable\LoadingThrowable;
+use RuntimeException;
 use Throwable;
 
 /**
  * @deprecated
  */
-class MaxPassReachedException extends \RuntimeException implements LoadingThrowable
+class MaxPassReachedException extends RuntimeException implements LoadingThrowable
 {
     /**
      * @var array<string, Throwable>
      */
-    private $stack = [];
+    private array $stack = [];
 
+    #[Pure]
     public function __construct($message, $code = 0, Throwable $previous = null, ErrorTracker $errorTracker = null)
     {
         parent::__construct($message, $code, $previous);
@@ -43,12 +46,6 @@ class MaxPassReachedException extends \RuntimeException implements LoadingThrowa
     }
 
     /**
-     * @param int             $limit
-     * @param FileTracker     $fileTracker
-     * @param ErrorTracker    $errorTracker
-     * @param int             $code
-     * @param Throwable|null $previous
-     *
      * @return static
      */
     public static function createForLimit(

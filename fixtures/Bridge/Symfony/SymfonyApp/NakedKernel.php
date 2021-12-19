@@ -14,19 +14,19 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
+use JetBrains\PhpStorm\Pure;
 use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 
 class NakedKernel extends IsolatedKernel
 {
-    public function registerBundles()
+    #[Pure]
+    public function registerBundles(): array
     {
-        $bundles = [
+        return [
             new FrameworkBundle(),
             new NelmioAliceBundle(),
             new FidryAliceDataFixturesBundle(),
         ];
-
-        return $bundles;
     }
 }

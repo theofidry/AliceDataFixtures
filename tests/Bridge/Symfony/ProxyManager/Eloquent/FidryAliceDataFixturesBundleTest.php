@@ -26,14 +26,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundleTest
 {
-    /**
-     * @var KernelInterface
-     */
-    protected $kernel;
+    protected KernelInterface $kernel;
 
-    /**
-     * @inheritdoc
-     */
     public function setUp(): void
     {
         $this->kernel = EloquentKernel::create();
@@ -41,37 +35,29 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
     }
 
     /**
-     * @inheritdoc
-     */
-    public function tearDown(): void
-    {
-        $this->kernel->shutdown();
-    }
-
-    /**
      * @group legacy
      * @expectedDepreaction The service "fidry_alice_data_fixtures.loader.multipass_file" is deprecated and will be removed in future versions.
      */
-    public function testServiceRegistration()
+    public function testServiceRegistration(): void
     {
         parent::testServiceRegistration();
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             ModelPurger::class,
             $this->kernel->getContainer()->get('fidry_alice_data_fixtures.persistence.purger.eloquent.model_purger')
         );
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             ModelPersister::class,
             $this->kernel->getContainer()->get('fidry_alice_data_fixtures.persistence.persister.eloquent.model_persister')
         );
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             PersisterLoader::class,
             $this->kernel->getContainer()->get('fidry_alice_data_fixtures.eloquent.persister_loader')
         );
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             PurgerLoader::class,
             $this->kernel->getContainer()->get('fidry_alice_data_fixtures.eloquent.purger_loader')
         );

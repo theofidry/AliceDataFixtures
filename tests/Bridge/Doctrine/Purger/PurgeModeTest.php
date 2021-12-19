@@ -22,12 +22,12 @@ use PHPUnit\Framework\TestCase;
  */
 class PurgeModeTest extends TestCase
 {
-    public function testThePurgerModesValueIsSynchronizedWithDoctrinePurgerMode()
+    public function testThePurgerModesValueIsSynchronizedWithDoctrinePurgerMode(): void
     {
         $mode = PurgeMode::createDeleteMode();
-        $this->assertEquals(ORMPurger::PURGE_MODE_DELETE, $mode->getValue());
+        self::assertEquals(ORMPurger::PURGE_MODE_DELETE, $mode->getValue());
 
         $mode = PurgeMode::createTruncateMode();
-        $this->assertEquals(ORMPurger::PURGE_MODE_TRUNCATE, $mode->getValue());
+        self::assertEquals(ORMPurger::PURGE_MODE_TRUNCATE, $mode->getValue());
     }
 }

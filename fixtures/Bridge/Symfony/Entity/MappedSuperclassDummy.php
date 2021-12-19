@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\Entity;
 
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+
 class MappedSuperclassDummy
 {
     /**
@@ -20,10 +24,10 @@ class MappedSuperclassDummy
      * @Column(type="integer")
      * @GeneratedValue
      */
-    public $id;
+    public int $id;
 
     /**
      * @Column(type="string")
      */
-    public $status;
+    public string $status;
 }

@@ -14,17 +14,17 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 
 class InvalidKernel extends IsolatedKernel
 {
-    public function registerBundles()
+    #[Pure]
+    public function registerBundles(): array
     {
-        $bundles = [
+        return [
             new FrameworkBundle(),
             new FidryAliceDataFixturesBundle(),
         ];
-
-        return $bundles;
     }
 }

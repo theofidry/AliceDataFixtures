@@ -15,7 +15,11 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony;
 
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\InvalidKernel;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\NakedKernel;
+use Fidry\AliceDataFixtures\Loader\MultiPassLoader;
+use Fidry\AliceDataFixtures\Loader\SimpleLoader;
+use LogicException;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -27,48 +31,40 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class FidryAliceDataFixturesBundleTest extends TestCase
 {
-    /**
-     * @var KernelInterface
-     */
-    protected $kernel;
+    protected KernelInterface $kernel;
 
-    /**
-     * @inheritdoc
-     */
     public function setUp(): void
     {
         $this->kernel = NakedKernel::create();
         $this->kernel->boot();
     }
 
-    /**
-     * @inheritdoc
-     */
     public function tearDown(): void
     {
         $this->kernel->shutdown();
+        (new Filesystem())->remove(__DIR__.'/../../../var/cache/');
     }
 
     /**
      * @group legacy
      * @expectedDepreaction The service "fidry_alice_data_fixtures.loader.multipass_file" is deprecated and will be removed in future versions.
      */
-    public function testServiceRegistration()
+    public function testServiceRegistration(): void
     {
-        $this->assertServiceIsInstanceOf(
-            \Fidry\AliceDataFixtures\Loader\MultiPassLoader::class,
+        self::assertServiceIsInstanceOf(
+            MultiPassLoader::class,
             'fidry_alice_data_fixtures.loader.multipass_file'
         );
 
-        $this->assertServiceIsInstanceOf(
-            \Fidry\AliceDataFixtures\Loader\SimpleLoader::class,
+        self::assertServiceIsInstanceOf(
+            SimpleLoader::class,
             'fidry_alice_data_fixtures.loader.simple'
         );
     }
 
-    public function testCannotBootIfNelmioAliceBundleIsNotRegistered()
+    public function testCannotBootIfNelmioAliceBundleIsNotRegistered(): void
     {
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Cannot register "Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle" without "Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle".');
 
         $kernel = InvalidKernel::create();
@@ -76,9 +72,9 @@ class FidryAliceDataFixturesBundleTest extends TestCase
         $kernel->shutdown();
     }
 
-    final protected function assertServiceIsInstanceOf(string $serviceClass, string $serviceId)
+    final protected function assertServiceIsInstanceOf(string $serviceClass, string $serviceId): void
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             $serviceClass,
             $this->kernel->getContainer()->get($serviceId)
         );

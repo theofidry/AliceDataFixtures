@@ -21,9 +21,6 @@ class FakeFileLoader implements FileLoaderInterface
 {
     use NotCallableTrait;
 
-    /**
-     * @inheritdoc
-     */
     public function loadFile(string $file, array $parameters = [], array $objects = []): ObjectSet
     {
         $this->__call(__METHOD__, func_get_args());

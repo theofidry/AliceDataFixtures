@@ -17,7 +17,7 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateDummiesTable extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Manager::schema()
             ->create(
@@ -32,7 +32,7 @@ class CreateDummiesTable extends Migration
         ;
     }
 
-    public function down()
+    public function down(): void
     {
         Manager::schema()->drop('dummies');
     }

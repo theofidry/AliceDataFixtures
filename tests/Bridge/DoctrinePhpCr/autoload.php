@@ -11,52 +11,51 @@
 
 declare(strict_types=1);
 
-$autoload = require_once __DIR__.'/../../../vendor-bin/doctrine_phpcr/vendor/autoload.php';
+const ROOT = __DIR__.'/../../..';
+
+$autoload = ROOT.'/vendor-bin/doctrine_phpcr/vendor/autoload.php';
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ODM\PHPCR\Configuration;
 use Doctrine\ODM\PHPCR\DocumentManager;
 use Doctrine\ODM\PHPCR\Mapping\Driver\AnnotationDriver;
 use Jackalope\RepositoryFactoryDoctrineDBAL;
+use PHPCR\SessionInterface;
+use PHPCR\SimpleCredentials;
 
-$params = array(
-    'driver' => false !== getenv('DB_DRIVER')? getenv('DB_DRIVER') : 'pdo_mysql',
-    'user' => false !== getenv('DB_USER')? getenv('DB_USER') : 'root',
-    'password' => false !== getenv('DB_PASSWORD')? getenv('DB_PASSWORD') : null,
-    'dbname' => false !== getenv('DB_NAME')? getenv('DB_NAME') : 'fidry_alice_data_fixtures',
-    'host' => false !== getenv('DB_HOST')? getenv('DB_HOST') : '127.0.0.1',
-    'port' => false !== getenv('DB_PORT')? getenv('DB_PORT') : 3307,
-);
+$session = (static function (): SessionInterface {
+    $connection = DriverManager::getConnection(
+        require ROOT.'/doctrine-phpcr-db-settings.php',
+    );
+    $repositoryFactory = new RepositoryFactoryDoctrineDBAL();
 
-$workspace = 'default';
-$user = 'admin';
-$pass = 'admin';
+    $repository = $repositoryFactory->getRepository([
+        'jackalope.doctrine_dbal_connection' => $connection,
+    ]);
 
-$dbConn = DriverManager::getConnection($params);
-$factory = new RepositoryFactoryDoctrineDBAL();
+    return $repository->login(
+        new SimpleCredentials(null, null),
+        'default',
+    );
+})();
 
-$parameters = array('jackalope.doctrine_dbal_connection' => $dbConn);
-$repository = $factory->getRepository($parameters);
-$credentials = new \PHPCR\SimpleCredentials(null, null);
+$config = (static function (): Configuration {
+    $driver = new AnnotationDriver(
+        new AnnotationReader(),
+        [
+            ROOT.'/vendor-bin/doctrine_phpcr/vendor/doctrine/phpcr-odm/lib/Doctrine/ODM/PHPCR/Document',
+            ROOT.'/fixtures/Bridge/Doctrine/PhpCrDocument',
+        ],
+    );
 
-$session = $repository->login($credentials, $workspace);
+    $config = new Configuration();
+    $config->setMetadataDriverImpl($driver);
 
-/* prepare the doctrine configuration */
-
-//AnnotationRegistry::registerLoader(array($autoload, 'loadClass'));
-
-$reader = new AnnotationReader();
-$driver = new AnnotationDriver($reader, array(
-    // this is a list of all folders containing document classes
-    __DIR__.'/../../../vendor-bin/doctrine_phpcr/vendor/doctrine/phpcr-odm/lib/Doctrine/ODM/PHPCR/Document',
-    __DIR__.'/../../../fixtures/Bridge/Doctrine/PhpCrDocument',
-));
-
-$config = new Configuration();
-$config->setMetadataDriverImpl($driver);
+    return $config;
+})();
 
 $documentManager = DocumentManager::create($session, $config);
 
+$GLOBALS['session'] = $session;
 $GLOBALS['document_manager'] = $documentManager;

@@ -25,7 +25,7 @@ use Nelmio\Alice\ParameterBag;
 use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringGenerationException;
 
 /**
- * Alternative to {@se SimpleLoader} to load the files in a smarter way.
+ * Alternative to {@see SimpleLoader} to load the files in a smarter way.
  *
  * @final
  *
@@ -35,8 +35,8 @@ use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringG
 {
     use IsAServiceTrait;
 
-    private $loader;
-    private $maxPass;
+    private FileLoaderInterface $loader;
+    private int $maxPass;
 
     public function __construct(FileLoaderInterface $fileLoader, int $maxPass = 15)
     {

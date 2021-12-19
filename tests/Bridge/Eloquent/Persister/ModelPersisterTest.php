@@ -17,8 +17,10 @@ use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\Dummy;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Illuminate\Database\Migrations\Migrator;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use stdClass;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Eloquent\Persister\ModelPersister
@@ -29,61 +31,49 @@ use ReflectionClass;
  */
 class ModelPersisterTest extends TestCase
 {
-    /**
-     * @var ModelPersister
-     */
-    private $persister;
+    private ModelPersister $persister;
 
-    /**
-     * @var Migrator
-     */
-    private $migrator;
+    private Migrator $migrator;
 
-    /**
-     * @inheritdoc
-     */
     public function setUp(): void
     {
         $this->migrator = $GLOBALS['migrator'];
         $this->persister = new ModelPersister($GLOBALS['manager']->getDatabaseManager());
     }
 
-    /**
-     * @inheritdoc
-     */
     public function tearDown(): void
     {
         $this->migrator->reset(['migrations']);
         $this->migrator->run(['migrations']);
     }
 
-    public function testIsAPersister()
+    public function testIsAPersister(): void
     {
-        $this->assertTrue(is_a(ModelPersister::class, PersisterInterface::class, true));
+        self::assertTrue(is_a(ModelPersister::class, PersisterInterface::class, true));
     }
 
-    public function testIsNotClonable()
+    public function testIsNotClonable(): void
     {
-        $this->assertFalse((new ReflectionClass(ModelPersister::class))->isCloneable());
+        self::assertFalse((new ReflectionClass(ModelPersister::class))->isCloneable());
     }
 
-    public function testCanPersistAModel()
+    public function testCanPersistAModel(): void
     {
         $model = new AnotherDummy([
             'address' => 'Wonderlands',
         ]);
-        $this->assertNull($model->id);
+        self::assertNull($model->id);
 
         $this->persister->persist($model);
-        $this->assertNull($model->id);
+        self::assertNull($model->id);
 
         $this->persister->flush();
-        $this->assertNotNull($model->id);
+        self::assertNotNull($model->id);
 
-        $this->assertEquals(1, AnotherDummy::all()->count());
+        self::assertEquals(1, AnotherDummy::all()->count());
     }
 
-    public function testCanPersistAModelWithARelationship()
+    public function testCanPersistAModelWithARelationship(): void
     {
         $anotherDummy = new AnotherDummy([
             'address' => 'Heaven',
@@ -96,21 +86,21 @@ class ModelPersisterTest extends TestCase
         $dummy->anotherDummy()->associate($anotherDummy);
 
         $this->persister->persist($dummy);
-        $this->assertNull($dummy->id);
+        self::assertNull($dummy->id);
 
         $this->persister->flush();
-        $this->assertNotNull($dummy->id);
+        self::assertNotNull($dummy->id);
 
-        $this->assertEquals(1, Dummy::all()->count());
-        $this->assertEquals(1, AnotherDummy::all()->count());
+        self::assertEquals(1, Dummy::all()->count());
+        self::assertEquals(1, AnotherDummy::all()->count());
     }
 
-    public function testCannotPersistANonModelObject()
+    public function testCannotPersistANonModelObject(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Expected object to be an instance of "Illuminate\Database\Eloquent\Model", got "stdClass" instead.');
 
-        $object = new \stdClass();
+        $object = new stdClass();
         $this->persister->persist($object);
     }
 }

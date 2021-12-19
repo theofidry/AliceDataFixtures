@@ -16,15 +16,21 @@ namespace Fidry\AliceDataFixtures\Bridge\Eloquent;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Migration\FakeMigrationRepository;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Filesystem\Filesystem;
+use JetBrains\PhpStorm\Pure;
 
 class MigratorFactory
 {
+    #[Pure]
     public static function create(): Migrator
     {
         return new Migrator(
             new FakeMigrationRepository(),
             new FakeConnectionResolver(),
-            new Filesystem()
+            new Filesystem(),
         );
+    }
+
+    private function __construct()
+    {
     }
 }

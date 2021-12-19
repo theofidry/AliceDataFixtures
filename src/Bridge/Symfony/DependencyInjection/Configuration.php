@@ -26,20 +26,11 @@ final class Configuration implements ConfigurationInterface
     public const DOCTRINE_PHPCR_ODM_DRIVER = 'doctrine_phpcr_odm';
     public const ELOQUENT_ORM_DRIVER = 'eloquent_orm';
 
-    /**
-     * @inheritdoc
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('fidry_alice_data_fixtures');
-        if (method_exists($treeBuilder, 'getRootNode')) {
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('fidry_alice_data_fixtures');
-        }
 
-        $rootNode
+        $treeBuilder->getRootNode()
             ->children()
                 ->scalarNode('default_purge_mode')
                     ->defaultValue('delete')

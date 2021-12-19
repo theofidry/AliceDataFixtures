@@ -22,13 +22,13 @@ use ReflectionClass;
  */
 class NullPersisterTest extends TestCase
 {
-    public function testIsAPersister()
+    public function testIsAPersister(): void
     {
-        $this->assertTrue(is_a(NullPersister::class, PersisterInterface::class, true));
+        self::assertTrue(is_a(NullPersister::class, PersisterInterface::class, true));
     }
 
-    public function testIsNotClonable()
+    public function testIsNotClonable(): void
     {
-        $this->assertFalse((new ReflectionClass(NullPersister::class))->isCloneable());
+        self::assertFalse((new ReflectionClass(NullPersister::class))->isCloneable());
     }
 }

@@ -22,7 +22,7 @@ use WouterJ\EloquentBundle\WouterJEloquentBundle;
 
 class EloquentKernel extends IsolatedKernel
 {
-    public function registerBundles()
+    public function registerBundles(): array
     {
         $bundles = [
             new FrameworkBundle(),
@@ -31,14 +31,14 @@ class EloquentKernel extends IsolatedKernel
             new WouterJEloquentBundle(),
         ];
 
-        if (class_exists('Fidry\PsyshBundle\PsyshBundle')) {
+        if (class_exists(PsyshBundle::class)) {
             $bundles[] = new PsyshBundle();
         }
 
         return $bundles;
     }
 
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         parent::registerContainerConfiguration($loader);
 

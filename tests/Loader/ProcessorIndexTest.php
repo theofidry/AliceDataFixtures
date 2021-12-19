@@ -23,7 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ProcessorIndexTest extends TestCase
 {
-    public function testIndexesArePreserved()
+    public function testIndexesArePreserved(): void
     {
         $processor = new DummyProcessor();
         $loader = new PersisterLoader(
@@ -37,28 +37,22 @@ class ProcessorIndexTest extends TestCase
 
         $loader->load([__DIR__.'/../../fixtures/fixture_files/dummy.yml']);
 
-        $this->assertSame(['dummy0'], $processor->preIds);
-        $this->assertSame(['dummy0'], $processor->postIds);
+        self::assertSame(['dummy0'], $processor->preIds);
+        self::assertSame(['dummy0'], $processor->postIds);
     }
 }
 
 class DummyProcessor implements ProcessorInterface
 {
-    public $preIds = [];
-    public $postIds = [];
+    public array $preIds = [];
+    public array $postIds = [];
 
-    /**
-     * @inheritdoc
-     */
-    public function preProcess(string $id, $object): void
+    public function preProcess(string $id, object $object): void
     {
         $this->preIds[] = $id;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function postProcess(string $id, $object): void
+    public function postProcess(string $id, object $object): void
     {
         $this->postIds[] = $id;
     }
