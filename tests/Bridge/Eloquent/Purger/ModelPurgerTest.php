@@ -20,10 +20,10 @@ use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use ReflectionClass;
 
 /**
@@ -37,30 +37,28 @@ class ModelPurgerTest extends TestCase
 
     public function testIsAPurger(): void
     {
-        $this->assertTrue(is_a(ModelPurger::class, PurgerInterface::class, true));
+        self::assertTrue(is_a(ModelPurger::class, PurgerInterface::class, true));
     }
 
     public function testIsAPurgerFactory(): void
     {
-        $this->assertTrue(is_a(ModelPurger::class, PurgerFactoryInterface::class, true));
+        self::assertTrue(is_a(ModelPurger::class, PurgerFactoryInterface::class, true));
     }
 
     public function testIsNotClonable(): void
     {
-        $this->assertFalse((new ReflectionClass(ModelPurger::class))->isCloneable());
+        self::assertFalse((new ReflectionClass(ModelPurger::class))->isCloneable());
     }
 
     public function testRollbackAndRunMigrationsForPurgingTheDatabase(): void
     {
         $migrationPath = '/path/to/migrations';
 
-        /** @var ObjectProphecy<MigrationRepositoryInterface> $migrationRepositoryProphecy */
         $migrationRepositoryProphecy = $this->prophesize(MigrationRepositoryInterface::class);
         $migrationRepositoryProphecy->repositoryExists()->willReturn(true);
         /** @var MigrationRepositoryInterface $migrationRepository */
         $migrationRepository = $migrationRepositoryProphecy->reveal();
 
-        /** @var ObjectProphecy<Migrator> $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
         $migratorProphecy->reset([$migrationPath])->shouldBeCalled();
         $migratorProphecy->run([$migrationPath])->shouldBeCalled();
@@ -79,14 +77,12 @@ class ModelPurgerTest extends TestCase
     {
         $migrationPath = '/path/to/migrations';
 
-        /** @var ObjectProphecy<MigrationRepositoryInterface> $migrationRepositoryProphecy */
         $migrationRepositoryProphecy = $this->prophesize(MigrationRepositoryInterface::class);
         $migrationRepositoryProphecy->repositoryExists()->willReturn(false);
         $migrationRepositoryProphecy->createRepository()->shouldBeCalled();
         /** @var MigrationRepositoryInterface $migrationRepository */
         $migrationRepository = $migrationRepositoryProphecy->reveal();
 
-        /** @var ObjectProphecy<Migrator> $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
         $migratorProphecy->reset([$migrationPath])->shouldBeCalled();
         $migratorProphecy->run([$migrationPath])->shouldBeCalled();
@@ -104,7 +100,6 @@ class ModelPurgerTest extends TestCase
 
     public function testCanCreateANewPurger(): void
     {
-        /** @var ObjectProphecy<Migrator> $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
         $migratorProphecy->reset(Argument::cetera())->shouldNotBeCalled();
         /** @var Migrator $migrator */
@@ -120,8 +115,8 @@ class ModelPurgerTest extends TestCase
         ];
 
         foreach ($newPurgers as $newPurger) {
-            $this->assertEquals($newPurger, $purger);
-            $this->assertNotSame($newPurger, $purger);
+            self::assertEquals($newPurger, $purger);
+            self::assertNotSame($newPurger, $purger);
         }
     }
 
@@ -131,7 +126,6 @@ class ModelPurgerTest extends TestCase
             .'"Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger" (not supported).'
         ;
 
-        /** @var ObjectProphecy<Migrator> $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
         $migratorProphecy->reset(Argument::cetera())->shouldNotBeCalled();
         /** @var Migrator $migrator */
@@ -141,8 +135,8 @@ class ModelPurgerTest extends TestCase
         try {
             $purger->create(PurgeMode::createTruncateMode());
             $this->fail('Expected exception to be thrown.');
-        } catch (\InvalidArgumentException $exception) {
-            $this->assertEquals($expectedExceptionMessage, $exception->getMessage());
+        } catch (InvalidArgumentException $exception) {
+            self::assertEquals($expectedExceptionMessage, $exception->getMessage());
         }
 
         try {
@@ -151,8 +145,8 @@ class ModelPurgerTest extends TestCase
                 new ModelPurger(new FakeMigrationRepository(), 'bar', $migrator)
             );
             $this->fail('Expected exception to be thrown.');
-        } catch (\InvalidArgumentException $exception) {
-            $this->assertEquals($expectedExceptionMessage, $exception->getMessage());
+        } catch (InvalidArgumentException $exception) {
+            self::assertEquals($expectedExceptionMessage, $exception->getMessage());
         }
     }
 
@@ -169,17 +163,17 @@ class ModelPurgerTest extends TestCase
         AnotherDummy::create([
             'address' => 'Wonderlands',
         ]);
-        $this->assertEquals(1, AnotherDummy::all()->count());
+        self::assertEquals(1, AnotherDummy::all()->count());
 
         $purger = new ModelPurger($GLOBALS['repository'], 'migrations', $GLOBALS['migrator']);
         $purger->purge();
 
-        $this->assertEquals(0, AnotherDummy::all()->count());
+        self::assertEquals(0, AnotherDummy::all()->count());
 
         // Ensures the schema has been restored
         AnotherDummy::create([
             'address' => 'Wonderlands'
         ]);
-        $this->assertEquals(1, AnotherDummy::all()->count());
+        self::assertEquals(1, AnotherDummy::all()->count());
     }
 }

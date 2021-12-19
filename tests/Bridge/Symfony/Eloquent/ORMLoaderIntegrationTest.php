@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace Fidry\AlicePersistence\Bridge\Symfony\Eloquent;
 
+use function bin2hex;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\EloquentKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
-use Illuminate\Database\DatabaseManager;
 use PHPUnit\Framework\TestCase;
+use function random_bytes;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -33,15 +34,13 @@ class ORMLoaderIntegrationTest extends TestCase
 
     private LoaderInterface $loader;
 
-    private DatabaseManager $databaseManager;
-
     private static string $seed;
 
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 
-        static::$seed = uniqid();
+        static::$seed = bin2hex(random_bytes(6));
     }
 
     public function setUp(): void
@@ -50,7 +49,6 @@ class ORMLoaderIntegrationTest extends TestCase
         $this->kernel->boot();
         $this->kernel->getContainer()->get('wouterj_eloquent.initializer')->initialize();
         $this->kernel->getContainer()->get('wouterj_eloquent')->setAsGlobal();
-        $this->databaseManager = $this->kernel->getContainer()->get('wouterj_eloquent.database_manager');
 
         $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.eloquent.persister_loader');
         $this->execute([
@@ -80,7 +78,7 @@ class ORMLoaderIntegrationTest extends TestCase
             __DIR__.'/../../../../fixtures/fixture_files/eloquent_another_dummy.yml',
         ]);
 
-        $this->assertEquals(1, AnotherDummy::all()->count());
+        self::assertEquals(1, AnotherDummy::all()->count());
     }
 
     public function testLoadAFileWithPurger(): void
@@ -94,7 +92,7 @@ class ORMLoaderIntegrationTest extends TestCase
             __DIR__.'/../../../../fixtures/fixture_files/eloquent_another_dummy.yml',
         ]);
 
-        $this->assertEquals(1, AnotherDummy::all()->count());
+        self::assertEquals(1, AnotherDummy::all()->count());
     }
 
     public function testBidirectionalRelationships(): void
@@ -103,8 +101,8 @@ class ORMLoaderIntegrationTest extends TestCase
             __DIR__.'/../../../../fixtures/fixture_files/eloquent_relationship_dummies.yml',
         ]);
 
-        $this->assertEquals(10, Dummy::all()->count());
-        $this->assertEquals(10, AnotherDummy::all()->count());
+        self::assertEquals(10, Dummy::all()->count());
+        self::assertEquals(10, AnotherDummy::all()->count());
     }
 
     public function testBidirectionalRelationshipsDeclaredInDifferentFiles(): void
@@ -114,8 +112,8 @@ class ORMLoaderIntegrationTest extends TestCase
             __DIR__.'/../../../../fixtures/fixture_files/eloquent_dummies.yml',
         ]);
 
-        $this->assertEquals(10, Dummy::all()->count());
-        $this->assertEquals(1, AnotherDummy::all()->count());
+        self::assertEquals(10, Dummy::all()->count());
+        self::assertEquals(1, AnotherDummy::all()->count());
     }
 
     private function execute(array $input): void

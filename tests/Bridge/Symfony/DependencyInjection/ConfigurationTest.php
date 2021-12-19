@@ -38,7 +38,7 @@ class ConfigurationTest extends TestCase
 
         $actual = $processor->processConfiguration($configuration, []);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function testDefaultValuesCanBeOverridden(): void
@@ -71,6 +71,6 @@ class ConfigurationTest extends TestCase
             ]
         );
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 }

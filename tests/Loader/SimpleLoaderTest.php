@@ -33,12 +33,12 @@ class SimpleLoaderTest extends TestCase
 
     public function testIsALoader(): void
     {
-        $this->assertTrue(is_a(SimpleLoader::class, LoaderInterface::class, true));
+        self::assertTrue(is_a(SimpleLoader::class, LoaderInterface::class, true));
     }
 
     public function testIsNotClonable(): void
     {
-        $this->assertFalse((new ReflectionClass(SimpleLoader::class))->isCloneable());
+        self::assertFalse((new ReflectionClass(SimpleLoader::class))->isCloneable());
     }
 
     public function testDecoratesAliceLoaderToLoadEachFileGivenAndReturnsTheObjectsLoaded(): void
@@ -65,7 +65,7 @@ class SimpleLoaderTest extends TestCase
         $loader = new SimpleLoader($filesLoader);
         $result = $loader->load($files);
 
-        $this->assertEquals(
+        self::assertEquals(
             [
                 'dummy' => new stdClass(),
             ],

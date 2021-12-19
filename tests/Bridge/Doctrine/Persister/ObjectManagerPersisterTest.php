@@ -53,12 +53,12 @@ class ObjectManagerPersisterTest extends TestCase
 
     public function testIsAPersister(): void
     {
-        $this->assertTrue(is_a(ObjectManagerPersister::class, PersisterInterface::class, true));
+        self::assertTrue(is_a(ObjectManagerPersister::class, PersisterInterface::class, true));
     }
 
     public function testIsNotClonable(): void
     {
-        $this->assertFalse((new ReflectionClass(ObjectManagerPersister::class))->isCloneable());
+        self::assertFalse((new ReflectionClass(ObjectManagerPersister::class))->isCloneable());
     }
 
     /**
@@ -75,10 +75,10 @@ class ObjectManagerPersisterTest extends TestCase
 
         $result = $this->entityManager->getRepository(get_class($entity))->findAll();
 
-        $this->assertEquals(1, count($result));
+        self::assertCount(1, $result);
 
         if ($exact) {
-            $this->assertEquals($originalEntity, $result[0]);
+            self::assertEquals($originalEntity, $result[0]);
         }
     }
 
@@ -98,12 +98,12 @@ class ObjectManagerPersisterTest extends TestCase
         $this->entityManager->clear();
 
         $result = $this->entityManager->getRepository(DummyWithIdentifier::class)->findOneBy(['id' => 100]);
-        $this->assertInstanceOf(DummyWithIdentifier::class, $result);
-        $this->assertEquals($result->id, $dummy->id);
+        self::assertInstanceOf(DummyWithIdentifier::class, $result);
+        self::assertEquals($result->id, $dummy->id);
 
         $result = $this->entityManager->getRepository(DummyWithRelation::class)->findOneBy(['id' => 200]);
-        $this->assertInstanceOf(DummyWithRelation::class, $result);
-        $this->assertEquals($result->id, $dummyWithRelation->id);
+        self::assertInstanceOf(DummyWithRelation::class, $result);
+        self::assertEquals($result->id, $dummyWithRelation->id);
     }
 
     public function testCanPersistMultipleEntitiesWithExplicitIdentifierSet(): void
@@ -118,7 +118,7 @@ class ObjectManagerPersisterTest extends TestCase
 
         $classMetadata = $this->entityManager->getClassMetadata(DummyWithIdentifier::class);
 
-        $this->assertEquals(
+        self::assertEquals(
             IdGenerator::class,
             get_class($classMetadata->idGenerator),
             'ID generator should be changed.'
@@ -128,14 +128,14 @@ class ObjectManagerPersisterTest extends TestCase
 
         $classMetadata = $this->entityManager->getClassMetadata(DummyWithIdentifier::class);
 
-        $this->assertNotEquals(
+        self::assertNotEquals(
             IdGenerator::class,
             get_class($classMetadata->idGenerator),
             'ID generator should be restored after flush.'
         );
 
         $entity = $this->entityManager->getRepository(DummyWithIdentifier::class)->find(200);
-        $this->assertInstanceOf(DummyWithIdentifier::class, $entity);
+        self::assertInstanceOf(DummyWithIdentifier::class, $entity);
     }
 
     public function testCanPersistEntitiesWithoutExplicitIdentifierSetEvenWhenExistingEntitiesHaveOne(): void
@@ -171,10 +171,10 @@ class ObjectManagerPersisterTest extends TestCase
         $this->persister->flush();
 
         $entity = $this->entityManager->getRepository(Dummy::class)->find($dummy1->id);
-        $this->assertInstanceOf(Dummy::class, $entity);
+        self::assertInstanceOf(Dummy::class, $entity);
 
         $entity = $this->entityManager->getRepository(Dummy::class)->find($dummy2->id);
-        $this->assertInstanceOf(Dummy::class, $entity);
+        self::assertInstanceOf(Dummy::class, $entity);
     }
 
     public function testPersistingMultipleEntitiesWithAndWithoutExplicitIdentifierSetWillNotThrowORMException(): void
@@ -210,7 +210,7 @@ class ObjectManagerPersisterTest extends TestCase
         $this->persister->persist($dummy);
         $this->persister->flush();
 
-        $this->assertTrue(true, 'Everything is fine.');
+        self::assertTrue(true, 'Everything is fine.');
     }
 
     public static function provideEntities(): iterable
@@ -238,7 +238,7 @@ class ObjectManagerPersisterTest extends TestCase
         ];
 
         yield 'entity with explicit ID' => [
-            (function () {
+            (static function () {
                 $dummy = new DummyWithIdentifier();
                 $dummy->id = 300;
 

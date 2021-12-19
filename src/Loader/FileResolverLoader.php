@@ -18,6 +18,7 @@ use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\PersisterAwareInterface;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
+use JetBrains\PhpStorm\Pure;
 use Nelmio\Alice\IsAServiceTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -35,6 +36,7 @@ use Psr\Log\NullLogger;
     private FileResolverInterface $fileResolver;
     private LoggerInterface $logger;
 
+    #[Pure]
     public function __construct(
         LoaderInterface $decoratedLoader,
         FileResolverInterface $fileResolver,

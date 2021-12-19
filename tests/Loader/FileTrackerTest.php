@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -24,7 +25,7 @@ class FileTrackerTest extends TestCase
     {
         $tracker = new FileTracker('foo');
 
-        $this->assertSame(['foo'], $tracker->getUnloadedFiles());
+        self::assertSame(['foo'], $tracker->getUnloadedFiles());
     }
 
     public function testCanMarkFilesAsLoaded(): void
@@ -32,12 +33,12 @@ class FileTrackerTest extends TestCase
         $tracker = new FileTracker('foo');
         $tracker->markAsLoaded('foo');
 
-        $this->assertSame([], $tracker->getUnloadedFiles());
+        self::assertSame([], $tracker->getUnloadedFiles());
     }
 
     public function testCannotMarkUntrackedFileAsLoaded(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The file "foo" is not being tracked. As such, it cannot be marked as "loaded".');
 
         $tracker = new FileTracker('');
@@ -47,13 +48,13 @@ class FileTrackerTest extends TestCase
     public function testCanTellWhenAllFilesHaveBeenLoaded(): void
     {
         $tracker = new FileTracker('foo', 'bar');
-        $this->assertFalse($tracker->allFilesHaveBeenLoaded());
+        self::assertFalse($tracker->allFilesHaveBeenLoaded());
 
         $tracker->markAsLoaded('foo');
-        $this->assertFalse($tracker->allFilesHaveBeenLoaded());
+        self::assertFalse($tracker->allFilesHaveBeenLoaded());
 
         $tracker->markAsLoaded('bar');
-        $this->assertTrue($tracker->allFilesHaveBeenLoaded());
+        self::assertTrue($tracker->allFilesHaveBeenLoaded());
     }
 
     public function testIsDeepClonable(): void
@@ -63,7 +64,7 @@ class FileTrackerTest extends TestCase
 
         $clone->markAsLoaded('foo');
 
-        $this->assertFalse($tracker->allFilesHaveBeenLoaded());
-        $this->assertTrue($clone->allFilesHaveBeenLoaded());
+        self::assertFalse($tracker->allFilesHaveBeenLoaded());
+        self::assertTrue($clone->allFilesHaveBeenLoaded());
     }
 }

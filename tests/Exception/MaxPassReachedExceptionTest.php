@@ -13,9 +13,12 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Exception;
 
+use Error;
+use Exception;
 use Fidry\AliceDataFixtures\Loader\ErrorTracker;
 use Nelmio\Alice\Throwable\LoadingThrowable;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Exception\MaxPassReachedException
@@ -24,32 +27,32 @@ class MaxPassReachedExceptionTest extends TestCase
 {
     public function testIsARuntimeException(): void
     {
-        $this->assertTrue(is_a(MaxPassReachedException::class, \RuntimeException::class, true));
+        self::assertTrue(is_a(MaxPassReachedException::class, RuntimeException::class, true));
     }
 
     public function testIsALoadingException(): void
     {
-        $this->assertTrue(is_a(MaxPassReachedException::class, LoadingThrowable::class, true));
+        self::assertTrue(is_a(MaxPassReachedException::class, LoadingThrowable::class, true));
     }
 
     public function testInstantiation(): void
     {
         $exception = new MaxPassReachedException('foo');
-        $this->assertEquals('foo', $exception->getMessage());
-        $this->assertEquals(0, $exception->getCode());
-        $this->assertNull($exception->getPrevious());
-        $this->assertCount(0, $exception->getStack());
+        self::assertEquals('foo', $exception->getMessage());
+        self::assertEquals(0, $exception->getCode());
+        self::assertNull($exception->getPrevious());
+        self::assertCount(0, $exception->getStack());
 
 
         $code = 100;
-        $previous = new \Error();
+        $previous = new Error();
         $tracker = new ErrorTracker();
-        $tracker->register('/foo.php', new \Exception('bar'));
+        $tracker->register('/foo.php', new Exception('bar'));
 
         $exception = new MaxPassReachedException('foo', $code, $previous, $tracker);
-        $this->assertEquals('foo', $exception->getMessage());
-        $this->assertEquals($code, $exception->getCode());
-        $this->assertSame($previous, $exception->getPrevious());
-        $this->assertEquals($tracker->getStack(), $exception->getStack());
+        self::assertEquals('foo', $exception->getMessage());
+        self::assertEquals($code, $exception->getCode());
+        self::assertSame($previous, $exception->getPrevious());
+        self::assertEquals($tracker->getStack(), $exception->getStack());
     }
 }

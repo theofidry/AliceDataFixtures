@@ -18,6 +18,7 @@ use Fidry\AliceDataFixtures\Persistence\PersisterAwareInterface;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\ProcessorInterface;
+use JetBrains\PhpStorm\Pure;
 use Nelmio\Alice\IsAServiceTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -42,6 +43,7 @@ use Psr\Log\NullLogger;
     /**
      * @param ProcessorInterface[] $processors
      */
+    #[Pure]
     public function __construct(
         LoaderInterface $decoratedLoader,
         PersisterInterface $persister,

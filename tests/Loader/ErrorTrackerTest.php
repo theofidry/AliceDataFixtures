@@ -25,7 +25,7 @@ class ErrorTrackerTest extends TestCase
     {
         $tracker = new ErrorTracker();
 
-        $this->assertSame([], $tracker->getStack());
+        self::assertSame([], $tracker->getStack());
     }
 
     public function testKeepsTrackOfErrors(): void
@@ -35,7 +35,7 @@ class ErrorTrackerTest extends TestCase
         $tracker->register('bar', $exception1 = new Exception('bar exception 0'));
         $tracker->register('bar', $exception2 = new Exception('bar exception 1'));
 
-        $this->assertEquals(
+        self::assertEquals(
             [
                 'foo' => [
                     $exception0,
@@ -52,15 +52,15 @@ class ErrorTrackerTest extends TestCase
     public function testIsDeepClonable(): void
     {
         $tracker = new ErrorTracker();
-        $tracker->register('foo', new Exception($message0 = 'foo exception'));
+        $tracker->register('foo', new Exception('foo exception'));
 
         $originalTracker = new ErrorTracker();
-        $originalTracker->register('foo', new Exception($message0 = 'foo exception'));
+        $originalTracker->register('foo', new Exception('foo exception'));
 
         $newTracker = clone $tracker;
-        $newTracker->register('bar', new Exception($message1 = 'bar exception'));
+        $newTracker->register('bar', new Exception('bar exception'));
 
-        $this->assertEquals($originalTracker->getStack(), $tracker->getStack());
-        $this->assertNotEquals($tracker->getStack(), $newTracker->getStack());
+        self::assertEquals($originalTracker->getStack(), $tracker->getStack());
+        self::assertNotEquals($tracker->getStack(), $newTracker->getStack());
     }
 }

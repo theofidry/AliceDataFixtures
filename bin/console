@@ -23,32 +23,34 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 $serverArgs = &$_SERVER['argv'];
 $kernelInput = 'NakedKernel';
+
 foreach ($serverArgs as $index => $arg) {
     if ('-k' === $arg || '--kernel' === $arg) {
         $kernelInput = $serverArgs[$index + 1];
-        unset($serverArgs[$index]);
-        unset($serverArgs[$index + 1]);
+        unset($serverArgs[$index], $serverArgs[$index + 1]);
+        
         break;
     }
 
-    if ('-k=' === substr($arg, 0, 3)) {
-        $kernelInput = substr($serverArgs[$index], 3);
+    if (str_starts_with($arg, '-k=')) {
+        $kernelInput = substr($arg, 3);
         unset($serverArgs[$index]);
         break;
     }
 
-    if ('--kernel=' === substr($arg, 0, 9)) {
-        $kernelInput = substr($serverArgs[$index], 9);
+    if (str_starts_with($arg, '--kernel=')) {
+        $kernelInput = substr($arg, 9);
         unset($serverArgs[$index]);
         break;
     }
 }
+
 $serverArgs = array_values($serverArgs);
 $kernelClass = 'Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\\'.$kernelInput;
 
 $input = new ArgvInput();
-$env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: uniqid());
-$debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('--no-debug', '')) && $env !== 'prod';
+$env = $input->getParameterOption(['--env', '-e'], getenv('SYMFONY_ENV') ?: bin2hex(random_bytes(6)));
+$debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(['--no-debug', '']) && $env !== 'prod';
 
 if ($debug) {
     Debug::enable();

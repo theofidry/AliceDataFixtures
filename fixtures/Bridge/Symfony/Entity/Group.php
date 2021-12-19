@@ -15,6 +15,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use JetBrains\PhpStorm\Pure;
 
 class Group
 {
@@ -25,6 +26,7 @@ class Group
      */
     private Collection $users;
 
+    #[Pure]
     public function __construct()
     {
         $this->users = new ArrayCollection();
