@@ -20,13 +20,13 @@ class AnotherDummy extends Model
 {
     protected $table = 'another_dummies';
 
-    protected array $fillable = [
+    protected $fillable = [
         'id',
         'address',
         'dummy',
     ];
 
-    public bool $timestamps = false;
+    public $timestamps = false;
 
     public function dummy(): BelongsTo
     {
