@@ -106,7 +106,7 @@ class FileResolverLoaderTest extends TestCase
         $loader = $loaderProphecy->reveal();
 
         $loader = new FileResolverLoader($loader, new DummyResolver());
-        $result = $loader->load($files, $parameters, $objects, null);
+        $result = $loader->load($files, $parameters, $objects);
 
         $this->assertEquals(
             [

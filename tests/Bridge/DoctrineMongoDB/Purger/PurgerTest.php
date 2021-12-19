@@ -19,6 +19,7 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use ReflectionObject;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger
@@ -34,7 +35,7 @@ class PurgerTest extends TestCase
         $manager = $this->prophesize(DocumentManager::class)->reveal();
         $purger = new Purger($manager);
 
-        $decoratedPurgerReflection = (new \ReflectionObject($purger))->getProperty('purger');
+        $decoratedPurgerReflection = (new ReflectionObject($purger))->getProperty('purger');
         $decoratedPurgerReflection->setAccessible(true);
         $decoratedPurger = $decoratedPurgerReflection->getValue($purger);
 

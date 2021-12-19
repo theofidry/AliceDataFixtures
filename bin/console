@@ -33,13 +33,13 @@ foreach ($serverArgs as $index => $arg) {
     }
 
     if ('-k=' === substr($arg, 0, 3)) {
-        $kernelInput = substr($serverArgs[$index], 3);
+        $kernelInput = substr($arg, 3);
         unset($serverArgs[$index]);
         break;
     }
 
     if ('--kernel=' === substr($arg, 0, 9)) {
-        $kernelInput = substr($serverArgs[$index], 9);
+        $kernelInput = substr($arg, 9);
         unset($serverArgs[$index]);
         break;
     }

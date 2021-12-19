@@ -20,6 +20,7 @@ use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -141,7 +142,7 @@ class ModelPurgerTest extends TestCase
         try {
             $purger->create(PurgeMode::createTruncateMode());
             $this->fail('Expected exception to be thrown.');
-        } catch (\InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             $this->assertEquals($expectedExceptionMessage, $exception->getMessage());
         }
 
@@ -151,7 +152,7 @@ class ModelPurgerTest extends TestCase
                 new ModelPurger(new FakeMigrationRepository(), 'bar', $migrator)
             );
             $this->fail('Expected exception to be thrown.');
-        } catch (\InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             $this->assertEquals($expectedExceptionMessage, $exception->getMessage());
         }
     }

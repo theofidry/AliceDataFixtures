@@ -17,7 +17,6 @@ use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\EloquentKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
-use Illuminate\Database\DatabaseManager;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -32,8 +31,6 @@ class ORMLoaderIntegrationTest extends TestCase
     private KernelInterface $kernel;
 
     private LoaderInterface $loader;
-
-    private DatabaseManager $databaseManager;
 
     private static string $seed;
 
@@ -50,7 +47,6 @@ class ORMLoaderIntegrationTest extends TestCase
         $this->kernel->boot();
         $this->kernel->getContainer()->get('wouterj_eloquent.initializer')->initialize();
         $this->kernel->getContainer()->get('wouterj_eloquent')->setAsGlobal();
-        $this->databaseManager = $this->kernel->getContainer()->get('wouterj_eloquent.database_manager');
 
         $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.eloquent.persister_loader');
         $this->execute([

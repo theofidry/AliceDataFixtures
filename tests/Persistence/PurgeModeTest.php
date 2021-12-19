@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Persistence;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,7 +23,7 @@ class PurgeModeTest extends TestCase
 {
     public function testThrowsAnExceptionIfUnknownPurgeModeIsGiven(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown purge mode "3".');
 
         new PurgeMode(3);

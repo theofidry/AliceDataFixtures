@@ -13,8 +13,12 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\Doctrine;
 
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundleTest as NakedFidryAliceDataFixturesBundleTest;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
+use Fidry\AliceDataFixtures\Loader\PersisterLoader;
+use Fidry\AliceDataFixtures\Loader\PurgerLoader;
 
 /**
  * @coversNothing
@@ -36,22 +40,22 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
         parent::testServiceRegistration();
 
         $this->assertServiceIsInstanceOf(
-            \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger::class,
+            Purger::class,
             'fidry_alice_data_fixtures.persistence.purger.doctrine.orm_purger'
         );
 
         $this->assertServiceIsInstanceOf(
-            \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister::class,
+            ObjectManagerPersister::class,
             'fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister'
         );
 
         $this->assertServiceIsInstanceOf(
-            \Fidry\AliceDataFixtures\Loader\PersisterLoader::class,
+            PersisterLoader::class,
             'fidry_alice_data_fixtures.doctrine.persister_loader'
         );
 
         $this->assertServiceIsInstanceOf(
-            \Fidry\AliceDataFixtures\Loader\PurgerLoader::class,
+            PurgerLoader::class,
             'fidry_alice_data_fixtures.doctrine.purger_loader'
         );
     }

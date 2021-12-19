@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Loader;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -37,7 +38,7 @@ class FileTrackerTest extends TestCase
 
     public function testCannotMarkUntrackedFileAsLoaded(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The file "foo" is not being tracked. As such, it cannot be marked as "loaded".');
 
         $tracker = new FileTracker('');

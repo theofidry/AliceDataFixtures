@@ -24,6 +24,7 @@ use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
+use ReflectionObject;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger
@@ -52,7 +53,7 @@ class PurgerTest extends TestCase
         $manager = $this->prophesize(DocumentManager::class)->reveal();
         $purger = new Purger($manager);
 
-        $decoratedPurgerReflection = (new \ReflectionObject($purger))->getProperty('purger');
+        $decoratedPurgerReflection = (new ReflectionObject($purger))->getProperty('purger');
         $decoratedPurgerReflection->setAccessible(true);
         /** @var DoctrineOrmPurger $decoratedPurger */
         $decoratedPurger = $decoratedPurgerReflection->getValue($purger);

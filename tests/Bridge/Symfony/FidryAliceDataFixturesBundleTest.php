@@ -15,6 +15,9 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony;
 
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\InvalidKernel;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\NakedKernel;
+use Fidry\AliceDataFixtures\Loader\MultiPassLoader;
+use Fidry\AliceDataFixtures\Loader\SimpleLoader;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -49,19 +52,19 @@ class FidryAliceDataFixturesBundleTest extends TestCase
     public function testServiceRegistration(): void
     {
         $this->assertServiceIsInstanceOf(
-            \Fidry\AliceDataFixtures\Loader\MultiPassLoader::class,
+            MultiPassLoader::class,
             'fidry_alice_data_fixtures.loader.multipass_file'
         );
 
         $this->assertServiceIsInstanceOf(
-            \Fidry\AliceDataFixtures\Loader\SimpleLoader::class,
+            SimpleLoader::class,
             'fidry_alice_data_fixtures.loader.simple'
         );
     }
 
     public function testCannotBootIfNelmioAliceBundleIsNotRegistered(): void
     {
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Cannot register "Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle" without "Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle".');
 
         $kernel = InvalidKernel::create();
