@@ -27,9 +27,9 @@ final class ErrorTracker
     /**
      * @var array<string, Throwable>
      */
-    private $stack = [];
+    private array $stack = [];
 
-    public function register(string $filePath, Throwable $error)
+    public function register(string $filePath, Throwable $error): void
     {
         if (false === array_key_exists($filePath, $this->stack)) {
             $this->stack[$filePath] = [];

@@ -14,25 +14,30 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 class Group
 {
     private $id;
-    private $users;
+
+    /**
+     * @var Collection<User>
+     */
+    private Collection $users;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
     }
 
-    public function setUsers(array $users)
+    public function setUsers(array $users): void
     {
         foreach ($users as $user) {
             $this->addUser($user);
         }
     }
 
-    public function addUser(User $user)
+    public function addUser(User $user): void
     {
         if (false === $this->users->contains($user)) {
             $this->users->add($user);

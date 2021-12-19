@@ -34,15 +34,12 @@ use Psr\Log\NullLogger;
 {
     use IsAServiceTrait;
 
-    private $loader;
-    private $persister;
-    private $logger;
-    private $processors;
+    private LoaderInterface $loader;
+    private PersisterInterface $persister;
+    private LoggerInterface $logger;
+    private array $processors;
 
     /**
-     * @param LoaderInterface      $decoratedLoader
-     * @param PersisterInterface   $persister
-     * @param LoggerInterface|null $logger
      * @param ProcessorInterface[] $processors
      */
     public function __construct(
@@ -54,14 +51,11 @@ use Psr\Log\NullLogger;
         $this->loader = $decoratedLoader;
         $this->persister = $persister;
         $this->logger = $logger ?? new NullLogger();
-        $this->processors = (function (ProcessorInterface ...$processors) {
+        $this->processors = (static function (ProcessorInterface ...$processors) {
             return $processors;
         })(...$processors);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function withPersister(PersisterInterface $persister): self
     {
         $loader = $this->loader;
@@ -74,7 +68,7 @@ use Psr\Log\NullLogger;
     }
 
     /**
-     * Pre process, persist and post process each object loaded.
+     * Pre-process, persist and post process each object loaded.
      *
      * {@inheritdoc}
      */

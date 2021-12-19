@@ -28,5 +28,5 @@ class Dummy
      * @Column(type="integer")
      * @GeneratedValue
      */
-    public $id;
+    public int $id;
 }

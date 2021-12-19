@@ -20,14 +20,11 @@ final class NullPersister implements PersisterInterface
 {
     use IsAServiceTrait;
 
-    /**
-     * @inheritdoc
-     */
-    public function persist($object)
+    public function persist(object $object): void
     {
     }
 
-    public function flush()
+    public function flush(): void
     {
     }
 }

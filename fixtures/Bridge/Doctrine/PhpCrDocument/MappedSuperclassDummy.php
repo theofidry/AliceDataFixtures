@@ -30,5 +30,5 @@ class MappedSuperclassDummy
     /**
      * @Field(type="string")
      */
-    public $status;
+    public string $status;
 }

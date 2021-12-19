@@ -33,24 +33,12 @@ use ReflectionClass;
  */
 class ObjectManagerPersisterTest extends TestCase
 {
-    /**
-     * @var ObjectManagerPersister
-     */
-    private $persister;
+    private ObjectManagerPersister $persister;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
-    /**
-     * @var ORMPurger
-     */
-    private $purger;
+    private ORMPurger $purger;
 
-    /**
-     * @inheritdoc
-     */
     public function setUp(): void
     {
         $this->entityManager = $GLOBALS['entity_manager'];
@@ -58,20 +46,17 @@ class ObjectManagerPersisterTest extends TestCase
         $this->purger = new ORMPurger($this->entityManager);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function tearDown(): void
     {
         $this->purger->purge();
     }
 
-    public function testIsAPersister()
+    public function testIsAPersister(): void
     {
         $this->assertTrue(is_a(ObjectManagerPersister::class, PersisterInterface::class, true));
     }
 
-    public function testIsNotClonable()
+    public function testIsNotClonable(): void
     {
         $this->assertFalse((new ReflectionClass(ObjectManagerPersister::class))->isCloneable());
     }
@@ -79,7 +64,7 @@ class ObjectManagerPersisterTest extends TestCase
     /**
      * @dataProvider provideEntities
      */
-    public function testCanPersistAnEntity($entity, bool $exact = false)
+    public function testCanPersistAnEntity($entity, bool $exact = false): void
     {
         $originalEntity = clone $entity;
 
@@ -97,7 +82,7 @@ class ObjectManagerPersisterTest extends TestCase
         }
     }
 
-    public function testCanPersistAnEntityWithRelationsAndExplicitIds()
+    public function testCanPersistAnEntityWithRelationsAndExplicitIds(): void
     {
         $dummy = new DummyWithIdentifier();
         $dummy->id = 100;
@@ -121,7 +106,7 @@ class ObjectManagerPersisterTest extends TestCase
         $this->assertEquals($result->id, $dummyWithRelation->id);
     }
 
-    public function testCanPersistMultipleEntitiesWithExplicitIdentifierSet()
+    public function testCanPersistMultipleEntitiesWithExplicitIdentifierSet(): void
     {
         $dummy = new DummyWithIdentifier();
         $dummy->id = 100;
@@ -153,7 +138,7 @@ class ObjectManagerPersisterTest extends TestCase
         $this->assertInstanceOf(DummyWithIdentifier::class, $entity);
     }
 
-    public function testCanPersistEntitiesWithoutExplicitIdentifierSetEvenWhenExistingEntitiesHaveOne()
+    public function testCanPersistEntitiesWithoutExplicitIdentifierSetEvenWhenExistingEntitiesHaveOne(): void
     {
         $this->markTestSkipped(
             <<<'EOF'
@@ -192,7 +177,7 @@ class ObjectManagerPersisterTest extends TestCase
         $this->assertInstanceOf(Dummy::class, $entity);
     }
 
-    public function testPersistingMultipleEntitiesWithAndWithoutExplicitIdentifierSetWillNotThrowORMException()
+    public function testPersistingMultipleEntitiesWithAndWithoutExplicitIdentifierSetWillNotThrowORMException(): void
     {
         $dummy = new DummyWithIdentifier();
         $this->persister->persist($dummy);
@@ -210,7 +195,7 @@ class ObjectManagerPersisterTest extends TestCase
     /**
      * @dataProvider provideNonPersistableEntities
      */
-    public function testDoesNotPersistEmbeddables($dummy)
+    public function testDoesNotPersistEmbeddables($dummy): void
     {
         try {
             $this->entityManager->persist($dummy);
@@ -228,12 +213,12 @@ class ObjectManagerPersisterTest extends TestCase
         $this->assertTrue(true, 'Everything is fine.');
     }
 
-    public function provideEntities()
+    public static function provideEntities(): iterable
     {
         yield 'simple entity' => [new Dummy()];
 
         yield 'entity with embeddable' => [
-            (function () {
+            (static function () {
                 $embeddable = new DummyEmbeddable();
                 $dummy = new DummyWithEmbeddable();
 
@@ -244,9 +229,9 @@ class ObjectManagerPersisterTest extends TestCase
         ];
 
         yield 'sub class entity' => [
-            (function () {
+            (static function () {
                 $dummy = new DummySubClass();
-                $dummy->status = 200;
+                $dummy->status = '200';
 
                 return $dummy;
             })()
@@ -262,7 +247,7 @@ class ObjectManagerPersisterTest extends TestCase
         ];
     }
 
-    public function provideNonPersistableEntities()
+    public static function provideNonPersistableEntities():iterable
     {
         yield 'embeddable' => [new DummyEmbeddable()];
 

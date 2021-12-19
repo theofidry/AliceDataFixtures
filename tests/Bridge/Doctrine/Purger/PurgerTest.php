@@ -33,22 +33,22 @@ class PurgerTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testIsAPurger()
+    public function testIsAPurger(): void
     {
         $this->assertTrue(is_a(Purger::class, PurgerInterface::class, true));
     }
 
-    public function testIsAPurgerFactory()
+    public function testIsAPurgerFactory(): void
     {
         $this->assertTrue(is_a(Purger::class, PurgerFactoryInterface::class, true));
     }
 
-    public function testIsNotClonable()
+    public function testIsNotClonable(): void
     {
         $this->assertFalse((new ReflectionClass(Purger::class))->isCloneable());
     }
 
-    public function testCreatesADoctrineOrmPurgerWithTheAppropriateManagerAndPurgeMode()
+    public function testCreatesADoctrineOrmPurgerWithTheAppropriateManagerAndPurgeMode(): void
     {
         $manager = new FakeEntityManager();
         $purgeMode = PurgeMode::createTruncateMode();
@@ -64,7 +64,7 @@ class PurgerTest extends TestCase
         $this->assertEquals(DoctrineOrmPurger::PURGE_MODE_TRUNCATE, $decoratedPurger->getPurgeMode());
     }
 
-    public function testDisableFKChecksOnDeleteIsPerformed()
+    public function testDisableFKChecksOnDeleteIsPerformed(): void
     {
         $connection = $this->prophesize(Connection::class);
         $connection->getDriver()->willReturn($this->prophesize(AbstractMySQLDriver::class)->reveal());
@@ -88,7 +88,7 @@ class PurgerTest extends TestCase
         $purger->purge();
     }
 
-    public function testEmptyDatabase()
+    public function testEmptyDatabase(): void
     {
         /** @var EntityManager $manager */
         $manager = $GLOBALS['entity_manager'];

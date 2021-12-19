@@ -35,22 +35,22 @@ class ModelPurgerTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testIsAPurger()
+    public function testIsAPurger(): void
     {
         $this->assertTrue(is_a(ModelPurger::class, PurgerInterface::class, true));
     }
 
-    public function testIsAPurgerFactory()
+    public function testIsAPurgerFactory(): void
     {
         $this->assertTrue(is_a(ModelPurger::class, PurgerFactoryInterface::class, true));
     }
 
-    public function testIsNotClonable()
+    public function testIsNotClonable(): void
     {
         $this->assertFalse((new ReflectionClass(ModelPurger::class))->isCloneable());
     }
 
-    public function testRollbackAndRunMigrationsForPurgingTheDatabase()
+    public function testRollbackAndRunMigrationsForPurgingTheDatabase(): void
     {
         $migrationPath = '/path/to/migrations';
 
@@ -75,7 +75,7 @@ class ModelPurgerTest extends TestCase
         $migratorProphecy->run(Argument::cetera())->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testCreatesTheMigrationDatabaseIfItDoesntExist()
+    public function testCreatesTheMigrationDatabaseIfItDoesntExist(): void
     {
         $migrationPath = '/path/to/migrations';
 
@@ -102,7 +102,7 @@ class ModelPurgerTest extends TestCase
         $migratorProphecy->run(Argument::cetera())->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testCanCreateANewPurger()
+    public function testCanCreateANewPurger(): void
     {
         /** @var Migrator|ObjectProphecy $migratorProphecy */
         $migratorProphecy = $this->prophesize(Migrator::class);
@@ -125,7 +125,7 @@ class ModelPurgerTest extends TestCase
         }
     }
 
-    public function testCannotCreateANewPurgerWithTruncateMode()
+    public function testCannotCreateANewPurgerWithTruncateMode(): void
     {
         $expectedExceptionMessage = 'Cannot purge database in truncate mode with '
             .'"Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger" (not supported).'
@@ -159,7 +159,7 @@ class ModelPurgerTest extends TestCase
     /**
      * @coversNothing
      */
-    public function testEmptyDatabase()
+    public function testEmptyDatabase(): void
     {
         $purger = new ModelPurger($GLOBALS['repository'], 'migrations', $GLOBALS['migrator']);
         // Doing a purge here is just to make the test slightly more robust when being run multiple times

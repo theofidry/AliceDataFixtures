@@ -35,12 +35,12 @@ use Psr\Log\NullLogger;
     public const PURGE_MODE_DELETE = 1;
     public const PURGE_MODE_TRUNCATE = 2;
 
-    private static $PURGE_MAPPING;
+    private static array $PURGE_MAPPING;
 
-    private $loader;
-    private $purgerFactory;
-    private $defaultPurgeMode;
-    private $logger;
+    private LoaderInterface $loader;
+    private PurgerFactoryInterface $purgerFactory;
+    private PurgeMode $defaultPurgeMode;
+    private LoggerInterface $logger;
 
     public function __construct(
         LoaderInterface $decoratedLoader,
@@ -48,7 +48,7 @@ use Psr\Log\NullLogger;
         string $defaultPurgeMode,
         LoggerInterface $logger = null
     ) {
-        if (null === self::$PURGE_MAPPING) {
+        if (!isset(self::$PURGE_MAPPING)) {
             self::$PURGE_MAPPING = [
                 'delete' => PurgeMode::createDeleteMode(),
                 'truncate' => PurgeMode::createTruncateMode(),
@@ -94,7 +94,7 @@ use Psr\Log\NullLogger;
     }
 
     /**
-     * Pre process, persist and post process each object loaded.
+     * Pre-process, persist and post process each object loaded.
      *
      * {@inheritdoc}
      */

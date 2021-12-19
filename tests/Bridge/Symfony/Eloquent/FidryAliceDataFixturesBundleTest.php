@@ -22,14 +22,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundleTest
 {
-    /**
-     * @var KernelInterface
-     */
-    protected $kernel;
+    protected KernelInterface $kernel;
 
-    /**
-     * @inheritdoc
-     */
     public function setUp(): void
     {
         $this->kernel = EloquentKernel::create();
@@ -40,7 +34,7 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
      * @group legacy
      * @expectedDepreaction The service "fidry_alice_data_fixtures.loader.multipass_file" is deprecated and will be removed in future versions.
      */
-    public function testServiceRegistration()
+    public function testServiceRegistration(): void
     {
         parent::testServiceRegistration();
 

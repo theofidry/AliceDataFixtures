@@ -14,33 +14,25 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Dummy extends Model
 {
-    /**
-     * @inheritdoc
-     */
     protected $table = 'dummies';
 
-    /**
-     * @inheritdoc
-     */
     protected $fillable = [
         'id',
         'name',
     ];
 
-    /**
-     * @inheritdoc
-     */
     public $timestamps = false;
 
-    public function anotherDummy()
+    public function anotherDummy(): BelongsTo
     {
         return $this->belongsTo(AnotherDummy::class);
     }
 
-    public function setAnotherDummy(AnotherDummy $anotherDummy)
+    public function setAnotherDummy(AnotherDummy $anotherDummy): void
     {
         if (null === $anotherDummy->id) {
             $anotherDummy->save();

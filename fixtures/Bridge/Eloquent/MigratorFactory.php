@@ -24,7 +24,11 @@ class MigratorFactory
         return new Migrator(
             new FakeMigrationRepository(),
             new FakeConnectionResolver(),
-            new Filesystem()
+            new Filesystem(),
         );
+    }
+
+    private function __construct()
+    {
     }
 }

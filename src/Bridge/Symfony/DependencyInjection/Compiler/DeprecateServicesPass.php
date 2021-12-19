@@ -75,10 +75,7 @@ final class DeprecateServicesPass implements CompilerPassInterface
     private const SERVICE_TEMPLATE = 'The service "%service_id%" is deprecated and will be removed in future versions.';
     private const ALIAS_TEMPLATE = 'The service alias "%alias_id%" is deprecated and will be removed in future versions.';
 
-    /**
-     * @inheritdoc
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         // Symfony 5.1
         $canDeprecateAliases = class_exists(AliasDeprecatedPublicServicesPass::class);

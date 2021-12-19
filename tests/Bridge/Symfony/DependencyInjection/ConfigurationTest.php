@@ -21,7 +21,7 @@ use Symfony\Component\Config\Definition\Processor;
  */
 class ConfigurationTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $configuration = new Configuration();
         $processor = new Processor();
@@ -41,7 +41,7 @@ class ConfigurationTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testDefaultValuesCanBeOverridden()
+    public function testDefaultValuesCanBeOverridden(): void
     {
         $configuration = new Configuration();
         $processor = new Processor();

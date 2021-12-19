@@ -22,35 +22,21 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @coversNothing
  */
 class ORMLoaderIntegrationTest extends TestCase
 {
-    /**
-     * @var EloquentKernel
-     */
-    private $kernel;
+    private KernelInterface $kernel;
 
-    /**
-     * @var LoaderInterface
-     */
-    private $loader;
+    private LoaderInterface $loader;
 
-    /**
-     * @var DatabaseManager
-     */
-    private $databaseManager;
+    private DatabaseManager $databaseManager;
 
-    /**
-     * @var int
-     */
-    private static $seed;
+    private static string $seed;
 
-    /**
-     * @inheritdoc
-     */
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -58,9 +44,6 @@ class ORMLoaderIntegrationTest extends TestCase
         static::$seed = uniqid();
     }
 
-    /**
-     * @inheritdoc
-     */
     public function setUp(): void
     {
         $this->kernel = new EloquentKernel(static::$seed, true);
@@ -76,9 +59,6 @@ class ORMLoaderIntegrationTest extends TestCase
         ]);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function tearDown(): void
     {
         $this->execute([
@@ -91,10 +71,10 @@ class ORMLoaderIntegrationTest extends TestCase
         ]);
 
         $this->kernel->shutdown();
-        $this->kernel = null;
+        unset($this->kernel);
     }
 
-    public function testLoadAFile()
+    public function testLoadAFile(): void
     {
         $this->loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/eloquent_another_dummy.yml',
@@ -103,7 +83,7 @@ class ORMLoaderIntegrationTest extends TestCase
         $this->assertEquals(1, AnotherDummy::all()->count());
     }
 
-    public function testLoadAFileWithPurger()
+    public function testLoadAFileWithPurger(): void
     {
         AnotherDummy::create([
             'address' => 'hello',
@@ -117,7 +97,7 @@ class ORMLoaderIntegrationTest extends TestCase
         $this->assertEquals(1, AnotherDummy::all()->count());
     }
 
-    public function testBidirectionalRelationships()
+    public function testBidirectionalRelationships(): void
     {
         $this->loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/eloquent_relationship_dummies.yml',
@@ -127,7 +107,7 @@ class ORMLoaderIntegrationTest extends TestCase
         $this->assertEquals(10, AnotherDummy::all()->count());
     }
 
-    public function testBidirectionalRelationshipsDeclaredInDifferentFiles()
+    public function testBidirectionalRelationshipsDeclaredInDifferentFiles(): void
     {
         $this->loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/eloquent_another_dummy.yml',
@@ -138,7 +118,7 @@ class ORMLoaderIntegrationTest extends TestCase
         $this->assertEquals(1, AnotherDummy::all()->count());
     }
 
-    private function execute(array $input)
+    private function execute(array $input): void
     {
         $application = new Application($this->kernel);
         $application->setAutoExit(false);

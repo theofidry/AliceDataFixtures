@@ -19,35 +19,21 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\PhpCrDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrinePhpcrKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @coversNothing
  */
 class PhpcrLoaderIntegrationTest extends TestCase
 {
-    /**
-     * @var DoctrinePhpcrKernel
-     */
-    private $kernel;
+    private KernelInterface $kernel;
 
-    /**
-     * @var LoaderInterface
-     */
-    private $loader;
+    private LoaderInterface $loader;
 
-    /**
-     * @var ManagerRegistry
-     */
-    private $doctrine;
+    private ManagerRegistry $doctrine;
 
-    /**
-     * @var int
-     */
-    private static $seed;
+    private static string $seed;
 
-    /**
-     * @inheritdoc
-     */
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -55,11 +41,6 @@ class PhpcrLoaderIntegrationTest extends TestCase
         static::$seed = uniqid();
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @group legacy
-     */
     public function setUp(): void
     {
         $this->kernel = new DoctrinePhpcrKernel(static::$seed, true);
@@ -69,19 +50,16 @@ class PhpcrLoaderIntegrationTest extends TestCase
         $this->doctrine = $this->kernel->getContainer()->get('doctrine_phpcr');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function tearDown(): void
     {
         $purger = new PHPCRPurger($this->doctrine->getManager());
         $purger->purge();
 
         $this->kernel->shutdown();
-        $this->kernel = null;
+        unset($this->kernel);
     }
 
-    public function testLoadAFile()
+    public function testLoadAFile(): void
     {
         $this->loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/phpcr_dummy.yml',
@@ -92,7 +70,7 @@ class PhpcrLoaderIntegrationTest extends TestCase
         $this->assertEquals(1, count($result));
     }
 
-    public function testLoadAFileWithPurger()
+    public function testLoadAFileWithPurger(): void
     {
         $dummy = new Dummy();
         $dummy->id = '/dummy_'.uniqid();

@@ -21,9 +21,6 @@ interface LoaderInterface
      * Loads the fixtures files and return the loaded objects.
      *
      * @param string[]       $fixturesFiles Path to the fixtures files to loads.
-     * @param array          $parameters
-     * @param array          $objects
-     * @param PurgeMode|null $purgeMode
      *
      * @return object[]
      */

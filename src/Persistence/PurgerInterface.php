@@ -26,5 +26,5 @@ interface PurgerInterface
      * Purges the database before loading. Depending of the implementation, the purge may truncate the database or
      * remove only a part of the database data.
      */
-    public function purge();
+    public function purge(): void;
 }

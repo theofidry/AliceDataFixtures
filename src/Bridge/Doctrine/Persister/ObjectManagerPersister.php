@@ -28,29 +28,26 @@ class ObjectManagerPersister implements PersisterInterface
 {
     use IsAServiceTrait;
 
-    private $objectManager;
+    private ObjectManager $objectManager;
 
     /**
-     * @var array|null Values are FQCN of persistable objects
+     * @var array Values are FQCN of persistable objects
      */
-    private $persistableClasses;
+    private array $persistableClasses;
 
     /**
      * @var ClassMetadata[] Entity metadata to restore after flush, FQCN being the key.
      */
-    private $metadataToRestore = [];
+    private array $metadataToRestore = [];
 
     public function __construct(ObjectManager $manager)
     {
         $this->objectManager = $manager;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function persist($object)
+    public function persist(object $object): void
     {
-        if (null === $this->persistableClasses) {
+        if (!isset($this->persistableClasses)) {
             $this->persistableClasses = array_flip($this->getPersistableClasses($this->objectManager));
         }
 
@@ -62,9 +59,9 @@ class ObjectManagerPersister implements PersisterInterface
             // Check if the ID is explicitly set by the user. To avoid the ID to be overridden by the ID generator
             // registered, we disable it for that specific object.
             if ($metadata instanceof ORMClassMetadataInfo) {
-                if ($metadata->usesIdGenerator()
+                if (!$metadata->idGenerator instanceof IdGenerator
+                    && $metadata->usesIdGenerator()
                     && 0 !== count($metadata->getIdentifierValues($object))
-                    && !$metadata->idGenerator instanceof IdGenerator
                 ) {
                     $metadata = $this->configureIdGenerator($metadata);
                 }
@@ -87,10 +84,7 @@ class ObjectManagerPersister implements PersisterInterface
         }
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function flush()
+    public function flush(): void
     {
         $this->objectManager->flush();
 

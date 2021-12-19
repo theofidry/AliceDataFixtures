@@ -22,7 +22,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class DoctrineMongodbKernel extends IsolatedKernel
 {
-    public function registerBundles()
+    public function registerBundles(): array
     {
         $bundles = [
             new FrameworkBundle(),
@@ -38,7 +38,7 @@ class DoctrineMongodbKernel extends IsolatedKernel
         return $bundles;
     }
 
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         parent::registerContainerConfiguration($loader);
 

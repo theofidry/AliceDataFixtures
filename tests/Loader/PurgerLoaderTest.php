@@ -33,17 +33,17 @@ class PurgerLoaderTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testIsALoader()
+    public function testIsALoader(): void
     {
         $this->assertTrue(is_a(PurgerLoader::class, LoaderInterface::class, true));
     }
 
-    public function testIsNotClonable()
+    public function testIsNotClonable(): void
     {
         $this->assertFalse((new ReflectionClass(PurgerLoader::class))->isCloneable());
     }
 
-    public function testPurgesTheDatabaseBeforeLoadingTheFixturesAndReturningTheResult()
+    public function testPurgesTheDatabaseBeforeLoadingTheFixturesAndReturningTheResult(): void
     {
         $files = [
             'fixtures1.yml',
@@ -87,7 +87,7 @@ class PurgerLoaderTest extends TestCase
         $purgerProphecy->purge()->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testIfNoPurgeModeIsGivenThenUseDefaultPurgeModeWithDelete()
+    public function testIfNoPurgeModeIsGivenThenUseDefaultPurgeModeWithDelete(): void
     {
         $files = [
             'fixtures1.yml',
@@ -131,7 +131,7 @@ class PurgerLoaderTest extends TestCase
         $purgerProphecy->purge()->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testIfNoPurgeModeIsGivenThenUseDefaultPurgeModeWithTruncate()
+    public function testIfNoPurgeModeIsGivenThenUseDefaultPurgeModeWithTruncate(): void
     {
         $files = [
             'fixtures1.yml',
@@ -175,7 +175,7 @@ class PurgerLoaderTest extends TestCase
         $purgerProphecy->purge()->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testIfNoPurgeModeIsGivenThenUseDefaultPurgeModeWithNoPurge()
+    public function testIfNoPurgeModeIsGivenThenUseDefaultPurgeModeWithNoPurge(): void
     {
         $files = [
             'fixtures1.yml',
@@ -219,7 +219,7 @@ class PurgerLoaderTest extends TestCase
         $purgerProphecy->purge()->shouldNotBeenCalled();
     }
 
-    public function testDoesNotPurgeOnNoPurgeModeGiven()
+    public function testDoesNotPurgeOnNoPurgeModeGiven(): void
     {
         $files = [
             'fixtures1.yml',

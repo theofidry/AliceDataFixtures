@@ -19,6 +19,7 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\MongoDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineMongodbKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @coversNothing
@@ -27,29 +28,14 @@ use PHPUnit\Framework\TestCase;
  */
 class MongodbLoaderIntegrationTest extends TestCase
 {
-    /**
-     * @var DoctrineMongodbKernel
-     */
-    private $kernel;
+    private KernelInterface $kernel;
 
-    /**
-     * @var LoaderInterface
-     */
-    private $loader;
+    private LoaderInterface $loader;
 
-    /**
-     * @var ManagerRegistry
-     */
-    private $doctrine;
+    private ManagerRegistry $doctrine;
 
-    /**
-     * @var int
-     */
-    private static $seed;
+    private static string $seed;
 
-    /**
-     * @inheritdoc
-     */
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -57,11 +43,6 @@ class MongodbLoaderIntegrationTest extends TestCase
         static::$seed = uniqid();
     }
 
-    /**
-     * @inheritdoc
-     *
-     * @group legacy
-     */
     public function setUp(): void
     {
         $this->kernel = new DoctrineMongodbKernel(static::$seed, true);
@@ -71,19 +52,16 @@ class MongodbLoaderIntegrationTest extends TestCase
         $this->doctrine = $this->kernel->getContainer()->get('doctrine_mongodb');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function tearDown(): void
     {
         $purger = new MongoDBPurger($this->doctrine->getManager());
         $purger->purge();
 
         $this->kernel->shutdown();
-        $this->kernel = null;
+        unset($this->kernel);
     }
 
-    public function testLoadAFile()
+    public function testLoadAFile(): void
     {
         $this->loader->load([
             __DIR__.'/../../../../fixtures/fixture_files/mongodb_dummy.yml',
@@ -94,7 +72,7 @@ class MongodbLoaderIntegrationTest extends TestCase
         $this->assertEquals(1, count($result));
     }
 
-    public function testLoadAFileWithPurger()
+    public function testLoadAFileWithPurger(): void
     {
         $dummy = new Dummy();
         $dummyManager = $this->doctrine->getManager();

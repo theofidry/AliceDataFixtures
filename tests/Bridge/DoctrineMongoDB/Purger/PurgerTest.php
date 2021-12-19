@@ -29,7 +29,7 @@ class PurgerTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testCreatesADoctrineOdmPurgerWithTheAppropriateManager()
+    public function testCreatesADoctrineOdmPurgerWithTheAppropriateManager(): void
     {
         $manager = $this->prophesize(DocumentManager::class)->reveal();
         $purger = new Purger($manager);
@@ -42,7 +42,7 @@ class PurgerTest extends TestCase
         $this->assertEquals($manager, $decoratedPurger->getObjectManager());
     }
 
-    public function testEmptyDatabase()
+    public function testEmptyDatabase(): void
     {
         /** @var DocumentManager $manager */
         $manager = $GLOBALS['document_manager'];

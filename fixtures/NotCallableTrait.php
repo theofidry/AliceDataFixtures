@@ -17,7 +17,7 @@ use DomainException;
 
 trait NotCallableTrait
 {
-    public function __call($method, $arguments)
+    public function __call($method, $arguments): void
     {
         throw new DomainException(
             sprintf(

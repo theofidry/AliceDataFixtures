@@ -17,5 +17,6 @@ class MappedSuperclassDummy
 {
     public $id;
 
+    
     public $status;
 }

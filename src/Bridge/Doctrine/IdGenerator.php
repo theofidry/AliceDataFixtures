@@ -15,25 +15,23 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Id\AbstractIdGenerator;
+use Webmozart\Assert\Assert;
 
 class IdGenerator extends AbstractIdGenerator
 {
-    const GENERATOR_TYPE_ALICE = 10;
-    /**
-     * @var AbstractIdGenerator
-     */
-    private $decorated;
+    public const GENERATOR_TYPE_ALICE = 10;
+
+    private AbstractIdGenerator $decorated;
 
     public function __construct(AbstractIdGenerator $decorated)
     {
         $this->decorated = $decorated;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function generate(EntityManager $em, $entity)
     {
+        Assert::notNull($entity);
+
         $class = get_class($entity);
 
         $metadata = $em->getClassMetadata($class);
@@ -46,10 +44,7 @@ class IdGenerator extends AbstractIdGenerator
         return $this->decorated->generate($em, $entity);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isPostInsertGenerator()
+    public function isPostInsertGenerator(): bool
     {
         return $this->decorated->isPostInsertGenerator();
     }
