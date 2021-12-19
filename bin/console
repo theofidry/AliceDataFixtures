@@ -23,11 +23,12 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 $serverArgs = &$_SERVER['argv'];
 $kernelInput = 'NakedKernel';
+
 foreach ($serverArgs as $index => $arg) {
     if ('-k' === $arg || '--kernel' === $arg) {
         $kernelInput = $serverArgs[$index + 1];
-        unset($serverArgs[$index]);
-        unset($serverArgs[$index + 1]);
+        unset($serverArgs[$index], $serverArgs[$index + 1]);
+        
         break;
     }
 
@@ -43,12 +44,13 @@ foreach ($serverArgs as $index => $arg) {
         break;
     }
 }
+
 $serverArgs = array_values($serverArgs);
 $kernelClass = 'Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\\'.$kernelInput;
 
 $input = new ArgvInput();
-$env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: uniqid());
-$debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('--no-debug', '')) && $env !== 'prod';
+$env = $input->getParameterOption(['--env', '-e'], getenv('SYMFONY_ENV') ?: uniqid());
+$debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(['--no-debug', '']) && $env !== 'prod';
 
 if ($debug) {
     Debug::enable();

@@ -26,6 +26,10 @@ $finder = Finder::create()
     )
     ->append([
         __DIR__.'/.php_cs.dist',
+        __DIR__.'/bin/console',
+        __DIR__.'/bin/doctrine_purge',
+        __DIR__.'/bin/eloquent_migrate',
+        __DIR__.'/bin/eloquent_rollback',
     ])
 ;
 
