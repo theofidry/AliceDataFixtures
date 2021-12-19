@@ -15,6 +15,7 @@ jobs:
         name: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} + ${{ matrix.variant }}
         runs-on: ubuntu-18.04
         strategy:
+            fail-fast: false
             matrix:
                 php-version:
                     - '7.4'
