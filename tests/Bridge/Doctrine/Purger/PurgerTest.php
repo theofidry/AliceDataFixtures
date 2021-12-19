@@ -98,17 +98,17 @@ class PurgerTest extends TestCase
         $manager->persist($dummy);
         $manager->flush();
 
-        $this->assertEquals(1, count($manager->getRepository(Dummy::class)->findAll()));
+        $this->assertCount(1, $manager->getRepository(Dummy::class)->findAll());
 
         $purger = new Purger($manager, PurgeMode::createDeleteMode());
         $purger->purge();
 
-        $this->assertEquals(0, count($manager->getRepository(Dummy::class)->findAll()));
+        $this->assertCount(0, $manager->getRepository(Dummy::class)->findAll());
 
         // Ensures the schema has been restored
         $dummy = new Dummy();
         $manager->persist($dummy);
         $manager->flush();
-        $this->assertEquals(1, count($manager->getRepository(Dummy::class)->findAll()));
+        $this->assertCount(1, $manager->getRepository(Dummy::class)->findAll());
     }
 }

@@ -75,7 +75,7 @@ class ObjectManagerPersisterTest extends TestCase
 
         $result = $this->entityManager->getRepository(get_class($entity))->findAll();
 
-        $this->assertEquals(1, count($result));
+        $this->assertCount(1, $result);
 
         if ($exact) {
             $this->assertEquals($originalEntity, $result[0]);

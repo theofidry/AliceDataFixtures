@@ -67,7 +67,7 @@ class ObjectManagerPersisterTest extends TestCase
 
         $result = $this->documentManager->getRepository(get_class($document))->findAll();
 
-        $this->assertEquals(1, count($result));
+        $this->assertCount(1, $result);
     }
 
     /**

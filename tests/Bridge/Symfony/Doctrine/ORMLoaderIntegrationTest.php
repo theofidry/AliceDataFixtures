@@ -72,7 +72,7 @@ class ORMLoaderIntegrationTest extends TestCase
 
         $result = $this->doctrine->getRepository(Dummy::class)->findAll();
 
-        $this->assertEquals(1, count($result));
+        $this->assertCount(1, $result);
     }
 
     public function testLoadAFileWithPurger(): void
@@ -97,7 +97,7 @@ class ORMLoaderIntegrationTest extends TestCase
 
         $result = $this->doctrine->getRepository(Dummy::class)->findAll();
 
-        $this->assertEquals(1, count($result));
+        $this->assertCount(1, $result);
     }
 
     public function testBidirectionalRelationships(): void
@@ -109,8 +109,8 @@ class ORMLoaderIntegrationTest extends TestCase
         $users = $this->doctrine->getRepository(User::class)->findAll();
         $groups = $this->doctrine->getRepository(Group::class)->findAll();
 
-        $this->assertEquals(5, count($users));
-        $this->assertEquals(5, count($groups));
+        $this->assertCount(5, $users);
+        $this->assertCount(5, $groups);
     }
 
     public function testBidirectionalRelationshipsDeclaredInDifferentFiles(): void
@@ -123,8 +123,8 @@ class ORMLoaderIntegrationTest extends TestCase
         $users = $this->doctrine->getRepository(User::class)->findAll();
         $groups = $this->doctrine->getRepository(Group::class)->findAll();
 
-        $this->assertEquals(5, count($users));
-        $this->assertEquals(5, count($groups));
+        $this->assertCount(5, $users);
+        $this->assertCount(5, $groups);
     }
 
     public function testBidirectionalRelationshipsDeclaredInDifferentFilesWithCyclingDependence(): void
@@ -137,7 +137,7 @@ class ORMLoaderIntegrationTest extends TestCase
         $users = $this->doctrine->getRepository(User::class)->findAll();
         $groups = $this->doctrine->getRepository(Group::class)->findAll();
 
-        $this->assertEquals(5, count($users));
-        $this->assertEquals(5, count($groups));
+        $this->assertCount(5, $users);
+        $this->assertCount(5, $groups);
     }
 }

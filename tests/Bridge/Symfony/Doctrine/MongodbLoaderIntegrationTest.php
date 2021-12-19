@@ -69,7 +69,7 @@ class MongodbLoaderIntegrationTest extends TestCase
 
         $result = $this->doctrine->getRepository(Dummy::class)->findAll();
 
-        $this->assertEquals(1, count($result));
+        $this->assertCount(1, $result);
     }
 
     public function testLoadAFileWithPurger(): void
@@ -87,6 +87,6 @@ class MongodbLoaderIntegrationTest extends TestCase
 
         $result = $this->doctrine->getRepository(Dummy::class)->findAll();
 
-        $this->assertEquals(1, count($result));
+        $this->assertCount(1, $result);
     }
 }
