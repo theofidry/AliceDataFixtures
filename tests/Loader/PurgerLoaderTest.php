@@ -65,13 +65,11 @@ class PurgerLoaderTest extends TestCase
         /** @var LoaderInterface $decoratedLoader */
         $decoratedLoader = $decoratedLoaderProphecy->reveal();
 
-        /** @var ObjectProphecy<PurgerInterface> $purgerProphecy */
         $purgerProphecy = $this->prophesize(PurgerInterface::class);
         $purgerProphecy->purge()->shouldBeCalled();
         /** @var PurgerInterface $purger */
         $purger = $purgerProphecy->reveal();
 
-        /** @var ObjectProphecy<PurgerFactoryInterface> $purgerFactoryProphecy */
         $purgerFactoryProphecy = $this->prophesize(PurgerFactoryInterface::class);
         $purgerFactoryProphecy->create($purgeMode)->willReturn($purger);
         /** @var PurgerFactoryInterface $purgerFactory */
@@ -109,13 +107,11 @@ class PurgerLoaderTest extends TestCase
         /** @var LoaderInterface $decoratedLoader */
         $decoratedLoader = $decoratedLoaderProphecy->reveal();
 
-        /** @var ObjectProphecy<PurgerInterface> $purgerProphecy */
         $purgerProphecy = $this->prophesize(PurgerInterface::class);
         $purgerProphecy->purge()->shouldBeCalled();
         /** @var PurgerInterface $purger */
         $purger = $purgerProphecy->reveal();
 
-        /** @var ObjectProphecy<PurgerFactoryInterface> $purgerFactoryProphecy */
         $purgerFactoryProphecy = $this->prophesize(PurgerFactoryInterface::class);
         $purgerFactoryProphecy->create(PurgeMode::createDeleteMode())->willReturn($purger);
         /** @var PurgerFactoryInterface $purgerFactory */
@@ -153,13 +149,11 @@ class PurgerLoaderTest extends TestCase
         /** @var LoaderInterface $decoratedLoader */
         $decoratedLoader = $decoratedLoaderProphecy->reveal();
 
-        /** @var ObjectProphecy<PurgerInterface> $purgerProphecy */
         $purgerProphecy = $this->prophesize(PurgerInterface::class);
         $purgerProphecy->purge()->shouldBeCalled();
         /** @var PurgerInterface $purger */
         $purger = $purgerProphecy->reveal();
 
-        /** @var ObjectProphecy<PurgerFactoryInterface> $purgerFactoryProphecy */
         $purgerFactoryProphecy = $this->prophesize(PurgerFactoryInterface::class);
         $purgerFactoryProphecy->create(PurgeMode::createTruncateMode())->willReturn($purger);
         /** @var PurgerFactoryInterface $purgerFactory */
@@ -197,13 +191,11 @@ class PurgerLoaderTest extends TestCase
         /** @var LoaderInterface $decoratedLoader */
         $decoratedLoader = $decoratedLoaderProphecy->reveal();
 
-        /** @var ObjectProphecy<PurgerInterface> $purgerProphecy */
         $purgerProphecy = $this->prophesize(PurgerInterface::class);
         $purgerProphecy->purge()->shouldNotBeenCalled();
         /** @var PurgerInterface $purger */
         $purger = $purgerProphecy->reveal();
 
-        /** @var ObjectProphecy<PurgerFactoryInterface> $purgerFactoryProphecy */
         $purgerFactoryProphecy = $this->prophesize(PurgerFactoryInterface::class);
         $purgerFactoryProphecy->create(PurgeMode::createNoPurgeMode())->willReturn($purger);
         /** @var PurgerFactoryInterface $purgerFactory */
@@ -241,7 +233,6 @@ class PurgerLoaderTest extends TestCase
         /** @var LoaderInterface $decoratedLoader */
         $decoratedLoader = $decoratedLoaderProphecy->reveal();
 
-        /** @var ObjectProphecy<PurgerFactoryInterface> $purgerFactoryProphecy */
         $purgerFactoryProphecy = $this->prophesize(PurgerFactoryInterface::class);
         $purgerFactoryProphecy->create(Argument::cetera())->shouldNotBeCalled();
         /** @var PurgerFactoryInterface $purgerFactory */
