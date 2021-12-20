@@ -16,7 +16,7 @@
          forceCoversAnnotation="true"
          beStrictAboutCoversAnnotation="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
-         stopOnFailure="true"
+         stopOnFailure="false"
          verbose="true">
 
     <php>

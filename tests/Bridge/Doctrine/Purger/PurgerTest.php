@@ -15,7 +15,6 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Driver\AbstractMySQLDriver;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\ORM\EntityManager;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;

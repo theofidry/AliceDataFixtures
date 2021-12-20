@@ -19,10 +19,10 @@ use Doctrine\Persistence\ManagerRegistry;
 use Fidry\AliceDataFixtures\Bridge\Symfony\PhpCrDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrinePhpcrKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
+use const PHP_VERSION_ID;
 use PHPUnit\Framework\TestCase;
 use function random_bytes;
 use Symfony\Component\HttpKernel\KernelInterface;
-use const PHP_VERSION_ID;
 
 /**
  * @coversNothing
