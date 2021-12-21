@@ -13,8 +13,12 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine;
 
+use function count;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Id\AbstractIdGenerator;
+use function get_class;
+use function is_array;
+use function reset;
 use Webmozart\Assert\Assert;
 
 class IdGenerator extends AbstractIdGenerator

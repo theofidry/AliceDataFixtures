@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
-use Doctrine\ORM\UnitOfWork;
-use ReflectionProperty;
 use function array_flip;
 use function count;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo as ODMClassMetadataInfo;
@@ -22,6 +20,7 @@ use Doctrine\ORM\EntityManagerInterface as ORMEntityManager;
 use Doctrine\ORM\Id\AssignedGenerator as ORMAssignedGenerator;
 use Doctrine\ORM\Mapping\ClassMetadataInfo as ORMClassMetadataInfo;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\UnitOfWork;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\ObjectManager;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\IdGenerator;
@@ -31,6 +30,7 @@ use function get_class;
 use Nelmio\Alice\IsAServiceTrait;
 use ReflectionClass;
 use ReflectionException;
+use ReflectionProperty;
 
 class ObjectManagerPersister implements PersisterInterface
 {
