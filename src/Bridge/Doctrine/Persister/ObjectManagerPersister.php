@@ -154,7 +154,7 @@ class ObjectManagerPersister implements PersisterInterface
                 foreach ($fieldValueOrFieldValues->getValues() as $fieldValue) {
                     $this->getMetadata($targetEntityClassName, $fieldValue);
                 }
-            } else {
+            } elseif ($fieldValueOrFieldValues !== null) {
                 $this->getMetadata($targetEntityClassName, $fieldValueOrFieldValues);
             }
         }
