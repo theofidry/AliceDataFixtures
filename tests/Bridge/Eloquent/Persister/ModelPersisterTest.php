@@ -31,7 +31,7 @@ use stdClass;
  */
 class ModelPersisterTest extends TestCase
 {
-    private ModelPersister $persister;
+    private PersisterInterface $persister;
 
     private Migrator $migrator;
 

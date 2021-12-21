@@ -15,9 +15,9 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Driver\AbstractMySQLDriver;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\ORM\FakeEntityManager;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
@@ -92,8 +92,8 @@ class PurgerTest extends TestCase
 
     public function testEmptyDatabase(): void
     {
-        /** @var EntityManager $manager */
-        $manager = $GLOBALS['entity_manager'];
+        /** @var EntityManagerInterface $manager */
+        $manager = $GLOBALS['entity_manager_factory']();
 
         $dummy = new Dummy();
         $manager->persist($dummy);

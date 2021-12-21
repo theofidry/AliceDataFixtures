@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-function get_param(string $envName, $default) {
-    $env = getenv($envName);
-
-    return false !== $env ? $env : $default;
-}
-
 // To keep in sync with docker-compose.yml
 return [
     'driver' => get_param('DOCTRINE_ORM_DB_DRIVER', 'pdo_mysql'),

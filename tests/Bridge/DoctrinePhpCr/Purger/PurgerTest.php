@@ -67,7 +67,7 @@ class PurgerTest extends TestCase
     public function testEmptyDatabase(): void
     {
         /** @var DocumentManager $manager */
-        $manager = $GLOBALS['document_manager'];
+        $manager = $GLOBALS['document_manager_factory']();
 
         $dummy = new Dummy();
         $dummy->id = '/dummy_'.bin2hex(random_bytes(6));

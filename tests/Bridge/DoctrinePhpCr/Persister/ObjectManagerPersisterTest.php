@@ -15,7 +15,8 @@ namespace Fidry\AliceDataFixtures\Bridge\DoctrinePhpCr\Persister;
 
 use function bin2hex;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger;
-use Doctrine\ODM\PHPCR\DocumentManager;
+use Doctrine\Common\DataFixtures\Purger\PurgerInterface;
+use Doctrine\ODM\PHPCR\DocumentManagerInterface;
 use Doctrine\ODM\PHPCR\Exception\InvalidArgumentException;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\Dummy;
@@ -33,13 +34,13 @@ class ObjectManagerPersisterTest extends TestCase
 {
     private ObjectManagerPersister $persister;
 
-    private DocumentManager $documentManager;
+    private DocumentManagerInterface $documentManager;
 
-    private PHPCRPurger $purger;
+    private PurgerInterface $purger;
 
     public function setUp(): void
     {
-        $this->documentManager = $GLOBALS['document_manager'];
+        $this->documentManager = $GLOBALS['document_manager_factory']();
         $this->persister = new ObjectManagerPersister($this->documentManager);
         $this->purger = new PHPCRPurger($this->documentManager);
     }

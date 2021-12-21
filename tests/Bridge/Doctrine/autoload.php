@@ -23,9 +23,9 @@ $config = Setup::createAnnotationMetadataConfiguration(
     true,
 );
 
-$entityManager = EntityManager::create(
+$entityManagerFactory = static fn () => EntityManager::create(
     require ROOT.'/doctrine-orm-db-settings.php',
     $config,
 );
 
-$GLOBALS['entity_manager'] = $entityManager;
+$GLOBALS['entity_manager_factory'] = $entityManagerFactory;

@@ -15,6 +15,7 @@ namespace Fidry\AliceDataFixtures\Bridge\DoctrineMongoDB\Purger;
 
 use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\PHPCR\DocumentManagerInterface;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
 use PHPUnit\Framework\TestCase;
@@ -45,8 +46,8 @@ class PurgerTest extends TestCase
 
     public function testEmptyDatabase(): void
     {
-        /** @var DocumentManager $manager */
-        $manager = $GLOBALS['document_manager'];
+        /** @var DocumentManagerInterface $manager */
+        $manager = $GLOBALS['document_manager_factory']();
 
         $dummy = new Dummy();
         $manager->persist($dummy);

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\DoctrineMongoDB\Persister;
 
 use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
+use Doctrine\Common\DataFixtures\Purger\PurgerInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\Dummy;
@@ -38,11 +39,11 @@ class ObjectManagerPersisterTest extends TestCase
 
     private DocumentManager $documentManager;
 
-    private MongoDBPurger $purger;
+    private PurgerInterface $purger;
 
     public function setUp(): void
     {
-        $this->documentManager = $GLOBALS['document_manager'];
+        $this->documentManager = $GLOBALS['document_manager_factory']();
         $this->persister = new ObjectManagerPersister($this->documentManager);
         $this->purger = new MongoDBPurger($this->documentManager);
     }
