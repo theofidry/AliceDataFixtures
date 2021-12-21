@@ -24,38 +24,39 @@ use Jackalope\RepositoryFactoryDoctrineDBAL;
 use PHPCR\SessionInterface;
 use PHPCR\SimpleCredentials;
 
-$session = (static function (): SessionInterface {
-    $connection = DriverManager::getConnection(
-        require ROOT.'/doctrine-phpcr-db-settings.php',
-    );
-    $repositoryFactory = new RepositoryFactoryDoctrineDBAL();
+$documentManagerFactory = static function () {
+    $session = (static function (): SessionInterface {
+        $connection = DriverManager::getConnection(
+            require ROOT.'/doctrine-phpcr-db-settings.php',
+        );
+        $repositoryFactory = new RepositoryFactoryDoctrineDBAL();
 
-    $repository = $repositoryFactory->getRepository([
-        'jackalope.doctrine_dbal_connection' => $connection,
-    ]);
+        $repository = $repositoryFactory->getRepository([
+            'jackalope.doctrine_dbal_connection' => $connection,
+        ]);
 
-    return $repository->login(
-        new SimpleCredentials(null, null),
-        'default',
-    );
-})();
+        return $repository->login(
+            new SimpleCredentials(null, null),
+            'default',
+        );
+    })();
 
-$config = (static function (): Configuration {
-    $driver = new AnnotationDriver(
-        new AnnotationReader(),
-        [
-            ROOT.'/vendor-bin/doctrine_phpcr/vendor/doctrine/phpcr-odm/lib/Doctrine/ODM/PHPCR/Document',
-            ROOT.'/fixtures/Bridge/Doctrine/PhpCrDocument',
-        ],
-    );
+    $config = (static function (): Configuration {
+        $driver = new AnnotationDriver(
+            new AnnotationReader(),
+            [
+                ROOT.'/vendor-bin/doctrine_phpcr/vendor/doctrine/phpcr-odm/lib/Doctrine/ODM/PHPCR/Document',
+                ROOT.'/fixtures/Bridge/Doctrine/PhpCrDocument',
+            ],
+        );
 
-    $config = new Configuration();
-    $config->setMetadataDriverImpl($driver);
+        $config = new Configuration();
+        $config->setMetadataDriverImpl($driver);
 
-    return $config;
-})();
+        return $config;
+    })();
 
-$documentManager = DocumentManager::create($session, $config);
+    return DocumentManager::create($session, $config);
+};
 
-$GLOBALS['session'] = $session;
-$GLOBALS['document_manager'] = $documentManager;
+$GLOBALS['document_manager_factory'] = $documentManagerFactory;

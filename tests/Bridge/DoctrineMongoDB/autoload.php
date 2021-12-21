@@ -43,7 +43,7 @@ $uri = sprintf(
     $port,
 );
 
-$documentManager = DocumentManager::create(
+$documentManagerFactory = static fn () => DocumentManager::create(
     new Client(
         $uri,
         [],
@@ -52,4 +52,4 @@ $documentManager = DocumentManager::create(
     $config,
 );
 
-$GLOBALS['document_manager'] = $documentManager;
+$GLOBALS['document_manager_factory'] = $documentManagerFactory;

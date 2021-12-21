@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
@@ -37,18 +36,17 @@ class ObjectManagerPersisterTest extends TestCase
 
     private EntityManagerInterface $entityManager;
 
-    private ORMPurger $purger;
-
     public function setUp(): void
     {
-        $this->entityManager = $GLOBALS['entity_manager'];
+        $this->entityManager = $GLOBALS['entity_manager_factory']();
         $this->persister = new ObjectManagerPersister($this->entityManager);
-        $this->purger = new ORMPurger($this->entityManager);
+
+        $this->entityManager->getConnection()->beginTransaction();
     }
 
     public function tearDown(): void
     {
-        $this->purger->purge();
+        $this->entityManager->getConnection()->rollBack();
         $this->entityManager->clear();
     }
 

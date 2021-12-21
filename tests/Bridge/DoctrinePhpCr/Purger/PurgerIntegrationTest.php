@@ -11,23 +11,26 @@
 
 declare(strict_types=1);
 
-namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
+namespace Fidry\AliceDataFixtures\Bridge\DoctrinePhpCr\Purger;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
+use function bin2hex;
+use Doctrine\ODM\PHPCR\DocumentManagerInterface;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\Dummy;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use PHPUnit\Framework\TestCase;
+use function random_bytes;
 
 /**
  * @coversNothing
  */
 class PurgerIntegrationTest extends TestCase
 {
-    private EntityManagerInterface $manager;
+    private DocumentManagerInterface $manager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->manager = $GLOBALS['entity_manager_factory']();
+        $this->manager = $GLOBALS['document_manager_factory']();
     }
 
     protected function tearDown(): void
@@ -38,6 +41,7 @@ class PurgerIntegrationTest extends TestCase
     public function testEmptyDatabase(): void
     {
         $dummy = new Dummy();
+        $dummy->id = '/dummy_'.bin2hex(random_bytes(6));
         $this->manager->persist($dummy);
         $this->manager->flush();
 
@@ -50,6 +54,7 @@ class PurgerIntegrationTest extends TestCase
 
         // Ensures the schema has been restored
         $dummy = new Dummy();
+        $dummy->id = '/dummy_'.bin2hex(random_bytes(6));
         $this->manager->persist($dummy);
         $this->manager->flush();
         self::assertCount(1, $this->manager->getRepository(Dummy::class)->findAll());

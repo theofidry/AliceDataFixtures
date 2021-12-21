@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Purger;
 
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Migration\FakeMigrationRepository;
-use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
@@ -122,9 +121,7 @@ class ModelPurgerTest extends TestCase
 
     public function testCannotCreateANewPurgerWithTruncateMode(): void
     {
-        $expectedExceptionMessage = 'Cannot purge database in truncate mode with '
-            .'"Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger" (not supported).'
-        ;
+        $expectedExceptionMessage = 'Cannot purge database in truncate mode with "Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger" (not supported).';
 
         $migratorProphecy = $this->prophesize(Migrator::class);
         $migratorProphecy->reset(Argument::cetera())->shouldNotBeCalled();
@@ -148,32 +145,5 @@ class ModelPurgerTest extends TestCase
         } catch (InvalidArgumentException $exception) {
             self::assertEquals($expectedExceptionMessage, $exception->getMessage());
         }
-    }
-
-    /**
-     * @coversNothing
-     */
-    public function testEmptyDatabase(): void
-    {
-        $purger = new ModelPurger($GLOBALS['repository'], 'migrations', $GLOBALS['migrator']);
-        // Doing a purge here is just to make the test slightly more robust when being run multiple times
-        // The real purge test is done at the next one
-        $purger->purge();
-
-        AnotherDummy::create([
-            'address' => 'Wonderlands',
-        ]);
-        self::assertEquals(1, AnotherDummy::all()->count());
-
-        $purger = new ModelPurger($GLOBALS['repository'], 'migrations', $GLOBALS['migrator']);
-        $purger->purge();
-
-        self::assertEquals(0, AnotherDummy::all()->count());
-
-        // Ensures the schema has been restored
-        AnotherDummy::create([
-            'address' => 'Wonderlands'
-        ]);
-        self::assertEquals(1, AnotherDummy::all()->count());
     }
 }

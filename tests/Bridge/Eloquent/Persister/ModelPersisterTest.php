@@ -16,6 +16,8 @@ namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Persister;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\Dummy;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use Illuminate\Database\Capsule\Manager;
+use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -31,14 +33,21 @@ use stdClass;
  */
 class ModelPersisterTest extends TestCase
 {
-    private ModelPersister $persister;
+    private PersisterInterface $persister;
 
     private Migrator $migrator;
 
     public function setUp(): void
     {
-        $this->migrator = $GLOBALS['migrator'];
-        $this->persister = new ModelPersister($GLOBALS['manager']->getDatabaseManager());
+        /**
+         * @var Manager $manager
+         * @var MigrationRepositoryInterface $repository
+         * @var Migrator $migrator
+         */
+        [$manager, $repository, $migrator] = $GLOBALS['manager_repository_migrator_factory']();
+
+        $this->migrator = $migrator;
+        $this->persister = new ModelPersister($manager->getDatabaseManager());
     }
 
     public function tearDown(): void

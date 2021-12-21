@@ -11,23 +11,25 @@
 
 declare(strict_types=1);
 
-namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
+namespace Fidry\AliceDataFixtures\Bridge\DoctrineMongoDB\Purger;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
-use Fidry\AliceDataFixtures\Persistence\PurgeMode;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\Dummy;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
+ *
+ * @requires extension mongodb
  */
 class PurgerIntegrationTest extends TestCase
 {
-    private EntityManagerInterface $manager;
+    private DocumentManager $manager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->manager = $GLOBALS['entity_manager_factory']();
+        $this->manager = $GLOBALS['document_manager_factory']();
     }
 
     protected function tearDown(): void
@@ -43,7 +45,7 @@ class PurgerIntegrationTest extends TestCase
 
         self::assertCount(1, $this->manager->getRepository(Dummy::class)->findAll());
 
-        $purger = new Purger($this->manager, PurgeMode::createDeleteMode());
+        $purger = new Purger($this->manager);
         $purger->purge();
 
         self::assertCount(0, $this->manager->getRepository(Dummy::class)->findAll());

@@ -10,7 +10,9 @@
  */
 
 use Doctrine\DBAL\DriverManager;
+use Doctrine\ODM\PHPCR\DocumentManagerInterface as PHPCRDocumentManager;
 use Doctrine\ODM\PHPCR\Tools\Console\Helper\DocumentManagerHelper as PhpcrDocumentManagerHelperAlias;
+use Doctrine\ORM\EntityManagerInterface as ORMEntityManager;
 use Doctrine\ORM\Tools\Console\ConsoleRunner as DoctrineORMConsoleRunner;
 use Jackalope\Tools\Console\Command\InitDoctrineDbalCommand as JackalopeInitDbalCommand;
 use Jackalope\Tools\Console\Helper\DoctrineDbalHelper as DoctrinePHPCRHelper;
@@ -37,7 +39,10 @@ $isDoctrinePHPCRInitCommand = !isset($argv[1])
 if ($isDoctrineORM) {
     require_once __DIR__.'/tests/Bridge/Doctrine/autoload.php';
 
-    return DoctrineORMConsoleRunner::createHelperSet($GLOBALS['entity_manager']);
+    /** @var ORMEntityManager $entityManager */
+    $entityManager = $GLOBALS['entity_manager_factory']();
+
+    return DoctrineORMConsoleRunner::createHelperSet($entityManager);
 }
 
 if ($isDoctrinePHPCR) {
@@ -66,8 +71,9 @@ if ($isDoctrinePHPCR) {
 
     require_once __DIR__.'/tests/Bridge/DoctrinePhpCr/autoload.php';
 
-    $session = $GLOBALS['session'];
-    $documentManager = $GLOBALS['document_manager'];
+    /** @var PHPCRDocumentManager $documentManager */
+    $documentManager = $GLOBALS['document_manager_factory']();
+    $session = $documentManager->getPhpcrSession();
 
     $helperSet = new HelperSet([
         'phpcr' => new PhpcrHelper($session),

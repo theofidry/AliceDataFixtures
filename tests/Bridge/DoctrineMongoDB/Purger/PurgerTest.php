@@ -15,7 +15,6 @@ namespace Fidry\AliceDataFixtures\Bridge\DoctrineMongoDB\Purger;
 
 use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -41,28 +40,5 @@ class PurgerTest extends TestCase
 
         self::assertInstanceOf(MongoDBPurger::class, $decoratedPurger);
         self::assertEquals($manager, $decoratedPurger->getObjectManager());
-    }
-
-    public function testEmptyDatabase(): void
-    {
-        /** @var DocumentManager $manager */
-        $manager = $GLOBALS['document_manager'];
-
-        $dummy = new Dummy();
-        $manager->persist($dummy);
-        $manager->flush();
-
-        self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());
-
-        $purger = new Purger($manager);
-        $purger->purge();
-
-        self::assertCount(0, $manager->getRepository(Dummy::class)->findAll());
-
-        // Ensures the schema has been restored
-        $dummy = new Dummy();
-        $manager->persist($dummy);
-        $manager->flush();
-        self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());
     }
 }
