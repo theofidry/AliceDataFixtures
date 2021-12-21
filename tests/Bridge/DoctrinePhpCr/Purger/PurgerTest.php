@@ -13,18 +13,14 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\DoctrinePhpCr\Purger;
 
-use function bin2hex;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger;
 use Doctrine\ODM\PHPCR\DocumentManager;
-use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
-use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
-use function random_bytes;
 use ReflectionClass;
 use ReflectionObject;
 
@@ -62,33 +58,5 @@ class PurgerTest extends TestCase
 
         self::assertInstanceOf(PHPCRPurger::class, $decoratedPurger);
         self::assertEquals($manager, $decoratedPurger->getObjectManager());
-    }
-
-    public function testEmptyDatabase(): void
-    {
-        /** @var DocumentManager $manager */
-        $manager = $GLOBALS['document_manager_factory']();
-
-        $dummy = new Dummy();
-        $dummy->id = '/dummy_'.bin2hex(random_bytes(6));
-        $manager->persist($dummy);
-        $manager->flush();
-
-        self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());
-
-        $purger = new Purger($manager, PurgeMode::createDeleteMode());
-        $purger->purge();
-
-        self::assertCount(0, $manager->getRepository(Dummy::class)->findAll());
-
-        // Ensures the schema has been restored
-        $dummy = new Dummy();
-        $dummy->id = '/dummy_'.bin2hex(random_bytes(6));
-        $manager->persist($dummy);
-        $manager->flush();
-        self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());
-
-        // TODO: move to a tearDown()
-        $manager->clear();
     }
 }

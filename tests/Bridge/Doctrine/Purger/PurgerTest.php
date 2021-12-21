@@ -17,8 +17,6 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\ORM\FakeEntityManager;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
@@ -88,31 +86,5 @@ class PurgerTest extends TestCase
         $decoratedPurgerReflection->setValue($purger, $purgerORM->reveal());
 
         $purger->purge();
-    }
-
-    public function testEmptyDatabase(): void
-    {
-        /** @var EntityManagerInterface $manager */
-        $manager = $GLOBALS['entity_manager_factory']();
-
-        $dummy = new Dummy();
-        $manager->persist($dummy);
-        $manager->flush();
-
-        self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());
-
-        $purger = new Purger($manager, PurgeMode::createDeleteMode());
-        $purger->purge();
-
-        self::assertCount(0, $manager->getRepository(Dummy::class)->findAll());
-
-        // Ensures the schema has been restored
-        $dummy = new Dummy();
-        $manager->persist($dummy);
-        $manager->flush();
-        self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());
-
-        // TODO: move to a tearDown()
-        $manager->clear();
     }
 }
