@@ -210,10 +210,10 @@ class ObjectManagerPersisterTest extends TestCase
 
         $this->entityManager->clear();
 
-        $result = $this->entityManager->getRepository(get_class($entity))->find(200);
+        $fetchedEntity = $this->entityManager->getRepository(get_class($entity))->find(200);
 
-        $this->assertSame($entity->id, $result->id);
-        $this->assertSame(200, $result->related->id);
+        $this->assertSame($entity->id, $fetchedEntity->id);
+        $this->assertSame(100, $fetchedEntity->related->id);
     }
 
     public static function provideEntities(): iterable

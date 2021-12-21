@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
 use function array_flip;
+use function array_key_exists;
 use function count;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo as ODMClassMetadataInfo;
 use Doctrine\ORM\EntityManagerInterface as ORMEntityManager;
@@ -99,6 +100,17 @@ class ObjectManagerPersister implements PersisterInterface
     {
         $metadata = $this->objectManager->getClassMetadata($className);
 
+        foreach ($metadata->getAssociationMappings() as $fieldName => $associationMapping) {
+            if (!array_key_exists('targetEntity', $associationMapping)) {
+                continue;
+            }
+
+            $targetEntityClassName = $associationMapping['targetEntity'];
+            $fieldValue = $metadata->getFieldValue($object, $fieldName);
+
+            $this->getMetadata($targetEntityClassName, $fieldValue);
+        }
+
         // Check if the ID is explicitly set by the user. To avoid the ID to be overridden by the ID generator
         // registered, we disable it for that specific object.
         if ($metadata instanceof ORMClassMetadataInfo
@@ -106,7 +118,7 @@ class ObjectManagerPersister implements PersisterInterface
             && $metadata->usesIdGenerator()
             && 0 !== count($metadata->getIdentifierValues($object))
         ) {
-            return $this->configureIdGenerator($metadata, $className);
+            return $this->configureIdGenerator($metadata);
         }
 
         // Note: in the event we have the ODMClassMetadataInfo, we do nothing
