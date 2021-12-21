@@ -36,7 +36,7 @@ jobs:
 #                    -   php-version: '7.4'
 #                        dependencies: highest
 #                        variant: 'symfony/symfony:"^4.4"'
-                        composer-flags: ''
+#                        composer-flags: ''
                     -   php-version: '7.4'
                         dependencies: highest
                         variant: 'symfony/symfony:"^5.4"'
