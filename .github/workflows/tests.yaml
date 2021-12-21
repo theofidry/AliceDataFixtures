@@ -23,11 +23,11 @@ jobs:
                     - '8.1'
                 dependencies: [ highest ]
                 variant: [ normal ]
-#                include:
-#                    -   php-version: '7.4'
-#                        dependencies: lowest
-#                        variant: normal
-#                        composer-flags: '--prefer-lowest'
+                include:
+                    -   php-version: '7.4'
+                        dependencies: lowest
+                        variant: normal
+                        composer-flags: '--prefer-lowest'
 #                    -   php-version: '7.4'
 #                        dependencies: highest
 #                        variant: 'symfony/symfony:"~4.4.0"'
