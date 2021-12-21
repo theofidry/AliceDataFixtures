@@ -111,5 +111,8 @@ class PurgerTest extends TestCase
         $manager->persist($dummy);
         $manager->flush();
         self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());
+
+        // TODO: move to a tearDown()
+        $manager->clear();
     }
 }

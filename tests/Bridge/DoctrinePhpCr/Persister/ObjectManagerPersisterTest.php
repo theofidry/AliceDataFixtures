@@ -48,6 +48,7 @@ class ObjectManagerPersisterTest extends TestCase
     public function tearDown(): void
     {
         $this->purger->purge();
+        $this->documentManager->clear();
     }
 
     public function testIsAPersister(): void
