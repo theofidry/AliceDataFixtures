@@ -14,7 +14,7 @@
         "doctrine/phpcr-bundle": "^2.3.0",
         "doctrine/phpcr-odm": "^1.5.4",
         "jackalope/jackalope-doctrine-dbal": "^1.7.1",
-        "symfony/symfony": "^4.4.32 || ^5.3.9",
+        "symfony/symfony": "^4.4.32 || ^5.4 || ^6.0",
         "theofidry/composer-inheritance-plugin": "^1.2",
         "wouterj/eloquent-bundle": "^2.1.1"
     },
@@ -30,6 +30,6 @@
         "symfony/polyfill-php73": "*"
     },
     "require": {
-        "symfony/doctrine-messenger": "^5.3"
+        "symfony/doctrine-messenger": "^5.4 || ^6.0"
     }
 }
