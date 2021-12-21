@@ -16,6 +16,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 use function array_flip;
 use function array_key_exists;
 use function count;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo as ODMClassMetadataInfo;
 use Doctrine\ORM\EntityManagerInterface as ORMEntityManager;
 use Doctrine\ORM\Id\AssignedGenerator as ORMAssignedGenerator;
@@ -106,9 +107,15 @@ class ObjectManagerPersister implements PersisterInterface
             }
 
             $targetEntityClassName = $associationMapping['targetEntity'];
-            $fieldValue = $metadata->getFieldValue($object, $fieldName);
+            $fieldValueOrFieldValues = $metadata->getFieldValue($object, $fieldName);
 
-            $this->getMetadata($targetEntityClassName, $fieldValue);
+            if ($fieldValueOrFieldValues instanceof Collection) {
+                foreach ($fieldValueOrFieldValues->getValues() as $fieldValue) {
+                    $this->getMetadata($targetEntityClassName, $fieldValue);
+                }
+            } else {
+                $this->getMetadata($targetEntityClassName, $fieldValueOrFieldValues);
+            }
         }
 
         // Check if the ID is explicitly set by the user. To avoid the ID to be overridden by the ID generator

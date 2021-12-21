@@ -15,6 +15,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMInvalidArgumentException;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\AnotherDummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummySubClass;
@@ -201,19 +202,34 @@ class ObjectManagerPersisterTest extends TestCase
         $related = new Dummy();
         $related->id = 100;
 
+        $anotherDummy1 = new AnotherDummy();
+        $anotherDummy1->id = 5000;
+
+        $anotherDummy2 = new AnotherDummy();
+        $anotherDummy2->id = 5010;
+
+        $anotherDummy3 = new AnotherDummy();
+
         $entity = new DummyWithRelatedCascadePersist();
         $entity->id = 200;
         $entity->related = $related;
+        $entity->relatedMultiple->add($anotherDummy1);
+        $entity->relatedMultiple->add($anotherDummy2);
+        $entity->relatedMultiple->add($anotherDummy3);
 
         $this->persister->persist($entity);
         $this->persister->flush();
 
         $this->entityManager->clear();
 
+        /** @var DummyWithRelatedCascadePersist $fetchedEntity */
         $fetchedEntity = $this->entityManager->getRepository(get_class($entity))->find(200);
 
         $this->assertSame($entity->id, $fetchedEntity->id);
         $this->assertSame(100, $fetchedEntity->related->id);
+        $this->assertSame(5000, $fetchedEntity->relatedMultiple->get(0)->id);
+        $this->assertSame(5010, $fetchedEntity->relatedMultiple->get(1)->id);
+        $this->assertSame(5011, $fetchedEntity->relatedMultiple->get(2)->id);
     }
 
     public static function provideEntities(): iterable
