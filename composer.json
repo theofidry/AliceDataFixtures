@@ -29,7 +29,7 @@
         "phpspec/prophecy": "^1.14.0",
         "phpspec/prophecy-phpunit": "^2.0.1",
         "phpunit/phpunit": "^9.5.10",
-        "symfony/phpunit-bridge": "^5.3.8"
+        "symfony/phpunit-bridge": "^5.3.8 || ^6.0"
     },
     "conflict": {
         "doctrine/orm": "<2.6.3",
