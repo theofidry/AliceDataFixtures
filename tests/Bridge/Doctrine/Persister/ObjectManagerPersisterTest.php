@@ -20,6 +20,7 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithIdentifier;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithRelatedCascadePersist;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithRelation;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\IdGenerator;
@@ -193,6 +194,26 @@ class ObjectManagerPersisterTest extends TestCase
         $this->persister->flush();
 
         self::assertTrue(true, 'Everything is fine.');
+    }
+
+    public function testIdGeneratorIsDisabledForCascadePersist(): void
+    {
+        $related = new Dummy();
+        $related->id = 100;
+
+        $entity = new DummyWithRelatedCascadePersist();
+        $entity->id = 200;
+        $entity->related = $related;
+
+        $this->persister->persist($entity);
+        $this->persister->flush();
+
+        $this->entityManager->clear();
+
+        $result = $this->entityManager->getRepository(get_class($entity))->find(200);
+
+        $this->assertSame($entity->id, $result->id);
+        $this->assertSame(200, $result->related->id);
     }
 
     public static function provideEntities(): iterable
