@@ -41,6 +41,11 @@ class DummyWithRelatedCascadePersist
     public Dummy $related;
 
     /**
+     * @ManyToOne(targetEntity="Dummy", cascade={"persist"})
+     */
+    public ?Dummy $relatedNullable = null;
+
+    /**
      * @var Collection<AnotherDummy>
      * @ManyToMany(targetEntity=AnotherDummy::class, cascade={"persist"})
      * @JoinTable(
