@@ -24,10 +24,13 @@ jobs:
                 dependencies: [ highest ]
                 variant: [ normal ]
                 include:
-                    -   php-version: '7.4'
-                        dependencies: lowest
-                        variant: normal
-                        composer-flags: '--prefer-lowest'
+                    # This one is excluded for now as horribly slow (the
+                    # Composer update takes over 10min in the CI)
+                    # This is likely due to some Symfony conflicting rules
+#                    -   php-version: '7.4'
+#                        dependencies: lowest
+#                        variant: normal
+#                        composer-flags: '--prefer-lowest'
                     -   php-version: '8.1'
                         dependencies: highest
                         variant: 'symfony/symfony:"^4.4"'
