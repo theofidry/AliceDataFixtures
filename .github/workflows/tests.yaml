@@ -31,15 +31,15 @@ jobs:
 #                        dependencies: lowest
 #                        variant: normal
 #                        composer-flags: '--prefer-lowest'
-                    -   php-version: '8.1'
+                    -   php-version: '7.4'
                         dependencies: highest
                         variant: 'symfony/symfony:"^4.4"'
                         composer-flags: ''
-                    -   php-version: '8.1'
+                    -   php-version: '8.0'
                         dependencies: highest
                         variant: 'symfony/symfony:"^5.4"'
                         composer-flags: ''
-                    -   php-version: '8.1'
+                    -   php-version: '8.0'
                         dependencies: highest
                         variant: 'symfony/symfony:"^6.0"'
                         composer-flags: ''
