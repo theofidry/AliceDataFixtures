@@ -16,7 +16,6 @@
         "jackalope/jackalope-doctrine-dbal": "^1.7.1",
         "ocramius/proxy-manager": "^2.13",
         "psy/psysh": "^0.10.9",
-        "symfony/symfony": "^4.4.32 || ^5.3.9",
         "theofidry/composer-inheritance-plugin": "^1.2",
         "theofidry/psysh-bundle": "^4.4",
         "wouterj/eloquent-bundle": "^2.1.1"
