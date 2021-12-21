@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\DoctrineMongoDB\Purger;
 
-use Doctrine\ODM\PHPCR\DocumentManagerInterface;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
 use PHPUnit\Framework\TestCase;
@@ -25,7 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PurgerIntegrationTest extends TestCase
 {
-    private DocumentManagerInterface $manager;
+    private DocumentManager $manager;
 
     protected function setUp(): void
     {
