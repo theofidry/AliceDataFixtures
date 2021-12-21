@@ -88,27 +88,4 @@ class PurgerTest extends TestCase
 
         $purger->purge();
     }
-
-    public function testEmptyDatabase(): void
-    {
-        /** @var EntityManager $manager */
-        $manager = $GLOBALS['entity_manager'];
-
-        $dummy = new Dummy();
-        $manager->persist($dummy);
-        $manager->flush();
-
-        self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());
-
-        $purger = new Purger($manager, PurgeMode::createDeleteMode());
-        $purger->purge();
-
-        self::assertCount(0, $manager->getRepository(Dummy::class)->findAll());
-
-        // Ensures the schema has been restored
-        $dummy = new Dummy();
-        $manager->persist($dummy);
-        $manager->flush();
-        self::assertCount(1, $manager->getRepository(Dummy::class)->findAll());
-    }
 }

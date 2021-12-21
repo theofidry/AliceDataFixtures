@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
+use Doctrine\ORM\UnitOfWork;
+use ReflectionProperty;
 use function array_flip;
 use function count;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo as ODMClassMetadataInfo;
@@ -45,6 +47,8 @@ class ObjectManagerPersister implements PersisterInterface
      * @var ClassMetadata[] Entity metadata to restore after flush, FQCN being the key.
      */
     private array $metadataToRestore = [];
+
+    private ReflectionProperty $unitOfWorkPersistersReflection;
 
     public function __construct(ObjectManager $manager)
     {
@@ -183,10 +187,8 @@ class ObjectManagerPersister implements PersisterInterface
 
         $unitOfWork = $objectManager->getUnitOfWork();
 
-        $unitOfWorkReflection = new ReflectionClass($unitOfWork);
-
         try {
-            $persistersReflection = $unitOfWorkReflection->getProperty('persisters');
+            $persistersReflection = $this->getUnitOfWorkPersistersReflection();
         } catch (ReflectionException $propertyNotFound) {
             // Do nothing: this will probably a case of a new UnitOfWork in
             // which case this hack should simply not apply
@@ -200,5 +202,24 @@ class ObjectManagerPersister implements PersisterInterface
         unset($persisters[$className]);
 
         $persistersReflection->setValue($unitOfWork, $persisters);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    private function getUnitOfWorkPersistersReflection(): ReflectionProperty
+    {
+        if (isset($this->unitOfWorkPersistersReflection)) {
+            return $this->unitOfWorkPersistersReflection;
+        }
+
+        $unitOfWorkReflection = new ReflectionClass(UnitOfWork::class);
+
+        $persistersReflection = $unitOfWorkReflection->getProperty('persisters');
+        $persistersReflection->setAccessible(true);
+
+        $this->unitOfWorkPersistersReflection = $persistersReflection;
+
+        return $persistersReflection;
     }
 }
