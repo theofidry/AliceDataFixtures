@@ -28,14 +28,18 @@ jobs:
                         dependencies: lowest
                         variant: normal
                         composer-flags: '--prefer-lowest'
-#                    -   php-version: '7.4'
-#                        dependencies: highest
-#                        variant: 'symfony/symfony:"~4.4.0"'
-#                        composer-flags: ''
-#                    -   php-version: '7.4'
-#                        dependencies: highest
-#                        variant: 'symfony/symfony:"~5.3.0"'
-#                        composer-flags: ''
+                    -   php-version: '8.1'
+                        dependencies: highest
+                        variant: 'symfony/symfony:"^4.4"'
+                        composer-flags: ''
+                    -   php-version: '8.1'
+                        dependencies: highest
+                        variant: 'symfony/symfony:"^5.4"'
+                        composer-flags: ''
+                    -   php-version: '8.1'
+                        dependencies: highest
+                        variant: 'symfony/symfony:"^6.0"'
+                        composer-flags: ''
         # To keep in sync with docker-compose.yml
         services:
             mysql:
@@ -117,7 +121,7 @@ jobs:
                 run: composer bin proxy-manager update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
             -   name: Add back Symfony for ProxyManager Composer bin dependencies
                 if: matrix.variant == 'normal'
-                run: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.4.1" --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --no-update
+                run: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.4.1 || ^6.0.0" --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --no-update
             -   name: Add back Symfony (variant) for ProxyManager Composer bin dependencies
                 if: matrix.variant != 'normal'
                 run: composer bin proxy-manager update --dev symfony/symfony --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --no-update
