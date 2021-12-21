@@ -23,18 +23,28 @@ jobs:
                     - '8.1'
                 dependencies: [ highest ]
                 variant: [ normal ]
-#                include:
+                include:
+                    # This one is excluded for now as horribly slow (the
+                    # Composer update takes over 10min in the CI)
+                    # This is likely due to some Symfony conflicting rules
+                    # TODO: investigate the issue and report it to Composer/Symfony
 #                    -   php-version: '7.4'
 #                        dependencies: lowest
 #                        variant: normal
 #                        composer-flags: '--prefer-lowest'
+                    # TODO: need more work
 #                    -   php-version: '7.4'
 #                        dependencies: highest
-#                        variant: 'symfony/symfony:"~4.4.0"'
+#                        variant: 'symfony/symfony:"^4.4"'
 #                        composer-flags: ''
-#                    -   php-version: '7.4'
+                    -   php-version: '7.4'
+                        dependencies: highest
+                        variant: 'symfony/symfony:"^5.4"'
+                        composer-flags: ''
+                    # TODO: Should be enabled as soon as PsyshBundle supports Symfony 6.x
+#                    -   php-version: '8.1'
 #                        dependencies: highest
-#                        variant: 'symfony/symfony:"~5.3.0"'
+#                        variant: 'symfony/symfony:"^6.0"'
 #                        composer-flags: ''
         # To keep in sync with docker-compose.yml
         services:
@@ -115,12 +125,14 @@ jobs:
                 run: composer bin proxy-manager update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
             -   name: Repeat "Install ProxyManager Composer bin dependencies"
                 run: composer bin proxy-manager update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
-            -   name: Install Symfony for ProxyManager Composer bin dependencies
+            -   name: Add back Symfony for ProxyManager Composer bin dependencies
                 if: matrix.variant == 'normal'
-                run: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.3.9" --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --with-dependencies
-            -   name: Install Symfony (variant) for ProxyManager Composer bin dependencies
+                run: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.4.1 || ^6.0.0" --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --no-update
+            -   name: Add back Symfony (variant) for ProxyManager Composer bin dependencies
                 if: matrix.variant != 'normal'
-                run: composer bin proxy-manager require --dev ${{ matrix.variant }} --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --with-dependencies
+                run: composer bin proxy-manager require --dev ${{ matrix.variant }} --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --no-update
+            -   name: Install Symfony for ProxyManager Composer bin dependencies
+                run: composer bin proxy-manager update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
 
             -   name: Configure Symfony (variant) Composer bin dependencies
                 if: matrix.variant != 'normal'
