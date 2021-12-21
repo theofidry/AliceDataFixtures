@@ -18,6 +18,7 @@ use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
+use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
 use InvalidArgumentException;
@@ -122,9 +123,7 @@ class ModelPurgerTest extends TestCase
 
     public function testCannotCreateANewPurgerWithTruncateMode(): void
     {
-        $expectedExceptionMessage = 'Cannot purge database in truncate mode with '
-            .'"Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger" (not supported).'
-        ;
+        $expectedExceptionMessage = 'Cannot purge database in truncate mode with "Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger" (not supported).';
 
         $migratorProphecy = $this->prophesize(Migrator::class);
         $migratorProphecy->reset(Argument::cetera())->shouldNotBeCalled();
@@ -155,7 +154,14 @@ class ModelPurgerTest extends TestCase
      */
     public function testEmptyDatabase(): void
     {
-        $purger = new ModelPurger($GLOBALS['repository'], 'migrations', $GLOBALS['migrator']);
+        /**
+         * @var Manager $manager
+         * @var MigrationRepositoryInterface $repository
+         * @var Migrator $migrator
+         */
+        [$manager, $repository, $migrator] = $GLOBALS['manager_repository_migrator_factory']();
+
+        $purger = new ModelPurger($repository, 'migrations', $migrator);
         // Doing a purge here is just to make the test slightly more robust when being run multiple times
         // The real purge test is done at the next one
         $purger->purge();
@@ -165,7 +171,7 @@ class ModelPurgerTest extends TestCase
         ]);
         self::assertEquals(1, AnotherDummy::all()->count());
 
-        $purger = new ModelPurger($GLOBALS['repository'], 'migrations', $GLOBALS['migrator']);
+        $purger = new ModelPurger($repository, 'migrations', $migrator);
         $purger->purge();
 
         self::assertEquals(0, AnotherDummy::all()->count());

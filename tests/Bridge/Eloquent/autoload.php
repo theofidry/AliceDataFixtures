@@ -23,36 +23,38 @@ use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Filesystem\Filesystem;
 
-$manager = (static function (): Manager {
-    $manager = new Manager();
-    $manager->addConnection(require ROOT.'/eloquent-db-settings.php');
-    $manager->bootEloquent();
-    $manager->setAsGlobal();
+$managerRepositoryMigratorFactory = static function () {
+    $manager = (static function (): Manager {
+        $manager = new Manager();
+        $manager->addConnection(require ROOT.'/eloquent-db-settings.php');
+        $manager->bootEloquent();
+        $manager->setAsGlobal();
 
-    return $manager;
-})();
+        return $manager;
+    })();
 
-$resolver = (static function (Manager $manager): ConnectionResolverInterface {
-    $resolver = new ConnectionResolver([
-        'default' => $manager->getConnection(),
-    ]);
-    $resolver->setDefaultConnection('default');
+    $resolver = (static function (Manager $manager): ConnectionResolverInterface {
+        $resolver = new ConnectionResolver([
+            'default' => $manager->getConnection(),
+        ]);
+        $resolver->setDefaultConnection('default');
 
-    return $resolver;
-})($manager);
+        return $resolver;
+    })($manager);
 
-$repository = (static function (ConnectionResolverInterface $resolver): MigrationRepositoryInterface {
-    $repository = new DatabaseMigrationRepository($resolver, 'migrations');
+    $repository = (static function (ConnectionResolverInterface $resolver): MigrationRepositoryInterface {
+        $repository = new DatabaseMigrationRepository($resolver, 'migrations');
 
-    if (false === $repository->repositoryExists()) {
-        $repository->createRepository();
-    }
+        if (false === $repository->repositoryExists()) {
+            $repository->createRepository();
+        }
 
-    return $repository;
-})($resolver);
+        return $repository;
+    })($resolver);
 
-$GLOBALS['manager'] = $manager;
-$GLOBALS['resolver'] = $resolver;
-$GLOBALS['repository'] = $repository;
-$GLOBALS['file_system'] = new Filesystem();
-$GLOBALS['migrator'] = new Migrator($repository, $resolver, new Filesystem());
+    $migrator = new Migrator($repository, $resolver, new Filesystem());
+
+    return [$manager, $repository, $migrator];
+};
+
+$GLOBALS['manager_repository_migrator_factory'] = $managerRepositoryMigratorFactory;

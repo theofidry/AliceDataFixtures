@@ -8,6 +8,6 @@
     },
     "config": {
         "bin-dir": "bin",
-        "sort-packages": true
+        "sort-packagces": true
     }
 }

@@ -11,10 +11,14 @@
  */
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\ORM\EntityManagerInterface;
 
 require_once __DIR__.'/../tests/Bridge/Doctrine/autoload.php';
 
-$purger = new ORMPurger($GLOBALS['entityManager']);
+/** @var EntityManagerInterface $entityManager */
+$entityManager = $GLOBALS['entityManager'];
+
+$purger = new ORMPurger($entityManager);
 $purger->purge();
 
 return 1;

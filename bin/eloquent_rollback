@@ -10,6 +10,17 @@
  * file that was distributed with this source code.
  */
 
+use Illuminate\Database\Capsule\Manager;
+use Illuminate\Database\Migrations\MigrationRepositoryInterface;
+use Illuminate\Database\Migrations\Migrator;
+
 require_once __DIR__.'/../tests/Bridge/Eloquent/autoload.php';
 
-$GLOBALS['migrator']->rollback();
+/**
+ * @var Manager $manager
+ * @var MigrationRepositoryInterface $repository
+ * @var Migrator $migrator
+ */
+[$manager, $repository, $migrator] = $GLOBALS['manager_repository_migrator_factory']();
+
+$migrator->rollback();
