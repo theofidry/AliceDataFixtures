@@ -122,7 +122,7 @@ jobs:
                 if: matrix.variant != 'normal'
                 run: composer bin proxy-manager update --dev symfony/symfony --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --no-update
             -   name: Install Symfony for ProxyManager Composer bin dependencies
-                run: composer bin proxy-manager update symfony/symfony --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
+                run: composer bin proxy-manager update symfony/symfony --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --with-all-dependencies
 
             -   name: Configure Symfony (variant) Composer bin dependencies
                 if: matrix.variant != 'normal'
