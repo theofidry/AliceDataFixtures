@@ -13,16 +13,24 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
+use function array_flip;
+use function count;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo as ODMClassMetadataInfo;
+use Doctrine\ORM\EntityManagerInterface as ORMEntityManager;
 use Doctrine\ORM\Id\AssignedGenerator as ORMAssignedGenerator;
 use Doctrine\ORM\Mapping\ClassMetadataInfo as ORMClassMetadataInfo;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\UnitOfWork;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\ObjectManager;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\IdGenerator;
 use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterExceptionFactory;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use function get_class;
 use Nelmio\Alice\IsAServiceTrait;
+use ReflectionClass;
+use ReflectionException;
+use ReflectionProperty;
 
 class ObjectManagerPersister implements PersisterInterface
 {
@@ -40,6 +48,8 @@ class ObjectManagerPersister implements PersisterInterface
      */
     private array $metadataToRestore = [];
 
+    private ReflectionProperty $unitOfWorkPersistersReflection;
+
     public function __construct(ObjectManager $manager)
     {
         $this->objectManager = $manager;
@@ -51,26 +61,10 @@ class ObjectManagerPersister implements PersisterInterface
             $this->persistableClasses = array_flip($this->getPersistableClasses($this->objectManager));
         }
 
-        $class = get_class($object);
+        $className = get_class($object);
 
-        if (isset($this->persistableClasses[$class])) {
-            $metadata = $this->objectManager->getClassMetadata($class);
-
-            // Check if the ID is explicitly set by the user. To avoid the ID to be overridden by the ID generator
-            // registered, we disable it for that specific object.
-            if ($metadata instanceof ORMClassMetadataInfo) {
-                if (!$metadata->idGenerator instanceof IdGenerator
-                    && $metadata->usesIdGenerator()
-                    && 0 !== count($metadata->getIdentifierValues($object))
-                ) {
-                    $metadata = $this->configureIdGenerator($metadata);
-                }
-            } elseif ($metadata instanceof ODMClassMetadataInfo) {
-                // Do nothing: currently not supported as Doctrine ODM does not have an equivalent of the ORM
-                // AssignedGenerator.
-            } else {
-                // Do nothing: not supported.
-            }
+        if (isset($this->persistableClasses[$className])) {
+            $metadata = $this->getMetadata($className, $object);
 
             try {
                 $this->objectManager->persist($object);
@@ -88,10 +82,36 @@ class ObjectManagerPersister implements PersisterInterface
     {
         $this->objectManager->flush();
 
-        foreach ($this->metadataToRestore as $metadata) {
-            $this->objectManager->getMetadataFactory()->setMetadataFor($metadata->getName(), $metadata);
+        $metadataFactory = $this->objectManager->getMetadataFactory();
+
+        if (null === $metadataFactory) {
+            return;
         }
+
+        foreach ($this->metadataToRestore as $metadata) {
+            $metadataFactory->setMetadataFor($metadata->getName(), $metadata);
+        }
+
         $this->metadataToRestore = [];
+    }
+
+    private function getMetadata(string $className, object $object): ClassMetadata
+    {
+        $metadata = $this->objectManager->getClassMetadata($className);
+
+        // Check if the ID is explicitly set by the user. To avoid the ID to be overridden by the ID generator
+        // registered, we disable it for that specific object.
+        if ($metadata instanceof ORMClassMetadataInfo
+            && !$metadata->idGenerator instanceof IdGenerator
+            && $metadata->usesIdGenerator()
+            && 0 !== count($metadata->getIdentifierValues($object))
+        ) {
+            return $this->configureIdGenerator($metadata, $className);
+        }
+
+        // Note: in the event we have the ODMClassMetadataInfo, we do nothing
+        // as there is no equivalent to the ORM AssignedGenerator
+        return $metadata;
     }
 
     /**
@@ -100,12 +120,21 @@ class ObjectManagerPersister implements PersisterInterface
     private function getPersistableClasses(ObjectManager $manager): array
     {
         $persistableClasses = [];
-        $allMetadata = $manager->getMetadataFactory()->getAllMetadata();
+        $metadataFactory = $manager->getMetadataFactory();
+
+        if (null === $metadataFactory) {
+            return $persistableClasses;
+        }
+
+        $allMetadata = $metadataFactory->getAllMetadata();
 
         foreach ($allMetadata as $metadata) {
             /** @var ORMClassMetadataInfo|ODMClassMetadataInfo $metadata */
             if (false === $metadata->isMappedSuperclass
-                && false === (isset($metadata->isEmbeddedClass) && $metadata->isEmbeddedClass)
+                && !(
+                    isset($metadata->isEmbeddedClass)
+                    && $metadata->isEmbeddedClass
+                )
             ) {
                 $persistableClasses[] = $metadata->getName();
             }
@@ -116,21 +145,81 @@ class ObjectManagerPersister implements PersisterInterface
 
     private function saveMetadataToRestore(ClassMetadata $metadata): void
     {
-        if (!isset($this->metadataToRestore[$metadata->getName()])) {
+        $className = $metadata->getName();
+
+        if (!isset($this->metadataToRestore[$className])) {
             $this->metadataToRestore[$metadata->getName()] = $metadata;
         }
+
+        $this->clearUnitOfWorkPersister($metadata->getName());
     }
 
-    private function configureIdGenerator(ORMClassMetadataInfo $metadata): ORMClassMetadataInfo
-    {
+    private function configureIdGenerator(
+        ORMClassMetadataInfo $metadata
+    ): ORMClassMetadataInfo {
         $this->saveMetadataToRestore($metadata);
 
         $newMetadata = clone $metadata;
         $newMetadata->setIdGeneratorType(IdGenerator::GENERATOR_TYPE_ALICE);
         $newMetadata->setIdGenerator(new IdGenerator($metadata->idGenerator));
 
-        $this->objectManager->getMetadataFactory()->setMetadataFor($metadata->getName(), $newMetadata);
+        $metadataFactory = $this->objectManager->getMetadataFactory();
+
+        if (null === $metadataFactory) {
+            return $metadata; // Do nothing
+        }
+
+        $className = $metadata->getName();
+
+        $metadataFactory->setMetadataFor($className, $newMetadata);
+        $this->clearUnitOfWorkPersister($className);
 
         return $newMetadata;
+    }
+
+    private function clearUnitOfWorkPersister(string $className): void
+    {
+        $objectManager = $this->objectManager;
+
+        if (!($objectManager instanceof ORMEntityManager)) {
+            return;
+        }
+
+        $unitOfWork = $objectManager->getUnitOfWork();
+
+        try {
+            $persistersReflection = $this->getUnitOfWorkPersistersReflection();
+        } catch (ReflectionException $propertyNotFound) {
+            // Do nothing: this will probably a case of a new UnitOfWork in
+            // which case this hack should simply not apply
+            return;
+        }
+
+        $persistersReflection->setAccessible(true);
+
+        $persisters = $persistersReflection->getValue($unitOfWork);
+
+        unset($persisters[$className]);
+
+        $persistersReflection->setValue($unitOfWork, $persisters);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    private function getUnitOfWorkPersistersReflection(): ReflectionProperty
+    {
+        if (isset($this->unitOfWorkPersistersReflection)) {
+            return $this->unitOfWorkPersistersReflection;
+        }
+
+        $unitOfWorkReflection = new ReflectionClass(UnitOfWork::class);
+
+        $persistersReflection = $unitOfWorkReflection->getProperty('persisters');
+        $persistersReflection->setAccessible(true);
+
+        $this->unitOfWorkPersistersReflection = $persistersReflection;
+
+        return $persistersReflection;
     }
 }
