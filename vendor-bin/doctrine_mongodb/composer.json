@@ -2,6 +2,7 @@
     "require-dev": {
         "alcaeus/mongo-php-adapter": "^1.2",
         "doctrine/annotations": "^1.0",
+        "doctrine/common": "^2.13 || ^3.0",
         "doctrine/data-fixtures": "^1.2",
         "doctrine/mongodb-odm": "^2.1.2",
         "theofidry/composer-inheritance-plugin": "^1.2"
