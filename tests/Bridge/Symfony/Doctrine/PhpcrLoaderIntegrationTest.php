@@ -46,7 +46,9 @@ class PhpcrLoaderIntegrationTest extends TestCase
 
     public function setUp(): void
     {
-        $this->markTestSkipped('annotation_reader is not available');
+  if (PHP_VERSION_ID < 80000) {
+        $this->markTestSkipped('The annotation reader is not available: the "enable_annotations" on the validator cannot be set as the PHP version is lower than 8');
+  }
         if (PHP_VERSION_ID >= 81000) {
             $this->markTestSkipped('Not compatible yet with PHP 8.1');
         }
