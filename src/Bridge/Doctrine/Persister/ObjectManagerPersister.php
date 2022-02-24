@@ -150,7 +150,11 @@ class ObjectManagerPersister implements PersisterInterface
             $targetEntityClassName = $associationMapping['targetEntity'];
             $fieldValueOrFieldValues = $metadata->getFieldValue($object, $fieldName);
 
-            if ($fieldValueOrFieldValues instanceof Collection) {
+            if (is_array($fieldValueOrFieldValues)) {
+                foreach ($fieldValueOrFieldValues as $fieldValue) {
+                    $this->getMetadata($targetEntityClassName, $fieldValue);
+                }
+            } elseif ($fieldValueOrFieldValues instanceof Collection) {
                 foreach ($fieldValueOrFieldValues->getValues() as $fieldValue) {
                     $this->getMetadata($targetEntityClassName, $fieldValue);
                 }
