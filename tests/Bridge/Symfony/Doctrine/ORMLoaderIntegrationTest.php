@@ -112,6 +112,20 @@ class ORMLoaderIntegrationTest extends TestCase
         self::assertCount(5, $groups);
     }
 
+    public function testArrayRelationships(): void
+    {
+        $this->loader->load([
+            __DIR__.'/../../../../fixtures/fixture_files/user_group_array.yml',
+        ]);
+
+        $users = $this->doctrine->getRepository(User::class)->findAll();
+        $groups = $this->doctrine->getRepository(Group::class)->findAll();
+
+        self::assertCount(5, $users);
+        self::assertCount(5, $groups);
+        self::assertCount(5, $groups[0]->getUsers());
+    }
+
     public function testBidirectionalRelationshipsDeclaredInDifferentFiles(): void
     {
         $this->loader->load([

@@ -45,4 +45,9 @@ class Group
             $this->users->add($user);
         }
     }
+
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
 }

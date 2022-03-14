@@ -7,7 +7,11 @@
     },
     "config": {
         "bin-dir": "bin",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "wikimedia/composer-merge-plugin": true,
+            "theofidry/composer-inheritance-plugin": true
+        }
     },
     "provide": {
         "ext-mongo": "*"

@@ -8,6 +8,8 @@
         "symfony/doctrine-messenger": "^4.4 || ^5.4 || ^6.0"
     },
     "require-dev": {
+        "doctrine/common": "^3.2",
+        "doctrine/annotations": "^1.13",
         "alcaeus/mongo-php-adapter": "^1.2.1",
         "doctrine/data-fixtures": "^1.5.1",
         "doctrine/doctrine-bundle": "^2.4.3",
@@ -23,7 +25,11 @@
     },
     "config": {
         "bin-dir": "bin",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "wikimedia/composer-merge-plugin": true,
+            "theofidry/composer-inheritance-plugin": true
+        }
     },
     "provide": {
         "ext-mongo": "*"

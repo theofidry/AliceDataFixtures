@@ -6,6 +6,7 @@
     },
     "require-dev": {
         "alcaeus/mongo-php-adapter": "^1.2.1",
+        "doctrine/annotations": "^1.13",
         "doctrine/data-fixtures": "^1.5.1",
         "doctrine/doctrine-bundle": "^2.4.3",
         "doctrine/mongodb-odm": "^2.2.2",

@@ -25,6 +25,7 @@
         "webmozart/assert": "^1.10"
     },
     "require-dev": {
+        "doctrine/annotations": "^1.13",
         "bamarni/composer-bin-plugin": "^1.4.1",
         "phpspec/prophecy": "^1.14.0",
         "phpspec/prophecy-phpunit": "^2.0.1",
@@ -76,7 +77,10 @@
 
     "config": {
         "bin-dir": "bin",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        }
     },
     "extra": {
         "bamarni-bin": {
