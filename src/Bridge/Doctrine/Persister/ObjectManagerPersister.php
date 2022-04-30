@@ -16,7 +16,6 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 use function array_flip;
 use function array_key_exists;
 use function count;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations\File\Metadata;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata as ODMClassMetadata;
 use Doctrine\ODM\PHPCR\Mapping\ClassMetadata as PHPCRClassMetadata;
@@ -150,8 +149,8 @@ class ObjectManagerPersister implements PersisterInterface
             $targetEntityClassName = $associationMapping['targetEntity'];
             $fieldValueOrFieldValues = $metadata->getFieldValue($object, $fieldName);
 
-            if ($fieldValueOrFieldValues instanceof Collection) {
-                foreach ($fieldValueOrFieldValues->getValues() as $fieldValue) {
+            if (is_iterable($fieldValueOrFieldValues)) {
+                foreach ($fieldValueOrFieldValues as $fieldValue) {
                     $this->getMetadata($targetEntityClassName, $fieldValue);
                 }
             } elseif ($fieldValueOrFieldValues !== null) {
