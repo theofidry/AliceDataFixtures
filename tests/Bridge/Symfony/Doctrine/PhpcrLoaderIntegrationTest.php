@@ -13,16 +13,16 @@ declare(strict_types=1);
 
 namespace Fidry\AlicePersistence\Bridge\Symfony\Doctrine;
 
-use function bin2hex;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger;
 use Doctrine\Persistence\ManagerRegistry;
 use Fidry\AliceDataFixtures\Bridge\Symfony\PhpCrDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrinePhpcrKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
-use const PHP_VERSION_ID;
 use PHPUnit\Framework\TestCase;
-use function random_bytes;
 use Symfony\Component\HttpKernel\KernelInterface;
+use function bin2hex;
+use function random_bytes;
+use const PHP_VERSION_ID;
 
 /**
  * @coversNothing
@@ -46,8 +46,12 @@ class PhpcrLoaderIntegrationTest extends TestCase
 
     public function setUp(): void
     {
-        if (PHP_VERSION_ID >= 81000) {
-            $this->markTestSkipped('Not compatible yet with PHP 8.1');
+        if (PHP_VERSION_ID < 80000) {
+            $this->markTestSkipped('The annotation reader is not available: the "enable_annotations" on the validator cannot be set as the PHP version is lower than 8');
+        }
+
+        if (PHP_VERSION_ID >= 80000) {
+            $this->markTestSkipped('Not compatible yet with PHP 8.0');
         }
 
         $this->kernel = new DoctrinePhpcrKernel(static::$seed, true);
