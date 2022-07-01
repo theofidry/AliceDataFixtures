@@ -13,16 +13,16 @@ declare(strict_types=1);
 
 namespace Fidry\AlicePersistence\Bridge\Symfony\Doctrine;
 
+use function bin2hex;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger;
 use Doctrine\Persistence\ManagerRegistry;
 use Fidry\AliceDataFixtures\Bridge\Symfony\PhpCrDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrinePhpcrKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpKernel\KernelInterface;
-use function bin2hex;
-use function random_bytes;
 use const PHP_VERSION_ID;
+use PHPUnit\Framework\TestCase;
+use function random_bytes;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @coversNothing
