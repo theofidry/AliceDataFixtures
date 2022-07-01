@@ -8,6 +8,9 @@
     },
     "config": {
         "bin-dir": "bin",
-        "sort-packagces": true
+        "sort-packagces": true,
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        }
     }
 }
