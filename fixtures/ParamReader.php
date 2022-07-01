@@ -11,9 +11,13 @@
 
 declare(strict_types=1);
 
-function get_param(string $envName, $default)
-{
-    $env = getenv($envName);
+namespace Fidry\AliceDataFixtures;
 
-    return false !== $env ? $env : $default;
+class ParamReader {
+    public static function get_param(string $envName, $default)
+    {
+        $env = getenv($envName);
+
+        return false !== $env ? $env : $default;
+    }
 }

@@ -68,10 +68,7 @@
                 "fixtures",
                 "tests"
             ]
-        },
-        "files": [
-            "fixtures/get-param.php"
-        ]
+        }
     },
 
     "config": {
