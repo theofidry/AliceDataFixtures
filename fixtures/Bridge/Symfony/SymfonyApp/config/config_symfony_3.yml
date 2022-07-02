@@ -15,6 +15,5 @@ framework:
         enabled: false
     validation:
         enabled: true
-        enable_annotations: true
     session: ~
     test: ~
