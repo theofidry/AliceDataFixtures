@@ -1,0 +1,21 @@
+#
+# This file is part of the Fidry\AliceDataFixtures package.
+#
+# (c) Théo FIDRY <theo.fidry@gmail.com>
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+#
+
+Fidry\AliceDataFixtures\Bridge\Symfony\Entity\User:
+    user{1..5}:
+        groups: '<numberBetween(2, 5)>x @group*'
+
+Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Group:
+    group{1..5}:
+        users:
+            - '@user1'
+            - '@user2'
+            - '@user3'
+            - '@user4'
+            - '@user5'
