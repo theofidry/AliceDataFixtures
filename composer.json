@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^8.1",
         "nelmio/alice": "^3.5",
         "psr/log": "^1 || ^2 || ^3",
         "webmozart/assert": "^1.10"

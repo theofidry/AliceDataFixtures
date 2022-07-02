@@ -18,7 +18,6 @@ jobs:
             fail-fast: false
             matrix:
                 php-version:
-                    - '7.4'
                     - '8.0'
                     - '8.1'
                 dependencies: [ highest ]
@@ -37,10 +36,10 @@ jobs:
 #                        dependencies: highest
 #                        variant: 'symfony/symfony:"^4.4"'
 #                        composer-flags: ''
-                    -   php-version: '7.4'
-                        dependencies: highest
-                        variant: 'symfony/symfony:"^5.4"'
-                        composer-flags: ''
+#                    -   php-version: '7.4'
+#                        dependencies: highest
+#                        variant: 'symfony/symfony:"^5.4"'
+#                        composer-flags: ''
                     # TODO: Should be enabled as soon as PsyshBundle supports Symfony 6.x
 #                    -   php-version: '8.1'
 #                        dependencies: highest
