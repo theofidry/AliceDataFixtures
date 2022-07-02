@@ -41,11 +41,10 @@ jobs:
                         dependencies: highest
                         variant: 'symfony/symfony:"^5.4"'
                         composer-flags: ''
-                    # TODO: Should be enabled as soon as PsyshBundle supports Symfony 6.x
-#                    -   php-version: '8.1'
-#                        dependencies: highest
-#                        variant: 'symfony/symfony:"^6.0"'
-#                        composer-flags: ''
+                    -   php-version: '8.1'
+                        dependencies: highest
+                        variant: 'symfony/symfony:"^6.0"'
+                        composer-flags: ''
         # To keep in sync with docker-compose.yml
         services:
             mysql:
@@ -144,9 +143,11 @@ jobs:
                 run: composer bin symfony update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
 
             -   name: Install CoversValidator Composer bin dependencies
+                if: matrix.php != '7.4'
                 run: composer bin covers-validator install --prefer-dist
 
             -   name: Install PHP-CS-Fixer Composer bin dependencies
+                if: matrix.php != '7.4'
                 run: composer bin php-cs-fixer install --prefer-dist
 
             -   name: Run Tests
