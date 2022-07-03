@@ -18,33 +18,14 @@ jobs:
             fail-fast: false
             matrix:
                 php-version:
-                    - '8.0'
                     - '8.1'
                 dependencies: [ highest ]
                 variant: [ normal ]
                 include:
-                    # This one is excluded for now as horribly slow (the
-                    # Composer update takes over 10min in the CI)
-                    # This is likely due to some Symfony conflicting rules
-                    # TODO: investigate the issue and report it to Composer/Symfony
-#                    -   php-version: '7.4'
-#                        dependencies: lowest
-#                        variant: normal
-#                        composer-flags: '--prefer-lowest'
-                    # TODO: need more work
-#                    -   php-version: '7.4'
-#                        dependencies: highest
-#                        variant: 'symfony/symfony:"^4.4"'
-#                        composer-flags: ''
-#                    -   php-version: '7.4'
-#                        dependencies: highest
-#                        variant: 'symfony/symfony:"^5.4"'
-#                        composer-flags: ''
-                    # TODO: Should be enabled as soon as PsyshBundle supports Symfony 6.x
-#                    -   php-version: '8.1'
-#                        dependencies: highest
-#                        variant: 'symfony/symfony:"^6.0"'
-#                        composer-flags: ''
+                    -   php-version: '8.1'
+                        dependencies: lowest
+                        variant: normal
+                        composer-flags: '--prefer-lowest'
         # To keep in sync with docker-compose.yml
         services:
             mysql:
