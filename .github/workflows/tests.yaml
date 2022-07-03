@@ -24,8 +24,7 @@ jobs:
                 include:
                     -   php-version: '8.1'
                         dependencies: lowest
-                        variant: normal
-                        composer-flags: '--prefer-lowest'
+                        variant: 'symfony/symfony:"^5.4"'
         # To keep in sync with docker-compose.yml
         services:
             mysql:
