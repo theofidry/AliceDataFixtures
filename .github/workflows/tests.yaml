@@ -23,7 +23,7 @@ jobs:
                 variant: [ normal ]
                 include:
                     -   php-version: '8.1'
-                        dependencies: lowest
+                        dependencies: highest
                         variant: 'symfony/symfony:"^5.4"'
         # To keep in sync with docker-compose.yml
         services:
