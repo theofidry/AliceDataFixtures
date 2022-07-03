@@ -107,7 +107,7 @@ jobs:
                 run: composer bin proxy-manager update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
             -   name: Add back Symfony for ProxyManager Composer bin dependencies
                 if: matrix.variant == 'normal'
-                run: composer bin proxy-manager require --dev "symfony/symfony:^4.4.32 || ^5.4.1 || ^6.0.0" --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --no-update
+                run: composer bin proxy-manager require --dev "symfony/symfony:^5.4.1 || ^6.0.0" --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --no-update
             -   name: Add back Symfony (variant) for ProxyManager Composer bin dependencies
                 if: matrix.variant != 'normal'
                 run: composer bin proxy-manager require --dev ${{ matrix.variant }} --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --no-update
