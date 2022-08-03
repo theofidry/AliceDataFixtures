@@ -162,7 +162,7 @@ services:
 ## Usage in tests
 
 It is common to load the fixtures for tests, but then you might need to reset your database between each tests. There is
-two ways of doing it: purge between each test which works but comes with an overhead and warping the test in a
+two ways of doing it: purge between each test which works but comes with an overhead and wrapping the test in a
 transaction which can be rollbacked at the end of the test. The second approach is usually faster but requires a
 database that supports transactions and removes the ability to peak at the database in the middle of a test while debugging.
 
