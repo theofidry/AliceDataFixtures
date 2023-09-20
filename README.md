@@ -57,7 +57,7 @@ fidry_alice_data_fixtures:
         eloquent_orm: ~
 ```
 
-For each driver, is the appropriate bundle is detected, e.g. DoctrineORMBundle for Doctrine and WouterJEloquentBundle
+For each driver, if the appropriate bundle is detected, e.g. DoctrineORMBundle for Doctrine and WouterJEloquentBundle
 for Eloquent, the services related to those driver will be enabled. If you want to skip those checks you can turn
 a specific driver to `true` instead. If you want to disable a specific driver, simply force the value `false` instead.
 
