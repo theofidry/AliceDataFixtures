@@ -84,7 +84,8 @@
     },
     "extra": {
         "bamarni-bin": {
-            "bin-links": false
+            "bin-links": false,
+            "forward-command": false
         },
         "branch-alias": {
             "dev-master": "1.x-dev"
