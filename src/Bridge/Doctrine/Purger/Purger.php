@@ -32,6 +32,7 @@ use Nelmio\Alice\IsAServiceTrait;
  * Bridge for Doctrine purger.
  *
  * @author Vincent CHALAMON <vincentchalamon@gmail.com>
+ *
  * @final
  */
 /* final */ class Purger implements PurgerInterface, PurgerFactoryInterface
