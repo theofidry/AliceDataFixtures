@@ -25,7 +25,9 @@ class AnotherDummy
 {
     /**
      * @Id
+     *
      * @Column(type="integer")
+     *
      * @GeneratedValue
      */
     public ?int $id = null;

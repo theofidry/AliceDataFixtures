@@ -26,7 +26,9 @@ class DummyWithEmbeddable
 {
     /**
      * @Id
+     *
      * @Column(type="integer")
+     *
      * @GeneratedValue
      */
     public int $id;

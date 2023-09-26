@@ -25,7 +25,9 @@ class MappedSuperclassDummy
 {
     /**
      * @Id
+     *
      * @Column(type="integer")
+     *
      * @GeneratedValue
      */
     public int $id;
