@@ -1,7 +1,7 @@
-name: Test
+name: Tests
 
 on:
-    pull_request:
+    pull_request: null
     push:
         branches: [ master, main ]
     schedule:
