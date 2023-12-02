@@ -51,6 +51,9 @@ jobs:
             -   name: Checkout
                 uses: actions/checkout@v4
 
+            -   name: Debug
+                run: mongosh --version
+
             -   name: Install PHP with extensions
                 uses: shivammathur/setup-php@v2
                 with:
