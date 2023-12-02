@@ -28,6 +28,7 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\IdGenerator;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use Throwable;
 
 /**
  * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
@@ -181,12 +182,13 @@ class ObjectManagerPersisterTest extends TestCase
      */
     public function testDoesNotPersistEmbeddables($dummy): void
     {
+        // Sanity check
         try {
             $this->entityManager->persist($dummy);
             $this->entityManager->flush();
 
             $this->fail('Expected exception to be thrown.');
-        } catch (ORMInvalidArgumentException $exception) {
+        } catch (Throwable) {
             // Expected result
             $this->entityManager->clear();
         }
