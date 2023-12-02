@@ -40,7 +40,7 @@ jobs:
                     MYSQL_ROOT_USER: root
                     MYSQL_ROOT_PASSWORD: password
             mongo:
-                image: mongo:4.4-bionic
+                image: mongo:7.0-bionic
                 ports:
                     - 27018:27017
                 env:
