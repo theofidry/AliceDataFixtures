@@ -49,7 +49,7 @@ jobs:
                     MONGO_INITDB_ROOT_PASSWORD: password
         steps:
             -   name: Checkout
-                uses: actions/checkout@v2
+                uses: actions/checkout@v4
 
             -   name: Install PHP with extensions
                 uses: shivammathur/setup-php@v2
@@ -66,7 +66,7 @@ jobs:
                     perl -pi -e 's/^}$/,"provide":{"ext-mongo":"*"}}/' composer.json
 
             -   name: Install Composer dependencies (${{ matrix.dependencies }})
-                uses: ramsey/composer-install@v1
+                uses: ramsey/composer-install@v2
                 with:
                     dependency-versions: ${{ matrix.dependencies }}
                     composer-options: "--prefer-dist --prefer-stable"
