@@ -12,6 +12,7 @@ on:
 env:
     MYSQL_HOST: '127.0.0.1'
     DOCTRINE_ORM_DB_HOST: '127.0.0.1'
+    XDEBUG_MODE: 'coverage'
 
 jobs:
     tests:
