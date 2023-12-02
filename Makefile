@@ -1,4 +1,3 @@
-COVERS_VALIDATOR=php -d zend.enable_gc=0 vendor-bin/covers-validator/bin/covers-validator
 PHP_CS_FIXER=php -d zend.enable_gc=0 vendor-bin/php-cs-fixer/bin/php-cs-fixer
 DOCKER_COMPOSE=docker-compose
 DOCKER_COMPOSE_EXEC=$(DOCKER_COMPOSE) exec -T
@@ -89,10 +88,7 @@ test: test_core	\
 
 .PHONY: test_core
 test_core:             				## Run the tests for the core library
-test_core: vendor/phpunit \
-		   vendor-bin/covers-validator/vendor
-	$(COVERS_VALIDATOR)
-
+test_core: vendor/phpunit
 	bin/phpunit
 
 .PHONY: test_doctrine_bridge
@@ -139,8 +135,7 @@ test_eloquent_bridge: vendor/bamarni \
 .PHONY: test_symfony_bridge
 test_symfony_bridge:				## Run the tests for the Symfony bridge
 test_symfony_bridge: vendor/bamarni \
-					 vendor-bin/symfony/vendor/phpunit \
-					 vendor-bin/covers-validator/vendor
+					 vendor-bin/symfony/vendor/phpunit
 	$(COVERS_VALIDATOR) -c phpunit_symfony.xml.dist
 	$(MAKE) remove_sf_cache
 
@@ -211,14 +206,6 @@ vendor/phpunit: composer.lock
 
 vendor/bamarni: composer.lock
 	composer update $(COMPOSER_FLAGS)
-	touch $@
-
-
-vendor-bin/covers-validator/composer.lock: vendor-bin/covers-validator/composer.json
-	@echo covers-validator composer.lock is not up to date
-
-vendor-bin/covers-validator/vendor: vendor-bin/covers-validator/composer.lock
-	composer bin covers-validator update $(COMPOSER_FLAGS)
 	touch $@
 
 
