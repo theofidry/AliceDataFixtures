@@ -134,18 +134,33 @@ jobs:
             # in one step with a timeout adjustment
             -   name: Remove Symfony from ProxyManager Composer bin dependencies
                 run: composer bin proxy-manager remove --dev symfony/symfony --no-update
+
             -   name: Install ProxyManager Composer bin dependencies
-                run: composer bin proxy-manager update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
+                uses: ramsey/composer-install@v2
+                with:
+                    dependency-versions: highest
+                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    working-directory: vendor-bin/proxy-manager
             -   name: Repeat "Install ProxyManager Composer bin dependencies"
-                run: composer bin proxy-manager update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
+                uses: ramsey/composer-install@v2
+                with:
+                    dependency-versions: highest
+                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    working-directory: vendor-bin/proxy-manager
+
             -   name: Add back Symfony for ProxyManager Composer bin dependencies
                 if: matrix.variant == 'normal'
                 run: composer bin proxy-manager require --dev "symfony/symfony:^5.4.1 || ^6.0.0" --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --no-update
             -   name: Add back Symfony (variant) for ProxyManager Composer bin dependencies
                 if: matrix.variant != 'normal'
                 run: composer bin proxy-manager require --dev ${{ matrix.variant }} --prefer-dist --prefer-stable ${{ matrix.composer-flags }} --no-update
+            
             -   name: Install Symfony for ProxyManager Composer bin dependencies
-                run: composer bin proxy-manager update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
+                uses: ramsey/composer-install@v2
+                with:
+                    dependency-versions: highest
+                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    working-directory: vendor-bin/proxy-manager
 
             -   name: Configure Symfony (variant) Composer bin dependencies
                 if: matrix.variant != 'normal'
