@@ -126,9 +126,6 @@ jobs:
             -   name: Repeat "Install Symfony Composer bin dependencies"
                 run: composer bin symfony update --prefer-dist --prefer-stable ${{ matrix.composer-flags }}
 
-            -   name: Install CoversValidator Composer bin dependencies
-                run: composer bin covers-validator install --prefer-dist
-
             -   name: Install PHP-CS-Fixer Composer bin dependencies
                 run: composer bin php-cs-fixer install --prefer-dist
 
