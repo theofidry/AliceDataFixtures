@@ -39,7 +39,7 @@ jobs:
                     MYSQL_DATABASE: fidry_alice_data_fixtures
                     MYSQL_ROOT_USER: root
                     MYSQL_ROOT_PASSWORD: password
-            mongosh:
+            mongo:
                 image: mongo:4.4-bionic
                 ports:
                     - 27018:27017
