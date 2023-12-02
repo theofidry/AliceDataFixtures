@@ -56,7 +56,7 @@ jobs:
                 with:
                     php-version: ${{ matrix.php-version }}
                     coverage: xdebug
-                    tools: phpenv, pecl, composer:v2
+                    tools: composer
                     extensions: mongodb
 
             -   name: Configure
