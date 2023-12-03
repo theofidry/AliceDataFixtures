@@ -1,12 +1,12 @@
 PHP_CS_FIXER=php -d zend.enable_gc=0 vendor-bin/php-cs-fixer/bin/php-cs-fixer
 DOCKER_COMPOSE=docker-compose
-DOCKER_COMPOSE_EXEC=$(DOCKER_COMPOSE) exec -T
+DOCKER_COMPOSE_EXEC=$(DOCKER_COMPOSE) exec --no-TTY
 ifeq ("$(CI)", "true")
 MYSQL_BIN=mysql --user=root --password=password --port=3307
-MONGO_BIN=mongo --username=root --password=password --port=27018
+MONGO_BIN=mongosh --username=root --password=password --port=27018
 else
 MYSQL_BIN=$(DOCKER_COMPOSE_EXEC) mysql mysql --user=root --password=password --port=3307
-MONGO_BIN=$(DOCKER_COMPOSE_EXEC) mongo mongo --username=root --password=password --port=27017
+MONGO_BIN=$(DOCKER_COMPOSE_EXEC) mongo mongosh --username=root --password=password --port=27017
 endif
 
 .DEFAULT_GOAL := help
@@ -24,8 +24,8 @@ help:
 .PHONY: clean
 clean:			## Removes all created artefacts
 clean:
-	$(MYSQL_BIN) -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
-	$(MONGO_BIN) --eval "db.getMongo().getDBNames().forEach(function(i){db.getSiblingDB(i).dropDatabase()})"
+	$(MYSQL_BIN) --execute="DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
+	$(MAKE) refresh_mongodb_db
 
 	git clean --exclude=.idea/ -ffdx
 
@@ -37,7 +37,7 @@ refresh_mysql_db:
 .PHONY: refresh_mongodb_db
 refresh_mongodb_db:	## Refresh the MongoDB database used
 refresh_mongodb_db:
-	$(MONGO_BIN) --eval "db.getMongo().getDBNames().forEach(function(i){db.getSiblingDB(i).dropDatabase()})"
+	$(MONGO_BIN) --eval "db.getMongo().getDBNames().filter(dbName => !['admin', 'config', 'local'].includes(dbName)).forEach(dbName => db.getSiblingDB(dbName).dropDatabase())"
 
 .PHONY: refresh_phpcr
 refresh_phpcr:		## Refresh the MongoDB PHPCR database used

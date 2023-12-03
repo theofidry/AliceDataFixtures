@@ -12,6 +12,7 @@ on:
 env:
     MYSQL_HOST: '127.0.0.1'
     DOCTRINE_ORM_DB_HOST: '127.0.0.1'
+    MONGO_DB_VERSION: '7.0'
     XDEBUG_MODE: 'coverage'
 
 jobs:
@@ -40,7 +41,7 @@ jobs:
                     MYSQL_ROOT_USER: root
                     MYSQL_ROOT_PASSWORD: password
             mongo:
-                image: mongo:4.4-bionic
+                image: mongo:7.0
                 ports:
                     - 27018:27017
                 env:
@@ -50,6 +51,17 @@ jobs:
         steps:
             -   name: Checkout
                 uses: actions/checkout@v4
+
+            -   name: Install mongosh
+                run: |
+                    sudo apt-get update
+                    sudo apt-get install -y wget gnupg
+                    wget -qO - https://www.mongodb.org/static/pgp/server-${MONGO_DB_VERSION}.asc | sudo apt-key add -
+                    echo \
+                        "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/${MONGO_DB_VERSION} multiverse" \
+                        | sudo tee /etc/apt/sources.list.d/mongodb-org-${MONGO_DB_VERSION}.list
+                    sudo apt-get update
+                    sudo apt-get install -y mongodb-mongosh
 
             -   name: Install PHP with extensions
                 uses: shivammathur/setup-php@v2

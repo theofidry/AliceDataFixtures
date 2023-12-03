@@ -17,7 +17,7 @@ services:
             - /var/lib/mysql
 
     mongo:
-        image: mongo:4.4-bionic
+        image: mongo:7.0
         ports:
             - 27018:27017
         environment:
