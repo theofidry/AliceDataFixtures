@@ -39,7 +39,7 @@ jobs:
                 variant:
                     - 'no-change'
                     - '"symfony/symfony:^5.4"'
-                    - '"symfony/symfony:^6.0"'
+                    - '"symfony/symfony:^6.4"'
         # To keep in sync with docker-compose.yml
         services:
             mysql:
