@@ -24,8 +24,8 @@ help:
 .PHONY: clean
 clean:			## Removes all created artefacts
 clean:
-	$(MYSQL_BIN) -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
-	$(MONGO_BIN) --eval "db.getMongo().getDBNames().forEach(function(i){db.getSiblingDB(i).dropDatabase()})"
+	$(MYSQL_BIN) --execute="DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
+	$(MAKE) refresh_mongodb_db
 
 	git clean --exclude=.idea/ -ffdx
 
@@ -37,7 +37,7 @@ refresh_mysql_db:
 .PHONY: refresh_mongodb_db
 refresh_mongodb_db:	## Refresh the MongoDB database used
 refresh_mongodb_db:
-	$(MONGO_BIN) --eval "db.getMongo().getDBNames().forEach(function(i){db.getSiblingDB(i).dropDatabase()})"
+	$(MONGO_BIN) --eval "db.getMongo().getDBNames().filter(dbName => !['admin', 'config', 'local'].includes(dbName)).forEach(dbName => db.getSiblingDB(dbName).dropDatabase())"
 
 .PHONY: refresh_phpcr
 refresh_phpcr:		## Refresh the MongoDB PHPCR database used
