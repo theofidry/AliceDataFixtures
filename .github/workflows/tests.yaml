@@ -40,6 +40,7 @@ jobs:
                     - 'no-change'
                     - '"symfony/symfony:^5.4"'
                     - '"symfony/symfony:^6.4"'
+                    - '"symfony/symfony:^7.0"'
         # To keep in sync with docker-compose.yml
         services:
             mysql:
