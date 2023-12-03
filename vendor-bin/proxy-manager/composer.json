@@ -16,6 +16,7 @@
         "doctrine/phpcr-odm": "*",
         "jackalope/jackalope-doctrine-dbal": "*",
         "ocramius/proxy-manager": "*",
+        "monolog/monolog": "*",
         "symfony/symfony": "^4.4.32 || ^5.4 || ^6.0",
         "theofidry/composer-inheritance-plugin": "^1.2",
         "wouterj/eloquent-bundle": "*"
