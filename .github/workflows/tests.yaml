@@ -17,7 +17,7 @@ env:
 
 jobs:
     tests:
-        name: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} + ${{ matrix.variant }}
+        name: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} + ${{ matrix.variant }} for ${{ matrix.make-test }}
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
@@ -25,15 +25,24 @@ jobs:
                 php-version:
                     - '8.2'
                 dependencies: [ highest, lowest ]
+                make-test:
+                    - test_core
+                    - test_doctrine_bridge
+                    - test_doctrine_odm_bridge
+                    - test_doctrine_phpcr_bridge
+                    - test_eloquent_bridge
+                    - test_symfony_bridge
+                    - test_symfony_doctrine_bridge
+                    - test_symfony_doctrine_bridge_proxy_manager
+                    - test_symfony_eloquent_bridge
+                    - test_symfony_eloquent_bridge_proxy_manager
                 variant:
-                    - '"symfony/symfony:^5.4.1 || ^6.0.0"'
+                    - 'no-change'
                     - '"symfony/symfony:^5.4"'
                     - '"symfony/symfony:^6.0"'
-                exclude:
-                    -   dependencies: 'locked'
-                        variant: '"symfony/symfony:^5.4"'
-                    -   dependencies: 'locked'
-                        variant: '"symfony/symfony:^6.0"'
+                include:
+                    -   dependencies: 'highest-no-change'
+                    -   dependencies: 'highest-no-change'
         # To keep in sync with docker-compose.yml
         services:
             mysql:
@@ -84,8 +93,7 @@ jobs:
             -   name: Install Composer dependencies (${{ matrix.dependencies }})
                 uses: ramsey/composer-install@v2
                 with:
-                    dependency-versions: ${{ matrix.dependencies }}
-                    composer-options: "--prefer-dist --prefer-stable"
+                    dependency-versions: "${{ matrix.dependencies }}"
 
             # Split the bin updates to avoid GA to time out the task
             # The updates apparently need to be repeated as well due to a bug
@@ -93,53 +101,53 @@ jobs:
             -   name: Install doctrine Composer bin dependencies
                 uses: ramsey/composer-install@v2
                 with:
-                    dependency-versions: ${{ matrix.dependencies }}
-                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    dependency-versions: "${{ matrix.dependencies }}"
+                    composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine
             -   name: Repeat "Install doctrine Composer bin dependencies"
                 uses: ramsey/composer-install@v2
                 with:
-                    dependency-versions: ${{ matrix.dependencies }}
-                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    dependency-versions: "${{ matrix.dependencies }}"
+                    composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine
 
             -   name: Install MongoDB Composer bin dependencies
                 uses: ramsey/composer-install@v2
                 with:
-                    dependency-versions: ${{ matrix.dependencies }}
-                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    dependency-versions: "${{ matrix.dependencies }}"
+                    composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine_mongodb
             -   name: Repeat "Install MongoDB Composer bin dependencies"
                 uses: ramsey/composer-install@v2
                 with:
-                    dependency-versions: ${{ matrix.dependencies }}
-                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    dependency-versions: "${{ matrix.dependencies }}"
+                    composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine_mongodb
 
             -   name: Install Doctrine PHPCR Composer bin dependencies
                 uses: ramsey/composer-install@v2
                 with:
-                    dependency-versions: ${{ matrix.dependencies }}
-                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    dependency-versions: "${{ matrix.dependencies }}"
+                    composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine_phpcr
             -   name: Repeat "Install Doctrine PHPCR Composer bin dependencies"
                 uses: ramsey/composer-install@v2
                 with:
-                    dependency-versions: ${{ matrix.dependencies }}
-                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    dependency-versions: "${{ matrix.dependencies }}"
+                    composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine_phpcr
 
             -   name: Install Eloquent Composer bin dependencies
                 uses: ramsey/composer-install@v2
                 with:
-                    dependency-versions: ${{ matrix.dependencies }}
-                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    dependency-versions: "${{ matrix.dependencies }}"
+                    composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/eloquent
             -   name: Repeat "Install Eloquent Composer bin dependencies"
                 uses: ramsey/composer-install@v2
                 with:
-                    dependency-versions: ${{ matrix.dependencies }}
-                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    dependency-versions: "${{ matrix.dependencies }}"
+                    composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/eloquent
 
             # There is a known issue here with Composer
@@ -148,53 +156,52 @@ jobs:
             # Once this is fixed the whole bin dependencies can probably be installed
             # in one step with a timeout adjustment
             -   name: Remove Symfony from ProxyManager Composer bin dependencies
-                if: matrix.dependencies != 'locked'
-                run: composer bin proxy-manager remove --dev symfony/symfony --no-update
+                if: matrix.variant != 'no-change'
+                run: composer bin proxy-manager remove --dev --no-update symfony/symfony
 
             -   name: Install ProxyManager Composer bin dependencies
                 uses: ramsey/composer-install@v2
                 with:
-                    dependency-versions: ${{ matrix.dependencies }}
-                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    dependency-versions: "${{ matrix.dependencies }}"
+                    composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/proxy-manager
             -   name: Repeat "Install ProxyManager Composer bin dependencies"
                 uses: ramsey/composer-install@v2
                 with:
-                    dependency-versions: ${{ matrix.dependencies }}
-                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    dependency-versions: "${{ matrix.dependencies }}"
+                    composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/proxy-manager
 
             -   name: Add back Symfony (variant) for ProxyManager Composer bin dependencies
-                if: matrix.dependencies != 'locked'
+                if: matrix.variant != 'no-change'
                 run: composer bin proxy-manager require --dev --no-update ${{ matrix.variant }}
 
             -   name: Install Symfony for ProxyManager Composer bin dependencies
                 uses: ramsey/composer-install@v2
                 with:
-                    dependency-versions: ${{ matrix.dependencies }}
-                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    dependency-versions: "${{ matrix.dependencies }}"
+                    composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/proxy-manager
 
             -   name: Configure Symfony (variant) Composer bin dependencies
-                if: matrix.dependencies != 'locked'
+                if: matrix.variant != 'no-change'
                 run: composer bin symfony require --dev --no-update ${{ matrix.variant }}
 
             -   name: Install Symfony Composer bin dependencies
                 uses: ramsey/composer-install@v2
                 with:
-                    dependency-versions: ${{ matrix.dependencies }}
-                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    dependency-versions: "${{ matrix.dependencies }}"
+                    composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/symfony
             -   name: Repeat "Install Symfony Composer bin dependencies"
                 uses: ramsey/composer-install@v2
                 with:
-                    dependency-versions: ${{ matrix.dependencies }}
-                    composer-options: "--prefer-dist --prefer-stable ${{ matrix.composer-flags }}"
+                    dependency-versions: "${{ matrix.dependencies }}"
+                    composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/symfony
 
             -   name: Run Tests
-                run: make test
-                timeout-minutes: 5
+                run: make ${{ matrix.make-test }}
 
   # This is a "trick", a meta task which does not change, and we can use in
   # the protected branch rules as opposed to the individual tests which
