@@ -6,7 +6,7 @@
     },
     "require-dev": {
         "alcaeus/mongo-php-adapter": "^1.2.1",
-        "doctrine/annotations": "^1.0",
+        "doctrine/annotations": "^1.0 || ^2.0",
         "doctrine/data-fixtures": "^1.5.1",
         "doctrine/doctrine-bundle": "^2.4.3",
         "doctrine/mongodb-odm": "^2.2.2",
@@ -15,9 +15,8 @@
         "doctrine/phpcr-bundle": "^2.3.0",
         "doctrine/phpcr-odm": "^1.5.4",
         "jackalope/jackalope-doctrine-dbal": "^1.7.1",
-        "ocramius/proxy-manager": "^2.13",
-        "psy/psysh": "^0.10.9",
-        "symfony/symfony": "^4.4.32 || ^5.4 || ^6.0",
+        "friendsofphp/proxy-manager-lts": "^1.0",
+        "symfony/symfony": "^5.4 || ^6.4",
         "theofidry/composer-inheritance-plugin": "^1.2",
         "wouterj/eloquent-bundle": "^2.1.1"
     },

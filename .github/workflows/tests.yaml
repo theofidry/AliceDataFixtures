@@ -193,7 +193,7 @@ jobs:
                     working-directory: vendor-bin/symfony
 
             -   name: Run Tests
-                run: make test
+                run: make test --keep-going
                 timeout-minutes: 5
 
   # This is a "trick", a meta task which does not change, and we can use in
