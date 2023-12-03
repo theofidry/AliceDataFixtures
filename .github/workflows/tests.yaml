@@ -24,14 +24,27 @@ jobs:
             matrix:
                 php-version:
                     - '8.2'
-                dependencies: [ highest, lowest ]
+                dependencies: [ locked, highest, lowest ]
+                make-test:
+                    - test_core
+                    - test_doctrine_bridge
+                    - test_doctrine_odm_bridge
+                    - test_doctrine_phpcr_bridge
+                    - test_eloquent_bridge
+                    - test_symfony_bridge
+                    - test_symfony_doctrine_bridge
+                    - test_symfony_doctrine_bridge_proxy_manager
+                    - test_symfony_eloquent_bridge
+                    - test_symfony_eloquent_bridge_proxy_manager
                 variant:
                     - '"symfony/symfony:^5.4.1 || ^6.4.0"'
                     - '"symfony/symfony:^5.4"'
                     - '"symfony/symfony:^6.4"'
                 include:
-                    -   php-version: '8.2'
-                        dependencies: 'locked'
+                    -   dependencies: 'locked'
+                        variant: '"symfony/symfony:^5.4"'
+                    -   dependencies: 'locked'
+                        variant: '"symfony/symfony:^6.4"'
         # To keep in sync with docker-compose.yml
         services:
             mysql:
@@ -190,8 +203,7 @@ jobs:
                     working-directory: vendor-bin/symfony
 
             -   name: Run Tests
-                run: make test --keep-going
-                timeout-minutes: 5
+                run: make ${{ make-test }}
 
   # This is a "trick", a meta task which does not change, and we can use in
   # the protected branch rules as opposed to the individual tests which
