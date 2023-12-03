@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
-use Fidry\PsyshBundle\PsyshBundle;
 use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -30,10 +29,6 @@ class EloquentKernel extends IsolatedKernel
             new FidryAliceDataFixturesBundle(),
             new WouterJEloquentBundle(),
         ];
-
-        if (class_exists(PsyshBundle::class)) {
-            $bundles[] = new PsyshBundle();
-        }
 
         return $bundles;
     }

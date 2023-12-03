@@ -15,7 +15,6 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
 use Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
-use Fidry\PsyshBundle\PsyshBundle;
 use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -30,10 +29,6 @@ class DoctrineMongodbKernel extends IsolatedKernel
             new FidryAliceDataFixturesBundle(),
             new DoctrineMongoDBBundle(),
         ];
-
-        if (class_exists(PsyshBundle::class)) {
-            $bundles[] = new PsyshBundle();
-        }
 
         return $bundles;
     }
