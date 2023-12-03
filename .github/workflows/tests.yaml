@@ -27,8 +27,8 @@ jobs:
                 dependencies: [ highest, lowest ]
                 variant:
                     - '"symfony/symfony:^5.4.1 || ^6.0.0"'
-                    - '"^5.4"'
-                    - '"^6.0"'
+                    - '"symfony/symfony:^5.4"'
+                    - '"symfony/symfony:^6.0"'
         # To keep in sync with docker-compose.yml
         services:
             mysql:
