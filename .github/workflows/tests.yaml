@@ -17,7 +17,7 @@ env:
 
 jobs:
     tests:
-        name: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} + ${{ matrix.variant }}
+        name: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} + ${{ matrix.variant }} for ${{ matrix.make-test }}
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
