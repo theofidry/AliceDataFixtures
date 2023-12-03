@@ -25,7 +25,9 @@ class DummyWithIdentifier
 {
     /**
      * @Id
+     *
      * @Column(type="integer")
+     *
      * @GeneratedValue
      */
     public int $id;

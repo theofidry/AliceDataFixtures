@@ -5,8 +5,8 @@
         ]
     },
     "require-dev": {
-        "illuminate/database": "^8.12",
-        "illuminate/filesystem": "^8.12",
+        "illuminate/database": ">=8.80",
+        "illuminate/filesystem": ">=8.80",
         "theofidry/composer-inheritance-plugin": "^1.2"
     },
     "config": {

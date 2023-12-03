@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "nelmio/alice": "^3.10",
         "psr/log": "^1 || ^2 || ^3",
         "webmozart/assert": "^1.10"
@@ -30,14 +30,14 @@
         "phpspec/prophecy": "^1.14.0",
         "phpspec/prophecy-phpunit": "^2.0.1",
         "phpunit/phpunit": "^9.5.10",
-        "symfony/phpunit-bridge": "^5.3.8 || ^6.0"
+        "symfony/phpunit-bridge": "^5.3.8 || ^6.4"
     },
     "conflict": {
         "doctrine/orm": "<2.6.3",
         "doctrine/persistence": "<2.0",
         "illuminate/database": "<8.12",
         "ocramius/proxy-manager": "<2.1",
-        "symfony/framework-bundle": "<5.4",
+        "symfony/framework-bundle": "<5.4 || >=6.0 <6.4",
         "zendframework/zend-code": "<3.3.1"
     },
     "suggest": {
@@ -84,7 +84,8 @@
     },
     "extra": {
         "bamarni-bin": {
-            "bin-links": false
+            "bin-links": false,
+            "forward-command": false
         },
         "branch-alias": {
             "dev-master": "1.x-dev"
