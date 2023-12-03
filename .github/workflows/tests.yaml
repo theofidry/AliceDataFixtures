@@ -17,7 +17,7 @@ env:
 
 jobs:
     tests:
-        name: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} + ${{ matrix.variant }} for ${{ matrix.make-test }}
+        name: '${{ matrix.make-test }}: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} + ${{ matrix.variant }}'
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
@@ -39,12 +39,7 @@ jobs:
                 variant:
                     - 'no-change'
                     - '"symfony/symfony:^5.4"'
-                    - '"symfony/symfony:^6.4"'
-                include:
-                    -   dependencies: 'highest-no-change'
-                        variant: '"symfony/symfony:^5.4"'
-                    -   dependencies: 'highest-no-change'
-                        variant: '"symfony/symfony:^6.4"'
+                    - '"symfony/symfony:^6.0"'
         # To keep in sync with docker-compose.yml
         services:
             mysql:

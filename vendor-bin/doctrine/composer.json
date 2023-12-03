@@ -1,11 +1,11 @@
 {
     "require-dev": {
-        "doctrine/annotations": "^1.0",
-        "doctrine/data-fixtures": "^1.2",
-        "doctrine/orm": "^2.5",
-        "doctrine/persistence": "^1.3.4 || ^2.0",
+        "doctrine/annotations": "*",
+        "doctrine/data-fixtures": "*",
+        "doctrine/orm": "*",
+        "doctrine/persistence": "*",
         "theofidry/composer-inheritance-plugin": "^1.2",
-        "symfony/cache": "^5.4 || ^6.0"
+        "symfony/cache": "*"
     },
     "config": {
         "bin-dir": "bin",
