@@ -19,7 +19,7 @@
         "doctrine/phpcr-odm": "^1.5.4",
         "jackalope/jackalope-doctrine-dbal": "^1.7.1",
         "monolog/monolog": "^3.1",
-        "symfony/symfony": "^4.4.32 || ^5.4 || ^6.0",
+        "symfony/symfony": "^6.4",
         "theofidry/composer-inheritance-plugin": "^1.2",
         "wouterj/eloquent-bundle": "^2.1.1"
     },
