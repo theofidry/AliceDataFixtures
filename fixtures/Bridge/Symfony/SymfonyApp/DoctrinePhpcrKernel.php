@@ -33,10 +33,6 @@ class DoctrinePhpcrKernel extends IsolatedKernel
             new DoctrinePHPCRBundle(),
         ];
 
-        if (class_exists(PsyshBundle::class)) {
-            $bundles[] = new PsyshBundle();
-        }
-
         return $bundles;
     }
 
