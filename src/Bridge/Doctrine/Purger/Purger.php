@@ -99,13 +99,13 @@ use Nelmio\Alice\IsAServiceTrait;
         if ($disableFkChecks) {
             $connection = $this->purger->getObjectManager()->getConnection();
 
-            $connection->exec('SET FOREIGN_KEY_CHECKS = 0;');
+            $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0;');
         }
 
         $this->purger->purge();
 
         if ($disableFkChecks && isset($connection)) {
-            $connection->exec('SET FOREIGN_KEY_CHECKS = 1;');
+            $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1;');
         }
     }
 

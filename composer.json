@@ -34,6 +34,7 @@
     },
     "conflict": {
         "doctrine/orm": "<2.6.3",
+        "doctrine/dbal": "<3.0",
         "doctrine/persistence": "<2.0",
         "illuminate/database": "<8.12",
         "ocramius/proxy-manager": "<2.1",
