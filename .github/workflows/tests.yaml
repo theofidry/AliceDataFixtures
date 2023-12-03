@@ -40,9 +40,6 @@ jobs:
                     - 'no-change'
                     - '"symfony/symfony:^5.4"'
                     - '"symfony/symfony:^6.0"'
-                include:
-                    -   dependencies: 'highest-no-change'
-                    -   dependencies: 'highest-no-change'
         # To keep in sync with docker-compose.yml
         services:
             mysql:
