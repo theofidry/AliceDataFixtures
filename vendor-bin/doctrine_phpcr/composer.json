@@ -1,9 +1,9 @@
 {
     "require-dev": {
-        "doctrine/annotations": "^1.0",
-        "doctrine/persistence": "^1.3.4 || ^2.0",
-        "doctrine/phpcr-odm": "^1.4",
-        "jackalope/jackalope-doctrine-dbal": "^1.2",
+        "doctrine/annotations": "*",
+        "doctrine/persistence": "*",
+        "doctrine/phpcr-odm": "*",
+        "jackalope/jackalope-doctrine-dbal": "*",
         "symfony/console": "^4.4.32 || ^5.4 || ^6.0",
         "theofidry/composer-inheritance-plugin": "^1.2"
     },
