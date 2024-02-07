@@ -102,6 +102,7 @@ class ObjectManagerPersister implements PersisterInterface
 
         foreach ($this->metadataToRestore as $metadata) {
             $metadataFactory->setMetadataFor($metadata->getName(), $metadata);
+            $this->clearUnitOfWorkPersister($metadata->getName());
         }
 
         $this->metadataToRestore = [];
