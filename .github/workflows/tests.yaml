@@ -88,7 +88,7 @@ jobs:
                     perl -pi -e 's/^}$/,"provide":{"ext-mongo":"*"}}/' composer.json
 
             -   name: Install Composer dependencies (${{ matrix.dependencies }})
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
 
@@ -96,52 +96,52 @@ jobs:
             # The updates apparently need to be repeated as well due to a bug
             # in the wiki merge plugin
             -   name: Install doctrine Composer bin dependencies
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine
             -   name: Repeat "Install doctrine Composer bin dependencies"
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine
 
             -   name: Install MongoDB Composer bin dependencies
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine_mongodb
             -   name: Repeat "Install MongoDB Composer bin dependencies"
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine_mongodb
 
             -   name: Install Doctrine PHPCR Composer bin dependencies
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine_phpcr
             -   name: Repeat "Install Doctrine PHPCR Composer bin dependencies"
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine_phpcr
 
             -   name: Install Eloquent Composer bin dependencies
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/eloquent
             -   name: Repeat "Install Eloquent Composer bin dependencies"
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
@@ -157,13 +157,13 @@ jobs:
                 run: composer bin proxy-manager remove --dev --no-update symfony/symfony
 
             -   name: Install ProxyManager Composer bin dependencies
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/proxy-manager
             -   name: Repeat "Install ProxyManager Composer bin dependencies"
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
@@ -174,7 +174,7 @@ jobs:
                 run: composer bin proxy-manager require --dev --no-update ${{ matrix.variant }}
 
             -   name: Install Symfony for ProxyManager Composer bin dependencies
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
@@ -185,13 +185,13 @@ jobs:
                 run: composer bin symfony require --dev --no-update ${{ matrix.variant }}
 
             -   name: Install Symfony Composer bin dependencies
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/symfony
             -   name: Repeat "Install Symfony Composer bin dependencies"
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
