@@ -17,7 +17,7 @@
         "jackalope/jackalope-doctrine-dbal": "*",
         "friendsofphp/proxy-manager-lts": "*",
         "monolog/monolog": "*",
-        "symfony/symfony": "^5.4 || ^6.4",
+        "symfony/symfony": "^5.4 || ^6.4 || ^7.0",
         "theofidry/composer-inheritance-plugin": "^1.2",
         "wouterj/eloquent-bundle": "*"
     },
