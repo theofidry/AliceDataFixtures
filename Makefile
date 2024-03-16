@@ -221,6 +221,7 @@ vendor-bin/doctrine/composer.lock: vendor-bin/doctrine/composer.json
 	@echo vendor-bin/doctrine/composer.lock is not up to date.
 
 vendor-bin/doctrine/vendor/phpunit: vendor-bin/doctrine/composer.lock
+	composer bin doctrine update $(COMPOSER_FLAGS) || true
 	composer bin doctrine update $(COMPOSER_FLAGS)
 	touch $@
 

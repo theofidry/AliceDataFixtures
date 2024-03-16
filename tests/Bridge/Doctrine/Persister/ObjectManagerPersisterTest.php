@@ -140,6 +140,24 @@ class ObjectManagerPersisterTest extends TestCase
         self::assertInstanceOf(DummyWithIdentifier::class, $entity);
     }
 
+    public function testClearingUnitOfWorkPersister(): void
+    {
+        $dummy = new DummyWithProperty();
+        $dummy->id = 1;
+
+        $this->persister->persist($dummy);
+        $this->persister->flush();
+
+        $dummy = new DummyWithProperty();
+        $dummy->property = 'foo';
+
+        $this->entityManager->persist($dummy);
+        $this->entityManager->flush();
+
+        $entity = $this->entityManager->getRepository(DummyWithProperty::class)->findOneBy(['property' => 'foo']);
+        self::assertInstanceOf(DummyWithProperty::class, $entity);
+    }
+
     public function testCanPersistEntitiesWithoutExplicitIdentifierSetEvenWhenExistingEntitiesHaveOne(): void
     {
         $dummy1 = new Dummy();
