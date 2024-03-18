@@ -21,6 +21,7 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithIdentifier;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithProperty;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithRelatedCascadePersist;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithRelation;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
