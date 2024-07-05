@@ -23,9 +23,9 @@ use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use WouterJ\EloquentBundle\WouterJEloquentBundle;
 
 /**
