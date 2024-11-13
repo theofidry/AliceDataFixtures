@@ -126,14 +126,14 @@ jobs:
 
             -   name: Install Doctrine PHPCR Composer bin dependencies
                 uses: ramsey/composer-install@v3
-                if: "matrix.make-test == 'test_doctrine_phpcr_bridge' || matrix.make-test == 'test_symfony_bridge'"
+                if: "matrix.make-test == 'test_doctrine_phpcr_bridge' || matrix.make-test == 'test_symfony_bridge' || matrix.make-test == 'test_symfony_doctrine_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine_phpcr
             -   name: Repeat "Install Doctrine PHPCR Composer bin dependencies"
                 uses: ramsey/composer-install@v3
-                if: "matrix.make-test == 'test_doctrine_phpcr_bridge' || matrix.make-test == 'test_symfony_bridge'"
+                if: "matrix.make-test == 'test_doctrine_phpcr_bridge' || matrix.make-test == 'test_symfony_bridge' || matrix.make-test == 'test_symfony_doctrine_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
