@@ -13,22 +13,16 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument;
 
-use Doctrine\ODM\PHPCR\Mapping\Annotations\Field;
-use Doctrine\ODM\PHPCR\Mapping\Annotations\Id;
-use Doctrine\ODM\PHPCR\Mapping\Annotations\MappedSuperclass;
+use Doctrine\ODM\PHPCR\Mapping\Attributes\Field;
+use Doctrine\ODM\PHPCR\Mapping\Attributes\Id;
+use Doctrine\ODM\PHPCR\Mapping\Attributes\MappedSuperclass;
 
-/**
- * @MappedSuperclass()
- */
+#[MappedSuperclass]
 class MappedSuperclassDummy
 {
-    /**
-     * @Id()
-     */
+    #[Id]
     public $id;
 
-    /**
-     * @Field(type="string")
-     */
+    #[Field(type: 'string')]
     public string $status;
 }
