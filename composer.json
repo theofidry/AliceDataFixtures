@@ -33,9 +33,9 @@
         "symfony/phpunit-bridge": "^5.3.8 || ^6.4"
     },
     "conflict": {
-        "doctrine/orm": "<2.20, >=3.0",
-        "doctrine/dbal": "<3.9, >=4.0",
-        "doctrine/persistence": "<3.4, >=4.0",
+        "doctrine/orm": "<2.20 || >=3.0",
+        "doctrine/dbal": "<3.9 || >=4.0",
+        "doctrine/persistence": "<3.4 || >=4.0",
         "illuminate/database": "<11.31",
         "ocramius/proxy-manager": "<2.1",
         "symfony/framework-bundle": ">=6.0 <6.4",
