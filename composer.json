@@ -33,6 +33,7 @@
         "symfony/phpunit-bridge": "^5.3.8 || ^6.4"
     },
     "conflict": {
+        "doctrine/data-fixtures": "<1.7.0",
         "doctrine/orm": "<2.20",
         "doctrine/phpcr-odm": "<2.0.0",
         "doctrine/dbal": "<3.0",
