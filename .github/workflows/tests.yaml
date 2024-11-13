@@ -196,14 +196,14 @@ jobs:
 
             -   name: Install Symfony Composer bin dependencies
                 uses: ramsey/composer-install@v3
-                if: "matrix.make-test == 'test_symfony_bridge' || matrix.make-test == 'test_symfony_doctrine_bridge' || matrix.make-test == 'test_symfony_eloquent_bridge' || matrix.make-test == 'test_symfony_eloquent_bridge_proxy_manager'"
+                if: "matrix.make-test == 'test_symfony_bridge' || matrix.make-test == 'test_symfony_doctrine_bridge' || matrix.make-test == 'test_symfony_eloquent_bridge' || matrix.make-test == 'test_symfony_eloquent_bridge_proxy_manager' || matrix.make-test == 'test_symfony_doctrine_bridge_proxy_manager'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/symfony
             -   name: Repeat "Install Symfony Composer bin dependencies"
                 uses: ramsey/composer-install@v3
-                if: "matrix.make-test == 'test_symfony_bridge' || matrix.make-test == 'test_symfony_doctrine_bridge' || matrix.make-test == 'test_symfony_eloquent_bridge' || matrix.make-test == 'test_symfony_eloquent_bridge_proxy_manager'"
+                if: "matrix.make-test == 'test_symfony_bridge' || matrix.make-test == 'test_symfony_doctrine_bridge' || matrix.make-test == 'test_symfony_eloquent_bridge' || matrix.make-test == 'test_symfony_eloquent_bridge_proxy_manager' || matrix.make-test == 'test_symfony_doctrine_bridge_proxy_manager'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
