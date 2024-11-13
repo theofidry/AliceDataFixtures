@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "nelmio/alice": "^3.10",
         "psr/log": "^1 || ^2 || ^3",
         "webmozart/assert": "^1.10"
@@ -34,10 +34,12 @@
     },
     "conflict": {
         "doctrine/orm": "<2.6.3",
+        "doctrine/phpcr-odm": "<2.0.0",
+        "doctrine/dbal": "<3.0",
         "doctrine/persistence": "<2.0",
         "illuminate/database": "<8.12",
         "ocramius/proxy-manager": "<2.1",
-        "symfony/framework-bundle": "<5.4 || >=6.0 <6.4",
+        "symfony/framework-bundle": ">=6.0 <6.4",
         "zendframework/zend-code": "<3.3.1"
     },
     "suggest": {

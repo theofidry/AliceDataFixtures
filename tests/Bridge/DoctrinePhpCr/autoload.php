@@ -15,11 +15,10 @@ const ROOT = __DIR__.'/../../..';
 
 $autoload = ROOT.'/vendor-bin/doctrine_phpcr/vendor/autoload.php';
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ODM\PHPCR\Configuration;
 use Doctrine\ODM\PHPCR\DocumentManager;
-use Doctrine\ODM\PHPCR\Mapping\Driver\AnnotationDriver;
+use Doctrine\ODM\PHPCR\Mapping\Driver\AttributeDriver;
 use Jackalope\RepositoryFactoryDoctrineDBAL;
 use PHPCR\SessionInterface;
 use PHPCR\SimpleCredentials;
@@ -42,8 +41,7 @@ $documentManagerFactory = static function () {
     })();
 
     $config = (static function (): Configuration {
-        $driver = new AnnotationDriver(
-            new AnnotationReader(),
+        $driver = new AttributeDriver(
             [
                 ROOT.'/vendor-bin/doctrine_phpcr/vendor/doctrine/phpcr-odm/lib/Doctrine/ODM/PHPCR/Document',
                 ROOT.'/fixtures/Bridge/Doctrine/PhpCrDocument',

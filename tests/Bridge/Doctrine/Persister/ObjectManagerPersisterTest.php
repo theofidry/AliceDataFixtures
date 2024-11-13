@@ -21,6 +21,7 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithEmbeddable;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithIdentifier;
+use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithProperty;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithRelatedCascadePersist;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithRelation;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
@@ -138,6 +139,24 @@ class ObjectManagerPersisterTest extends TestCase
 
         $entity = $this->entityManager->getRepository(DummyWithIdentifier::class)->find(200);
         self::assertInstanceOf(DummyWithIdentifier::class, $entity);
+    }
+
+    public function testClearingUnitOfWorkPersister(): void
+    {
+        $dummy = new DummyWithProperty();
+        $dummy->id = 1;
+
+        $this->persister->persist($dummy);
+        $this->persister->flush();
+
+        $dummy = new DummyWithProperty();
+        $dummy->property = 'foo';
+
+        $this->entityManager->persist($dummy);
+        $this->entityManager->flush();
+
+        $entity = $this->entityManager->getRepository(DummyWithProperty::class)->findOneBy(['property' => 'foo']);
+        self::assertInstanceOf(DummyWithProperty::class, $entity);
     }
 
     public function testCanPersistEntitiesWithoutExplicitIdentifierSetEvenWhenExistingEntitiesHaveOne(): void
