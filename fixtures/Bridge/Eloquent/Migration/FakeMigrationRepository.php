@@ -75,4 +75,9 @@ class FakeMigrationRepository implements MigrationRepositoryInterface
     {
         $this->__call(__METHOD__, func_get_args());
     }
+
+    public function getMigrationsByBatch($batch)
+    {
+        $this->__call(__METHOD__, func_get_args());
+    }
 }

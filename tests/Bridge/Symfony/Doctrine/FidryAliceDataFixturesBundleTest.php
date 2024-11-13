@@ -33,6 +33,7 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
 
     /**
      * @group legacy
+     *
      * @expectedDepreaction The service "fidry_alice_data_fixtures.loader.multipass_file" is deprecated and will be removed in future versions.
      */
     public function testServiceRegistration(): void

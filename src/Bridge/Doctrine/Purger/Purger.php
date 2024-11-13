@@ -17,6 +17,7 @@ use Doctrine\Common\DataFixtures\Purger\MongoDBPurger as DoctrineMongoDBPurger;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger as DoctrinePhpCrPurger;
 use Doctrine\Common\DataFixtures\Purger\PurgerInterface as DoctrinePurgerInterface;
+use Doctrine\DBAL\Platforms\MariaDBPlatform;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\ODM\MongoDB\DocumentManager as DoctrineMongoDocumentManager;
 use Doctrine\ODM\PHPCR\DocumentManager as DoctrinePhpCrDocumentManager;
@@ -32,6 +33,7 @@ use Nelmio\Alice\IsAServiceTrait;
  * Bridge for Doctrine purger.
  *
  * @author Vincent CHALAMON <vincentchalamon@gmail.com>
+ *
  * @final
  */
 /* final */ class Purger implements PurgerInterface, PurgerFactoryInterface
@@ -92,19 +94,19 @@ use Nelmio\Alice\IsAServiceTrait;
         $disableFkChecks = (
             $this->purger instanceof DoctrineOrmPurger
             && in_array($this->purgeMode->getValue(), [PurgeMode::createDeleteMode()->getValue(), PurgeMode::createTruncateMode()->getValue()])
-            && $this->purger->getObjectManager()->getConnection()->getDatabasePlatform() instanceof MySqlPlatform
+            && $this->doesDatabaseSupportTruncate()
         );
 
         if ($disableFkChecks) {
             $connection = $this->purger->getObjectManager()->getConnection();
 
-            $connection->exec('SET FOREIGN_KEY_CHECKS = 0;');
+            $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0;');
         }
 
         $this->purger->purge();
 
         if ($disableFkChecks && isset($connection)) {
-            $connection->exec('SET FOREIGN_KEY_CHECKS = 1;');
+            $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1;');
         }
     }
 
@@ -134,5 +136,13 @@ use Nelmio\Alice\IsAServiceTrait;
                 get_class($manager)
             )
         );
+    }
+
+    private function doesDatabaseSupportTruncate(): bool
+    {
+        $platform = $this->purger->getObjectManager()->getConnection()->getDatabasePlatform();
+
+        return $platform instanceof MySqlPlatform
+            || $platform instanceof MariaDBPlatform;
     }
 }

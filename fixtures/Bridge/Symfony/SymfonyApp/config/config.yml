@@ -8,6 +8,10 @@
 #
 
 framework:
+    http_method_override: false
+    handle_all_throwables: false
+    php_errors:
+        log: true
     secret: test
     router:
         resource: ~
@@ -16,7 +20,7 @@ framework:
         enabled: false
     validation:
         enabled: true
-        enable_annotations: true
+        email_validation_mode: html5
     session:
         enabled: false
     test: ~

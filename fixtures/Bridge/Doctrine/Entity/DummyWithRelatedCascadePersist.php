@@ -30,7 +30,9 @@ class DummyWithRelatedCascadePersist
 {
     /**
      * @Id
+     *
      * @Column(type="integer")
+     *
      * @GeneratedValue
      */
     public ?int $id = null;
@@ -47,10 +49,13 @@ class DummyWithRelatedCascadePersist
 
     /**
      * @var Collection<AnotherDummy>
+     *
      * @ManyToMany(targetEntity=AnotherDummy::class, cascade={"persist"})
+     *
      * @JoinTable(
      *     name="dummmy_with_related_cascade_persist_to_another_dummy",
      *     joinColumns={
+     *
      *         @JoinColumn(name="user_id", referencedColumnName="id")
      *     },
      *     inverseJoinColumns={

@@ -4,18 +4,18 @@ AliceDataFixtures
 [Alice](https://github.com/nelmio/alice) 3.x no longer ships with a persistence layer, so this library provides one!
 
 [![Package version](https://img.shields.io/packagist/v/theofidry/alice-data-fixtures.svg?style=flat-square)](https://packagist.org/packages/theofidry/alice-data-fixtures)
-[![Build Status](https://github.com/theofidry/AliceDataFixtures/workflows/Test/badge.svg?branch=master)](https://github.com/theofidry/AliceDataFixtures/workflows/Test/badge.svg?branch=master)
+[![Build Status](https://github.com/theofidry/AliceDataFixtures/workflows/Test/badge.svg?branch=master)](https://github.com/theofidry/AliceDataFixtures/actions?query=branch%3Amaster)
 [![Slack](https://img.shields.io/badge/slack-%23alice--fixtures-red.svg?style=flat-square)](https://symfony-devs.slack.com/shared_invite/MTYxMjcxMjc0MTc5LTE0OTA3ODE4OTQtYzc4NWVmMzRmZQ)
 [![license](https://img.shields.io/badge/license-MIT-red.svg?style=flat-square)](LICENSE)
 
 
 Supports:
 
-* Symfony 4.4+, 5.4+, 6.0+
-* Doctrine ORM 2.5+
+* Symfony 6.4+
+* Doctrine ORM 2.20+
 * Doctrine ODM 2.0+
-* Doctrine PHPCR 1.4+
-* Eloquent 8.12+
+* Doctrine PHPCR 2.0+
+* Eloquent 11.0+
 
 
 ## Documentation
@@ -57,7 +57,7 @@ fidry_alice_data_fixtures:
         eloquent_orm: ~
 ```
 
-For each driver, is the appropriate bundle is detected, e.g. DoctrineORMBundle for Doctrine and WouterJEloquentBundle
+For each driver, if the appropriate bundle is detected, e.g. DoctrineORMBundle for Doctrine and WouterJEloquentBundle
 for Eloquent, the services related to those driver will be enabled. If you want to skip those checks you can turn
 a specific driver to `true` instead. If you want to disable a specific driver, simply force the value `false` instead.
 

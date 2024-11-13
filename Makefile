@@ -1,13 +1,12 @@
-COVERS_VALIDATOR=php -d zend.enable_gc=0 vendor-bin/covers-validator/bin/covers-validator
 PHP_CS_FIXER=php -d zend.enable_gc=0 vendor-bin/php-cs-fixer/bin/php-cs-fixer
-DOCKER_COMPOSE=docker-compose
-DOCKER_COMPOSE_EXEC=$(DOCKER_COMPOSE) exec -T
+DOCKER_COMPOSE=docker compose
+DOCKER_COMPOSE_EXEC=$(DOCKER_COMPOSE) exec --no-TTY
 ifeq ("$(CI)", "true")
 MYSQL_BIN=mysql --user=root --password=password --port=3307
-MONGO_BIN=mongo --username=root --password=password --port=27018
+MONGO_BIN=mongosh --username=root --password=password --port=27018
 else
-MYSQL_BIN=$(DOCKER_COMPOSE_EXEC) mysql mysql --user=root --password=password --port=3307
-MONGO_BIN=$(DOCKER_COMPOSE_EXEC) mongo mongo --username=root --password=password --port=27017
+MYSQL_BIN=$(DOCKER_COMPOSE_EXEC) mysql mysql --user=root --password=password --host=host.docker.internal --port=3307
+MONGO_BIN=$(DOCKER_COMPOSE_EXEC) mongo mongosh --username=root --password=password --host=host.docker.internal --port=27018
 endif
 
 .DEFAULT_GOAL := help
@@ -25,8 +24,8 @@ help:
 .PHONY: clean
 clean:			## Removes all created artefacts
 clean:
-	$(MYSQL_BIN) -e "DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
-	$(MONGO_BIN) --eval "db.getMongo().getDBNames().forEach(function(i){db.getSiblingDB(i).dropDatabase()})"
+	$(MYSQL_BIN) --execute="DROP DATABASE IF EXISTS fidry_alice_data_fixtures;"
+	$(MAKE) refresh_mongodb_db
 
 	git clean --exclude=.idea/ -ffdx
 
@@ -38,7 +37,7 @@ refresh_mysql_db:
 .PHONY: refresh_mongodb_db
 refresh_mongodb_db:	## Refresh the MongoDB database used
 refresh_mongodb_db:
-	$(MONGO_BIN) --eval "db.getMongo().getDBNames().forEach(function(i){db.getSiblingDB(i).dropDatabase()})"
+	$(MONGO_BIN) --eval "db.getMongo().getDBNames().filter(dbName => !['admin', 'config', 'local'].includes(dbName)).forEach(dbName => db.getSiblingDB(dbName).dropDatabase())"
 
 .PHONY: refresh_phpcr
 refresh_phpcr:		## Refresh the MongoDB PHPCR database used
@@ -89,10 +88,7 @@ test: test_core	\
 
 .PHONY: test_core
 test_core:             				## Run the tests for the core library
-test_core: vendor/phpunit \
-		   vendor-bin/covers-validator/vendor
-	$(COVERS_VALIDATOR)
-
+test_core: vendor/phpunit
 	bin/phpunit
 
 .PHONY: test_doctrine_bridge
@@ -118,7 +114,7 @@ test_doctrine_odm_bridge: vendor/bamarni \
 .PHONY: test_doctrine_phpcr_bridge
 test_doctrine_phpcr_bridge:			## Run the tests for the Doctrine Mongodb PHPCR bridge
 test_doctrine_phpcr_bridge: vendor/bamarni \
-							vendor-bin/doctrine_mongodb/vendor/phpunit
+							vendor-bin/doctrine_phpcr/vendor/phpunit
 	$(MAKE) remove_sf_cache
 	$(MAKE) refresh_phpcr
 
@@ -139,8 +135,7 @@ test_eloquent_bridge: vendor/bamarni \
 .PHONY: test_symfony_bridge
 test_symfony_bridge:				## Run the tests for the Symfony bridge
 test_symfony_bridge: vendor/bamarni \
-					 vendor-bin/symfony/vendor/phpunit \
-					 vendor-bin/covers-validator/vendor
+					 vendor-bin/symfony/vendor/phpunit
 	$(COVERS_VALIDATOR) -c phpunit_symfony.xml.dist
 	$(MAKE) remove_sf_cache
 
@@ -211,14 +206,6 @@ vendor/phpunit: composer.lock
 
 vendor/bamarni: composer.lock
 	composer update $(COMPOSER_FLAGS)
-	touch $@
-
-
-vendor-bin/covers-validator/composer.lock: vendor-bin/covers-validator/composer.json
-	@echo covers-validator composer.lock is not up to date
-
-vendor-bin/covers-validator/vendor: vendor-bin/covers-validator/composer.lock
-	composer bin covers-validator update $(COMPOSER_FLAGS)
 	touch $@
 
 

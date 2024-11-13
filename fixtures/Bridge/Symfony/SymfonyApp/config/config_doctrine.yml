@@ -24,6 +24,9 @@ doctrine:
                     1002: "SET NAMES 'UTF8' COLLATE 'utf8_unicode_ci'"
     orm:
         auto_mapping: true
+        controller_resolver:
+            auto_mapping: false
+        enable_lazy_ghost_objects: true
         mappings:
             fixture_entities:
                 type: xml

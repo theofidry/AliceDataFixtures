@@ -32,7 +32,7 @@ class IdGenerator extends AbstractIdGenerator
         $this->decorated = $decorated;
     }
 
-    public function generate(EntityManager $em, $entity)
+    public function generate(EntityManager $em, $entity): mixed
     {
         Assert::notNull($entity);
 
