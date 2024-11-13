@@ -38,8 +38,8 @@ jobs:
                     - test_symfony_eloquent_bridge_proxy_manager
                 variant:
                     - 'no-change'
-                    - '"symfony/symfony:^6.4.14"'
-                    - '"symfony/symfony:^7.1"'
+                    - '"symfony/http-kernel:^6.4.14 symfony/validator:^6.4.14"'
+                    - '"symfony/http-kernel:^7.1 symfony/validator:^7.1"'
         # To keep in sync with docker-compose.yml
         services:
             mysql:
