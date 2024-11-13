@@ -27,7 +27,7 @@ foreach ($serverArgs as $index => $arg) {
     if ('-k' === $arg || '--kernel' === $arg) {
         $kernelInput = $serverArgs[$index + 1];
         unset($serverArgs[$index], $serverArgs[$index + 1]);
-        
+
         break;
     }
 
