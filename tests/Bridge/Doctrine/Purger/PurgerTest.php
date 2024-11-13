@@ -14,9 +14,13 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
+use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
+use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ClassMetadataFactory;
+use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\ORM\FakeEntityManager;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
@@ -66,24 +70,38 @@ class PurgerTest extends TestCase
 
     public function testDisableFKChecksOnDeleteIsPerformed(): void
     {
+        $mappingDriverProphecy = $this->prophesize(MappingDriver::class);
+        $mappingDriverProphecy->getAllClassNames()->willReturn([]);
+
+        $configuration = new Configuration();
+        $configuration->setMetadataDriverImpl($mappingDriverProphecy->reveal());
+
         $connection = $this->prophesize(Connection::class);
+        $connection->getConfiguration()->willReturn($configuration);
         $connection->getDatabasePlatform()->willReturn($this->prophesize(MySqlPlatform::class)->reveal());
-        $connection->exec('SET FOREIGN_KEY_CHECKS = 0;')->shouldBeCalled();
-        $connection->exec('SET FOREIGN_KEY_CHECKS = 1;')->shouldBeCalled();
+        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0;')->shouldBeCalled();
+        $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1;')->shouldBeCalled();
+
+        $classMetadataFactory = new ClassMetadataFactory();
 
         $manager = $this->prophesize(EntityManager::class);
+        $manager->getConfiguration()->willReturn($configuration);
         $manager->getConnection()->willReturn($connection->reveal());
+        $manager->getEventManager()->willReturn(new EventManager());
+        $manager->getMetadataFactory()->willReturn($classMetadataFactory);
 
-        $purgerORM = $this->prophesize(DoctrineOrmPurger::class);
-        $purgerORM->getObjectManager()->willReturn($manager->reveal());
-        $purgerORM->purge()->shouldBeCalled();
+        $classMetadataFactory->setEntityManager($manager->reveal());
+
+        $purgerORM = new DoctrineOrmPurger(
+            $manager->reveal(),
+        );
 
         $purgeMode = PurgeMode::createDeleteMode();
         $purger = new Purger($manager->reveal(), $purgeMode);
 
         $decoratedPurgerReflection = (new ReflectionObject($purger))->getProperty('purger');
         $decoratedPurgerReflection->setAccessible(true);
-        $decoratedPurgerReflection->setValue($purger, $purgerORM->reveal());
+        $decoratedPurgerReflection->setValue($purger, $purgerORM);
 
         $purger->purge();
     }
