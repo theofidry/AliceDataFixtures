@@ -13,16 +13,12 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument;
 
-use Doctrine\ODM\PHPCR\Mapping\Annotations\Document;
-use Doctrine\ODM\PHPCR\Mapping\Annotations\Id;
+use Doctrine\ODM\PHPCR\Mapping\Attributes\Document;
+use Doctrine\ODM\PHPCR\Mapping\Attributes\Id;
 
-/**
- * @Document()
- */
+#[Document]
 class Dummy
 {
-    /**
-     * @Id()
-     */
+    #[Id]
     public $id;
 }
