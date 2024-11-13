@@ -46,14 +46,6 @@ class PhpcrLoaderIntegrationTest extends TestCase
 
     public function setUp(): void
     {
-        if (PHP_VERSION_ID < 80000) {
-            $this->markTestSkipped('The annotation reader is not available: the "enable_annotations" on the validator cannot be set as the PHP version is lower than 8');
-        }
-
-        if (PHP_VERSION_ID >= 80000) {
-            $this->markTestSkipped('Not compatible yet with PHP 8.0');
-        }
-
         $this->kernel = new DoctrinePhpcrKernel(static::$seed, true);
         $this->kernel->boot();
 

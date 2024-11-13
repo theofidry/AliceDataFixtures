@@ -33,11 +33,16 @@
         "symfony/phpunit-bridge": "^5.3.8 || ^6.4 || ^7.0"
     },
     "conflict": {
-        "doctrine/orm": "<2.6.3",
+        "doctrine/data-fixtures": "<1.7.0",
+        "doctrine/orm": "<2.20",
+        "doctrine/doctrine-bundle": "<2.11.0",
+        "doctrine/mongodb-odm-bundle": "<5.1.0",
+        "doctrine/mongodb-odm": "<2.6.0",
+        "doctrine/phpcr-bundle": "<3.0",
         "doctrine/phpcr-odm": "<2.0.0",
         "doctrine/dbal": "<3.0",
         "doctrine/persistence": "<2.0",
-        "illuminate/database": "<8.12",
+        "illuminate/database": "<10.0",
         "ocramius/proxy-manager": "<2.1",
         "symfony/framework-bundle": ">=6.0 <6.4",
         "zendframework/zend-code": "<3.3.1"
