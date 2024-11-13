@@ -34,6 +34,7 @@
     },
     "conflict": {
         "doctrine/orm": "<2.6.3",
+        "doctrine/phpcr-odm": "<2.0.0",
         "doctrine/dbal": "<3.0",
         "doctrine/persistence": "<2.0",
         "illuminate/database": "<8.12",

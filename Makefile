@@ -6,7 +6,7 @@ MYSQL_BIN=mysql --user=root --password=password --port=3307
 MONGO_BIN=mongosh --username=root --password=password --port=27018
 else
 MYSQL_BIN=$(DOCKER_COMPOSE_EXEC) mysql mysql --user=root --password=password --host=host.docker.internal --port=3307
-MONGO_BIN=$(DOCKER_COMPOSE_EXEC) mongo mongosh --username=root --password=password --host=host.docker.internal --port=27017
+MONGO_BIN=$(DOCKER_COMPOSE_EXEC) mongo mongosh --username=root --password=password --host=host.docker.internal --port=27018
 endif
 
 .DEFAULT_GOAL := help
