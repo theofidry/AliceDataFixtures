@@ -38,7 +38,6 @@ jobs:
                     - test_symfony_eloquent_bridge_proxy_manager
                 variant:
                     - 'no-change'
-                    - '"symfony/symfony:^5.4"'
                     - '"symfony/symfony:^6.4"'
         # To keep in sync with docker-compose.yml
         services:
