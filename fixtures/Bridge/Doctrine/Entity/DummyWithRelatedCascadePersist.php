@@ -22,6 +22,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @Entity
@@ -65,8 +66,14 @@ class DummyWithRelatedCascadePersist
      */
     public Collection $relatedMultiple;
 
+    /**
+     * @OneToMany(targetEntity=AnotherDummy::class, mappedBy="strategy")
+     */
+    public $nonTypedRelatedMultiple;
+
     public function __construct()
     {
         $this->relatedMultiple = new ArrayCollection();
+        $this->nonTypedRelatedMultiple = new ArrayCollection();
     }
 }
