@@ -13,11 +13,9 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument;
 
-use Doctrine\ODM\PHPCR\Mapping\Annotations\Document;
+use Doctrine\ODM\PHPCR\Mapping\Attributes\Document;
 
-/**
- * @Document()
- */
+#[Document]
 class DummySubClass extends MappedSuperclassDummy
 {
 }
