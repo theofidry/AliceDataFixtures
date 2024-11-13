@@ -96,12 +96,14 @@ jobs:
             # in the wiki merge plugin
             -   name: Install doctrine Composer bin dependencies
                 uses: ramsey/composer-install@v3
+                if: "matrix.make-test == 'test_doctrine_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine
             -   name: Repeat "Install doctrine Composer bin dependencies"
                 uses: ramsey/composer-install@v3
+                if: "matrix.make-test == 'test_doctrine_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
@@ -109,12 +111,14 @@ jobs:
 
             -   name: Install MongoDB Composer bin dependencies
                 uses: ramsey/composer-install@v3
+                if: "matrix.make-test == 'test_doctrine_odm_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine_mongodb
             -   name: Repeat "Install MongoDB Composer bin dependencies"
                 uses: ramsey/composer-install@v3
+                if: "matrix.make-test == 'test_doctrine_odm_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
@@ -122,12 +126,14 @@ jobs:
 
             -   name: Install Doctrine PHPCR Composer bin dependencies
                 uses: ramsey/composer-install@v3
+                if: "matrix.make-test == 'test_doctrine_phpcr_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine_phpcr
             -   name: Repeat "Install Doctrine PHPCR Composer bin dependencies"
                 uses: ramsey/composer-install@v3
+                if: "matrix.make-test == 'test_doctrine_phpcr_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
@@ -135,12 +141,14 @@ jobs:
 
             -   name: Install Eloquent Composer bin dependencies
                 uses: ramsey/composer-install@v3
+                if: "matrix.make-test == 'test_eloquent_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/eloquent
             -   name: Repeat "Install Eloquent Composer bin dependencies"
                 uses: ramsey/composer-install@v3
+                if: "matrix.make-test == 'test_eloquent_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
@@ -157,12 +165,14 @@ jobs:
 
             -   name: Install ProxyManager Composer bin dependencies
                 uses: ramsey/composer-install@v3
+                if: "matrix.make-test == 'test_symfony_doctrine_bridge_proxy_manager' || matrix.make-test == 'test_symfony_eloquent_bridge_proxy_manager'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/proxy-manager
             -   name: Repeat "Install ProxyManager Composer bin dependencies"
                 uses: ramsey/composer-install@v3
+                if: "matrix.make-test == 'test_symfony_doctrine_bridge_proxy_manager' || matrix.make-test == 'test_symfony_eloquent_bridge_proxy_manager'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
@@ -174,6 +184,7 @@ jobs:
 
             -   name: Install Symfony for ProxyManager Composer bin dependencies
                 uses: ramsey/composer-install@v3
+                if: "matrix.make-test == 'test_symfony_doctrine_bridge_proxy_manager' || matrix.make-test == 'test_symfony_eloquent_bridge_proxy_manager'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
@@ -185,12 +196,14 @@ jobs:
 
             -   name: Install Symfony Composer bin dependencies
                 uses: ramsey/composer-install@v3
+                if: "matrix.make-test == 'test_symfony_bridge' || matrix.make-test == 'test_symfony_doctrine_bridge' || matrix.make-test == 'test_symfony_eloquent_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/symfony
             -   name: Repeat "Install Symfony Composer bin dependencies"
                 uses: ramsey/composer-install@v3
+                if: "matrix.make-test == 'test_symfony_bridge' || matrix.make-test == 'test_symfony_doctrine_bridge' || matrix.make-test == 'test_symfony_eloquent_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
