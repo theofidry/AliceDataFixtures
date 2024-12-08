@@ -44,7 +44,7 @@ use Nelmio\Alice\IsAServiceTrait;
     private ?PurgeMode $purgeMode;
     private DoctrinePurgerInterface $purger;
 
-    public function __construct(ObjectManager $manager, PurgeMode $purgeMode = null)
+    public function __construct(ObjectManager $manager, ?PurgeMode $purgeMode = null)
     {
         $this->manager = $manager;
         $this->purgeMode = $purgeMode;
@@ -52,7 +52,7 @@ use Nelmio\Alice\IsAServiceTrait;
         $this->purger = static::createPurger($manager, $purgeMode);
     }
 
-    public function create(PurgeMode $mode, PurgerInterface $purger = null): PurgerInterface
+    public function create(PurgeMode $mode, ?PurgerInterface $purger = null): PurgerInterface
     {
         if (null === $purger) {
             return new self($this->manager, $mode);

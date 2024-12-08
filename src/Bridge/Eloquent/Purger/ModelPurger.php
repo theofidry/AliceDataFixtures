@@ -39,7 +39,7 @@ use Nelmio\Alice\IsAServiceTrait;
         $this->repository = $repository;
     }
 
-    public function create(PurgeMode $mode, PurgerInterface $purger = null): PurgerInterface
+    public function create(PurgeMode $mode, ?PurgerInterface $purger = null): PurgerInterface
     {
         if (PurgeMode::createTruncateMode() == $mode) {
             throw new InvalidArgumentException(

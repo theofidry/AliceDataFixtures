@@ -46,7 +46,7 @@ use Psr\Log\NullLogger;
         LoaderInterface $decoratedLoader,
         PurgerFactoryInterface $purgerFactory,
         string $defaultPurgeMode,
-        LoggerInterface $logger = null
+        ?LoggerInterface $logger = null
     ) {
         if (!isset(self::$PURGE_MAPPING)) {
             self::$PURGE_MAPPING = [
@@ -98,7 +98,7 @@ use Psr\Log\NullLogger;
      *
      * {@inheritdoc}
      */
-    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
+    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], ?PurgeMode $purgeMode = null): array
     {
         if (null === $purgeMode) {
             $purgeMode = $this->defaultPurgeMode;

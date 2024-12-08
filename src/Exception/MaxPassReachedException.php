@@ -31,7 +31,7 @@ class MaxPassReachedException extends RuntimeException implements LoadingThrowab
     private array $stack = [];
 
     #[Pure]
-    public function __construct($message, $code = 0, Throwable $previous = null, ErrorTracker $errorTracker = null)
+    public function __construct($message, $code = 0, ?Throwable $previous = null, ?ErrorTracker $errorTracker = null)
     {
         parent::__construct($message, $code, $previous);
 
@@ -53,7 +53,7 @@ class MaxPassReachedException extends RuntimeException implements LoadingThrowab
         FileTracker $fileTracker,
         ErrorTracker $errorTracker,
         int $code = 0,
-        Throwable $previous = null
+        ?Throwable $previous = null
     ) {
         return new static(
             static::createMessage($limit, $fileTracker, $errorTracker),
