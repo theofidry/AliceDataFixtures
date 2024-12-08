@@ -47,7 +47,7 @@ use Psr\Log\NullLogger;
     public function __construct(
         LoaderInterface $decoratedLoader,
         PersisterInterface $persister,
-        LoggerInterface $logger = null,
+        ?LoggerInterface $logger = null,
         array $processors = []
     ) {
         $this->loader = $decoratedLoader;
