@@ -74,7 +74,7 @@ use Psr\Log\NullLogger;
      *
      * {@inheritdoc}
      */
-    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
+    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], ?PurgeMode $purgeMode = null): array
     {
         $objects = $this->loader->load($fixturesFiles, $parameters, $objects, $purgeMode);
 

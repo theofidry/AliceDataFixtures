@@ -63,7 +63,7 @@ use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringG
      *
      * @throws MaxPassReachedException
      */
-    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
+    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], ?PurgeMode $purgeMode = null): array
     {
         $errorTracker = new ErrorTracker();
         $filesTracker = new FileTracker(...$fixturesFiles);
