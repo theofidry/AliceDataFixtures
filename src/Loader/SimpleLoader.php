@@ -37,7 +37,7 @@ use Psr\Log\NullLogger;
     private LoggerInterface $logger;
 
     #[Pure]
-    public function __construct(FilesLoaderInterface $fileLoader, LoggerInterface $logger = null)
+    public function __construct(FilesLoaderInterface $fileLoader, ?LoggerInterface $logger = null)
     {
         $this->filesLoader = $fileLoader;
         $this->logger = $logger ?? new NullLogger();
@@ -48,7 +48,7 @@ use Psr\Log\NullLogger;
      *
      * {@inheritdoc}
      */
-    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
+    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], ?PurgeMode $purgeMode = null): array
     {
         $this->logger->info('Loading fixtures.');
 

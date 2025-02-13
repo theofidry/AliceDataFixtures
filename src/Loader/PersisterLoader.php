@@ -47,7 +47,7 @@ use Psr\Log\NullLogger;
     public function __construct(
         LoaderInterface $decoratedLoader,
         PersisterInterface $persister,
-        LoggerInterface $logger = null,
+        ?LoggerInterface $logger = null,
         array $processors = []
     ) {
         $this->loader = $decoratedLoader;
@@ -74,7 +74,7 @@ use Psr\Log\NullLogger;
      *
      * {@inheritdoc}
      */
-    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array
+    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], ?PurgeMode $purgeMode = null): array
     {
         $objects = $this->loader->load($fixturesFiles, $parameters, $objects, $purgeMode);
 
