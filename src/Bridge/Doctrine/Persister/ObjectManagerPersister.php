@@ -144,7 +144,7 @@ class ObjectManagerPersister implements PersisterInterface
         $this->objectChecked[$objectId] = true;
 
         foreach ($metadata->getAssociationMappings() as $fieldName => $associationMapping) {
-            $targetEntityClassName = $associationMapping->targetEntity;
+            $targetEntityClassName = $associationMapping['targetEntity'];
             $fieldValueOrFieldValues = $metadata->getFieldValue($object, $fieldName);
 
             if (is_array($fieldValueOrFieldValues)) {
