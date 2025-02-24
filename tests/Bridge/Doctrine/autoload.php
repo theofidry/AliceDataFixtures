@@ -15,17 +15,21 @@ const ROOT = __DIR__.'/../../..';
 
 require_once ROOT.'/vendor-bin/doctrine/vendor/autoload.php';
 
+use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\ORMSetup;
 
-$config = Setup::createAnnotationMetadataConfiguration(
-    [ROOT.'/fixtures/Bridge/Doctrine/Entity'],
-    true,
+$config = ORMSetup::createAttributeMetadataConfiguration(
+    paths: [ROOT.'/fixtures/Bridge/Doctrine/Entity'],
+    isDevMode: true,
 );
 
-$entityManagerFactory = static fn () => EntityManager::create(
+$connection = DriverManager::getConnection(
     require ROOT.'/doctrine-orm-db-settings.php',
     $config,
 );
 
-$GLOBALS['entity_manager_factory'] = $entityManagerFactory;
+// obtaining the entity manager
+$entityManager = new EntityManager($connection, $config);
+
+$GLOBALS['entity_manager'] = $entityManager;

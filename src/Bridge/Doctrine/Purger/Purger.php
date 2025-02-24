@@ -52,7 +52,7 @@ use Nelmio\Alice\IsAServiceTrait;
         $this->purger = static::createPurger($manager, $purgeMode);
     }
 
-    public function create(PurgeMode $mode, PurgerInterface $purger = null): PurgerInterface
+    public function create(PurgeMode $mode, ?PurgerInterface $purger = null): PurgerInterface
     {
         if (null === $purger) {
             return new self($this->manager, $mode);

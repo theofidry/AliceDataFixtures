@@ -27,7 +27,7 @@ class PurgerIntegrationTest extends TestCase
 
     public function setUp(): void
     {
-        $this->manager = $GLOBALS['entity_manager_factory']();
+        $this->manager = $GLOBALS['entity_manager'];
     }
 
     protected function tearDown(): void

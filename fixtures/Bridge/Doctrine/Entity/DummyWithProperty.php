@@ -9,22 +9,14 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 
-/**
- * @Entity
- */
+#[Entity]
 class DummyWithProperty
 {
-    /**
-     * @Id
-     *
-     * @Column(type="integer")
-     *
-     * @GeneratedValue
-     */
+    #[Id]
+    #[Column(type: 'integer')]
+    #[GeneratedValue]
     public int $id;
 
-    /**
-     * @Column(type="string", name="property", nullable=true)
-     */
+    #[Column(type: 'string', name: 'property', nullable: true)]
     public ?string $property = null;
 }

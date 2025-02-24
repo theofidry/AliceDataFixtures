@@ -19,22 +19,14 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 
-/**
- * @Entity
- */
+#[Entity]
 class DummyWithEmbeddable
 {
-    /**
-     * @Id
-     *
-     * @Column(type="integer")
-     *
-     * @GeneratedValue
-     */
+    #[Id]
+    #[Column(type: 'integer')]
+    #[GeneratedValue]
     public int $id;
 
-    /**
-     * @Embedded(class="DummyEmbeddable")
-     */
+    #[Embedded(class: \DummyEmbeddable::class)]
     public DummyEmbeddable $embeddable;
 }

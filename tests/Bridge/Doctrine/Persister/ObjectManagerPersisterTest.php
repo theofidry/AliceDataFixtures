@@ -42,7 +42,7 @@ class ObjectManagerPersisterTest extends TestCase
 
     public function setUp(): void
     {
-        $this->entityManager = $GLOBALS['entity_manager_factory']();
+        $this->entityManager = $GLOBALS['entity_manager'];
         $this->persister = new ObjectManagerPersister($this->entityManager);
 
         $this->entityManager->getConnection()->beginTransaction();
