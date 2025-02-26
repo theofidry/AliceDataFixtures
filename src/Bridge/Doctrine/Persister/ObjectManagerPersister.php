@@ -22,7 +22,7 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata as ODMClassMetadata;
 use Doctrine\ODM\PHPCR\Mapping\ClassMetadata as PHPCRClassMetadata;
 use Doctrine\ORM\EntityManagerInterface as ORMEntityManager;
 use Doctrine\ORM\Id\AssignedGenerator as ORMAssignedGenerator;
-use Doctrine\ORM\Mapping\ClassMetadataInfo as ORMClassMetadataInfo;
+use Doctrine\ORM\Mapping\ClassMetadata as ORMClassMetadata;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\UnitOfWork;
 use Doctrine\Persistence\Mapping\ClassMetadata;
@@ -113,7 +113,7 @@ class ObjectManagerPersister implements PersisterInterface
     {
         $metadata = $this->objectManager->getClassMetadata($className);
 
-        if (!($metadata instanceof ORMClassMetadataInfo)) {
+        if (!($metadata instanceof ORMClassMetadata)) {
             return $metadata;
         }
 
@@ -133,7 +133,7 @@ class ObjectManagerPersister implements PersisterInterface
         return $metadata;
     }
 
-    private function checkAssociationsMetadata(ORMClassMetadataInfo $metadata, object $object): void
+    private function checkAssociationsMetadata(ORMClassMetadata $metadata, object $object): void
     {
         $objectId = spl_object_id($object);
 
@@ -191,13 +191,13 @@ class ObjectManagerPersister implements PersisterInterface
     private static function isClassMetadataOfPersistableClass(ClassMetadata $metadata): bool
     {
         $isMappedSuperClass = (
-            $metadata instanceof ORMClassMetadataInfo
+            $metadata instanceof ORMClassMetadata
                 || $metadata instanceof ODMClassMetadata
                 || $metadata instanceof PHPCRClassMetadata
         )
             && $metadata->isMappedSuperclass;
 
-        $isEmbeddedClass = $metadata instanceof ORMClassMetadataInfo
+        $isEmbeddedClass = $metadata instanceof ORMClassMetadata
             && $metadata->isEmbeddedClass;
 
         return !($isMappedSuperClass || $isEmbeddedClass);
@@ -215,8 +215,8 @@ class ObjectManagerPersister implements PersisterInterface
     }
 
     private function configureIdGenerator(
-        ORMClassMetadataInfo $metadata
-    ): ORMClassMetadataInfo {
+        ORMClassMetadata $metadata
+    ): ORMClassMetadata {
         $this->saveMetadataToRestore($metadata);
 
         $newMetadata = clone $metadata;
