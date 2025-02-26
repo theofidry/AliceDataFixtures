@@ -45,7 +45,7 @@ class IdGenerator extends AbstractIdGenerator
             return reset($idValues);
         }
 
-        return $this->decorated->generate($em, $entity);
+        return $this->decorated->generateId($em, $entity);
     }
 
     public function isPostInsertGenerator(): bool
