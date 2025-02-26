@@ -1,5 +1,5 @@
 {
-    "name": "theofidry/alice-data-fixtures",
+    "name": "drewblin/alice-data-fixtures",
     "description": "Nelmio alice extension to persist the loaded fixtures.",
     "keywords": [
         "Fixture",
@@ -31,6 +31,9 @@
         "phpspec/prophecy-phpunit": "^2.0.1",
         "phpunit/phpunit": "^9.5.10",
         "symfony/phpunit-bridge": "^5.3.8 || ^6.4"
+    },
+    "replace": {
+        "theofidry/alice-data-fixtures": "1.7.2"
     },
     "conflict": {
         "doctrine/orm": "<2.6.3",
