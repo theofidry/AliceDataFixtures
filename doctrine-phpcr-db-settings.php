@@ -10,4 +10,5 @@ return [
     'dbname' => get_param('DOCTRINE_PHPCR_DB_NAME', 'fidry_alice_data_fixtures'),
     'host' => get_param('DOCTRINE_PHPCR_DB_HOST', '127.0.0.1'),
     'port' => get_param('DOCTRINE_PHPCR_DB_PORT', 3307),
+    'charset' => get_param('DOCTRINE_PHPCR_DB_CHARSET', 'UTF8'),
 ];

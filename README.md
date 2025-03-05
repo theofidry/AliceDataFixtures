@@ -11,11 +11,11 @@ AliceDataFixtures
 
 Supports:
 
-* Symfony 5.4+, 6.4+
-* Doctrine ORM 2.5+
+* Symfony 6.4+
+* Doctrine ORM 2.20+
 * Doctrine ODM 2.0+
-* Doctrine PHPCR 1.4+
-* Eloquent 8.12+
+* Doctrine PHPCR 2.0+
+* Eloquent 11.0+
 
 
 ## Documentation

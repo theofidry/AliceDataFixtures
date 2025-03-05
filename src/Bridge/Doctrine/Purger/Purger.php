@@ -17,6 +17,7 @@ use Doctrine\Common\DataFixtures\Purger\MongoDBPurger as DoctrineMongoDBPurger;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger as DoctrinePhpCrPurger;
 use Doctrine\Common\DataFixtures\Purger\PurgerInterface as DoctrinePurgerInterface;
+use Doctrine\DBAL\Platforms\MariaDBPlatform;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\ODM\MongoDB\DocumentManager as DoctrineMongoDocumentManager;
 use Doctrine\ODM\PHPCR\DocumentManager as DoctrinePhpCrDocumentManager;
@@ -93,7 +94,7 @@ use Nelmio\Alice\IsAServiceTrait;
         $disableFkChecks = (
             $this->purger instanceof DoctrineOrmPurger
             && in_array($this->purgeMode->getValue(), [PurgeMode::createDeleteMode()->getValue(), PurgeMode::createTruncateMode()->getValue()])
-            && $this->purger->getObjectManager()->getConnection()->getDatabasePlatform() instanceof MySqlPlatform
+            && $this->doesDatabaseSupportTruncate()
         );
 
         if ($disableFkChecks) {
@@ -135,5 +136,13 @@ use Nelmio\Alice\IsAServiceTrait;
                 get_class($manager)
             )
         );
+    }
+
+    private function doesDatabaseSupportTruncate(): bool
+    {
+        $platform = $this->purger->getObjectManager()->getConnection()->getDatabasePlatform();
+
+        return $platform instanceof MySqlPlatform
+            || $platform instanceof MariaDBPlatform;
     }
 }
