@@ -147,7 +147,6 @@ test_eloquent_bridge: vendor/bamarni \
 test_symfony_bridge:				## Run the tests for the Symfony bridge
 test_symfony_bridge: vendor/bamarni \
 					 vendor-bin/symfony/vendor/phpunit
-	$(COVERS_VALIDATOR) -c phpunit_symfony.xml.dist
 	$(MAKE) remove_sf_cache
 
 	vendor-bin/symfony/bin/phpunit -c phpunit_symfony.xml.dist
