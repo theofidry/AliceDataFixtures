@@ -114,7 +114,7 @@ use Nelmio\Alice\IsAServiceTrait;
     private $manager;
     private $purger;
 
-    public function __construct(ObjectManager $manager, PurgeMode $purgeMode = null)
+    public function __construct(ObjectManager $manager, ?PurgeMode $purgeMode = null)
     {
         $this->manager = $manager;
         $this->purger = static::createPurger($manager, $purgeMode);
