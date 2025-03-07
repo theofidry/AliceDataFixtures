@@ -31,7 +31,7 @@ use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
-#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister::class)]
+#[CoversClass(ObjectManagerPersister::class)]
 #[RequiresPhpExtension('mongodb')]
 class ObjectManagerPersisterTest extends TestCase
 {

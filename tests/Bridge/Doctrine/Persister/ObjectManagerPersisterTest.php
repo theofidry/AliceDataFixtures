@@ -32,7 +32,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Throwable;
 
-#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister::class)]
+#[CoversClass(ObjectManagerPersister::class)]
 class ObjectManagerPersisterTest extends TestCase
 {
     private ObjectManagerPersister $persister;

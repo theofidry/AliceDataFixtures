@@ -27,7 +27,7 @@ use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 
-#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger::class)]
+#[CoversClass(ModelPurger::class)]
 #[BackupGlobals(false)]
 class ModelPurgerTest extends TestCase
 {

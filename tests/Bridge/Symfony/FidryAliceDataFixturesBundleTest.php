@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony;
 
+use Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler\RegisterTagServicesPass;
+use Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler\TaggedDefinitionsLocator;
+use Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Configuration;
+use Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\FidryAliceDataFixturesExtension;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\InvalidKernel;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\NakedKernel;
 use Fidry\AliceDataFixtures\Loader\MultiPassLoader;
@@ -24,11 +28,11 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle::class)]
-#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Configuration::class)]
-#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\FidryAliceDataFixturesExtension::class)]
-#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler\RegisterTagServicesPass::class)]
-#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler\TaggedDefinitionsLocator::class)]
+#[CoversClass(FidryAliceDataFixturesBundle::class)]
+#[CoversClass(Configuration::class)]
+#[CoversClass(FidryAliceDataFixturesExtension::class)]
+#[CoversClass(RegisterTagServicesPass::class)]
+#[CoversClass(TaggedDefinitionsLocator::class)]
 class FidryAliceDataFixturesBundleTest extends TestCase
 {
     protected KernelInterface $kernel;

@@ -25,7 +25,7 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use stdClass;
 
-#[CoversClass(\Fidry\AliceDataFixtures\Loader\PurgerLoader::class)]
+#[CoversClass(PurgerLoader::class)]
 #[UsesClass('\Fidry\AliceDataFixtures\Persistence\PurgeMode')]
 class PurgerLoaderTest extends TestCase
 {

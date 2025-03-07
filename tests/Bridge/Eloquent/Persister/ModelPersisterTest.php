@@ -29,7 +29,7 @@ use stdClass;
 /**
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
-#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Eloquent\Persister\ModelPersister::class)]
+#[CoversClass(ModelPersister::class)]
 #[BackupGlobals(false)]
 class ModelPersisterTest extends TestCase
 {

@@ -32,7 +32,7 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use stdClass;
 
-#[CoversClass(\Fidry\AliceDataFixtures\Loader\MultiPassLoader::class)]
+#[CoversClass(MultiPassLoader::class)]
 #[UsesClass('\Fidry\AliceDataFixtures\Loader\ErrorTracker')]
 #[UsesClass('\Fidry\AliceDataFixtures\Loader\FileTracker')]
 #[UsesClass('\Fidry\AliceDataFixtures\Exception\MaxPassReachedException')]

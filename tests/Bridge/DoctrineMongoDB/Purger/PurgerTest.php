@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionObject;
 
-#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger::class)]
+#[CoversClass(Purger::class)]
 #[RequiresPhpExtension('mongodb')]
 class PurgerTest extends TestCase
 {
