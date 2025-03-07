@@ -17,3 +17,9 @@ wouterj_eloquent:
             password: password
             prefix: ~
     eloquent: true
+
+services:
+    logger:
+        class: Symfony\Component\HttpKernel\Log\Logger
+        arguments:
+            - 'error'
