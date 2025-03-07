@@ -27,7 +27,7 @@ final class ObjectGeneratorPersisterExceptionFactory
                 'this may be due to having it disabled because one instance of the entity had an ID assigned. ' .
                 'Either remove this assigned ID to allow the auto ID generator to operate or generate an ID for ' .
                 'all the "%1$s" entities.',
-            get_class($entity)
+            $entity::class
         ));
     }
 }

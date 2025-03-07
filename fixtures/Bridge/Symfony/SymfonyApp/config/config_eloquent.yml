@@ -21,4 +21,6 @@ wouterj_eloquent:
 
 services:
     logger:
-        class: Psr\Log\NullLogger
+        class: Symfony\Component\HttpKernel\Log\Logger
+        arguments:
+            - 'error'

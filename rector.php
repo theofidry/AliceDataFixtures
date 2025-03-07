@@ -13,6 +13,10 @@ declare(strict_types=1);
  */
 
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
+use Rector\Php80\Rector\Class_\StringableForToStringRector;
+use Rector\Php81\Rector\ClassMethod\NewInInitializerRector;
+use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -26,5 +30,22 @@ return RectorConfig::configure()
         __DIR__.'/vendor-bin/rector/vendor/autoload.php',
     ])
     ->withImportNames(removeUnusedImports: true)
-    //->withPhpSets(php83: true)
-    ->withAttributesSets(phpunit: true);
+    ->withPhpSets(php83: true)
+    ->withAttributesSets(phpunit: true)
+    ->withSkip([
+        NewInInitializerRector::class => [
+            __DIR__.'/src/Loader/PersisterLoader.php',
+            __DIR__.'/src/Loader/PurgerLoader.php',
+        ],
+        ReadOnlyPropertyRector::class => [
+            __DIR__.'/fixtures/Bridge/Symfony/Entity/Group.php',
+            __DIR__.'/fixtures/Bridge/Symfony/Entity/User.php',
+        ],
+        RemoveParentCallWithoutParentRector::class => [
+            __DIR__.'/fixtures/Bridge/Symfony/SymfonyApp/DoctrineKernelWithInvalidDatabase.php',
+            __DIR__.'/tests/Bridge/Symfony/**/*.php',
+        ],
+        StringableForToStringRector::class => [
+            __DIR__.'/src/Persistence/PurgeMode.php',
+        ],
+    ]);

@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 final class DeprecateServicesPass implements CompilerPassInterface
 {
-    private const DEPRECATED_SERVICES = [
+    private const array DEPRECATED_SERVICES = [
         'fidry_alice_data_fixtures.loader.multipass_file' => [
             '',
             '1.0'
@@ -42,7 +42,7 @@ final class DeprecateServicesPass implements CompilerPassInterface
             '1.0',
         ],
     ];
-    private const DEPRECATED_ALIASES = [
+    private const array DEPRECATED_ALIASES = [
         'fidry_alice_data_fixtures.persistence.purger.doctrine.orm_purger' => [
             'Use "fidry_alice_data_fixtures.persistence.doctrine.purger.purger_factory" instead.',
             '1.0',
@@ -72,8 +72,8 @@ final class DeprecateServicesPass implements CompilerPassInterface
             '1.0',
         ],
     ];
-    private const SERVICE_TEMPLATE = 'The service "%service_id%" is deprecated and will be removed in future versions.';
-    private const ALIAS_TEMPLATE = 'The service alias "%alias_id%" is deprecated and will be removed in future versions.';
+    private const string SERVICE_TEMPLATE = 'The service "%service_id%" is deprecated and will be removed in future versions.';
+    private const string ALIAS_TEMPLATE = 'The service alias "%alias_id%" is deprecated and will be removed in future versions.';
 
     public function process(ContainerBuilder $container): void
     {

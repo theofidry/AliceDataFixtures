@@ -99,7 +99,7 @@ class PersisterLoaderTest extends TestCase
         /** @var ProcessorInterface $secondProcessor */
         $secondProcessor = $secondProcessorProphecy->reveal();
 
-        $loader = new PersisterLoader($loader, $persister, null, [$firstProcessor, $secondProcessor]);
+        $loader = new PersisterLoader($loader, $persister, processors: [$firstProcessor, $secondProcessor]);
         $result = $loader->load($files);
 
         self::assertEquals(

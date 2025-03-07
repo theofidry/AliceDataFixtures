@@ -17,8 +17,9 @@ use function array_flip;
 use function array_key_exists;
 use InvalidArgumentException;
 use function sprintf;
+use Stringable;
 
-final class PurgeMode
+final class PurgeMode implements Stringable
 {
     private static array $values = [
         'NO_PURGE_MODE' => 0,
@@ -27,7 +28,7 @@ final class PurgeMode
     ];
 
     
-    private int $mode;
+    private readonly int $mode;
 
     public function __construct(int $mode)
     {

@@ -22,10 +22,12 @@ use Fidry\AliceDataFixtures\Loader\PurgerLoader;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use Override;
 
 #[CoversNothing]
 class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundleTest
 {
+    #[Override]
     public function setUp(): void
     {
         $this->kernel = DoctrineKernel::create();

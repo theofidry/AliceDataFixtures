@@ -19,6 +19,7 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundleTest as N
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
 use Fidry\AliceDataFixtures\Loader\PersisterLoader;
 use Fidry\AliceDataFixtures\Loader\PurgerLoader;
+use Override;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -29,6 +30,7 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
 {
     protected KernelInterface $kernel;
 
+    #[Override]
     public function setUp(): void
     {
         $this->kernel = DoctrineKernel::create();

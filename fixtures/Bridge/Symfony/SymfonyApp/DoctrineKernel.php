@@ -16,6 +16,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
 use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
+use Override;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -33,6 +34,7 @@ class DoctrineKernel extends IsolatedKernel
         return $bundles;
     }
 
+    #[Override]
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         parent::registerContainerConfiguration($loader);

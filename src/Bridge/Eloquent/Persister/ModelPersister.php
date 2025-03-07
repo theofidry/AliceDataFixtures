@@ -45,7 +45,7 @@ use Nelmio\Alice\IsAServiceTrait;
                 sprintf(
                     'Expected object to be an instance of "%s", got "%s" instead.',
                     Model::class,
-                    get_class($object)
+                    $object::class
                 )
             );
         }

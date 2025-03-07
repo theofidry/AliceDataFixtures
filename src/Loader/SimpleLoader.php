@@ -33,14 +33,11 @@ use Psr\Log\NullLogger;
 {
     use IsAServiceTrait;
 
-    private FilesLoaderInterface $filesLoader;
-    private LoggerInterface $logger;
-
     #[Pure]
-    public function __construct(FilesLoaderInterface $fileLoader, ?LoggerInterface $logger = null)
-    {
-        $this->filesLoader = $fileLoader;
-        $this->logger = $logger ?? new NullLogger();
+    public function __construct(
+        private FilesLoaderInterface $filesLoader,
+        private LoggerInterface $logger = new NullLogger(),
+    ) {
     }
 
     /**
