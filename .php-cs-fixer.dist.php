@@ -76,6 +76,7 @@ return (new Config())
         'no_short_bool_cast' => true,
         'no_spaces_around_offset' => true,
         'no_unused_imports' => true,
+        'nullable_type_declaration_for_default_null_value' => true,
         'ordered_imports' => true,
         'phpdoc_order' => true,
         'phpdoc_scalar' => true,
