@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\ORMInvalidArgumentException;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\AnotherDummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyEmbeddable;
@@ -27,13 +26,13 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyWithRelation;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\IdGenerator;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Throwable;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
- */
+#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister::class)]
 class ObjectManagerPersisterTest extends TestCase
 {
     private ObjectManagerPersister $persister;
@@ -64,9 +63,7 @@ class ObjectManagerPersisterTest extends TestCase
         self::assertFalse((new ReflectionClass(ObjectManagerPersister::class))->isCloneable());
     }
 
-    /**
-     * @dataProvider provideEntities
-     */
+    #[DataProvider('provideEntities')]
     public function testCanPersistAnEntity($entity, bool $exact = false): void
     {
         $originalEntity = clone $entity;
@@ -196,9 +193,7 @@ class ObjectManagerPersisterTest extends TestCase
         $this->persister->flush();
     }
 
-    /**
-     * @dataProvider provideNonPersistableEntities
-     */
+    #[DataProvider('provideNonPersistableEntities')]
     public function testDoesNotPersistEmbeddables($dummy): void
     {
         // Sanity check

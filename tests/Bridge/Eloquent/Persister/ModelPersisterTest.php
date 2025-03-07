@@ -20,17 +20,17 @@ use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use stdClass;
 
 /**
- * @covers \Fidry\AliceDataFixtures\Bridge\Eloquent\Persister\ModelPersister
- *
- * @backupGlobals disabled
- *
  * @author Théo FIDRY <theo.fidry@gmail.com>
  */
+#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Eloquent\Persister\ModelPersister::class)]
+#[BackupGlobals(false)]
 class ModelPersisterTest extends TestCase
 {
     private PersisterInterface $persister;

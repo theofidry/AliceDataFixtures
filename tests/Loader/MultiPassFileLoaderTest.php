@@ -23,19 +23,19 @@ use Nelmio\Alice\ObjectBag;
 use Nelmio\Alice\ObjectSet;
 use Nelmio\Alice\ParameterBag;
 use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringGenerationException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use stdClass;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Loader\MultiPassLoader
- *
- * @uses \Fidry\AliceDataFixtures\Loader\ErrorTracker
- * @uses \Fidry\AliceDataFixtures\Loader\FileTracker
- * @uses \Fidry\AliceDataFixtures\Exception\MaxPassReachedException
- */
+#[CoversClass(\Fidry\AliceDataFixtures\Loader\MultiPassLoader::class)]
+#[UsesClass('\Fidry\AliceDataFixtures\Loader\ErrorTracker')]
+#[UsesClass('\Fidry\AliceDataFixtures\Loader\FileTracker')]
+#[UsesClass('\Fidry\AliceDataFixtures\Exception\MaxPassReachedException')]
 class MultiPassFileLoaderTest extends TestCase
 {
     use ProphecyTrait;
@@ -50,9 +50,7 @@ class MultiPassFileLoaderTest extends TestCase
         self::assertFalse((new ReflectionClass(MultiPassLoader::class))->isCloneable());
     }
 
-    /**
-     * @dataProvider provideMaxPassValue
-     */
+    #[DataProvider('provideMaxPassValue')]
     public function testMaxPassGivenMustBeAStrictlyPositiveInteger(int $maxPass, string $expectedExceptionMessage = null): void
     {
         try {

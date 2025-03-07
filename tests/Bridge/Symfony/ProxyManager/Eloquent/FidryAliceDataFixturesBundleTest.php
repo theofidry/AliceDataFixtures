@@ -19,11 +19,11 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundleTest as N
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\EloquentKernel;
 use Fidry\AliceDataFixtures\Loader\PersisterLoader;
 use Fidry\AliceDataFixtures\Loader\PurgerLoader;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundleTest
 {
     protected KernelInterface $kernel;
@@ -35,10 +35,9 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
     }
 
     /**
-     * @group legacy
-     *
      * @expectedDepreaction The service "fidry_alice_data_fixtures.loader.multipass_file" is deprecated and will be removed in future versions.
      */
+    #[Group('legacy')]
     public function testServiceRegistration(): void
     {
         parent::testServiceRegistration();

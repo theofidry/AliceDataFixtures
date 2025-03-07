@@ -16,15 +16,14 @@ namespace Fidry\AliceDataFixtures\Bridge\DoctrineMongoDB\Purger;
 use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionObject;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger
- *
- * @requires extension mongodb
- */
+#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger::class)]
+#[RequiresPhpExtension('mongodb')]
 class PurgerTest extends TestCase
 {
     use ProphecyTrait;

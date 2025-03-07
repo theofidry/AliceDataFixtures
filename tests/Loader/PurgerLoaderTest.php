@@ -17,17 +17,16 @@ use Fidry\AliceDataFixtures\LoaderInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use stdClass;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Loader\PurgerLoader
- *
- * @uses \Fidry\AliceDataFixtures\Persistence\PurgeMode
- */
+#[CoversClass(\Fidry\AliceDataFixtures\Loader\PurgerLoader::class)]
+#[UsesClass('\Fidry\AliceDataFixtures\Persistence\PurgeMode')]
 class PurgerLoaderTest extends TestCase
 {
     use ProphecyTrait;

@@ -25,14 +25,14 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
- *
- * @requires extension mongodb
- */
+#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister::class)]
+#[RequiresPhpExtension('mongodb')]
 class ObjectManagerPersisterTest extends TestCase
 {
     private ObjectManagerPersister $persister;
@@ -64,9 +64,7 @@ class ObjectManagerPersisterTest extends TestCase
         self::assertFalse((new ReflectionClass(ObjectManagerPersister::class))->isCloneable());
     }
 
-    /**
-     * @dataProvider provideDocuments
-     */
+    #[DataProvider('provideDocuments')]
     public function testCanPersistADocument($document, bool $exact = false): void
     {
         try {
@@ -88,9 +86,7 @@ class ObjectManagerPersisterTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider provideNonPersistableDocuments
-     */
+    #[DataProvider('provideNonPersistableDocuments')]
     public function testDoesNotPersistEmbeddables($dummy): void
     {
         try {

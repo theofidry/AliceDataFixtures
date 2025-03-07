@@ -18,17 +18,17 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\NakedKernel;
 use Fidry\AliceDataFixtures\Loader\MultiPassLoader;
 use Fidry\AliceDataFixtures\Loader\SimpleLoader;
 use LogicException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle
- * @covers \Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Configuration
- * @covers \Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\FidryAliceDataFixturesExtension
- * @covers \Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler\RegisterTagServicesPass
- * @covers \Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler\TaggedDefinitionsLocator
- */
+#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle::class)]
+#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Configuration::class)]
+#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\FidryAliceDataFixturesExtension::class)]
+#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler\RegisterTagServicesPass::class)]
+#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler\TaggedDefinitionsLocator::class)]
 class FidryAliceDataFixturesBundleTest extends TestCase
 {
     protected KernelInterface $kernel;
@@ -46,10 +46,9 @@ class FidryAliceDataFixturesBundleTest extends TestCase
     }
 
     /**
-     * @group legacy
-     *
      * @expectedDepreaction The service "fidry_alice_data_fixtures.loader.multipass_file" is deprecated and will be removed in future versions.
      */
+    #[Group('legacy')]
     public function testServiceRegistration(): void
     {
         self::assertServiceIsInstanceOf(

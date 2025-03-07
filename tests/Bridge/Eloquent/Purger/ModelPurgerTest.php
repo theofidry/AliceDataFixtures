@@ -20,16 +20,15 @@ use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
 use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger
- *
- * @backupGlobals disabled
- */
+#[CoversClass(\Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger::class)]
+#[BackupGlobals(false)]
 class ModelPurgerTest extends TestCase
 {
     use ProphecyTrait;
