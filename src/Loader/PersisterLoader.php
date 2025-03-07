@@ -34,6 +34,8 @@ use Psr\Log\NullLogger;
 /*final*/ class PersisterLoader implements LoaderInterface, PersisterAwareInterface
 {
     use IsAServiceTrait;
+
+    private LoggerInterface $logger;
     private array $processors;
 
     /**
@@ -43,9 +45,10 @@ use Psr\Log\NullLogger;
     public function __construct(
         private LoaderInterface $loader,
         private PersisterInterface $persister,
-        private LoggerInterface $logger = new NullLogger(),
+        ?LoggerInterface $logger = null,
         array $processors = []
     ) {
+        $this->logger = $logger ?? new NullLogger();
         $this->processors = (static fn (ProcessorInterface ...$processors) => $processors)(...$processors);
     }
 

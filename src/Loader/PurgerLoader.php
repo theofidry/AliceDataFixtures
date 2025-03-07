@@ -36,13 +36,15 @@ use Psr\Log\NullLogger;
     public const PURGE_MODE_TRUNCATE = 2;
 
     private static array $PURGE_MAPPING;
+
     private PurgeMode $defaultPurgeMode;
+    private LoggerInterface $logger;
 
     public function __construct(
         private LoaderInterface $loader,
         private PurgerFactoryInterface $purgerFactory,
         string $defaultPurgeMode,
-        private LoggerInterface $logger = new NullLogger()
+        ?LoggerInterface $logger,
     ) {
         if (!isset(self::$PURGE_MAPPING)) {
             self::$PURGE_MAPPING = [
@@ -62,6 +64,7 @@ use Psr\Log\NullLogger;
         }
 
         $this->defaultPurgeMode = self::$PURGE_MAPPING[$defaultPurgeMode];
+        $this->logger = $logger ?? new NullLogger();
     }
 
     /**
