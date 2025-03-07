@@ -37,8 +37,10 @@ use Psr\Log\NullLogger;
     private LoggerInterface $logger;
 
     #[Pure]
-    public function __construct(FilesLoaderInterface $fileLoader, ?LoggerInterface $logger = null)
-    {
+    public function __construct(
+        FilesLoaderInterface $fileLoader,
+        ?LoggerInterface $logger = null,
+    ) {
         $this->filesLoader = $fileLoader;
         $this->logger = $logger ?? new NullLogger();
     }
