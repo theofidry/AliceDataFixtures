@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AlicePersistence\Bridge\Symfony\Eloquent;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use function bin2hex;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\Dummy;
@@ -25,9 +26,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class ORMLoaderIntegrationTest extends TestCase
 {
     private KernelInterface $kernel;

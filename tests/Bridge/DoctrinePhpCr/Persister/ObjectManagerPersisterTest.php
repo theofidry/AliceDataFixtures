@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\DoctrinePhpCr\Persister;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 use function bin2hex;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger;
 use Doctrine\Common\DataFixtures\Purger\PurgerInterface;
@@ -27,9 +29,7 @@ use PHPUnit\Framework\TestCase;
 use function random_bytes;
 use ReflectionClass;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
- */
+#[CoversClass(ObjectManagerPersister::class)]
 class ObjectManagerPersisterTest extends TestCase
 {
     private ObjectManagerPersister $persister;
@@ -61,9 +61,7 @@ class ObjectManagerPersisterTest extends TestCase
         self::assertFalse((new ReflectionClass(ObjectManagerPersister::class))->isCloneable());
     }
 
-    /**
-     * @dataProvider provideDocuments
-     */
+    #[DataProvider('provideDocuments')]
     public function testCanPersistADocument($document): void
     {
         $this->persister->persist($document);
@@ -74,9 +72,7 @@ class ObjectManagerPersisterTest extends TestCase
         self::assertCount(1, $result);
     }
 
-    /**
-     * @dataProvider provideNonPersistableDocuments
-     */
+    #[DataProvider('provideNonPersistableDocuments')]
     public function testDoesNotPersistEmbeddables($dummy): void
     {
         try {

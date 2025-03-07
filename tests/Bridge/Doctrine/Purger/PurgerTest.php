@@ -25,14 +25,13 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\ORM\FakeEntityManager;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use ReflectionObject;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger
- */
+#[CoversNothing]
 class PurgerTest extends TestCase
 {
     use ProphecyTrait;

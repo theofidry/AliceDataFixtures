@@ -22,3 +22,7 @@ framework:
         email_validation_mode: html5
     session: ~
     test: ~
+
+services:
+    logger:
+        class: Psr\Log\NullLogger

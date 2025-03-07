@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AlicePersistence\Bridge\Symfony\Doctrine;
 
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use function bin2hex;
 use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
 use Doctrine\Persistence\ManagerRegistry;
@@ -27,6 +28,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 #[RequiresPhpExtension('mongodb')]
 #[CoversNothing]
+// TODO: remove this hack. This is purely for "Test code or tested code did not remove its own exception handlers".
+#[RunTestsInSeparateProcesses]
 class MongodbLoaderIntegrationTest extends TestCase
 {
     private KernelInterface $kernel;

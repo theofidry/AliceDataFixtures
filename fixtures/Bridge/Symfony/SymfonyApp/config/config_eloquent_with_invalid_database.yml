@@ -17,3 +17,7 @@ wouterj_eloquent:
             password: password
             prefix: ~
     eloquent: true
+
+services:
+    logger:
+        class: Psr\Log\NullLogger

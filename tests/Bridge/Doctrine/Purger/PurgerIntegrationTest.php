@@ -16,11 +16,10 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Purger;
 use Doctrine\ORM\EntityManagerInterface;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class PurgerIntegrationTest extends TestCase
 {
     private EntityManagerInterface $manager;

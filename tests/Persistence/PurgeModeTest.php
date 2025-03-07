@@ -14,11 +14,10 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Persistence;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Persistence\PurgeMode
- */
+#[CoversClass(PurgeMode::class)]
 class PurgeModeTest extends TestCase
 {
     public function testThrowsAnExceptionIfUnknownPurgeModeIsGiven(): void
