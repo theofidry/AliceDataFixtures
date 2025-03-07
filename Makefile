@@ -62,6 +62,14 @@ cs: remove_sf_cache \
 	vendor-bin/php-cs-fixer/vendor
 	$(PHP_CS_FIXER) fix
 
+.PHONY: rector_lint
+rector_lint: $(RECTOR_BIN)
+	$(RECTOR) --dry-run
+
+.PHONY: rector
+rector: $(RECTOR_BIN)
+	$(RECTOR)
+
 .PHONY: start_databases
 start_databases:             	## Start Docker containers
 start_databases:
@@ -291,4 +299,3 @@ vendor-bin/rector/vendor: vendor-bin/rector/composer.lock
 vendor-bin/rector/composer.lock: vendor-bin/rector/composer.json
 	@echo "$(@) is not up to date. You may want to run the following command:"
 	@echo "$$ composer bin rector update --lock && touch -c $(@)"
-z
