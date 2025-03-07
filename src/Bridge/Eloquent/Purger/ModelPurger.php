@@ -28,13 +28,11 @@ use Nelmio\Alice\IsAServiceTrait;
 {
     use IsAServiceTrait;
 
-    private Migrator $migrator;
-    private MigrationRepositoryInterface $repository;
-
-    public function __construct(MigrationRepositoryInterface $repository, private string $migrationPath, Migrator $migrator)
-    {
-        $this->migrator = $migrator;
-        $this->repository = $repository;
+    public function __construct(
+        private MigrationRepositoryInterface $repository,
+        private string $migrationPath,
+        private Migrator $migrator,
+    ) {
     }
 
     public function create(PurgeMode $mode, ?PurgerInterface $purger = null): PurgerInterface

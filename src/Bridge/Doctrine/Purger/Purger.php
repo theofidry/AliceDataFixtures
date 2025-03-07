@@ -40,13 +40,12 @@ use Nelmio\Alice\IsAServiceTrait;
 {
     use IsAServiceTrait;
 
-    private ObjectManager $manager;
     private DoctrinePurgerInterface $purger;
 
-    public function __construct(ObjectManager $manager, private ?PurgeMode $purgeMode = null)
-    {
-        $this->manager = $manager;
-
+    public function __construct(
+        private ObjectManager $manager,
+        private ?PurgeMode $purgeMode = null,
+    ) {
         $this->purger = static::createPurger($manager, $this->purgeMode);
     }
 

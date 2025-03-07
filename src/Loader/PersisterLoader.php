@@ -46,7 +46,7 @@ use Psr\Log\NullLogger;
         private LoggerInterface $logger = new NullLogger(),
         array $processors = []
     ) {
-        $this->processors = (static fn(ProcessorInterface ...$processors) => $processors)(...$processors);
+        $this->processors = (static fn (ProcessorInterface ...$processors) => $processors)(...$processors);
     }
 
     public function withPersister(PersisterInterface $persister): self

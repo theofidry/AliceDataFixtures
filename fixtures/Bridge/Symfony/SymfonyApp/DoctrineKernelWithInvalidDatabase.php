@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
-use Override;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\Bundle\DoctrineBundle;
+use Override;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
 class DoctrineKernelWithInvalidDatabase extends DoctrineKernel
 {
     public function getBundles(): array
     {
-        $bundles = null;
+        $bundles = parent::getBundles();
 
         $bundles[] = new DoctrineBundle();
 

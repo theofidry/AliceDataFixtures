@@ -33,8 +33,11 @@ use Psr\Log\NullLogger;
     use IsAServiceTrait;
 
     #[Pure]
-    public function __construct(private LoaderInterface $loader, private FileResolverInterface $fileResolver, private LoggerInterface $logger = new NullLogger())
-    {
+    public function __construct(
+        private LoaderInterface $loader,
+        private FileResolverInterface $fileResolver,
+        private LoggerInterface $logger = new NullLogger(),
+    ) {
     }
 
     public function withPersister(PersisterInterface $persister): self
