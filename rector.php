@@ -15,6 +15,7 @@ declare(strict_types=1);
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
 use Rector\Php80\Rector\Class_\StringableForToStringRector;
+use Rector\Php81\Rector\ClassMethod\NewInInitializerRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -30,8 +31,13 @@ return RectorConfig::configure()
     ->withImportNames(removeUnusedImports: true)
     ->withPhpSets(php83: true)
     ->withSkip([
+        NewInInitializerRector::class => [
+            __DIR__.'/src/Loader/PersisterLoader.php',
+            __DIR__.'/src/Loader/PurgerLoader.php',
+        ],
         RemoveParentCallWithoutParentRector::class => [
             __DIR__.'/fixtures/Bridge/Symfony/SymfonyApp/DoctrineKernelWithInvalidDatabase.php',
+            __DIR__.'/tests/Bridge/Symfony/**/*.php',
         ],
         StringableForToStringRector::class => [
             __DIR__.'/src/Persistence/PurgeMode.php',
