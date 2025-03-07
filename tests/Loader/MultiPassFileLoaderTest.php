@@ -51,7 +51,7 @@ class MultiPassFileLoaderTest extends TestCase
     }
 
     #[DataProvider('provideMaxPassValue')]
-    public function testMaxPassGivenMustBeAStrictlyPositiveInteger(int $maxPass, string $expectedExceptionMessage = null): void
+    public function testMaxPassGivenMustBeAStrictlyPositiveInteger(int $maxPass, ?string $expectedExceptionMessage): void
     {
         try {
             new MultiPassLoader(new FakeFileLoader(), $maxPass);

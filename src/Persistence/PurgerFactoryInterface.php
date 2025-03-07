@@ -19,5 +19,5 @@ interface PurgerFactoryInterface
      * Creates a new purger with the given purger mode. As the purger is stateful, it may be useful sometimes to create
      * a new purger with the same state as an existing one and just have control on the purge mode.
      */
-    public function create(PurgeMode $mode, PurgerInterface $purger = null): PurgerInterface;
+    public function create(PurgeMode $mode, ?PurgerInterface $purger = null): PurgerInterface;
 }
