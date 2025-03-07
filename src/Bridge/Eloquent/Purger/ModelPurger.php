@@ -45,7 +45,7 @@ use Nelmio\Alice\IsAServiceTrait;
             throw new InvalidArgumentException(
                 sprintf(
                     'Cannot purge database in truncate mode with "%s" (not supported).',
-                    __CLASS__
+                    self::class,
                 )
             );
         }
