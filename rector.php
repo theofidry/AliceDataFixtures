@@ -17,6 +17,7 @@ use Rector\Config\RectorConfig;
 return RectorConfig::configure()
     ->withPaths([
         __DIR__.'/src/Bridge/Eloquent/Purger/ModelPurger.php',
+        __DIR__.'/src/Loader/MultiPassLoader.php',
     ])
     ->withAutoloadPaths([
         __DIR__.'/vendor/autoload.php',
