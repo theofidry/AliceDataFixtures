@@ -37,14 +37,14 @@ use Psr\Log\NullLogger;
 
     private static array $PURGE_MAPPING;
 
-    private LoaderInterface $loader;
+    private LoaderInterface $decoratedLoader;
     private PurgerFactoryInterface $purgerFactory;
     private PurgeMode $defaultPurgeMode;
     private LoggerInterface $logger;
 
     public function __construct(
-        LoaderInterface $decoratedLoader,
-        PurgerFactoryInterface $purgerFactory,
+        private LoaderInterface $decoratedLoader,
+        private PurgerFactoryInterface $purgerFactory,
         string $defaultPurgeMode,
         ?LoggerInterface $logger = null
     ) {
@@ -55,9 +55,6 @@ use Psr\Log\NullLogger;
                 'no_purge' => PurgeMode::createNoPurgeMode(),
             ];
         }
-
-        $this->loader = $decoratedLoader;
-        $this->purgerFactory = $purgerFactory;
 
         if (false === in_array($defaultPurgeMode, ['delete', 'truncate', 'no_purge'], true)) {
             throw new InvalidArgumentException(
@@ -77,7 +74,7 @@ use Psr\Log\NullLogger;
      */
     public function withPersister(PersisterInterface $persister): self
     {
-        $loader = $this->loader;
+        $loader = $this->decoratedLoader;
 
         if ($loader instanceof PersisterAwareInterface) {
             $loader = $loader->withPersister($persister);
@@ -116,6 +113,6 @@ use Psr\Log\NullLogger;
             $purger->purge();
         }
 
-        return $this->loader->load($fixturesFiles, $parameters, $objects, $purgeMode);
+        return $this->decoratedLoader->load($fixturesFiles, $parameters, $objects, $purgeMode);
     }
 }
