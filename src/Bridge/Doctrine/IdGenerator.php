@@ -22,13 +22,11 @@ use Webmozart\Assert\Assert;
 
 class IdGenerator extends AbstractIdGenerator
 {
-    public const GENERATOR_TYPE_ALICE = 10;
+    public const int GENERATOR_TYPE_ALICE = 10;
 
-    private readonly AbstractIdGenerator $decorated;
-
-    public function __construct(AbstractIdGenerator $decorated)
-    {
-        $this->decorated = $decorated;
+    public function __construct(
+        private readonly AbstractIdGenerator $decorated,
+    ) {
     }
 
     public function generate(EntityManager $em, $entity): mixed

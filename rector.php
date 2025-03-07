@@ -13,6 +13,8 @@ declare(strict_types=1);
  */
 
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
+use Rector\Php80\Rector\Class_\StringableForToStringRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -26,4 +28,12 @@ return RectorConfig::configure()
         __DIR__.'/vendor-bin/rector/vendor/autoload.php',
     ])
     ->withImportNames(removeUnusedImports: true)
-    ->withPhpSets(php83: true);
+    ->withPhpSets(php83: true)
+    ->withSkip([
+        RemoveParentCallWithoutParentRector::class => [
+            __DIR__.'/fixtures/Bridge/Symfony/SymfonyApp/DoctrineKernelWithInvalidDatabase.php',
+        ],
+        StringableForToStringRector::class => [
+            __DIR__.'/src/Persistence/PurgeMode.php',
+        ],
+    ]);
