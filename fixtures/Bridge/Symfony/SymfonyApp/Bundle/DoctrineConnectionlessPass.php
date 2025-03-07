@@ -24,7 +24,7 @@ class DoctrineConnectionlessPass implements CompilerPassInterface
         try {
             $proxyCacheWarmerDefinition = $container->findDefinition('doctrine.orm.proxy_cache_warmer');
             $proxyCacheWarmerDefinition->clearTag('kernel.cache_warmer');
-        } catch (ServiceNotFoundException $exception) {
+        } catch (ServiceNotFoundException) {
         }
     }
 }

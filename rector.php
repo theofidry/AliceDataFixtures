@@ -13,6 +13,10 @@ declare(strict_types=1);
  */
 
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
+use Rector\Php80\Rector\Class_\StringableForToStringRector;
+use Rector\Php81\Rector\ClassMethod\NewInInitializerRector;
+use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -27,26 +31,20 @@ return RectorConfig::configure()
     ])
     ->withImportNames(removeUnusedImports: true)
     ->withPhpSets(php83: true)
-    ->withAttributesSets(phpunit: true)
     ->withSkip([
-//        __DIR__.'/composer-root-version-checker/vendor',
-//
-//        __DIR__.'/src/PhpParser/TraverserFactory.php',
-//        __DIR__.'/tests/PhpParser/UseStmtNameTest.php',
-//        __DIR__.'/src/PhpParser/NodeVisitor/AttributeAppender/ParentNodeAppender.php',
-//
-//        Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector::class,
-//        Rector\Php73\Rector\String_\SensitiveHereNowDocRector::class,
-//        Rector\Php81\Rector\ClassMethod\NewInInitializerRector::class => [
-//            __DIR__.'/src/Configuration/Configuration.php',
-//        ],
-//        Rector\Php81\Rector\Property\ReadOnlyPropertyRector::class => [
-//            __DIR__.'/src/Configuration/Configuration.php',
-//        ],
-//        Rector\Php55\Rector\String_\StringClassNameToClassConstantRector::class => [
-//            __DIR__.'/tests/Symbol/NamespaceRegistryTest.php',
-//            __DIR__.'/tests/Symbol/Reflector/UserSymbolsReflectorTest.php',
-//            __DIR__.'/tests/Symbol/SymbolRegistryTest.php',
-//            __DIR__.'/tests/Symbol/SymbolsRegistryTest.php',
-//        ],
+        NewInInitializerRector::class => [
+            __DIR__.'/src/Loader/PersisterLoader.php',
+            __DIR__.'/src/Loader/PurgerLoader.php',
+        ],
+        ReadOnlyPropertyRector::class => [
+            __DIR__.'/fixtures/Bridge/Symfony/Entity/Group.php',
+            __DIR__.'/fixtures/Bridge/Symfony/Entity/User.php',
+        ],
+        RemoveParentCallWithoutParentRector::class => [
+            __DIR__.'/fixtures/Bridge/Symfony/SymfonyApp/DoctrineKernelWithInvalidDatabase.php',
+            __DIR__.'/tests/Bridge/Symfony/**/*.php',
+        ],
+        StringableForToStringRector::class => [
+            __DIR__.'/src/Persistence/PurgeMode.php',
+        ],
     ]);

@@ -19,12 +19,14 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundleTest as N
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
 use Fidry\AliceDataFixtures\Loader\PersisterLoader;
 use Fidry\AliceDataFixtures\Loader\PurgerLoader;
+use Override;
 
 /**
  * @coversNothing
  */
 class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundleTest
 {
+    #[Override]
     public function setUp(): void
     {
         $this->kernel = DoctrineKernel::create();
@@ -36,6 +38,7 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
      *
      * @expectedDepreaction The service "fidry_alice_data_fixtures.loader.multipass_file" is deprecated and will be removed in future versions.
      */
+    #[Override]
     public function testServiceRegistration(): void
     {
         parent::testServiceRegistration();

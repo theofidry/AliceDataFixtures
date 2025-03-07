@@ -29,7 +29,6 @@ use Doctrine\Persistence\ObjectManager;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\IdGenerator;
 use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterExceptionFactory;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
-use function get_class;
 use Nelmio\Alice\IsAServiceTrait;
 use ReflectionClass;
 use ReflectionException;
@@ -72,7 +71,7 @@ class ObjectManagerPersister implements PersisterInterface
             $this->persistableClasses = array_flip($this->getPersistableClasses($this->objectManager));
         }
 
-        $className = get_class($object);
+        $className = $object::class;
 
         if (isset($this->persistableClasses[$className])) {
             $metadata = $this->getMetadata($className, $object);
@@ -248,7 +247,7 @@ class ObjectManagerPersister implements PersisterInterface
 
         try {
             $persistersReflection = $this->getUnitOfWorkPersistersReflection();
-        } catch (ReflectionException $propertyNotFound) {
+        } catch (ReflectionException) {
             // Do nothing: this will probably a case of a new UnitOfWork in
             // which case this hack should simply not apply
             return;

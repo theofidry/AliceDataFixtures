@@ -21,10 +21,10 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 final class Configuration implements ConfigurationInterface
 {
-    public const DOCTRINE_ORM_DRIVER = 'doctrine_orm';
-    public const DOCTRINE_MONGODB_ODM_DRIVER = 'doctrine_mongodb_odm';
-    public const DOCTRINE_PHPCR_ODM_DRIVER = 'doctrine_phpcr_odm';
-    public const ELOQUENT_ORM_DRIVER = 'eloquent_orm';
+    public const string DOCTRINE_ORM_DRIVER = 'doctrine_orm';
+    public const string DOCTRINE_MONGODB_ODM_DRIVER = 'doctrine_mongodb_odm';
+    public const string DOCTRINE_PHPCR_ODM_DRIVER = 'doctrine_phpcr_odm';
+    public const string ELOQUENT_ORM_DRIVER = 'eloquent_orm';
 
     public function getConfigTreeBuilder(): TreeBuilder
     {

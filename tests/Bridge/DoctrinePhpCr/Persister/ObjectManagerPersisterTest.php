@@ -69,7 +69,7 @@ class ObjectManagerPersisterTest extends TestCase
         $this->persister->persist($document);
         $this->persister->flush();
 
-        $result = $this->documentManager->getRepository(get_class($document))->findAll();
+        $result = $this->documentManager->getRepository($document::class)->findAll();
 
         self::assertCount(1, $result);
     }
@@ -83,7 +83,7 @@ class ObjectManagerPersisterTest extends TestCase
             $this->documentManager->persist($dummy);
             $this->documentManager->flush();
             $this->fail('Expected exception to be thrown.');
-        } catch (InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException) {
             // Expected result
             $this->documentManager->clear();
         }
