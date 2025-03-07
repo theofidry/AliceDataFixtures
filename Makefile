@@ -9,7 +9,7 @@ MYSQL_BIN=$(DOCKER_COMPOSE_EXEC) mysql mysql --user=root --password=password --h
 MONGO_BIN=$(DOCKER_COMPOSE_EXEC) mongo mongosh --username=root --password=password --host=host.docker.internal --port=27018
 endif
 
-RECTOR_BIN = vendor-bin/rector/vendor/bin/rector
+RECTOR_BIN = bin/rector
 RECTOR = $(RECTOR_BIN)
 
 .DEFAULT_GOAL := help
@@ -291,11 +291,5 @@ vendor-bin/proxy-manager/vendor/phpunit: vendor-bin/proxy-manager/composer.lock
 .PHONY: rector_install
 rector_install: $(RECTOR_BIN)
 
-$(RECTOR_BIN): vendor-bin/rector/vendor
+$(RECTOR_BIN): vendor
 	touch -c $@
-vendor-bin/rector/vendor: vendor-bin/rector/composer.lock
-	composer bin rector install
-	touch -c $@
-vendor-bin/rector/composer.lock: vendor-bin/rector/composer.json
-	@echo "$(@) is not up to date. You may want to run the following command:"
-	@echo "$$ composer bin rector update --lock && touch -c $(@)"
