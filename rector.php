@@ -20,6 +20,5 @@ return RectorConfig::configure()
     ])
     ->withAutoloadPaths([
         __DIR__.'/vendor/autoload.php',
-        __DIR__.'/vendor-bin/rector/vendor/autoload.php',
     ])
     ->withPhpSets(php83: true);
