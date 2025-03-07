@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\DoctrinePhpCr\Purger;
 
-use PHPUnit\Framework\Attributes\CoversNothing;
 use function bin2hex;
 use Doctrine\ODM\PHPCR\DocumentManagerInterface;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use function random_bytes;
 

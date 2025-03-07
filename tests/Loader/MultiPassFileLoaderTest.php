@@ -33,9 +33,9 @@ use ReflectionClass;
 use stdClass;
 
 #[CoversClass(MultiPassLoader::class)]
-#[UsesClass('\Fidry\AliceDataFixtures\Loader\ErrorTracker')]
-#[UsesClass('\Fidry\AliceDataFixtures\Loader\FileTracker')]
-#[UsesClass('\Fidry\AliceDataFixtures\Exception\MaxPassReachedException')]
+#[UsesClass(ErrorTracker::class)]
+#[UsesClass(FileTracker::class)]
+#[UsesClass(MaxPassReachedException::class)]
 class MultiPassFileLoaderTest extends TestCase
 {
     use ProphecyTrait;

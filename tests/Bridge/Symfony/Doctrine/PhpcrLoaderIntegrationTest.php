@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Fidry\AlicePersistence\Bridge\Symfony\Doctrine;
 
-use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use function bin2hex;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger;
 use Doctrine\Persistence\ManagerRegistry;

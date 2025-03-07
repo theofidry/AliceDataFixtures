@@ -19,10 +19,10 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundleTest as N
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
 use Fidry\AliceDataFixtures\Loader\PersisterLoader;
 use Fidry\AliceDataFixtures\Loader\PurgerLoader;
+use Override;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
-use Override;
 
 #[CoversNothing]
 class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundleTest
@@ -37,6 +37,7 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
     #[Group('legacy')]
     // TODO: remove this hack. This is purely for "Test code or tested code did not remove its own exception handlers".
     #[RunInSeparateProcess]
+    #[Override]
     public function testServiceRegistration(): void
     {
         parent::testServiceRegistration();

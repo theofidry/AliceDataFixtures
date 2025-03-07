@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\DoctrinePhpCr\Persister;
 
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\CoversClass;
 use function bin2hex;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger;
 use Doctrine\Common\DataFixtures\Purger\PurgerInterface;
@@ -25,6 +23,8 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use function random_bytes;
 use ReflectionClass;

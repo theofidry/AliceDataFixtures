@@ -40,6 +40,7 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
     #[Group('legacy')]
     // TODO: remove this hack. This is purely for "Test code or tested code did not remove its own exception handlers".
     #[RunInSeparateProcess]
+    #[Override]
     public function testServiceRegistration(): void
     {
         parent::testServiceRegistration();

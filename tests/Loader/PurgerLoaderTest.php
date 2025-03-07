@@ -26,7 +26,7 @@ use ReflectionClass;
 use stdClass;
 
 #[CoversClass(PurgerLoader::class)]
-#[UsesClass('\Fidry\AliceDataFixtures\Persistence\PurgeMode')]
+#[UsesClass(PurgeMode::class)]
 class PurgerLoaderTest extends TestCase
 {
     use ProphecyTrait;
