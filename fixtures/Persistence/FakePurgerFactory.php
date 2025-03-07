@@ -19,7 +19,7 @@ class FakePurgerFactory implements PurgerFactoryInterface
 {
     use NotCallableTrait;
 
-    public function create(PurgeMode $mode, PurgerInterface $purger = null): PurgerInterface
+    public function create(PurgeMode $mode, ?PurgerInterface $purger = null): PurgerInterface
     {
         $this->__call(__METHOD__, func_get_args());
     }

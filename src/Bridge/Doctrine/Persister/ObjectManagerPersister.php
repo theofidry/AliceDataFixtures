@@ -17,7 +17,6 @@ use function array_flip;
 use function array_key_exists;
 use function count;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ODM\MongoDB\Mapping\Annotations\File\Metadata;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata as ODMClassMetadata;
 use Doctrine\ODM\PHPCR\Mapping\ClassMetadata as PHPCRClassMetadata;
 use Doctrine\ORM\EntityManagerInterface as ORMEntityManager;
