@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Persistence;
 
+use Stringable;
 use function array_flip;
 use function array_key_exists;
 use InvalidArgumentException;
 use function sprintf;
 
-final class PurgeMode
+final class PurgeMode implements Stringable
 {
     private static array $values = [
         'NO_PURGE_MODE' => 0,
@@ -27,7 +28,7 @@ final class PurgeMode
     ];
 
     
-    private int $mode;
+    private readonly int $mode;
 
     public function __construct(int $mode)
     {
@@ -61,6 +62,6 @@ final class PurgeMode
 
     public function __toString(): string
     {
-        return array_flip(self::$values)[$this->mode];
+        return (string) array_flip(self::$values)[$this->mode];
     }
 }

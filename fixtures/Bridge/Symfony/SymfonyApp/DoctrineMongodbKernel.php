@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
+use Override;
 use Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
 use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
@@ -33,6 +34,7 @@ class DoctrineMongodbKernel extends IsolatedKernel
         return $bundles;
     }
 
+    #[Override]
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         parent::registerContainerConfiguration($loader);

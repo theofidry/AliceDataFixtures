@@ -13,10 +13,12 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp;
 
+use Override;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
 class EloquentKernelWithInvalidDatabase extends EloquentKernel
 {
+    #[Override]
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         parent::registerContainerConfiguration($loader);

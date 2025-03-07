@@ -24,7 +24,7 @@ class User
     /**
      * @var Collection<Group>
      */
-    private Collection $groups;
+    private readonly Collection $groups;
 
     #[Pure]
     public function __construct()

@@ -36,17 +36,13 @@ use Psr\Log\NullLogger;
     public const PURGE_MODE_TRUNCATE = 2;
 
     private static array $PURGE_MAPPING;
-
-    private LoaderInterface $loader;
-    private PurgerFactoryInterface $purgerFactory;
     private PurgeMode $defaultPurgeMode;
-    private LoggerInterface $logger;
 
     public function __construct(
-        LoaderInterface $decoratedLoader,
-        PurgerFactoryInterface $purgerFactory,
+        private LoaderInterface $loader,
+        private PurgerFactoryInterface $purgerFactory,
         string $defaultPurgeMode,
-        ?LoggerInterface $logger = null
+        private LoggerInterface $logger = new NullLogger()
     ) {
         if (!isset(self::$PURGE_MAPPING)) {
             self::$PURGE_MAPPING = [
@@ -55,9 +51,6 @@ use Psr\Log\NullLogger;
                 'no_purge' => PurgeMode::createNoPurgeMode(),
             ];
         }
-
-        $this->loader = $decoratedLoader;
-        $this->purgerFactory = $purgerFactory;
 
         if (false === in_array($defaultPurgeMode, ['delete', 'truncate', 'no_purge'], true)) {
             throw new InvalidArgumentException(
@@ -69,7 +62,6 @@ use Psr\Log\NullLogger;
         }
 
         $this->defaultPurgeMode = self::$PURGE_MAPPING[$defaultPurgeMode];
-        $this->logger = $logger ?? new NullLogger();
     }
 
     /**

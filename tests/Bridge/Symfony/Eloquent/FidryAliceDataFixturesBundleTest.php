@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\Eloquent;
 
+use Override;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Persister\ModelPersister;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundleTest as NakedFidryAliceDataFixturesBundleTest;
@@ -28,6 +29,7 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
 {
     protected KernelInterface $kernel;
 
+    #[Override]
     public function setUp(): void
     {
         $this->kernel = EloquentKernel::create();
@@ -39,6 +41,7 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
      *
      * @expectedDepreaction The service "fidry_alice_data_fixtures.loader.multipass_file" is deprecated and will be removed in future versions.
      */
+    #[Override]
     public function testServiceRegistration(): void
     {
         parent::testServiceRegistration();

@@ -29,13 +29,11 @@ use Nelmio\Alice\IsAServiceTrait;
     use IsAServiceTrait;
 
     private Migrator $migrator;
-    private string $migrationPath;
     private MigrationRepositoryInterface $repository;
 
-    public function __construct(MigrationRepositoryInterface $repository, string $migrationPath, Migrator $migrator)
+    public function __construct(MigrationRepositoryInterface $repository, private string $migrationPath, Migrator $migrator)
     {
         $this->migrator = $migrator;
-        $this->migrationPath = $migrationPath;
         $this->repository = $repository;
     }
 
@@ -45,7 +43,7 @@ use Nelmio\Alice\IsAServiceTrait;
             throw new InvalidArgumentException(
                 sprintf(
                     'Cannot purge database in truncate mode with "%s" (not supported).',
-                    __CLASS__
+                    self::class
                 )
             );
         }

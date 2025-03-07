@@ -41,15 +41,13 @@ use Nelmio\Alice\IsAServiceTrait;
     use IsAServiceTrait;
 
     private ObjectManager $manager;
-    private ?PurgeMode $purgeMode;
     private DoctrinePurgerInterface $purger;
 
-    public function __construct(ObjectManager $manager, ?PurgeMode $purgeMode = null)
+    public function __construct(ObjectManager $manager, private ?PurgeMode $purgeMode = null)
     {
         $this->manager = $manager;
-        $this->purgeMode = $purgeMode;
 
-        $this->purger = static::createPurger($manager, $purgeMode);
+        $this->purger = static::createPurger($manager, $this->purgeMode);
     }
 
     public function create(PurgeMode $mode, ?PurgerInterface $purger = null): PurgerInterface
@@ -67,8 +65,8 @@ use Nelmio\Alice\IsAServiceTrait;
                 sprintf(
                     'Expected purger to be either and instance of "%s" or "%s". Got "%s".',
                     DoctrinePurgerInterface::class,
-                    __CLASS__,
-                    get_class($purger)
+                    self::class,
+                    $purger::class
                 )
             );
         }
@@ -77,7 +75,7 @@ use Nelmio\Alice\IsAServiceTrait;
             throw new InvalidArgumentException(
                 sprintf(
                     'Expected purger "%s" to have an object manager, got "null" instead.',
-                    get_class($purger)
+                    $purger::class
                 )
             );
         }
@@ -133,7 +131,7 @@ use Nelmio\Alice\IsAServiceTrait;
         throw new InvalidArgumentException(
             sprintf(
                 'Cannot create a purger for ObjectManager of class %s',
-                get_class($manager)
+                $manager::class
             )
         );
     }

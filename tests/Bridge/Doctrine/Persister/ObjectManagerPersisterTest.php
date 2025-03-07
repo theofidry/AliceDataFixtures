@@ -75,7 +75,7 @@ class ObjectManagerPersisterTest extends TestCase
 
         $this->entityManager->clear();
 
-        $result = $this->entityManager->getRepository(get_class($entity))->findAll();
+        $result = $this->entityManager->getRepository($entity::class)->findAll();
 
         self::assertCount(1, $result);
 
@@ -122,7 +122,7 @@ class ObjectManagerPersisterTest extends TestCase
 
         self::assertEquals(
             IdGenerator::class,
-            get_class($classMetadata->idGenerator),
+            $classMetadata->idGenerator::class,
             'ID generator should be changed.'
         );
 
@@ -132,7 +132,7 @@ class ObjectManagerPersisterTest extends TestCase
 
         self::assertNotEquals(
             IdGenerator::class,
-            get_class($classMetadata->idGenerator),
+            $classMetadata->idGenerator::class,
             'ID generator should be restored after flush.'
         );
 
@@ -243,7 +243,7 @@ class ObjectManagerPersisterTest extends TestCase
         $this->entityManager->clear();
 
         /** @var DummyWithRelatedCascadePersist $fetchedEntity */
-        $fetchedEntity = $this->entityManager->getRepository(get_class($entity))->find(200);
+        $fetchedEntity = $this->entityManager->getRepository($entity::class)->find(200);
 
         $this->assertSame($entity->id, $fetchedEntity->id);
         $this->assertSame(100, $fetchedEntity->related->id);
