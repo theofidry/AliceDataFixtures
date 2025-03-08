@@ -15,6 +15,7 @@ const ROOT = __DIR__.'/../../..';
 
 require_once ROOT.'/vendor-bin/doctrine/vendor/autoload.php';
 
+use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 
@@ -23,9 +24,11 @@ $config = ORMSetup::createAttributeMetadataConfiguration(
     true,
 );
 
-$entityManagerFactory = static fn () => EntityManager::create(
+$connection = DriverManager::getConnection(
     require ROOT.'/doctrine-orm-db-settings.php',
     $config,
 );
+
+$entityManagerFactory = static fn () => new EntityManager($connection, $config);
 
 $GLOBALS['entity_manager_factory'] = $entityManagerFactory;
