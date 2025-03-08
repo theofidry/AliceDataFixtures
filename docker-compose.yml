@@ -13,6 +13,9 @@ services:
         # Store data in memory to improve speed
         tmpfs:
             - /var/lib/mysql
+        extra_hosts:
+          # Ensure that host.docker.internal is correctly defined on Linux
+          - host.docker.internal:host-gateway
 
     mongo:
         image: mongo:7.0
@@ -26,3 +29,6 @@ services:
         # Store data in memory to improve speed
         tmpfs:
             - /data/db
+        extra_hosts:
+          # Ensure that host.docker.internal is correctly defined on Linux
+          - host.docker.internal:host-gateway
