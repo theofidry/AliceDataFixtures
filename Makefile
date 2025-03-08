@@ -109,7 +109,7 @@ test_doctrine_bridge: vendor/bamarni \
 	$(MAKE) remove_sf_cache
 	$(MAKE) refresh_mysql_db
 
-	vendor-bin/doctrine/bin/doctrine orm:schema-tool:create
+	bin/doctrine orm:schema-tool:create
 
 	vendor-bin/doctrine/bin/phpunit -c phpunit_doctrine.xml.dist
 

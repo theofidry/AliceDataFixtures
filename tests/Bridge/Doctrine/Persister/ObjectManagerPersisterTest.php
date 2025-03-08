@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\ORMInvalidArgumentException;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\AnotherDummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyEmbeddable;
@@ -40,7 +41,7 @@ class ObjectManagerPersisterTest extends TestCase
 
     public function setUp(): void
     {
-        $this->entityManager = $GLOBALS['entity_manager'];
+        $this->entityManager = $GLOBALS['entity_manager_factory']();
         $this->persister = new ObjectManagerPersister($this->entityManager);
 
         $this->entityManager->getConnection()->beginTransaction();
@@ -201,7 +202,7 @@ class ObjectManagerPersisterTest extends TestCase
             $this->entityManager->flush();
 
             $this->fail('Expected exception to be thrown.');
-        } catch (Throwable) {
+        } catch (ORMInvalidArgumentException) {
             // Expected result
             $this->entityManager->clear();
         }
