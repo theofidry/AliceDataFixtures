@@ -37,8 +37,10 @@ return RectorConfig::configure()
     )
     ->withSkip([
         NewInInitializerRector::class => [
+            __DIR__.'/src/Loader/FileResolverLoader.php',
             __DIR__.'/src/Loader/PersisterLoader.php',
             __DIR__.'/src/Loader/PurgerLoader.php',
+            __DIR__.'/src/Loader/SimpleLoader.php',
         ],
         ReadOnlyPropertyRector::class => [
             __DIR__.'/fixtures/Bridge/Symfony/Entity/Group.php',
