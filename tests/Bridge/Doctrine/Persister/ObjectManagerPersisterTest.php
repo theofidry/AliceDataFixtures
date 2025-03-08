@@ -36,7 +36,6 @@ use Throwable;
 class ObjectManagerPersisterTest extends TestCase
 {
     private ObjectManagerPersister $persister;
-
     private EntityManagerInterface $entityManager;
 
     public function setUp(): void

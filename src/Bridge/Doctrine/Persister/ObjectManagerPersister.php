@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
+use Doctrine\ORM\Exception\ORMException;
 use function array_flip;
 use function array_key_exists;
 use function count;
@@ -22,7 +23,6 @@ use Doctrine\ODM\PHPCR\Mapping\ClassMetadata as PHPCRClassMetadata;
 use Doctrine\ORM\EntityManagerInterface as ORMEntityManager;
 use Doctrine\ORM\Id\AssignedGenerator as ORMAssignedGenerator;
 use Doctrine\ORM\Mapping\ClassMetadata as ORMClassMetadata;
-use Doctrine\ORM\ORMException;
 use Doctrine\ORM\UnitOfWork;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\ObjectManager;
@@ -142,7 +142,7 @@ class ObjectManagerPersister implements PersisterInterface
         $this->objectChecked[$objectId] = true;
 
         foreach ($metadata->getAssociationMappings() as $fieldName => $associationMapping) {
-            $targetEntityClassName = $associationMapping->targetEntity;
+            $targetEntityClassName = $associationMapping['targetEntity'];
             $fieldValueOrFieldValues = $metadata->getFieldValue($object, $fieldName);
 
             if (is_array($fieldValueOrFieldValues)) {

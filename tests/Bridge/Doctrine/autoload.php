@@ -29,9 +29,4 @@ $connection = DriverManager::getConnection(
     $config,
 );
 
-$entityManagerFactory = static fn () => EntityManager::create(
-    require ROOT.'/doctrine-orm-db-settings.php',
-    $config,
-);
-
-$GLOBALS['entity_manager_factory'] = $entityManagerFactory;
+$GLOBALS['entity_manager'] = new EntityManager($connection, $config);

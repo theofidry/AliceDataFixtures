@@ -14,12 +14,14 @@ use Doctrine\ODM\PHPCR\DocumentManagerInterface as PHPCRDocumentManager;
 use Doctrine\ODM\PHPCR\Tools\Console\Helper\DocumentManagerHelper as PhpcrDocumentManagerHelperAlias;
 use Doctrine\ORM\EntityManagerInterface as ORMEntityManager;
 use Doctrine\ORM\Tools\Console\ConsoleRunner as DoctrineORMConsoleRunner;
+use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
 use Jackalope\Tools\Console\Command\InitDoctrineDbalCommand as JackalopeInitDbalCommand;
 use Jackalope\Tools\Console\Helper\DoctrineDbalHelper as DoctrinePHPCRHelper;
 use PHPCR\Util\Console\Helper\PhpcrConsoleDumperHelper;
 use PHPCR\Util\Console\Helper\PhpcrHelper;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Helper\QuestionHelper;
+use Webmozart\Assert\Assert;
 
 // See https://www.doctrine-project.org/projects/doctrine-orm/en/2.9/reference/configuration.html#setting-up-the-commandline-tool
 // Depending of which Doctrine project we are using (ORM, ODM or PHP-CR) we
@@ -41,8 +43,11 @@ if ($isDoctrineORM) {
 
     /** @var ORMEntityManager $entityManager */
     $entityManager = $GLOBALS['entity_manager'];
+    Assert::isInstanceOf($entityManager, ORMEntityManager::class);
 
-    return DoctrineORMConsoleRunner::createHelperSet($entityManager);
+    return DoctrineORMConsoleRunner::run(
+        new SingleManagerProvider($entityManager),
+    );
 }
 
 if ($isDoctrinePHPCR) {
@@ -57,7 +62,7 @@ if ($isDoctrinePHPCR) {
             require __DIR__.'/doctrine-phpcr-db-settings.php',
         );
 
-        // For some reasons phpcrodm uses `$extraCommands` if defined but does not
+        // For some reason phpcrodm uses `$extraCommands` if defined but does not
         // provide the init command by default hence we need to manually add it.
         $extraCommands = [new JackalopeInitDbalCommand()];
 

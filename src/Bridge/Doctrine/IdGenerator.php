@@ -29,9 +29,10 @@ class IdGenerator extends AbstractIdGenerator
     ) {
     }
 
-    public function generateId(EntityManagerInterface $em, object|null $entity): mixed
+    public function generateId(EntityManagerInterface $em, $entity): mixed
     {
         Assert::notNull($entity);
+        Assert::object($entity);
 
         $class = $entity::class;
 

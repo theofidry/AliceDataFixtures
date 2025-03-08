@@ -45,7 +45,7 @@ use Psr\Log\NullLogger;
 
     public function withPersister(PersisterInterface $persister): self
     {
-        $loader = $this->loader;
+        $loader = $this->decoratedLoader;
 
         if ($loader instanceof PersisterAwareInterface) {
             $loader = $loader->withPersister($persister);
@@ -65,6 +65,6 @@ use Psr\Log\NullLogger;
 
         $fixturesFiles = $this->fileResolver->resolve($fixturesFiles);
 
-        return $this->loader->load($fixturesFiles, $parameters, $objects, $purgeMode);
+        return $this->decoratedLoader->load($fixturesFiles, $parameters, $objects, $purgeMode);
     }
 }
