@@ -14,11 +14,10 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Loader;
 
 use Exception;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Loader\ErrorTracker
- */
+#[CoversClass(ErrorTracker::class)]
 class ErrorTrackerTest extends TestCase
 {
     public function testCanGetStackOfATrackerEvenIfNoErrorHasBeenRegistered(): void

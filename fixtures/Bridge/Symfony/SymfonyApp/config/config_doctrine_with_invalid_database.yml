@@ -24,3 +24,9 @@ doctrine:
                 dir: '%project_dir%/config/doctrine'
                 is_bundle: false
                 prefix: Fidry\AliceDataFixtures\Bridge\Symfony\Entity
+
+services:
+    logger:
+        class: Symfony\Component\HttpKernel\Log\Logger
+        arguments:
+            - 'error'

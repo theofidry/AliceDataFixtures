@@ -32,18 +32,14 @@ use Psr\Log\NullLogger;
 {
     use IsAServiceTrait;
 
-    private LoaderInterface $loader;
-    private FileResolverInterface $fileResolver;
     private LoggerInterface $logger;
 
     #[Pure]
     public function __construct(
-        LoaderInterface $decoratedLoader,
-        FileResolverInterface $fileResolver,
+        private LoaderInterface $decoratedLoader,
+        private FileResolverInterface $fileResolver,
         ?LoggerInterface $logger = null
     ) {
-        $this->loader = $decoratedLoader;
-        $this->fileResolver = $fileResolver;
         $this->logger = $logger ?? new NullLogger();
     }
 

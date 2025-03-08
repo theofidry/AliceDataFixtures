@@ -18,6 +18,8 @@ use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\EloquentKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\TestCase;
 use function random_bytes;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -25,9 +27,8 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
+#[RunTestsInSeparateProcesses]
 class ORMLoaderIntegrationTest extends TestCase
 {
     private KernelInterface $kernel;

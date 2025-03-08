@@ -16,13 +16,12 @@ namespace Fidry\AliceDataFixtures\Bridge\DoctrineMongoDB\Purger;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\MongoDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @coversNothing
- *
- * @requires extension mongodb
- */
+#[RequiresPhpExtension('mongodb')]
+#[CoversNothing]
 class PurgerIntegrationTest extends TestCase
 {
     private DocumentManager $manager;

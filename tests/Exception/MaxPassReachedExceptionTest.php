@@ -17,12 +17,11 @@ use Error;
 use Exception;
 use Fidry\AliceDataFixtures\Loader\ErrorTracker;
 use Nelmio\Alice\Throwable\LoadingThrowable;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Exception\MaxPassReachedException
- */
+#[CoversClass(MaxPassReachedException::class)]
 class MaxPassReachedExceptionTest extends TestCase
 {
     public function testIsARuntimeException(): void

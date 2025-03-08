@@ -13,11 +13,8 @@
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          colors="true"
-         forceCoversAnnotation="true"
-         beStrictAboutCoversAnnotation="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
-         stopOnFailure="true"
-         verbose="true">
+         stopOnFailure="true">
 
     <php>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=2" />
@@ -30,13 +27,13 @@
         </testsuite>
     </testsuites>
 
-    <coverage>
+    <source>
         <include>
             <directory>src</directory>
         </include>
         <exclude>
             <directory>src/Bridge</directory>
         </exclude>
-    </coverage>
+    </source>
 
 </phpunit>

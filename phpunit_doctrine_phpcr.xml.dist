@@ -13,12 +13,9 @@
          xsi:noNamespaceSchemaLocation="vendor-bin/doctrine_phpcr/vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="tests/Bridge/DoctrinePhpCr/autoload.php"
          colors="true"
-         forceCoversAnnotation="true"
-         beStrictAboutCoversAnnotation="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
          stopOnFailure="true"
-         backupGlobals="false"
-         verbose="true">
+         backupGlobals="false">
 
     <php>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=4" />
@@ -30,10 +27,10 @@
         </testsuite>
     </testsuites>
 
-    <coverage>
+    <source>
         <include>
             <directory>src/Bridge/Doctrine</directory>
         </include>
-    </coverage>
+    </source>
 
 </phpunit>

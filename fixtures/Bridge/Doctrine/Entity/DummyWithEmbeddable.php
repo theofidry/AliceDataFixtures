@@ -27,6 +27,6 @@ class DummyWithEmbeddable
     #[GeneratedValue]
     public int $id;
 
-    #[Embedded(class: \DummyEmbeddable::class)]
+    #[Embedded(class: DummyEmbeddable::class)]
     public DummyEmbeddable $embeddable;
 }

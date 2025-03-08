@@ -35,11 +35,10 @@ use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringG
 {
     use IsAServiceTrait;
 
-    private FileLoaderInterface $loader;
-    private int $maxPass;
-
-    public function __construct(FileLoaderInterface $fileLoader, int $maxPass = 15)
-    {
+    public function __construct(
+        private FileLoaderInterface $loader,
+        private int $maxPass = 15,
+    ) {
         if ($maxPass <= 0) {
             throw new InvalidArgumentException(
                 sprintf(
@@ -49,9 +48,6 @@ use Nelmio\Alice\Throwable\Exception\Generator\Resolver\UnresolvableValueDuringG
                 )
             );
         }
-
-        $this->loader = $fileLoader;
-        $this->maxPass = $maxPass;
     }
 
     /**

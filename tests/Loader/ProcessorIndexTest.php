@@ -16,11 +16,10 @@ namespace Fidry\AliceDataFixtures\Loader;
 use Fidry\AliceDataFixtures\Persistence\Persister\NullPersister;
 use Fidry\AliceDataFixtures\ProcessorInterface;
 use Nelmio\Alice\Loader\NativeLoader;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class ProcessorIndexTest extends TestCase
 {
     public function testIndexesArePreserved(): void

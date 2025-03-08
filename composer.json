@@ -25,26 +25,25 @@
         "webmozart/assert": "^1.10"
     },
     "require-dev": {
-        "doctrine/annotations": "^1.13",
         "bamarni/composer-bin-plugin": "^1.4.1",
-        "phpspec/prophecy": "^1.14.0",
-        "phpspec/prophecy-phpunit": "^2.0.1",
-        "phpunit/phpunit": "^9.5.10",
-        "symfony/phpunit-bridge": "^5.3.8 || ^6.4 || ^7.0"
+        "phpspec/prophecy": "^1.20.0",
+        "phpspec/prophecy-phpunit": "^2.3.0",
+        "phpunit/phpunit": "^11.5.12",
+        "symfony/phpunit-bridge": "^7.2"
     },
     "conflict": {
         "doctrine/data-fixtures": "<1.7.0",
-        "doctrine/orm": "<2.20",
+        "doctrine/orm": "<2.20 || >=3.0",
         "doctrine/doctrine-bundle": "<2.11.0",
         "doctrine/mongodb-odm-bundle": "<5.1.0",
         "doctrine/mongodb-odm": "<2.6.0",
         "doctrine/phpcr-bundle": "<3.0",
         "doctrine/phpcr-odm": "<2.0.0",
         "doctrine/dbal": "<3.0",
-        "doctrine/persistence": "<2.0",
+        "doctrine/persistence": "<2.5.7 || >=3.0 <3.4.0",
         "illuminate/database": "<10.0",
         "ocramius/proxy-manager": "<2.1",
-        "symfony/framework-bundle": ">=6.0 <6.4",
+        "symfony/framework-bundle": ">=6.0 <6.4.19",
         "zendframework/zend-code": "<3.3.1"
     },
     "suggest": {

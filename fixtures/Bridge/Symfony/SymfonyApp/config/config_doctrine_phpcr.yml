@@ -42,3 +42,9 @@ doctrine_phpcr:
 fidry_alice_data_fixtures:
     db_drivers:
         doctrine_orm: false
+
+services:
+    logger:
+        class: Symfony\Component\HttpKernel\Log\Logger
+        arguments:
+            - 'error'

@@ -33,7 +33,7 @@ use WouterJ\EloquentBundle\WouterJEloquentBundle;
  */
 final class FidryAliceDataFixturesExtension extends Extension
 {
-    private const SERVICES_DIR = __DIR__.'/../Resources/config';
+    private const string SERVICES_DIR = __DIR__.'/../Resources/config';
 
     public function load(array $configs, ContainerBuilder $container): void
     {
