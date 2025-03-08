@@ -24,8 +24,8 @@ use Symfony\Component\Console\Helper\QuestionHelper;
 use Webmozart\Assert\Assert;
 
 // See https://www.doctrine-project.org/projects/doctrine-orm/en/2.9/reference/configuration.html#setting-up-the-commandline-tool
-// Depending of which Doctrine project we are using (ORM, ODM or PHP-CR) we
-// set-up the project differently.
+// Depending on which Doctrine project we are using (ORM, ODM or PHP-CR) we
+// set up the project differently.
 //
 // This is purely for the Doctrine commands that require this file as an entry
 // point. The actual set-up (which is re-used for example running the tests)
@@ -42,7 +42,7 @@ if ($isDoctrineORM) {
     require_once __DIR__.'/tests/Bridge/Doctrine/autoload.php';
 
     /** @var ORMEntityManager $entityManager */
-    $entityManager = $GLOBALS['entity_manager'];
+    $entityManager = $GLOBALS['entity_manager_factory']();
     Assert::isInstanceOf($entityManager, ORMEntityManager::class);
 
     return DoctrineORMConsoleRunner::run(

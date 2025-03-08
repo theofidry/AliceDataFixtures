@@ -20,8 +20,8 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 
 $config = ORMSetup::createAttributeMetadataConfiguration(
-    paths: [ROOT.'/fixtures/Bridge/Doctrine/Entity'],
-    isDevMode: true,
+    [ROOT.'/fixtures/Bridge/Doctrine/Entity'],
+    true,
 );
 
 $connection = DriverManager::getConnection(
@@ -29,4 +29,6 @@ $connection = DriverManager::getConnection(
     $config,
 );
 
-$GLOBALS['entity_manager'] = new EntityManager($connection, $config);
+$entityManagerFactory = static fn () => new EntityManager($connection, $config);
+
+$GLOBALS['entity_manager_factory'] = $entityManagerFactory;
