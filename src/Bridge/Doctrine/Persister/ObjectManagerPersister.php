@@ -187,10 +187,10 @@ class ObjectManagerPersister implements PersisterInterface
     private static function isClassMetadataOfPersistableClass(ClassMetadata $metadata): bool
     {
         $isMappedSuperClass = (
-            $metadata instanceof ORMClassMetadata
+                $metadata instanceof ORMClassMetadata
                 || $metadata instanceof ODMClassMetadata
                 || $metadata instanceof PHPCRClassMetadata
-        )
+            )
             && $metadata->isMappedSuperclass;
 
         $isEmbeddedClass = $metadata instanceof ORMClassMetadata

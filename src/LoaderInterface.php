@@ -24,5 +24,5 @@ interface LoaderInterface
      *
      * @return object[]
      */
-    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], PurgeMode $purgeMode = null): array;
+    public function load(array $fixturesFiles, array $parameters = [], array $objects = [], ?PurgeMode $purgeMode = null): array;
 }

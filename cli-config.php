@@ -40,7 +40,7 @@ if ($isDoctrineORM) {
     require_once __DIR__.'/tests/Bridge/Doctrine/autoload.php';
 
     /** @var ORMEntityManager $entityManager */
-    $entityManager = $GLOBALS['entity_manager_factory']();
+    $entityManager = $GLOBALS['entity_manager'];
 
     return DoctrineORMConsoleRunner::createHelperSet($entityManager);
 }

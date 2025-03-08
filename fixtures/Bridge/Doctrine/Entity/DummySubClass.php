@@ -15,9 +15,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Entity;
 
 use Doctrine\ORM\Mapping\Entity;
 
-/**
- * @Entity
- */
+#[Entity]
 class DummySubClass extends MappedSuperclassDummy
 {
 }
