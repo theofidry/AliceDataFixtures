@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
-use Doctrine\ORM\Exception\ORMException;
 use function array_flip;
 use function array_key_exists;
 use function count;
@@ -21,6 +20,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata as ODMClassMetadata;
 use Doctrine\ODM\PHPCR\Mapping\ClassMetadata as PHPCRClassMetadata;
 use Doctrine\ORM\EntityManagerInterface as ORMEntityManager;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Id\AssignedGenerator as ORMAssignedGenerator;
 use Doctrine\ORM\Mapping\ClassMetadata as ORMClassMetadata;
 use Doctrine\ORM\UnitOfWork;
