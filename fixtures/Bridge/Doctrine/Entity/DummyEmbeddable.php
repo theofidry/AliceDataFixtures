@@ -15,9 +15,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Entity;
 
 use Doctrine\ORM\Mapping\Embeddable;
 
-/**
- * @Embeddable
- */
+#[Embeddable]
 class DummyEmbeddable
 {
 }

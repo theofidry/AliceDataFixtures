@@ -20,24 +20,15 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 
-/**
- * @Entity
- */
+#[Entity]
 class DummyWithRelation
 {
-    /**
-     * @Id
-     *
-     * @Column(type="integer")
-     *
-     * @GeneratedValue
-     */
+    #[Id]
+    #[Column(type: 'integer')]
+    #[GeneratedValue]
     public int $id;
 
-    /**
-     * @OneToOne(targetEntity="DummyWithIdentifier", cascade={"persist"})
-     *
-     * @JoinColumn(name="dummy_id", referencedColumnName="id")
-     */
+    #[OneToOne(targetEntity: 'DummyWithIdentifier', cascade: ['persist'])]
+    #[JoinColumn(name: 'dummy_id', referencedColumnName: 'id')]
     public DummyWithIdentifier $dummy;
 }

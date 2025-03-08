@@ -19,50 +19,33 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\InverseJoinColumn;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 
-/**
- * @Entity
- */
+#[Entity]
 class DummyWithRelatedCascadePersist
 {
-    /**
-     * @Id
-     *
-     * @Column(type="integer")
-     *
-     * @GeneratedValue
-     */
+    #[Id]
+    #[Column(type: 'integer')]
+    #[GeneratedValue]
     public ?int $id = null;
 
-    /**
-     * @ManyToOne(targetEntity="Dummy", cascade={"persist"})
-     */
+    #[ManyToOne(targetEntity: Dummy::class, cascade: ['persist'])]
     public Dummy $related;
 
-    /**
-     * @ManyToOne(targetEntity="Dummy", cascade={"persist"})
-     */
+    #[ManyToOne(targetEntity: Dummy::class, cascade: ['persist'])]
     public ?Dummy $relatedNullable = null;
 
     /**
      * @var Collection<AnotherDummy>
-     *
-     * @ManyToMany(targetEntity=AnotherDummy::class, cascade={"persist"})
-     *
-     * @JoinTable(
-     *     name="dummmy_with_related_cascade_persist_to_another_dummy",
-     *     joinColumns={
-     *
-     *         @JoinColumn(name="user_id", referencedColumnName="id")
-     *     },
-     *     inverseJoinColumns={
-     *         @JoinColumn(name="group_id", referencedColumnName="id")
-     *     }
-     * )
      */
+    #[ManyToMany(targetEntity: AnotherDummy::class, cascade: ['persist'])]
+    #[JoinTable(name: 'dummmy_with_related_cascade_persist_to_another_dummy')]
+    #[JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[InverseJoinColumn(name: 'group_id', referencedColumnName: 'id')]
     public Collection $relatedMultiple;
 
     public function __construct()

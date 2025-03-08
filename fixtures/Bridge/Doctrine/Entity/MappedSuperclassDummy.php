@@ -18,22 +18,14 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 
-/**
- * @MappedSuperclass
- */
+#[MappedSuperclass]
 class MappedSuperclassDummy
 {
-    /**
-     * @Id
-     *
-     * @Column(type="integer")
-     *
-     * @GeneratedValue
-     */
+    #[Id]
+    #[Column(type: 'integer')]
+    #[GeneratedValue]
     public int $id;
 
-    /**
-     * @Column(type="string")
-     */
+    #[Column(type: 'string')]
     public string $status;
 }

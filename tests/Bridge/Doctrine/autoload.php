@@ -16,9 +16,9 @@ const ROOT = __DIR__.'/../../..';
 require_once ROOT.'/vendor-bin/doctrine/vendor/autoload.php';
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\ORMSetup;
 
-$config = Setup::createAnnotationMetadataConfiguration(
+$config = ORMSetup::createAttributeMetadataConfiguration(
     [ROOT.'/fixtures/Bridge/Doctrine/Entity'],
     true,
 );
