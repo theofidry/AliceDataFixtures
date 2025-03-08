@@ -16,15 +16,14 @@ namespace Fidry\AliceDataFixtures\Loader;
 use Fidry\AliceDataFixtures\File\Resolver\DummyResolver;
 use Fidry\AliceDataFixtures\FileResolverInterface;
 use Fidry\AliceDataFixtures\LoaderInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use stdClass;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Loader\FileResolverLoader
- */
+#[CoversClass(FileResolverLoader::class)]
 class FileResolverLoaderTest extends TestCase
 {
     use ProphecyTrait;

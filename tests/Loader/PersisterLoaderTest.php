@@ -18,15 +18,14 @@ use Fidry\AliceDataFixtures\Persistence\FakePersister;
 use Fidry\AliceDataFixtures\Persistence\PersisterAwareInterface;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
 use Fidry\AliceDataFixtures\ProcessorInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use stdClass;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Loader\PersisterLoader
- */
+#[CoversClass(PersisterLoader::class)]
 class PersisterLoaderTest extends TestCase
 {
     use ProphecyTrait;

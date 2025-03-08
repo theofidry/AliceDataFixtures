@@ -14,11 +14,10 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Loader;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Loader\FileTracker
- */
+#[CoversClass(FileTracker::class)]
 class FileTrackerTest extends TestCase
 {
     public function testReturnsAllUnloadedFiles(): void

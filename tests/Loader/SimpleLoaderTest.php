@@ -18,15 +18,14 @@ use Nelmio\Alice\FilesLoaderInterface;
 use Nelmio\Alice\ObjectBag;
 use Nelmio\Alice\ObjectSet;
 use Nelmio\Alice\ParameterBag;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use stdClass;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Loader\SimpleLoader
- */
+#[CoversClass(SimpleLoader::class)]
 class SimpleLoaderTest extends TestCase
 {
     use ProphecyTrait;

@@ -20,10 +20,11 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
 use Fidry\AliceDataFixtures\Loader\PersisterLoader;
 use Fidry\AliceDataFixtures\Loader\PurgerLoader;
 use Override;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundleTest
 {
     #[Override]
@@ -33,11 +34,9 @@ class FidryAliceDataFixturesBundleTest extends NakedFidryAliceDataFixturesBundle
         $this->kernel->boot();
     }
 
-    /**
-     * @group legacy
-     *
-     * @expectedDepreaction The service "fidry_alice_data_fixtures.loader.multipass_file" is deprecated and will be removed in future versions.
-     */
+    #[Group('legacy')]
+    // TODO: remove this hack. This is purely for "Test code or tested code did not remove its own exception handlers".
+    #[RunInSeparateProcess]
     #[Override]
     public function testServiceRegistration(): void
     {

@@ -23,13 +23,13 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\DummySubClass;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\MappedSuperclassDummy;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use function random_bytes;
 use ReflectionClass;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister
- */
+#[CoversClass(ObjectManagerPersister::class)]
 class ObjectManagerPersisterTest extends TestCase
 {
     private ObjectManagerPersister $persister;
@@ -61,9 +61,7 @@ class ObjectManagerPersisterTest extends TestCase
         self::assertFalse((new ReflectionClass(ObjectManagerPersister::class))->isCloneable());
     }
 
-    /**
-     * @dataProvider provideDocuments
-     */
+    #[DataProvider('provideDocuments')]
     public function testCanPersistADocument($document): void
     {
         $this->persister->persist($document);
@@ -74,9 +72,7 @@ class ObjectManagerPersisterTest extends TestCase
         self::assertCount(1, $result);
     }
 
-    /**
-     * @dataProvider provideNonPersistableDocuments
-     */
+    #[DataProvider('provideNonPersistableDocuments')]
     public function testDoesNotPersistEmbeddables($dummy): void
     {
         try {

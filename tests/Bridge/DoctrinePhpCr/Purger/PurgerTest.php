@@ -19,14 +19,13 @@ use Doctrine\ODM\PHPCR\DocumentManager;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
 use Fidry\AliceDataFixtures\Persistence\PurgerFactoryInterface;
 use Fidry\AliceDataFixtures\Persistence\PurgerInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use ReflectionObject;
 
-/**
- * @covers \Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger
- */
+#[CoversClass(Purger::class)]
 class PurgerTest extends TestCase
 {
     use ProphecyTrait;

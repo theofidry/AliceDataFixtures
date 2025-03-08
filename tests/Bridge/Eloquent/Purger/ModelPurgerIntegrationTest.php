@@ -16,11 +16,10 @@ namespace Fidry\AliceDataFixtures\Bridge\Eloquent\Purger;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Model\AnotherDummy;
 use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Database\Migrations\Migrator;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class ModelPurgerIntegrationTest extends TestCase
 {
     private MigrationRepositoryInterface $repository;

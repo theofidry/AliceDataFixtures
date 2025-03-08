@@ -15,10 +15,9 @@ namespace Fidry\AliceDataFixtures\Bridge\Symfony\ProxyManager\Doctrine;
 
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundleTest as NakedFidryAliceDataFixturesBundleTest;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernelWithInvalidDatabase;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class LazyIntegrationTest extends NakedFidryAliceDataFixturesBundleTest
 {
     public function testTheApplicationCanBeStartedWithoutRequiringADatabaseConnection(): void

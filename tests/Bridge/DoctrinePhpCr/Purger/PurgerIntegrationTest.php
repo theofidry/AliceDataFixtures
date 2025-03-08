@@ -18,12 +18,11 @@ use Doctrine\ODM\PHPCR\DocumentManagerInterface;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\PhpCrDocument\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use function random_bytes;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class PurgerIntegrationTest extends TestCase
 {
     private DocumentManagerInterface $manager;
