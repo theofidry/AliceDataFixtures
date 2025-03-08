@@ -13,8 +13,9 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
+use Closure;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\ORMInvalidArgumentException;
+use Exception;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\AnotherDummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyEmbeddable;
@@ -35,12 +36,14 @@ use ReflectionClass;
 #[CoversClass(ObjectManagerPersister::class)]
 class ObjectManagerPersisterTest extends TestCase
 {
+    private Closure $entityManagerFactory;
     private ObjectManagerPersister $persister;
     private EntityManagerInterface $entityManager;
 
     public function setUp(): void
     {
-        $this->entityManager = $GLOBALS['entity_manager_factory']();
+        $this->entityManagerFactory = $GLOBALS['entity_manager_factory'];
+        $this->entityManager = ($this->entityManagerFactory)();
         $this->persister = new ObjectManagerPersister($this->entityManager);
 
         $this->entityManager->getConnection()->beginTransaction();
@@ -195,16 +198,9 @@ class ObjectManagerPersisterTest extends TestCase
     #[DataProvider('provideNonPersistableEntities')]
     public function testDoesNotPersistEmbeddables($dummy): void
     {
-        // Sanity check
-        try {
-            $this->entityManager->persist($dummy);
-            $this->entityManager->flush();
-
-            $this->fail('Expected exception to be thrown.');
-        } catch (ORMInvalidArgumentException) {
-            // Expected result
-            $this->entityManager->clear();
-        }
+        // Sanity check. Use another entity manager in case it closes the
+        // connection.
+        $this->assertCannotPersistObject($dummy);
 
         $this->persister->persist($dummy);
         $this->persister->flush();
@@ -286,5 +282,21 @@ class ObjectManagerPersisterTest extends TestCase
         yield 'embeddable' => [new DummyEmbeddable()];
 
         yield 'mapped super class' => [new MappedSuperclassDummy()];
+    }
+
+    private function assertCannotPersistObject(object $dummy): void
+    {
+        // Use another entity manager in case it closes the connection.
+        $entityManager = ($this->entityManagerFactory)();
+
+        try {
+            $entityManager->persist($dummy);
+            $entityManager->flush();
+
+            $this->fail('Expected exception to be thrown.');
+        } catch (Exception) {
+            // Expected result
+            $entityManager->clear();
+        }
     }
 }

@@ -29,6 +29,7 @@ use Doctrine\Persistence\ObjectManager;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\IdGenerator;
 use Fidry\AliceDataFixtures\Exception\ObjectGeneratorPersisterExceptionFactory;
 use Fidry\AliceDataFixtures\Persistence\PersisterInterface;
+use function is_array;
 use Nelmio\Alice\IsAServiceTrait;
 use ReflectionClass;
 use ReflectionException;
@@ -142,6 +143,10 @@ class ObjectManagerPersister implements PersisterInterface
         $this->objectChecked[$objectId] = true;
 
         foreach ($metadata->getAssociationMappings() as $fieldName => $associationMapping) {
+            if (is_array($associationMapping) && !array_key_exists('targetEntity', $associationMapping)) {
+                continue;
+            }
+
             $targetEntityClassName = $associationMapping['targetEntity'];
             $fieldValueOrFieldValues = $metadata->getFieldValue($object, $fieldName);
 
