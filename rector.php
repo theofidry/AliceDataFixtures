@@ -31,7 +31,10 @@ return RectorConfig::configure()
     ])
     ->withImportNames(removeUnusedImports: true)
     ->withPhpSets(php83: true)
-    ->withAttributesSets(phpunit: true)
+    ->withAttributesSets(
+        doctrine: true,
+        phpunit: true,
+    )
     ->withSkip([
         NewInInitializerRector::class => [
             __DIR__.'/src/Loader/PersisterLoader.php',
