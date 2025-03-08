@@ -13,11 +13,8 @@
          xsi:noNamespaceSchemaLocation="vendor-bin/proxy-manager/vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor-bin/proxy-manager/vendor/autoload.php"
          colors="true"
-         forceCoversAnnotation="true"
-         beStrictAboutCoversAnnotation="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
-         stopOnFailure="true"
-         verbose="true">
+         stopOnFailure="true">
 
     <php>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=31" />
@@ -29,10 +26,10 @@
         </testsuite>
     </testsuites>
 
-    <coverage>
+    <source>
         <include>
             <directory>src/Bridge/Symfony/Doctrine</directory>
         </include>
-    </coverage>
+    </source>
 
 </phpunit>

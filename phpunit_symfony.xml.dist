@@ -13,11 +13,8 @@
          xsi:noNamespaceSchemaLocation="vendor-bin/symfony/vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor-bin/symfony/vendor/autoload.php"
          colors="true"
-         forceCoversAnnotation="true"
-         beStrictAboutCoversAnnotation="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
-         stopOnFailure="true"
-         verbose="true">
+         stopOnFailure="true">
 
     <php>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=0" />
@@ -32,7 +29,7 @@
         </testsuite>
     </testsuites>
 
-    <coverage>
+    <source>
         <include>
             <directory>src/Bridge/Symfony</directory>
         </include>
@@ -42,6 +39,6 @@
             <directory>tests/Bridge/Symfony/Eloquent</directory>
             <directory>tests/Bridge/Symfony/ProxyManager</directory>
         </exclude>
-    </coverage>
+    </source>
 
 </phpunit>
