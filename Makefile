@@ -231,7 +231,9 @@ vendor-bin/doctrine/composer.lock: vendor-bin/doctrine/composer.json
 	@echo vendor-bin/doctrine/composer.lock is not up to date.
 
 vendor-bin/doctrine/vendor/phpunit: vendor-bin/doctrine/composer.lock
-	composer bin doctrine update $(COMPOSER_FLAGS)
+	@if [ -z "$$CI" ]; then \
+		composer bin doctrine update $(COMPOSER_FLAGS)
+	fi
 	touch $@
 
 
@@ -239,8 +241,10 @@ vendor-bin/doctrine_mongodb/composer.lock: vendor-bin/doctrine_mongodb/composer.
 	@echo vendor-bin/doctrine_mongodb/composer.lock is not up to date.
 
 vendor-bin/doctrine_mongodb/vendor/phpunit: vendor-bin/doctrine_mongodb/composer.lock
-	composer bin doctrine_mongodb update $(COMPOSER_FLAGS) || true
-	composer bin doctrine_mongodb update $(COMPOSER_FLAGS)
+	@if [ -z "$$CI" ]; then \
+		composer bin doctrine_mongodb update $(COMPOSER_FLAGS) || true
+		composer bin doctrine_mongodb update $(COMPOSER_FLAGS)
+	fi
 	touch $@
 
 
@@ -248,11 +252,15 @@ vendor-bin/doctrine_phpcr/composer.lock: vendor-bin/doctrine_phpcr/composer.json
 	@echo vendor-bin/doctrine_phpcr/composer.lock is not up to date.
 
 vendor-bin/doctrine_phpcr/vendor/phpunit: vendor-bin/doctrine_phpcr/composer.lock
-	composer bin doctrine_phpcr update $(COMPOSER_FLAGS)
+	@if [ -z "$$CI" ]; then \
+		composer bin doctrine_phpcr update $(COMPOSER_FLAGS)
+	fi
 	touch $@
 
 vendor-bin/doctrine_phpcr/bin/phpcrodm: vendor-bin/doctrine_phpcr/composer.lock
-	composer bin doctrine_phpcr update $(COMPOSER_FLAGS)
+	@if [ -z "$$CI" ]; then \
+		composer bin doctrine_phpcr update $(COMPOSER_FLAGS)
+	fi
 	touch $@
 
 
@@ -260,8 +268,10 @@ vendor-bin/eloquent/composer.lock: vendor-bin/eloquent/composer.json
 	@echo vendor-bin/eloquent/composer.lock is not up to date.
 
 vendor-bin/eloquent/vendor/phpunit: vendor-bin/eloquent/composer.lock
-	composer bin eloquent update $(COMPOSER_FLAGS) || true
-	composer bin eloquent update $(COMPOSER_FLAGS)
+	@if [ -z "$$CI" ]; then \
+		composer bin eloquent update $(COMPOSER_FLAGS) || true
+		composer bin eloquent update $(COMPOSER_FLAGS)
+	fi
 	touch $@
 
 
@@ -269,13 +279,17 @@ vendor-bin/symfony/composer.lock: vendor-bin/symfony/composer.json
 	@echo vendor-bin/symfony/composer.lock is not up to date.
 
 vendor-bin/symfony/vendor/phpunit: vendor-bin/symfony/composer.lock
-	composer bin symfony update $(COMPOSER_FLAGS) || true
-	composer bin symfony update $(COMPOSER_FLAGS)
+	@if [ -z "$$CI" ]; then \
+		composer bin symfony update $(COMPOSER_FLAGS) || true
+		composer bin symfony update $(COMPOSER_FLAGS)
+	fi
 	touch $@
 
 bin/console: vendor-bin/symfony/composer.lock
-	composer bin symfony update $(COMPOSER_FLAGS) || true
-	composer bin symfony update $(COMPOSER_FLAGS)
+	@if [ -z "$$CI" ]; then \
+		composer bin symfony update $(COMPOSER_FLAGS) || true
+		composer bin symfony update $(COMPOSER_FLAGS)
+	fi
 	touch $@
 
 
@@ -283,8 +297,10 @@ vendor-bin/proxy-manager/composer.lock: vendor-bin/proxy-manager/composer.json
 	@echo vendor-bin/proxy-manager/composer.lock is not up to date.
 
 vendor-bin/proxy-manager/vendor/phpunit: vendor-bin/proxy-manager/composer.lock
-	composer bin proxy-manager update $(COMPOSER_FLAGS) || true
-	composer bin proxy-manager update $(COMPOSER_FLAGS)
+	@if [ -z "$$CI" ]; then \
+		composer bin proxy-manager update $(COMPOSER_FLAGS) || true
+		composer bin proxy-manager update $(COMPOSER_FLAGS)
+	fi
 	touch $@
 
 .PHONY: rector_install
