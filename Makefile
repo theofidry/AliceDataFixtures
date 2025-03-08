@@ -280,15 +280,15 @@ vendor-bin/symfony/composer.lock: vendor-bin/symfony/composer.json
 
 vendor-bin/symfony/vendor/phpunit: vendor-bin/symfony/composer.lock
 	@if [ -z "$$CI" ]; then \
-		composer bin symfony update $(COMPOSER_FLAGS) || true \
-		composer bin symfony update $(COMPOSER_FLAGS) \
+		composer bin symfony update $(COMPOSER_FLAGS) || true; \
+		composer bin symfony update $(COMPOSER_FLAGS); \
 	fi
 	touch $@
 
 bin/console: vendor-bin/symfony/composer.lock
 	@if [ -z "$$CI" ]; then \
-		composer bin symfony update $(COMPOSER_FLAGS) || true \
-		composer bin symfony update $(COMPOSER_FLAGS) \
+		composer bin symfony update $(COMPOSER_FLAGS) || true; \
+		composer bin symfony update $(COMPOSER_FLAGS); \
 	fi
 	touch $@
 

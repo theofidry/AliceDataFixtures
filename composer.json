@@ -40,7 +40,7 @@
         "doctrine/phpcr-bundle": "<3.0",
         "doctrine/phpcr-odm": "<2.0.0",
         "doctrine/dbal": "<3.0",
-        "doctrine/persistence": "<2.0",
+        "doctrine/persistence": "<2.5.7 || >=3.0 <3.4.0",
         "illuminate/database": "<10.0",
         "ocramius/proxy-manager": "<2.1",
         "symfony/framework-bundle": ">=6.0 <6.4",
