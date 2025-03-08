@@ -232,7 +232,7 @@ vendor-bin/doctrine/composer.lock: vendor-bin/doctrine/composer.json
 
 vendor-bin/doctrine/vendor/phpunit: vendor-bin/doctrine/composer.lock
 	@if [ -z "$$CI" ]; then \
-		composer bin doctrine update $(COMPOSER_FLAGS)
+		composer bin doctrine update $(COMPOSER_FLAGS) \
 	fi
 	touch $@
 
@@ -242,8 +242,8 @@ vendor-bin/doctrine_mongodb/composer.lock: vendor-bin/doctrine_mongodb/composer.
 
 vendor-bin/doctrine_mongodb/vendor/phpunit: vendor-bin/doctrine_mongodb/composer.lock
 	@if [ -z "$$CI" ]; then \
-		composer bin doctrine_mongodb update $(COMPOSER_FLAGS) || true
-		composer bin doctrine_mongodb update $(COMPOSER_FLAGS)
+		composer bin doctrine_mongodb update $(COMPOSER_FLAGS) || true \
+		composer bin doctrine_mongodb update $(COMPOSER_FLAGS) \
 	fi
 	touch $@
 
@@ -253,13 +253,13 @@ vendor-bin/doctrine_phpcr/composer.lock: vendor-bin/doctrine_phpcr/composer.json
 
 vendor-bin/doctrine_phpcr/vendor/phpunit: vendor-bin/doctrine_phpcr/composer.lock
 	@if [ -z "$$CI" ]; then \
-		composer bin doctrine_phpcr update $(COMPOSER_FLAGS)
+		composer bin doctrine_phpcr update $(COMPOSER_FLAGS) \
 	fi
 	touch $@
 
 vendor-bin/doctrine_phpcr/bin/phpcrodm: vendor-bin/doctrine_phpcr/composer.lock
 	@if [ -z "$$CI" ]; then \
-		composer bin doctrine_phpcr update $(COMPOSER_FLAGS)
+		composer bin doctrine_phpcr update $(COMPOSER_FLAGS) \
 	fi
 	touch $@
 
@@ -269,8 +269,8 @@ vendor-bin/eloquent/composer.lock: vendor-bin/eloquent/composer.json
 
 vendor-bin/eloquent/vendor/phpunit: vendor-bin/eloquent/composer.lock
 	@if [ -z "$$CI" ]; then \
-		composer bin eloquent update $(COMPOSER_FLAGS) || true
-		composer bin eloquent update $(COMPOSER_FLAGS)
+		composer bin eloquent update $(COMPOSER_FLAGS) || true \
+		composer bin eloquent update $(COMPOSER_FLAGS) \
 	fi
 	touch $@
 
@@ -280,15 +280,15 @@ vendor-bin/symfony/composer.lock: vendor-bin/symfony/composer.json
 
 vendor-bin/symfony/vendor/phpunit: vendor-bin/symfony/composer.lock
 	@if [ -z "$$CI" ]; then \
-		composer bin symfony update $(COMPOSER_FLAGS) || true
-		composer bin symfony update $(COMPOSER_FLAGS)
+		composer bin symfony update $(COMPOSER_FLAGS) || true \
+		composer bin symfony update $(COMPOSER_FLAGS) \
 	fi
 	touch $@
 
 bin/console: vendor-bin/symfony/composer.lock
 	@if [ -z "$$CI" ]; then \
-		composer bin symfony update $(COMPOSER_FLAGS) || true
-		composer bin symfony update $(COMPOSER_FLAGS)
+		composer bin symfony update $(COMPOSER_FLAGS) || true \
+		composer bin symfony update $(COMPOSER_FLAGS) \
 	fi
 	touch $@
 
@@ -298,8 +298,8 @@ vendor-bin/proxy-manager/composer.lock: vendor-bin/proxy-manager/composer.json
 
 vendor-bin/proxy-manager/vendor/phpunit: vendor-bin/proxy-manager/composer.lock
 	@if [ -z "$$CI" ]; then \
-		composer bin proxy-manager update $(COMPOSER_FLAGS) || true
-		composer bin proxy-manager update $(COMPOSER_FLAGS)
+		composer bin proxy-manager update $(COMPOSER_FLAGS) || true \
+		composer bin proxy-manager update $(COMPOSER_FLAGS) \
 	fi
 	touch $@
 
