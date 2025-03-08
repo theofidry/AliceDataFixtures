@@ -31,7 +31,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
-use Throwable;
 
 #[CoversClass(ObjectManagerPersister::class)]
 class ObjectManagerPersisterTest extends TestCase
