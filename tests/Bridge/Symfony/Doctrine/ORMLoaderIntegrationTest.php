@@ -36,7 +36,11 @@ class ORMLoaderIntegrationTest extends TestCase
 
     private LoaderInterface $loader;
 
+    private LoaderInterface $purgerLoader;
+
     private Registry $doctrine;
+
+    private Connection $connection;
 
     private static string $seed;
 
@@ -53,7 +57,9 @@ class ORMLoaderIntegrationTest extends TestCase
         $this->kernel->boot();
 
         $this->loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.doctrine.persister_loader');
+        $this->purgerLoader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.doctrine.purger_loader');
         $this->doctrine = $this->kernel->getContainer()->get('doctrine');
+        $this->connection = $this->doctrine->getConnection();
     }
 
     public function tearDown(): void
@@ -89,12 +95,11 @@ class ORMLoaderIntegrationTest extends TestCase
         // And doing that can lead to broken entities
         // However in this context we unset ALL entities and it's for testing purpose
         // Not a real application where deleting an application should be handled properly
-        $this->doctrine->getConnection()->exec('SET FOREIGN_KEY_CHECKS=0;');
-        $loader = $this->kernel->getContainer()->get('fidry_alice_data_fixtures.doctrine.purger_loader');
-        $loader->load([
+        $this->connection->executeStatement('SET FOREIGN_KEY_CHECKS=0;');
+        $this->purgerLoader->load([
             __DIR__.'/../../../../fixtures/fixture_files/dummy.yml',
         ]);
-        $this->doctrine->getConnection()->exec('SET FOREIGN_KEY_CHECKS=1;');
+        $this->connection->executeStatement('SET FOREIGN_KEY_CHECKS=1;');
 
         $result = $this->doctrine->getRepository(Dummy::class)->findAll();
 
