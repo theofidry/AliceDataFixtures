@@ -196,16 +196,8 @@ class ObjectManagerPersisterTest extends TestCase
     #[DataProvider('provideNonPersistableEntities')]
     public function testDoesNotPersistEmbeddables($dummy): void
     {
-        // Sanity check
-        try {
-            $this->entityManager->persist($dummy);
-            $this->entityManager->flush();
-
-            $this->fail('Expected exception to be thrown.');
-        } catch (Throwable) {
-            // Expected result
-            $this->entityManager->clear();
-        }
+        // Sanity check.
+        $this->assertCannotPersistObject($dummy);
 
         $this->persister->persist($dummy);
         $this->persister->flush();
@@ -287,5 +279,18 @@ class ObjectManagerPersisterTest extends TestCase
         yield 'embeddable' => [new DummyEmbeddable()];
 
         yield 'mapped super class' => [new MappedSuperclassDummy()];
+    }
+
+    private function assertCannotPersistObject(object $dummy): void
+    {
+        try {
+            $this->entityManager->persist($dummy);
+            $this->entityManager->flush();
+
+            $this->fail('Expected exception to be thrown.');
+        } catch (Throwable) {
+            // Expected result
+            $this->entityManager->clear();
+        }
     }
 }
