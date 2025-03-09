@@ -35,13 +35,14 @@ use Throwable;
 #[CoversClass(ObjectManagerPersister::class)]
 class ObjectManagerPersisterTest extends TestCase
 {
+    private Closure $entityManagerFactory;
     private ObjectManagerPersister $persister;
-
     private EntityManagerInterface $entityManager;
 
     public function setUp(): void
     {
-        $this->entityManager = $GLOBALS['entity_manager_factory']();
+        $this->entityManagerFactory = $GLOBALS['entity_manager_factory'];
+        $this->entityManager = ($this->entityManagerFactory)();
         $this->persister = new ObjectManagerPersister($this->entityManager);
 
         $this->entityManager->getConnection()->beginTransaction();
@@ -196,7 +197,8 @@ class ObjectManagerPersisterTest extends TestCase
     #[DataProvider('provideNonPersistableEntities')]
     public function testDoesNotPersistEmbeddables($dummy): void
     {
-        // Sanity check.
+        // Sanity check. Use another entity manager in case it closes the
+        // connection.
         $this->assertCannotPersistObject($dummy);
 
         $this->persister->persist($dummy);
@@ -283,14 +285,17 @@ class ObjectManagerPersisterTest extends TestCase
 
     private function assertCannotPersistObject(object $dummy): void
     {
+        // Use another entity manager in case it closes the connection.
+        $entityManager = ($this->entityManagerFactory)();
+
         try {
-            $this->entityManager->persist($dummy);
-            $this->entityManager->flush();
+            $entityManager->persist($dummy);
+            $entityManager->flush();
 
             $this->fail('Expected exception to be thrown.');
         } catch (Throwable) {
             // Expected result
-            $this->entityManager->clear();
+            $entityManager->clear();
         }
     }
 }
