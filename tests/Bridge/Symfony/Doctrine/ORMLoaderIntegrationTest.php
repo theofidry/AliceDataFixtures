@@ -16,6 +16,7 @@ namespace Fidry\AlicePersistence\Bridge\Symfony\Doctrine;
 use function bin2hex;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
+use Doctrine\DBAL\Connection;
 use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\Group;
 use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\User;

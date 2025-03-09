@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine;
 
 use function count;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Id\AbstractIdGenerator;
 use function is_array;
 use function reset;
@@ -29,9 +29,10 @@ class IdGenerator extends AbstractIdGenerator
     ) {
     }
 
-    public function generate(EntityManager $em, $entity): mixed
+    public function generateId(EntityManagerInterface $em, $entity): mixed
     {
         Assert::notNull($entity);
+        Assert::object($entity);
 
         $class = $entity::class;
 
@@ -42,7 +43,7 @@ class IdGenerator extends AbstractIdGenerator
             return reset($idValues);
         }
 
-        return $this->decorated->generate($em, $entity);
+        return $this->decorated->generateId($em, $entity);
     }
 
     public function isPostInsertGenerator(): bool

@@ -33,7 +33,7 @@
     },
     "conflict": {
         "doctrine/data-fixtures": "<1.7.0",
-        "doctrine/orm": "<2.20 || >=3.0",
+        "doctrine/orm": "<3.3.2",
         "doctrine/doctrine-bundle": "<2.11.0",
         "doctrine/mongodb-odm-bundle": "<5.1.0",
         "doctrine/mongodb-odm": "<2.6.0",

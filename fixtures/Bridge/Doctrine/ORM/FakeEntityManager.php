@@ -13,14 +13,24 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\ORM;
 
+use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\Cache;
+use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Internal\Hydration\AbstractHydrator;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadataFactory;
 use Doctrine\ORM\NativeQuery;
+use Doctrine\ORM\Proxy\ProxyFactory;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\Query\FilterCollection;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\UnitOfWork;
 use Fidry\AliceDataFixtures\NotCallableTrait;
 
 class FakeEntityManager implements EntityManagerInterface
@@ -87,7 +97,7 @@ class FakeEntityManager implements EntityManagerInterface
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function getReference($entityName, $id)
+    public function getReference(string $entityName, mixed $id): object|null
     {
         $this->__call(__METHOD__, func_get_args());
     }
@@ -112,22 +122,22 @@ class FakeEntityManager implements EntityManagerInterface
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function getEventManager()
+    public function getEventManager(): EventManager
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): Configuration
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function isOpen()
+    public function isOpen(): bool
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function getUnitOfWork()
+    public function getUnitOfWork(): UnitOfWork
     {
         $this->__call(__METHOD__, func_get_args());
     }
@@ -137,32 +147,32 @@ class FakeEntityManager implements EntityManagerInterface
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function newHydrator($hydrationMode)
+    public function newHydrator(string|int $hydrationMode): AbstractHydrator
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function getProxyFactory()
+    public function getProxyFactory(): ProxyFactory
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function getFilters()
+    public function getFilters(): FilterCollection
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function isFiltersStateClean()
+    public function isFiltersStateClean(): bool
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function hasFilters()
+    public function hasFilters(): bool
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function find($className, $id)
+    public function find(string $className, mixed $id, LockMode|int|null $lockMode = null, int|null $lockVersion = null): object|null
     {
         $this->__call(__METHOD__, func_get_args());
     }
@@ -192,7 +202,7 @@ class FakeEntityManager implements EntityManagerInterface
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function refresh($object): void
+    public function refresh(object $object, LockMode|int|null $lockMode = null): void
     {
         $this->__call(__METHOD__, func_get_args());
     }
@@ -202,12 +212,12 @@ class FakeEntityManager implements EntityManagerInterface
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function getRepository($className)
+    public function getRepository(string $className): EntityRepository
     {
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function getMetadataFactory()
+    public function getMetadataFactory(): ClassMetadataFactory
     {
         $this->__call(__METHOD__, func_get_args());
     }
@@ -222,7 +232,17 @@ class FakeEntityManager implements EntityManagerInterface
         $this->__call(__METHOD__, func_get_args());
     }
 
-    public function getClassMetadata($className)
+    public function getClassMetadata(string $className): ClassMetadata
+    {
+        $this->__call(__METHOD__, func_get_args());
+    }
+
+    public function wrapInTransaction(callable $func): mixed
+    {
+        $this->__call(__METHOD__, func_get_args());
+    }
+
+    public function isUninitializedObject(mixed $value): bool
     {
         $this->__call(__METHOD__, func_get_args());
     }

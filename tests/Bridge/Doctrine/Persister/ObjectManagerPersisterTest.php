@@ -15,6 +15,7 @@ namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
 use Closure;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\AnotherDummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\Dummy;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Entity\DummyEmbeddable;
@@ -31,7 +32,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
-use Throwable;
 
 #[CoversClass(ObjectManagerPersister::class)]
 class ObjectManagerPersisterTest extends TestCase
@@ -294,7 +294,7 @@ class ObjectManagerPersisterTest extends TestCase
             $entityManager->flush();
 
             $this->fail('Expected exception to be thrown.');
-        } catch (Throwable) {
+        } catch (Exception) {
             // Expected result
             $entityManager->clear();
         }
