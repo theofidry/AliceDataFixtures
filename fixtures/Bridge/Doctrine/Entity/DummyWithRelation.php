@@ -28,7 +28,7 @@ class DummyWithRelation
     #[GeneratedValue]
     public int $id;
 
-    #[OneToOne(targetEntity: 'DummyWithIdentifier', cascade: ['persist'])]
+    #[OneToOne(targetEntity: DummyWithIdentifier::class, cascade: ['persist'])]
     #[JoinColumn(name: 'dummy_id', referencedColumnName: 'id')]
     public DummyWithIdentifier $dummy;
 }
