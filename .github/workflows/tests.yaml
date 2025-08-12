@@ -61,7 +61,7 @@ jobs:
                     MONGO_INITDB_ROOT_PASSWORD: password
         steps:
             -   name: Checkout
-                uses: actions/checkout@v4
+                uses: actions/checkout@v5
 
             -   name: Install mongosh
                 run: |
