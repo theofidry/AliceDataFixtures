@@ -75,11 +75,11 @@ class ObjectManagerPersister implements PersisterInterface
         $className = $object::class;
 
         if (isset($this->persistableClasses[$className])) {
-            $metadata = $this->getMetadata($className, $object);
-
             try {
                 $this->objectManager->persist($object);
             } catch (ORMException $exception) {
+                $metadata = $this->getMetadata($className, $object);
+
                 if ($metadata->idGenerator instanceof ORMAssignedGenerator) {
                     throw ObjectGeneratorPersisterExceptionFactory::createForEntityMissingAssignedIdForField($object);
                 }
