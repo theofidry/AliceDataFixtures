@@ -75,7 +75,7 @@ class ObjectManagerPersister implements PersisterInterface
         $className = $object::class;
 
         if (isset($this->persistableClasses[$className])) {
-            $metadata = $this->getMetadata($className, $object);
+            $metadata = $this->getMetadataAndChangeIdGeneratorIfNecessary($className, $object);
 
             try {
                 $this->objectManager->persist($object);
@@ -108,7 +108,7 @@ class ObjectManagerPersister implements PersisterInterface
         $this->objectChecked = [];
     }
 
-    private function getMetadata(string $className, object $object): ClassMetadata
+    private function getMetadataAndChangeIdGeneratorIfNecessary(string $className, object $object): ClassMetadata
     {
         $metadata = $this->objectManager->getClassMetadata($className);
 
@@ -152,14 +152,14 @@ class ObjectManagerPersister implements PersisterInterface
 
             if (is_array($fieldValueOrFieldValues)) {
                 foreach ($fieldValueOrFieldValues as $fieldValue) {
-                    $this->getMetadata($targetEntityClassName, $fieldValue);
+                    $this->getMetadataAndChangeIdGeneratorIfNecessary($targetEntityClassName, $fieldValue);
                 }
             } elseif ($fieldValueOrFieldValues instanceof Collection) {
                 foreach ($fieldValueOrFieldValues->getValues() as $fieldValue) {
-                    $this->getMetadata($targetEntityClassName, $fieldValue);
+                    $this->getMetadataAndChangeIdGeneratorIfNecessary($targetEntityClassName, $fieldValue);
                 }
             } elseif ($fieldValueOrFieldValues !== null) {
-                $this->getMetadata($targetEntityClassName, $fieldValueOrFieldValues);
+                $this->getMetadataAndChangeIdGeneratorIfNecessary($targetEntityClassName, $fieldValueOrFieldValues);
             }
         }
     }
