@@ -30,7 +30,6 @@ composer require --dev theofidry/alice-data-fixtures \
 # With Doctrine ODM
 #
 composer require --dev theofidry/alice-data-fixtures \
-                       alcaeus/mongo-php-adapter \
                        doctrine/data-fixtures \
                        doctrine/mongodb-odm
 
@@ -68,7 +67,6 @@ composer require --dev theofidry/alice-data-fixtures \
 # With Doctrine ODM
 #
 composer require --dev theofidry/alice-data-fixtures \
-                       alcaeus/mongo-php-adapter \
                        doctrine/data-fixtures \
                        doctrine/mongodb-odm
 

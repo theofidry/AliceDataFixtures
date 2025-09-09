@@ -1,6 +1,5 @@
 {
     "require-dev": {
-        "alcaeus/mongo-php-adapter": "*",
         "doctrine/annotations": "*",
         "doctrine/data-fixtures": "*",
         "doctrine/mongodb-odm": "*",
