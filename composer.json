@@ -51,7 +51,6 @@
 
         "doctrine/orm": "To use Doctrine ORM",
 
-        "alcaeus/mongo-php-adapter": "To use Doctrine with the MongoDB flavour",
         "doctrine/mongodb": "To use Doctrine with the MongoDB flavour",
         "doctrine/mongodb-odm": "To use Doctrine with the MongoDB flavour",
 

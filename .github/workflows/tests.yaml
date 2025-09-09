@@ -80,7 +80,7 @@ jobs:
                     php-version: ${{ matrix.php-version }}
                     coverage: xdebug
                     tools: composer
-                    extensions: mongodb
+                    extensions: mongodb2
 
             -   name: Configure
                 run: |
