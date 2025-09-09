@@ -8,7 +8,6 @@
         "symfony/doctrine-messenger": "^4.4 || ^5.4 || ^6.4"
     },
     "require-dev": {
-        "alcaeus/mongo-php-adapter": "*",
         "doctrine/annotations": "*",
         "doctrine/data-fixtures": "*",
         "doctrine/doctrine-bundle": "*",
