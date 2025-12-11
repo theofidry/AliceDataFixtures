@@ -1,6 +1,7 @@
 {
     "require-dev": {
         "doctrine/annotations": "*",
+        "doctrine/data-fixtures": "^1.7 || ^2.0",
         "doctrine/persistence": "*",
         "doctrine/phpcr-odm": "*",
         "jackalope/jackalope-doctrine-dbal": "*",
