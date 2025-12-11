@@ -18,6 +18,7 @@
         "monolog/monolog": ">=2.0",
         "symfony/http-kernel": "^5.4 || ^6.4 || ^7.1",
         "symfony/validator": "^5.4 || ^6.4 || ^7.1",
+        "symfony/var-exporter": "^5.4 || ^6.4 || ^7.1",
         "theofidry/composer-inheritance-plugin": "^1.2",
         "wouterj/eloquent-bundle": "*"
     },

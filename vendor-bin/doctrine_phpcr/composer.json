@@ -6,6 +6,7 @@
         "doctrine/phpcr-odm": "*",
         "jackalope/jackalope-doctrine-dbal": "*",
         "symfony/console": "^4.4.32 || ^5.4 || ^6.0",
+        "symfony/var-exporter": "^5.4 || ^6.4 || ^7.1",
         "theofidry/composer-inheritance-plugin": "^1.2"
     },
     "config": {
