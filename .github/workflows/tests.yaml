@@ -41,7 +41,7 @@ jobs:
                 symfony-versions:
                     - false
                     - '6.4.*'
-                    - '7.*.*'
+                    - '7.4.*'
         # To keep in sync with docker-compose.yml
         services:
             mysql:
