@@ -13,13 +13,10 @@
          xsi:noNamespaceSchemaLocation="vendor-bin/doctrine_phpcr/vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="tests/Bridge/DoctrinePhpCr/autoload.php"
          colors="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
          stopOnFailure="true"
          backupGlobals="false">
-
-    <php>
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=4" />
-    </php>
 
     <testsuites>
         <testsuite name="Test Suite">
