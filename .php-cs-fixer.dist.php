@@ -91,4 +91,5 @@ return (new Config())
         'whitespace_after_comma_in_array' => true,
     ])
     ->setFinder($finder)
-    ->setCacheFile(__DIR__.'/var/.php-cs-fixer.cache');
+    ->setCacheFile(__DIR__.'/var/.php-cs-fixer.cache')
+    ->setUnsupportedPhpVersionAllowed(true);
