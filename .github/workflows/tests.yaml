@@ -17,7 +17,7 @@ env:
 
 jobs:
     tests:
-        name: '${{ matrix.make-test }}: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} + ${{ matrix.variant }}'
+        name: '${{ matrix.make-test }}: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} + ${{ matrix.symfony-versions }}'
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
@@ -38,10 +38,10 @@ jobs:
                     - test_symfony_doctrine_bridge_proxy_manager
                     - test_symfony_eloquent_bridge
                     - test_symfony_eloquent_bridge_proxy_manager
-                variant:
-                    - 'no-change'
-                    - 'symfony/http-kernel:^6.4.19 symfony/validator:^6.4.19'
-                    - 'symfony/http-kernel:^7.2.4 symfony/validator:^7.2.4'
+                symfony-versions:
+                    - false
+                    - '6.4.*'
+                    - '7.*.*'
         # To keep in sync with docker-compose.yml
         services:
             mysql:
@@ -80,8 +80,12 @@ jobs:
                 with:
                     php-version: ${{ matrix.php-version }}
                     coverage: xdebug
-                    tools: composer
+                    tools: composer, flex
                     extensions: mongodb2
+
+            - name: Configure Symfony version
+              run: echo "SYMFONY_REQUIRE=${{ matrix.symfony-versions }}" >> $GITHUB_ENV
+              if: matrix.symfony-versions
 
             -   name: Configure
                 run: |
@@ -179,10 +183,6 @@ jobs:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/proxy-manager
-
-            -   name: Configure Symfony (variant) Composer bin dependencies
-                if: matrix.variant != 'no-change'
-                run: composer bin symfony require --dev --no-update ${{ matrix.variant }}
 
             -   name: Install Symfony Composer bin dependencies
                 uses: ramsey/composer-install@3cf229dc2919194e9e36783941438d17239e8520 # 3.1.1
