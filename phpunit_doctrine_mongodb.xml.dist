@@ -12,6 +12,7 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor-bin/doctrine_mongodb/vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="tests/Bridge/DoctrineMongoDB/autoload.php"
+         cacheDirectory="var/phpunit-cache-doctrine-mongodb"
          colors="true"
          displayDetailsOnTestsThatTriggerDeprecations="true"
          beStrictAboutTestsThatDoNotTestAnything="false"

@@ -12,6 +12,7 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor-bin/symfony/vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor-bin/symfony/vendor/autoload.php"
+         cacheDirectory="var/phpunit-cache-symfony"
          colors="true"
          displayDetailsOnTestsThatTriggerDeprecations="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
