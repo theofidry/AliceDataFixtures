@@ -21,6 +21,8 @@ jobs:
     tests:
         name: '${{ matrix.make-test }}: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} + ${{ matrix.symfony-versions }}'
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
         strategy:
             fail-fast: false
             matrix:
