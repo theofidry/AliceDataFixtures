@@ -28,8 +28,7 @@
         "bamarni/composer-bin-plugin": "^1.4.1",
         "phpspec/prophecy": "^1.20.0",
         "phpspec/prophecy-phpunit": "^2.3.0",
-        "phpunit/phpunit": "^11.5.12",
-        "symfony/phpunit-bridge": "^7.4"
+        "phpunit/phpunit": "^11.5.12"
     },
     "conflict": {
         "doctrine/data-fixtures": "<1.7.0",

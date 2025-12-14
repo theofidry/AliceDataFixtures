@@ -13,12 +13,9 @@
          xsi:noNamespaceSchemaLocation="vendor-bin/doctrine/vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="tests/Bridge/Doctrine/autoload.php"
          colors="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
          stopOnFailure="true">
-
-    <php>
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=0" />
-    </php>
 
     <testsuites>
         <testsuite name="Test Suite">
