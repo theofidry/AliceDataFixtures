@@ -19,8 +19,12 @@
         "monolog/monolog": "*",
         "symfony/http-kernel": "^5.4 || ^6.4 || ^7.1",
         "symfony/validator": "^5.4 || ^6.4 || ^7.1",
+        "symfony/var-exporter": "^5.4 || ^6.4 || ^7.1",
         "theofidry/composer-inheritance-plugin": "^1.2",
         "wouterj/eloquent-bundle": "*"
+    },
+    "conflict": {
+        "symfony/doctrine-bridge": "<6.4.3 || >=7.0,<7.0.3"
     },
     "config": {
         "bin-dir": "bin",
