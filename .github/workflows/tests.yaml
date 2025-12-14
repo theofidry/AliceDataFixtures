@@ -10,6 +10,10 @@ on:
 
 permissions: {}
 
+concurrency:
+    group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+    cancel-in-progress: true
+
 # this fixes the input device is not a TTY .. see https://github.com/docker/compose/issues/5696
 env:
     MYSQL_HOST: '127.0.0.1'
