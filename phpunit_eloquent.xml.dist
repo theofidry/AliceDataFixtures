@@ -12,6 +12,7 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor-bin/eloquent/vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="tests/Bridge/Eloquent/autoload.php"
+         cacheDirectory="var/phpunit-cache-eloquent"
          colors="true"
          displayDetailsOnTestsThatTriggerDeprecations="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
