@@ -8,6 +8,8 @@ on:
         # Do not make it the first of the month and/or midnight since it is a very busy time
         - cron: "* 10 5 * *"
 
+permissions: {}
+
 # this fixes the input device is not a TTY .. see https://github.com/docker/compose/issues/5696
 env:
     MYSQL_HOST: '127.0.0.1'
