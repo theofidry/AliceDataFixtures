@@ -26,7 +26,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -37,8 +36,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 #[CoversClass(TaggedDefinitionsLocator::class)]
 class FidryAliceDataFixturesBundleTest extends TestCase
 {
-    use ExpectDeprecationTrait;
-
     protected KernelInterface $kernel;
 
     public function setUp(): void
