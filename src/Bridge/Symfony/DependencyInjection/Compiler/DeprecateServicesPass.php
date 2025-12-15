@@ -13,12 +13,11 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Symfony\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\Compiler\AliasDeprecatedPublicServicesPass;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Flags deprecated services and aliases with pre/post Symfony 5.1 compatibility layer.
+ * Flags deprecated services and aliases.
  *
  * @private
  */
@@ -77,26 +76,14 @@ final class DeprecateServicesPass implements CompilerPassInterface
 
     public function process(ContainerBuilder $container): void
     {
-        // Symfony 5.1
-        $canDeprecateAliases = class_exists(AliasDeprecatedPublicServicesPass::class);
-
         foreach (self::DEPRECATED_SERVICES as $id => [$alternative, $version]) {
             if (false === $container->hasDefinition($id)) {
                 continue;
             }
 
-            $definition = $container->getDefinition($id);
-
-            // Compatibility layer for Definition::setDeprecated()
-            if ($canDeprecateAliases) {
-                $definition->setDeprecated('theofidry/alice-data-fixtures', $version, self::SERVICE_TEMPLATE.$alternative);
-            } else {
-                $definition->setDeprecated(true, self::SERVICE_TEMPLATE.$alternative);
-            }
-        }
-
-        if (!$canDeprecateAliases) {
-            return;
+            $container
+                ->getDefinition($id)
+                ->setDeprecated('theofidry/alice-data-fixtures', $version, self::SERVICE_TEMPLATE.$alternative);
         }
 
         foreach (self::DEPRECATED_ALIASES as $id => [$alternative, $version]) {
@@ -104,8 +91,9 @@ final class DeprecateServicesPass implements CompilerPassInterface
                 continue;
             }
 
-            $definition = $container->getAlias($id);
-            $definition->setDeprecated('theofidry/alice-data-fixtures', $version, self::ALIAS_TEMPLATE.$alternative);
+            $container
+                ->getAlias($id)
+                ->setDeprecated('theofidry/alice-data-fixtures', $version, self::ALIAS_TEMPLATE.$alternative);
         }
     }
 }
