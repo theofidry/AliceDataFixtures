@@ -52,8 +52,8 @@ jobs:
                     - '7.4.*'
                     - '8.*.*'
                 exclude:
-                    php-version: '8.5'
-                    symfony-versions: '8.*.*'
+                    - php-version: '8.5'
+                      symfony-versions: '8.*.*'
 
         # To keep in sync with docker-compose.yml
         services:
