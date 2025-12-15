@@ -5,7 +5,7 @@
         ]
     },
     "require": {
-        "symfony/doctrine-messenger": "^4.4 || ^5.4 || ^6.4"
+        "symfony/doctrine-messenger": "^6.4 || ^7.4"
     },
     "require-dev": {
         "doctrine/annotations": "*",
@@ -17,14 +17,14 @@
         "doctrine/phpcr-odm": "*",
         "jackalope/jackalope-doctrine-dbal": "*",
         "monolog/monolog": "*",
-        "symfony/http-kernel": "^5.4 || ^6.4 || ^7.1",
-        "symfony/validator": "^5.4 || ^6.4 || ^7.1",
-        "symfony/var-exporter": "^5.4 || ^6.4 || ^7.1",
+        "symfony/http-kernel": "^6.4 || ^7.4",
+        "symfony/validator": "^6.4 || ^7.4",
+        "symfony/var-exporter": "^6.4 || ^7.4",
         "theofidry/composer-inheritance-plugin": "^1.2",
         "wouterj/eloquent-bundle": "*"
     },
     "conflict": {
-        "symfony/doctrine-bridge": "<6.4.3 || >=7.0,<7.0.3"
+        "symfony/doctrine-bridge": "<6.4.3 || >=7.0,<7.4"
     },
     "config": {
         "bin-dir": "bin",
