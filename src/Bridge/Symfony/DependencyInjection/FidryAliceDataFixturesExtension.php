@@ -24,7 +24,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use WouterJ\EloquentBundle\WouterJEloquentBundle;
 
@@ -54,8 +54,8 @@ final class FidryAliceDataFixturesExtension extends Extension
             );
         }
 
-        $loader = new XmlFileLoader($container, new FileLocator(self::SERVICES_DIR));
-        $loader->load('loader.xml');
+        $loader = new PhpFileLoader($container, new FileLocator(self::SERVICES_DIR));
+        $loader->load('loader.php');
 
         $container->registerForAutoconfiguration(ProcessorInterface::class)
             ->addTag('fidry_alice_data_fixtures.processor')
