@@ -23,14 +23,11 @@ use Fidry\AliceDataFixtures\Bridge\Symfony\Entity\User;
 use Fidry\AliceDataFixtures\Bridge\Symfony\SymfonyApp\DoctrineKernel;
 use Fidry\AliceDataFixtures\LoaderInterface;
 use PHPUnit\Framework\Attributes\CoversNothing;
-use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\TestCase;
 use function random_bytes;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 #[CoversNothing]
-// TODO: remove this hack. This is purely for "Test code or tested code did not remove its own exception handlers".
-#[RunTestsInSeparateProcesses]
 class ORMLoaderIntegrationTest extends TestCase
 {
     private KernelInterface $kernel;
