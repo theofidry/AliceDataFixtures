@@ -78,4 +78,36 @@ return static function (ContainerConfigurator $container): void {
     $services
         ->alias(
             'fidry_alice_data_fixtures.persistence.purger.doctrine.orm_purger',
-            'fidry_alice_data_fixtures.persistence.doctrine.purger.purger_f
+            'fidry_alice_data_fixtures.persistence.doctrine.purger.purger_factory'
+        );
+    // Deprecated (see DeprecateServicesPass)
+
+    $services
+        ->set(
+            'fidry_alice_data_fixtures.persistence.purger_modepurger_mode',
+            PurgeMode::class
+        )
+        ->factory([PurgeMode::class, 'createDeleteMode'])
+        ->public(false);
+    // Deprecated (see DeprecateServicesPass)
+
+    /*
+     * Persisters
+     */
+    $services
+        ->alias(
+            'fidry_alice_data_fixtures.persistence.persister.doctrine',
+            'fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister'
+        )
+        ->public();
+
+    $services
+        ->set(
+            'fidry_alice_data_fixtures.persistence.persister.doctrine.object_manager_persister',
+            ObjectManagerPersister::class
+        )
+        ->lazy()
+        ->args([
+            service('doctrine.orm.entity_manager'),
+        ]);
+};
