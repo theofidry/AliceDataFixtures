@@ -1,20 +1,30 @@
 <?php
 
+/*
+ * This file is part of the Fidry\AliceDataFixtures package.
+ *
+ * (c) Théo FIDRY <theo.fidry@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Persister\ObjectManagerPersister;
 use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
 use Fidry\AliceDataFixtures\Loader\PersisterLoader;
 use Fidry\AliceDataFixtures\Loader\PurgerLoader;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\abstract_arg;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
-    /*
-     * Loaders
-     */
+    // Loaders
     $services
         ->alias(
             'fidry_alice_data_fixtures.loader.doctrine',
@@ -52,12 +62,10 @@ return static function (ContainerConfigurator $container): void {
             service('fidry_alice_data_fixtures.loader.simple'),
             service('fidry_alice_data_fixtures.persistence.persister.doctrine'),
             service('logger')->ignoreOnInvalid(),
+            abstract_arg('processors'),
         ]);
-    // Processors are injected via a Compiler pass
 
-    /*
-     * Purger Factory
-     */
+    // Purger Factory
     $services
         ->alias(
             'fidry_alice_data_fixtures.persistence.purger_factory.doctrine',
@@ -91,9 +99,7 @@ return static function (ContainerConfigurator $container): void {
         ->public(false);
     // Deprecated (see DeprecateServicesPass)
 
-    /*
-     * Persisters
-     */
+    // Persisters
     $services
         ->alias(
             'fidry_alice_data_fixtures.persistence.persister.doctrine',

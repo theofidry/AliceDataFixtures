@@ -1,26 +1,33 @@
 <?php
 
+/*
+ * This file is part of the Fidry\AliceDataFixtures package.
+ *
+ * (c) Théo FIDRY <theo.fidry@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Persister\ModelPersister;
 use Fidry\AliceDataFixtures\Bridge\Eloquent\Purger\ModelPurger;
 use Fidry\AliceDataFixtures\Loader\PersisterLoader;
 use Fidry\AliceDataFixtures\Loader\PurgerLoader;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\abstract_arg;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
-    /*
-     * Parameters
-     */
     $container->parameters()
         ->set('fidry_alice_data_fixtures.eloquent.migration_path', 'migrations');
 
-    /*
-     * Loaders
-     */
+    // Loaders
     $services
         ->alias(
             'fidry_alice_data_fixtures.loader.eloquent',
@@ -58,12 +65,10 @@ return static function (ContainerConfigurator $container): void {
             service('fidry_alice_data_fixtures.loader.simple'),
             service('fidry_alice_data_fixtures.persistence.persister.eloquent'),
             service('logger')->ignoreOnInvalid(),
+            abstract_arg('processor'),
         ]);
-    // Processors are injected via a Compiler pass
 
-    /*
-     * Purger Factory
-     */
+    // Purger Factory
     $services
         ->alias(
             'fidry_alice_data_fixtures.persistence.purger_factory.eloquent',
@@ -96,12 +101,10 @@ return static function (ContainerConfigurator $container): void {
             PurgeMode::class
         )
         ->factory([PurgeMode::class, 'createDeleteMode'])
-        ->public(false);
+        ->private();
     // Deprecated (see DeprecateServicesPass)
 
-    /*
-     * Persisters
-     */
+    // Persisters
     $services
         ->alias(
             'fidry_alice_data_fixtures.persistence.persister.eloquent',
