@@ -101,7 +101,7 @@ final class FidryAliceDataFixturesExtension extends Extension
         }
 
         if ($bundleIsRegistered) {
-            $loader->load($driver.'.xml');
+            $loader->load($driver.'.php');
         }
     }
 }
