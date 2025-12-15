@@ -16,7 +16,6 @@ use Fidry\AliceDataFixtures\Bridge\Doctrine\Purger\Purger;
 use Fidry\AliceDataFixtures\Loader\PersisterLoader;
 use Fidry\AliceDataFixtures\Loader\PurgerLoader;
 use Fidry\AliceDataFixtures\Persistence\PurgeMode;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\abstract_arg;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -62,7 +61,6 @@ return static function (ContainerConfigurator $container): void {
             service('fidry_alice_data_fixtures.loader.simple'),
             service('fidry_alice_data_fixtures.persistence.persister.doctrine'),
             service('logger')->ignoreOnInvalid(),
-            abstract_arg('processors'),
         ]);
 
     // Purger Factory
