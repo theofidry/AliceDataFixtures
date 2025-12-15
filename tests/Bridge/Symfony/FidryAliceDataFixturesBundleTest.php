@@ -24,7 +24,6 @@ use Fidry\AliceDataFixtures\Loader\SimpleLoader;
 use LogicException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -51,8 +50,6 @@ class FidryAliceDataFixturesBundleTest extends TestCase
     }
 
     #[Group('legacy')]
-    // TODO: remove this hack. This is purely for "Test code or tested code did not remove its own exception handlers".
-    #[RunInSeparateProcess]
     public function testServiceRegistration(): void
     {
         self::assertServiceIsInstanceOf(
@@ -66,8 +63,6 @@ class FidryAliceDataFixturesBundleTest extends TestCase
         );
     }
 
-    // TODO: remove this hack. This is purely for "Test code or tested code did not remove its own exception handlers".
-    #[RunInSeparateProcess]
     public function testCannotBootIfNelmioAliceBundleIsNotRegistered(): void
     {
         $this->expectException(LogicException::class);

@@ -10,8 +10,9 @@
         "sort-packages": true,
         "allow-plugins": {
             "bamarni/composer-bin-plugin": true,
-            "wikimedia/composer-merge-plugin": true,
-            "theofidry/composer-inheritance-plugin": true
+            "symfony/runtime": false,
+            "theofidry/composer-inheritance-plugin": true,
+            "wikimedia/composer-merge-plugin": true
         }
     },
     "provide": {
