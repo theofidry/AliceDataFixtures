@@ -5,7 +5,7 @@
         ]
     },
     "require": {
-        "symfony/doctrine-messenger": "^6.4 || ^7.4"
+        "symfony/doctrine-messenger": "^6.4 || ^7.4 || ^8.0"
     },
     "require-dev": {
         "doctrine/annotations": "*",
@@ -17,9 +17,9 @@
         "doctrine/phpcr-odm": "*",
         "jackalope/jackalope-doctrine-dbal": "*",
         "monolog/monolog": "*",
-        "symfony/http-kernel": "^6.4 || ^7.4",
-        "symfony/validator": "^6.4 || ^7.4",
-        "symfony/var-exporter": "^6.4 || ^7.4",
+        "symfony/http-kernel": "^6.4 || ^7.4 || ^8.0",
+        "symfony/validator": "^6.4 || ^7.4 || ^8.0",
+        "symfony/var-exporter": "^6.4 || ^7.4 || ^8.0",
         "theofidry/composer-inheritance-plugin": "^1.2",
         "wouterj/eloquent-bundle": "*"
     },
