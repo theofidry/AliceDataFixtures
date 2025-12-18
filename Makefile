@@ -93,9 +93,7 @@ test: test_core	\
 	  test_eloquent_bridge \
 	  test_symfony_bridge \
 	  test_symfony_doctrine_bridge \
-	  test_symfony_doctrine_bridge_proxy_manager \
-	  test_symfony_eloquent_bridge \
-	  test_symfony_eloquent_bridge_proxy_manager
+	  test_symfony_eloquent_bridge
 
 .PHONY: test_core
 test_core:             				## Run the tests for the core library
@@ -176,32 +174,6 @@ test_symfony_eloquent_bridge: vendor/bamarni \
 
 	vendor-bin/symfony/bin/phpunit -c phpunit_symfony_eloquent.xml.dist
 
-.PHONY: test_symfony_doctrine_bridge_proxy_manager
-test_symfony_doctrine_bridge_proxy_manager:	## Run the tests for the Symfony Doctrine bridge with Proxy Manager
-test_symfony_doctrine_bridge_proxy_manager: vendor/bamarni \
-										    bin/console \
-											vendor-bin/proxy-manager/vendor/phpunit
-	$(MAKE) remove_sf_cache
-	$(MAKE) refresh_mysql_db
-	$(MAKE) refresh_mongodb_db
-	$(MAKE) refresh_phpcr
-
-	php bin/console doctrine:schema:create --kernel=DoctrineKernel
-
-	vendor-bin/proxy-manager/bin/phpunit -c phpunit_symfony_proxy_manager_with_doctrine.xml.dist
-
-.PHONY: test_symfony_eloquent_bridge_proxy_manager
-test_symfony_eloquent_bridge_proxy_manager:	## Run the tests for the Symfony Eloquent bridge with Proxy Manager
-test_symfony_eloquent_bridge_proxy_manager: vendor/bamarni \
-											bin/console \
-											vendor-bin/proxy-manager/vendor/phpunit
-	$(MAKE) remove_sf_cache
-	$(MAKE) refresh_mysql_db
-
-	php bin/console eloquent:migrate:install --kernel=EloquentKernel
-
-	vendor-bin/proxy-manager/bin/phpunit -c phpunit_symfony_proxy_manager_with_eloquent.xml.dist
-
 
 #
 # Rules from files
@@ -278,14 +250,6 @@ bin/console: vendor-bin/symfony/composer.lock
 	composer bin symfony update $(COMPOSER_FLAGS)
 	touch $@
 
-
-vendor-bin/proxy-manager/composer.lock: vendor-bin/proxy-manager/composer.json
-	@echo vendor-bin/proxy-manager/composer.lock is not up to date.
-
-vendor-bin/proxy-manager/vendor/phpunit: vendor-bin/proxy-manager/composer.lock
-	composer bin proxy-manager update $(COMPOSER_FLAGS) || true
-	composer bin proxy-manager update $(COMPOSER_FLAGS)
-	touch $@
 
 .PHONY: rector_install
 rector_install: $(RECTOR_BIN)
