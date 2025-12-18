@@ -29,7 +29,7 @@
         "phpspec/prophecy": "^1.20.0",
         "phpspec/prophecy-phpunit": "^2.3.0",
         "phpunit/phpunit": "^11.5.12",
-        "symfony/runtime": "^7.4 || ^8.0"
+        "symfony/runtime": "*"
     },
     "conflict": {
         "doctrine/data-fixtures": "<1.7.0",
