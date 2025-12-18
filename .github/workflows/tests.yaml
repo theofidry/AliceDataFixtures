@@ -50,6 +50,11 @@ jobs:
                     - false
                     - '6.4.*'
                     - '7.4.*'
+                    - '8.*.*'
+                exclude:
+                    - php-version: '8.3'
+                      symfony-versions: '8.*.*'
+
         # To keep in sync with docker-compose.yml
         services:
             mysql:
