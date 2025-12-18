@@ -12,8 +12,8 @@ AliceDataFixtures
 Supports:
 
 * Symfony 7.4+
-* Doctrine ORM 2.20+
-* Doctrine ODM 2.0+
+* Doctrine ORM 3.3+
+* Doctrine ODM 5.1+
 * Doctrine PHPCR 2.0+
 * Eloquent 12.0+
 
