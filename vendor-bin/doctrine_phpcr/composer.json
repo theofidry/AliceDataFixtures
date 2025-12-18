@@ -5,8 +5,8 @@
         "doctrine/persistence": "*",
         "doctrine/phpcr-odm": "*",
         "jackalope/jackalope-doctrine-dbal": "*",
-        "symfony/console": "^6.4 || ^7.4 || ^8.0",
-        "symfony/var-exporter": "^6.4 || ^7.4 || ^8.0",
+        "symfony/console": "^7.4 || ^8.0",
+        "symfony/var-exporter": "^7.4 || ^8.0",
         "theofidry/composer-inheritance-plugin": "^1.2"
     },
     "config": {
