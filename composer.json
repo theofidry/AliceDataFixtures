@@ -59,8 +59,6 @@
         "jackalope/jackalope-doctrine-dbal": "To use Doctrine with the PHPCR flavour",
 
         "illuminate/database": "To use Eloquent",
-
-        "ocramius/proxy-manager": "To avoid database connection on kernel boot"
     },
 
     "autoload": {
