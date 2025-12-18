@@ -257,8 +257,6 @@ class ObjectManagerPersister implements PersisterInterface
             return;
         }
 
-        $persistersReflection->setAccessible(true);
-
         $persisters = $persistersReflection->getValue($unitOfWork);
 
         unset($persisters[$className]);
@@ -278,7 +276,6 @@ class ObjectManagerPersister implements PersisterInterface
         $unitOfWorkReflection = new ReflectionClass(UnitOfWork::class);
 
         $persistersReflection = $unitOfWorkReflection->getProperty('persisters');
-        $persistersReflection->setAccessible(true);
 
         $this->unitOfWorkPersistersReflection = $persistersReflection;
 

@@ -51,7 +51,6 @@ class PurgerTest extends TestCase
         $purger = new Purger($manager);
 
         $decoratedPurgerReflection = (new ReflectionObject($purger))->getProperty('purger');
-        $decoratedPurgerReflection->setAccessible(true);
         /** @var DoctrineOrmPurger $decoratedPurger */
         $decoratedPurger = $decoratedPurgerReflection->getValue($purger);
 

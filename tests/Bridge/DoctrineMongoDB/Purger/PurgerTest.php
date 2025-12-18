@@ -34,7 +34,6 @@ class PurgerTest extends TestCase
         $purger = new Purger($manager);
 
         $decoratedPurgerReflection = (new ReflectionObject($purger))->getProperty('purger');
-        $decoratedPurgerReflection->setAccessible(true);
         $decoratedPurger = $decoratedPurgerReflection->getValue($purger);
 
         self::assertInstanceOf(MongoDBPurger::class, $decoratedPurger);
