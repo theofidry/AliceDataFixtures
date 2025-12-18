@@ -17,9 +17,9 @@
         "doctrine/phpcr-odm": "*",
         "jackalope/jackalope-doctrine-dbal": "*",
         "monolog/monolog": "*",
-        "symfony/http-kernel": "^7.4 || ^8.0",
-        "symfony/validator": "^7.4 || ^8.0",
-        "symfony/var-exporter": "^7.4 || ^8.0",
+        "symfony/http-kernel": "*",
+        "symfony/validator": "*",
+        "symfony/var-exporter": "*",
         "theofidry/composer-inheritance-plugin": "^1.2",
         "wouterj/eloquent-bundle": "*"
     },

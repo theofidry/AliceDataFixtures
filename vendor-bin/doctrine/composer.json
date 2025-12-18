@@ -6,7 +6,7 @@
         "doctrine/persistence": "*",
         "theofidry/composer-inheritance-plugin": "^1.2",
         "symfony/cache": "*",
-        "symfony/var-exporter": "^7.4 || ^8.0"
+        "symfony/var-exporter": "*"
     },
     "config": {
         "bin-dir": "bin",
