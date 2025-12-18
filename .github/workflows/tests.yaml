@@ -47,7 +47,6 @@ jobs:
                     - test_symfony_eloquent_bridge_proxy_manager
                 symfony-versions:
                     - false
-                    - '6.4.*'
                     - '7.4.*'
                     - '8.*.*'
 
