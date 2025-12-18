@@ -41,7 +41,7 @@
         "doctrine/phpcr-odm": "<2.0.0",
         "doctrine/dbal": "<3.0",
         "doctrine/persistence": "<2.5.7 || >=3.0 <3.4.0",
-        "illuminate/database": "<10.0",
+        "illuminate/database": "<12.0",
         "ocramius/proxy-manager": "<2.1",
         "symfony/framework-bundle": "<7.4.0",
         "zendframework/zend-code": "<3.3.1"
@@ -58,7 +58,7 @@
         "doctrine/phpcr-odm": "To use Doctrine with the PHPCR flavour",
         "jackalope/jackalope-doctrine-dbal": "To use Doctrine with the PHPCR flavour",
 
-        "illuminate/database": "To use Eloquent",
+        "illuminate/database": "To use Eloquent"
     },
 
     "autoload": {

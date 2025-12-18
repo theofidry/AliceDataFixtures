@@ -15,7 +15,7 @@ Supports:
 * Doctrine ORM 2.20+
 * Doctrine ODM 2.0+
 * Doctrine PHPCR 2.0+
-* Eloquent 11.0+
+* Eloquent 12.0+
 
 
 ## Documentation
