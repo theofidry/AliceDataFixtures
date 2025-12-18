@@ -23,6 +23,7 @@ $config = ORMSetup::createAttributeMetadataConfiguration(
     [ROOT.'/fixtures/Bridge/Doctrine/Entity'],
     true,
 );
+$config->enableNativeLazyObjects(true);
 
 $connection = DriverManager::getConnection(
     require ROOT.'/doctrine-orm-db-settings.php',
