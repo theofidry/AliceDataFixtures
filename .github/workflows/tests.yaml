@@ -31,7 +31,6 @@ jobs:
             fail-fast: false
             matrix:
                 php-version:
-                    - '8.3'
                     - '8.4'
                     - '8.5'
                 dependencies: [ highest, lowest ]
@@ -51,9 +50,6 @@ jobs:
                     - '6.4.*'
                     - '7.4.*'
                     - '8.*.*'
-                exclude:
-                    - php-version: '8.3'
-                      symfony-versions: '8.*.*'
 
         # To keep in sync with docker-compose.yml
         services:
