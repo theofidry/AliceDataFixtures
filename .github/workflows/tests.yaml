@@ -68,7 +68,7 @@ jobs:
                     MONGO_INITDB_ROOT_PASSWORD: password
         steps:
             -   name: Checkout
-                uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+                uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
             -   name: Install mongosh
                 run: |
@@ -82,7 +82,7 @@ jobs:
                     sudo apt-get install -y mongodb-mongosh
 
             -   name: Install PHP with extensions
-                uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # 2.36.0
+                uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
                 with:
                     php-version: ${{ matrix.php-version }}
                     coverage: xdebug
@@ -100,7 +100,7 @@ jobs:
                     perl -pi -e 's/^}$/,"provide":{"ext-mongo":"*"}}/' composer.json
 
             -   name: Install Composer dependencies (${{ matrix.dependencies }})
-                uses: ramsey/composer-install@a35c6ebd3d08125aaf8852dff361e686a1a67947 # 3.2.0
+                uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
 
@@ -108,14 +108,14 @@ jobs:
             # The updates apparently need to be repeated as well due to a bug
             # in the wiki merge plugin
             -   name: Install doctrine Composer bin dependencies
-                uses: ramsey/composer-install@a35c6ebd3d08125aaf8852dff361e686a1a67947 # 3.2.0
+                uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
                 if: "matrix.make-test == 'test_doctrine_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine
             -   name: Repeat "Install doctrine Composer bin dependencies"
-                uses: ramsey/composer-install@a35c6ebd3d08125aaf8852dff361e686a1a67947 # 3.2.0
+                uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
                 if: "matrix.make-test == 'test_doctrine_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
@@ -123,14 +123,14 @@ jobs:
                     working-directory: vendor-bin/doctrine
 
             -   name: Install MongoDB Composer bin dependencies
-                uses: ramsey/composer-install@a35c6ebd3d08125aaf8852dff361e686a1a67947 # 3.2.0
+                uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
                 if: "matrix.make-test == 'test_doctrine_odm_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine_mongodb
             -   name: Repeat "Install MongoDB Composer bin dependencies"
-                uses: ramsey/composer-install@a35c6ebd3d08125aaf8852dff361e686a1a67947 # 3.2.0
+                uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
                 if: "matrix.make-test == 'test_doctrine_odm_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
@@ -138,14 +138,14 @@ jobs:
                     working-directory: vendor-bin/doctrine_mongodb
 
             -   name: Install Doctrine PHPCR Composer bin dependencies
-                uses: ramsey/composer-install@a35c6ebd3d08125aaf8852dff361e686a1a67947 # 3.2.0
+                uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
                 if: "matrix.make-test == 'test_doctrine_phpcr_bridge' || matrix.make-test == 'test_symfony_bridge' || matrix.make-test == 'test_symfony_doctrine_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/doctrine_phpcr
             -   name: Repeat "Install Doctrine PHPCR Composer bin dependencies"
-                uses: ramsey/composer-install@a35c6ebd3d08125aaf8852dff361e686a1a67947 # 3.2.0
+                uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
                 if: "matrix.make-test == 'test_doctrine_phpcr_bridge' || matrix.make-test == 'test_symfony_bridge' || matrix.make-test == 'test_symfony_doctrine_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
@@ -153,14 +153,14 @@ jobs:
                     working-directory: vendor-bin/doctrine_phpcr
 
             -   name: Install Eloquent Composer bin dependencies
-                uses: ramsey/composer-install@a35c6ebd3d08125aaf8852dff361e686a1a67947 # 3.2.0
+                uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
                 if: "matrix.make-test == 'test_eloquent_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/eloquent
             -   name: Repeat "Install Eloquent Composer bin dependencies"
-                uses: ramsey/composer-install@a35c6ebd3d08125aaf8852dff361e686a1a67947 # 3.2.0
+                uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
                 if: "matrix.make-test == 'test_eloquent_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
@@ -168,14 +168,14 @@ jobs:
                     working-directory: vendor-bin/eloquent
 
             -   name: Install Symfony Composer bin dependencies
-                uses: ramsey/composer-install@a35c6ebd3d08125aaf8852dff361e686a1a67947 # 3.2.0
+                uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
                 if: "matrix.make-test == 'test_symfony_bridge' || matrix.make-test == 'test_symfony_doctrine_bridge' || matrix.make-test == 'test_symfony_eloquent_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                     composer-options: "${{ matrix.composer-flags }}"
                     working-directory: vendor-bin/symfony
             -   name: Repeat "Install Symfony Composer bin dependencies"
-                uses: ramsey/composer-install@a35c6ebd3d08125aaf8852dff361e686a1a67947 # 3.2.0
+                uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
                 if: "matrix.make-test == 'test_symfony_bridge' || matrix.make-test == 'test_symfony_doctrine_bridge' || matrix.make-test == 'test_symfony_eloquent_bridge'"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
