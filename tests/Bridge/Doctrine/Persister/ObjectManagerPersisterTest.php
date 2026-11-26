@@ -32,6 +32,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use stdClass;
 
 #[CoversClass(ObjectManagerPersister::class)]
 class ObjectManagerPersisterTest extends TestCase
@@ -206,6 +207,25 @@ class ObjectManagerPersisterTest extends TestCase
         $this->persister->flush();
 
         self::assertTrue(true, 'Everything is fine.');
+    }
+
+    public function testDoesNotPersistAnUnmappedObject(): void
+    {
+        $this->persister->persist(new stdClass());
+        $this->persister->flush();
+
+        self::assertFalse($this->entityManager->getMetadataFactory()->hasMetadataFor(stdClass::class));
+    }
+
+    public function testDoesNotLoadTheMetadataOfEveryMappedClass(): void
+    {
+        $this->persister->persist(new Dummy());
+        $this->persister->flush();
+
+        $loadedMetadata = $this->entityManager->getMetadataFactory()->getLoadedMetadata();
+
+        self::assertArrayHasKey(Dummy::class, $loadedMetadata);
+        self::assertArrayNotHasKey(AnotherDummy::class, $loadedMetadata);
     }
 
     public function testIdGeneratorIsDisabledForCascadePersist(): void

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Fidry\AliceDataFixtures\Bridge\Doctrine\Persister;
 
-use function array_flip;
 use function array_key_exists;
 use function count;
 use Doctrine\Common\Collections\Collection;
@@ -43,9 +42,9 @@ class ObjectManagerPersister implements PersisterInterface
     private ObjectManager $objectManager;
 
     /**
-     * @var array Values are FQCN of persistable objects
+     * @var array<class-string, bool> Whether the class is persistable, by FQCN.
      */
-    private array $persistableClasses;
+    private array $persistableClasses = [];
 
     /**
      * @var ClassMetadata[] Entity metadata to restore after flush, FQCN being the key.
@@ -68,13 +67,9 @@ class ObjectManagerPersister implements PersisterInterface
 
     public function persist(object $object): void
     {
-        if (!isset($this->persistableClasses)) {
-            $this->persistableClasses = array_flip($this->getPersistableClasses($this->objectManager));
-        }
-
         $className = $object::class;
 
-        if (isset($this->persistableClasses[$className])) {
+        if ($this->isPersistableClass($className)) {
             $metadata = $this->getMetadataAndChangeIdGeneratorIfNecessary($className, $object);
 
             try {
@@ -168,26 +163,29 @@ class ObjectManagerPersister implements PersisterInterface
     }
 
     /**
-     * @return string[]
+     * @param class-string $className
      */
-    private function getPersistableClasses(ObjectManager $manager): array
+    private function isPersistableClass(string $className): bool
     {
-        $persistableClasses = [];
-        $metadataFactory = $manager->getMetadataFactory();
+        return $this->persistableClasses[$className] ??= $this->resolvePersistableClass($className);
+    }
 
-        if (null === $metadataFactory) {
-            return $persistableClasses;
+    /**
+     * @param class-string $className
+     */
+    private function resolvePersistableClass(string $className): bool
+    {
+        $metadataFactory = $this->objectManager->getMetadataFactory();
+
+        if (null === $metadataFactory || $metadataFactory->isTransient($className)) {
+            return false;
         }
 
-        $allMetadata = $metadataFactory->getAllMetadata();
+        $metadata = $this->objectManager->getClassMetadata($className);
 
-        foreach ($allMetadata as $metadata) {
-            if (self::isClassMetadataOfPersistableClass($metadata)) {
-                $persistableClasses[] = $metadata->getName();
-            }
-        }
-
-        return $persistableClasses;
+        // a proxy or an alias resolves to the metadata of another class: only the exact class is persistable
+        return $metadata->getName() === $className
+            && self::isClassMetadataOfPersistableClass($metadata);
     }
 
     private static function isClassMetadataOfPersistableClass(ClassMetadata $metadata): bool
