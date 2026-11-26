@@ -70,16 +70,19 @@ jobs:
             -   name: Checkout
                 uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-            -   name: Install mongosh
-                run: |
-                    sudo apt-get update
-                    sudo apt-get install -y wget gnupg
-                    wget -qO - https://www.mongodb.org/static/pgp/server-${MONGO_DB_VERSION}.asc | sudo apt-key add -
-                    echo \
-                        "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/${MONGO_DB_VERSION} multiverse" \
-                        | sudo tee /etc/apt/sources.list.d/mongodb-org-${MONGO_DB_VERSION}.list
-                    sudo apt-get update
-                    sudo apt-get install -y mongodb-mongosh
+            - name: Install mongosh
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y wget gnupg
+                  sudo mkdir -p /usr/share/keyrings
+                  wget -qO - https://www.mongodb.org/static/pgp/server-${MONGO_DB_VERSION}.asc \
+                      | sudo gpg --dearmor -o /usr/share/keyrings/mongodb-server-${MONGO_DB_VERSION}.gpg
+                  echo \
+                      "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-${MONGO_DB_VERSION}.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/${MONGO_DB_VERSION} multiverse" \
+                      | sudo tee /etc/apt/sources.list.d/mongodb-org-${MONGO_DB_VERSION}.list
+                  sudo apt-get update
+                  sudo apt-get install -y mongodb-mongosh
+
 
             -   name: Install PHP with extensions
                 uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # 2.36.0
